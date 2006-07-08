@@ -1,0 +1,15 @@
+<li id=<%="group_#{group.id}"%> style="list-style:lower-roman;">
+	<%= link_to_remote(image_tag('/images/icons/cross.png'),
+					   :url=>{
+							 	:controller=>'category',
+							 	:action=>'remove_group',
+							    :id=>category.id,
+								:group_id=>group.id,
+								:update=>"group_#{group.id}"
+							 },
+						:confirm=>"Remove #{ h group.name} from #{h category.name}?" 
+						) %>
+	<%= link_to( group.name, :controller=>'group',:action=>'show',:id=>group.id ) %> 
+	(<%= group.users.size %>) -- 
+	<%= truncate group.description, 40 %>
+</li>

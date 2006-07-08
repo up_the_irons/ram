@@ -1,0 +1,27 @@
+<h1>Listing Users</h1>
+
+<table>
+	<tr>
+		<th></th>
+		<th>Login</th>
+		<th>Email Address</th>
+		<th>Status</th>
+		<th>Actions</th>
+	</tr>
+	
+<% for user in @users %>
+	<tr>
+		<td><%= image_tag('/images/icons/user.png')%></td>
+  		<td><%= link_to(h(user.login),:controller=>'admin',:action=>'show_user', :id=>user) %></td>
+  		<td><%= user.email unless user.email.nil? -%></td>
+  		<td><%= User::STATUS[user.state] -%></td>
+  		<td>
+  			[ <%= link_to('Edit', :action=>'edit', :id =>user)%> | 
+  			<%= link_to('Destroy', { :action=>'destroy', :id =>user }, :confirm => 'Are you sure?', :post => true ) %> ]
+  		</td>
+  	</tr>
+<% end -%>
+</table>
+
+<%= link_to 'Previous page', { :page => @user_pages.current.previous } if @user_pages.current.previous %>
+<%= link_to 'Next page', { :page => @user_pages.current.next } if @user_pages.current.next %> 

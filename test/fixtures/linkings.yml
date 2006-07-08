@@ -1,0 +1,328 @@
+# Schema as of Sat Jun 24 11:18:29 PDT 2006 (schema version 6)
+#
+#  id                  :integer(11)   not null
+#  user_id             :integer(11)   
+#  category_id         :integer(11)   
+#  group_id            :integer(11)   
+#  linkable_id         :integer(11)   
+#  linkable_type       :string(255)   
+#  created_on          :datetime      
+#  updated_on          :datetime      
+#
+
+--- 
+linking_21: 
+  created_on: 2006-06-11 11:04:12 -07:00
+  updated_on: 2006-06-11 11:04:12 -07:00
+  id: 21
+  group_id: 31
+  category_id: 14
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_7: 
+  created_on: 2006-06-11 11:01:46 -07:00
+  updated_on: 2006-06-11 11:01:46 -07:00
+  id: 7
+  group_id: 31
+  category_id: 19
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_10: 
+  created_on: 2006-06-11 11:02:17 -07:00
+  updated_on: 2006-06-11 11:02:17 -07:00
+  id: 10
+  group_id: 31
+  category_id: 10
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_11: 
+  created_on: 2006-06-11 11:02:27 -07:00
+  updated_on: 2006-06-11 11:02:27 -07:00
+  id: 11
+  group_id: 31
+  category_id: 28
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_8: 
+  created_on: 2006-06-11 11:01:56 -07:00
+  updated_on: 2006-06-11 11:01:57 -07:00
+  id: 8
+  group_id: 31
+  category_id: 20
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_22: 
+  created_on: 2006-06-11 11:04:20 -07:00
+  updated_on: 2006-06-11 11:04:20 -07:00
+  id: 22
+  group_id: 31
+  category_id: 51
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_23: 
+  created_on: 2006-06-11 11:04:31 -07:00
+  updated_on: 2006-06-11 11:04:31 -07:00
+  id: 23
+  group_id: 31
+  category_id: 23
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_9: 
+  created_on: 2006-06-11 11:02:04 -07:00
+  updated_on: 2006-06-11 11:02:04 -07:00
+  id: 9
+  group_id: 31
+  category_id: 21
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_12: 
+  created_on: 2006-06-11 11:02:35 -07:00
+  updated_on: 2006-06-11 11:02:35 -07:00
+  id: 12
+  group_id: 31
+  category_id: 29
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_13: 
+  created_on: 2006-06-11 11:02:43 -07:00
+  updated_on: 2006-06-11 11:02:43 -07:00
+  id: 13
+  group_id: 31
+  category_id: 30
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_24: 
+  created_on: 2006-06-11 11:04:40 -07:00
+  updated_on: 2006-06-11 11:04:40 -07:00
+  id: 24
+  group_id: 31
+  category_id: 24
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_25: 
+  created_on: 2006-06-11 11:04:49 -07:00
+  updated_on: 2006-06-11 11:04:49 -07:00
+  id: 25
+  group_id: 31
+  category_id: 25
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_1: 
+  created_on: 2006-06-09 11:01:07 -07:00
+  updated_on: 2006-06-10 11:01:07 -07:00
+  id: 1
+  group_id: 1
+  category_id: 6
+  user_id: 4
+  linkable_type: Asset
+  linkable_id: 1
+linking_14: 
+  created_on: 2006-06-11 11:02:50 -07:00
+  updated_on: 2006-06-11 11:02:50 -07:00
+  id: 14
+  group_id: 31
+  category_id: 11
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_15: 
+  created_on: 2006-06-11 11:02:58 -07:00
+  updated_on: 2006-06-11 11:02:58 -07:00
+  id: 15
+  group_id: 31
+  category_id: 12
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_2: 
+  created_on: 2006-06-09 11:01:07 -07:00
+  updated_on: 2006-06-10 11:01:07 -07:00
+  id: 2
+  group_id: 2
+  category_id: 7
+  user_id: 4
+  linkable_type: Asset
+  linkable_id: 1
+linking_26: 
+  created_on: 2006-06-11 11:04:58 -07:00
+  updated_on: 2006-06-11 11:04:58 -07:00
+  id: 26
+  group_id: 31
+  category_id: 26
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_27: 
+  created_on: 2006-06-11 11:05:07 -07:00
+  updated_on: 2006-06-11 11:05:07 -07:00
+  id: 27
+  group_id: 31
+  category_id: 27
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_3: 
+  created_on: 2006-06-09 11:01:07 -07:00
+  updated_on: 2006-06-10 11:01:07 -07:00
+  id: 3
+  group_id: 3
+  category_id: 8
+  user_id: 4
+  linkable_type: Asset
+  linkable_id: 1
+linking_16: 
+  created_on: 2006-06-11 11:03:06 -07:00
+  updated_on: 2006-06-11 11:03:06 -07:00
+  id: 16
+  group_id: 31
+  category_id: 16
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_17: 
+  created_on: 2006-06-11 11:03:13 -07:00
+  updated_on: 2006-06-11 11:03:13 -07:00
+  id: 17
+  group_id: 31
+  category_id: 17
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_4: 
+  created_on: 2006-06-11 11:01:18 -07:00
+  updated_on: 2006-06-11 11:01:18 -07:00
+  id: 4
+  group_id: 31
+  category_id: 6
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_5: 
+  created_on: 2006-06-11 11:01:30 -07:00
+  updated_on: 2006-06-11 11:01:30 -07:00
+  id: 5
+  group_id: 31
+  category_id: 7
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_18: 
+  created_on: 2006-06-11 11:03:21 -07:00
+  updated_on: 2006-06-11 11:03:22 -07:00
+  id: 18
+  group_id: 31
+  category_id: 18
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_19: 
+  created_on: 2006-06-11 11:03:52 -07:00
+  updated_on: 2006-06-11 11:03:52 -07:00
+  id: 19
+  group_id: 31
+  category_id: 8
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_6: 
+  created_on: 2006-06-11 11:01:39 -07:00
+  updated_on: 2006-06-11 11:01:39 -07:00
+  id: 6
+  group_id: 31
+  category_id: 9
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_20: 
+  created_on: 2006-06-11 11:04:03 -07:00
+  updated_on: 2006-06-11 11:04:03 -07:00
+  id: 20
+  group_id: 31
+  category_id: 13
+  user_id: 
+  linkable_type: 
+  linkable_id: 
+linking_21: 
+  created_on: 2006-06-11 11:04:03 -07:00
+  updated_on: 2006-06-11 11:04:03 -07:00
+  id: 21
+  group_id: 3
+  category_id: 10
+  user_id: 
+  linkable_type: 'Asset'
+  linkable_id: 7
+linking_22: 
+  created_on: 2006-06-11 11:04:03 -07:00
+  updated_on: 2006-06-11 11:04:03 -07:00
+  id: 22
+  group_id: 3
+  category_id: 10
+  user_id: 
+  linkable_type: 'Asset'
+  linkable_id: 5
+linking_23: 
+  created_on: 2006-06-11 11:04:03 -07:00
+  updated_on: 2006-06-11 11:04:03 -07:00
+  id: 23
+  group_id: 4
+  category_id: 11
+  user_id: 
+  linkable_type: 'Asset'
+  linkable_id: 6
+linking_24: 
+  created_on: 2006-06-11 11:04:03 -07:00
+  updated_on: 2006-06-11 11:04:03 -07:00
+  id: 24
+  group_id: 1
+  category_id: 19
+  user_id: 
+  linkable_type: 'Asset'
+  linkable_id: 2
+linking_25: 
+  created_on: 2006-06-11 11:04:03 -07:00
+  updated_on: 2006-06-11 11:04:03 -07:00
+  id: 25
+  group_id: 1
+  category_id: 9
+  user_id: 
+  linkable_type: 'Asset'
+  linkable_id: 4
+linking_26: 
+  created_on: 2006-06-11 11:04:03 -07:00
+  updated_on: 2006-06-11 11:04:03 -07:00
+  id: 26
+  group_id: 1
+  category_id: 9
+  user_id: 
+  linkable_type: 'Asset'
+  linkable_id: 3
+linking_27: 
+  created_on: 2006-06-11 11:04:03 -07:00
+  updated_on: 2006-06-11 11:04:03 -07:00
+  id: 27
+  group_id: 3
+  category_id: 10
+  user_id: 
+  linkable_type: 'Asset'
+  linkable_id: 7
+linking_28: 
+  created_on: 2006-06-11 11:02:58 -07:00
+  updated_on: 2006-06-11 11:02:58 -07:00
+  id: 28
+  group_id: 31
+  category_id: 15
+  user_id: 
+  linkable_type: 'Asset' 
+  linkable_id: 6

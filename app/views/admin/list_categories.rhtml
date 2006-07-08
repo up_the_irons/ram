@@ -1,0 +1,15 @@
+<h1>Listing categories</h1>
+
+<dl>  
+<% for category in @categories %>
+  <dt><%= link_to(h(category.name),:controller=>'category',:action=>'show', :id=>category) %></dt>
+  <dd style="display:inline;"><%= h category.description %>
+  <% if current_user.is_admin? %>
+  [ <%= link_to('Edit', :action => 'edit', :id => category)%> | 
+  <%= link_to('Destroy', { :action => 'destroy', :id => category }, :confirm => 'Are you sure?', :post => true ) %> ]
+  <% end -%>
+<% end -%>
+</dl>
+
+<%= link_to 'Previous page', { :page => @category_pages.current.previous } if @category_pages.current.previous %>
+<%= link_to 'Next page', { :page => @category_pages.current.next } if @category_pages.current.next %> 

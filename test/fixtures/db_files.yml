@@ -1,0 +1,37 @@
+<%
+    def fixture_data(name)
+        render_binary("#{RAILS_ROOT}/test/fixtures/#{name}")
+    end
+
+    def render_binary(filename)
+        data = File.open(filename,'rb').read
+        "!binary | #{[data].pack('m').gsub(/\n/,"\n    ")}\n"
+    end
+%>
+binary_1:
+  id: 1
+  data: <%= fixture_data('images/rails.png') %>
+  
+binary_2:
+  id: 2
+  data: <%= fixture_data('images/atari-games-stacked.jpg') %>
+  
+binary_3:
+  id: 3
+  data: <%= fixture_data('images/atari-xe-large.jpg') %>
+  
+binary_4:
+  id: 4
+  data: <%= fixture_data('images/atari2600_console01.jpg') %>
+  
+binary_5:
+  id: 5
+  data: <%= fixture_data('images/famicom_disk_system.jpg') %>
+  
+binary_6:
+  id: 6
+  data: <%= fixture_data('images/genesis800.jpg') %>
+  
+binary_7:
+  id: 7
+  data: <%= fixture_data('images/nes.jpg') %>

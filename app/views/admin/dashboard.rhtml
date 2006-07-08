@@ -1,0 +1,34 @@
+<dl class="inline_list">
+	<dt>From here you can manage:</dt>
+	<dd style="display:inline"><%= link_to 'Users', :controller=>'admin', :action=>'list_users' %></dd>
+	<dd style="display:inline"><%= link_to 'Groups', :controller=>'admin', :action=>'list_groups' %></dd>
+	<dd style="display:inline"><%= link_to 'Categories', :controller=>'admin', :action=>'list_categories' %></dd>
+</dl>
+<table class="event_inbox" cellpadding="5" border="0">
+	<caption style="text-align:left;">Events Inbox</caption>
+	<tr>
+		<th></th>
+		<th style="text-align:left;">Type</th>
+		<th style="text-align:left;">Subject</th>
+		<th style="text-align:left;">Date Received</th>
+	</tr>
+	<tr>
+		<td><%= image_tag('/images/icons/email.png') %></td>
+		<td>System Message</td>
+		<td>foo@bar.com requested an account</td>
+		<td><%= Date.today %></td>
+	</tr>
+	<tr>
+		<td><%= image_tag('/images/icons/email.png') %></td>
+		<td>System Message</td>
+		<td>foo@bar.com requested an account</td>
+		<td><%= Date.today %></td>
+	</tr>
+	<tr>
+		<td><%= image_tag('/images/icons/email_open.png') %></td>
+		<td>System Message</td>
+		<td>foo@bar.com requested an account</td>
+		<td><%= Date.today %></td>
+	</tr>
+</table>
+		

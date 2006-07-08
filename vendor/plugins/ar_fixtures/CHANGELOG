@@ -1,0 +1,5 @@
+
+== Jan 12 2005
+
+* Added code to handle single table inheritance. May need to be modified for non-standard use of STI.
+

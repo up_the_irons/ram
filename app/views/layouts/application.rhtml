@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>RAM: <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= stylesheet_link_tag 'base' %>
+  <%= javascript_include_tag :defaults %> 
+</head>
+<body>
+	<div id="page_container" style="width:740px;margin:auto;">
+		<div id="menu_container">
+			<%= render :partial=>'shared/page/header'%>
+			<br style="display:block;clear:both;" />
+		</div>
+		<p id="page_flash">
+		<%= flash[:notice] %>
+		
+		<%= 
+		#todo: color the error another way.
+		flash[:error] %>
+		</p>
+		<div id="page_content" style="width:720px;">
+		
+			<%= @content_for_layout %>
+		<br class="clear_both" />
+		</div>
+		<br class="clear_both" />
+	</div>
+	<div id="page_footer" style="width:740px;margin:auto">
+			<%= render :partial=>'shared/page/footer'%>
+	</div>
+	
+	<% #used to display a spinner on ajax events. %>
+	<div id='spinner' style='display:none; padding: 5px; background-color: white; line-height: 200px; text-align:center; width: 100px; height: 100px'><%= image_tag 'ajax-loader.gif' %></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<p class="important_page_message">Not Yet A Member <%= link_to('Sign Up Here', :action=>'signup') %></p>
+<%= error_messages_for 'user' %>
+
+<%= start_form_tag %>
+<ul class="web_form">
+
+<li><label for="login">Login</label>
+<%= text_field_tag 'login' %></li>
+
+<li><label for="password">Password</label>
+<%= password_field_tag 'password' %></li>
+
+<li><label for="submit">&nbsp;</label>
+<%= submit_tag 'Log in' %></li>
+</ul>
+<%= end_form_tag %>
+
+<%=
+#added for testing before launch (obviously)
+%>
+<ul class="web_form">
+	<li><label for="login_as">login as:</label>
+		<select id='login_as' onchange='new Ajax.Request("/account/login_as?user_id="+$(this).value);' >	
+		<option>Select A User Account</option>
+		<%= options_for_select User.find(:all).map{|u| [u.login,u.id]} %>
+	</li>
+</ul>
+<br class="clear_both" />

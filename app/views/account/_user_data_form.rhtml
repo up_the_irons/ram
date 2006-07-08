@@ -1,0 +1,11 @@
+<li><label for="login">Login: </label>
+<%= user.text_field :login %></li>
+
+<li><label for="email">Email: </label>
+<%= user.text_field :email %></li>
+
+<li><label for="password">Password: </label>
+<%= user.password_field :password, :value=>"#{'**********' unless @user.new_record?}" %></li>
+
+<li><label for="password_confirmation">Confirm Password: </label>
+<%= user.password_field :password_confirmation, :value=>"#{'**********' unless @user.new_record?}" %></li>

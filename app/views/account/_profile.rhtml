@@ -1,0 +1,35 @@
+<h1><%= user.full_name unless user.full_name.nil? %>'s Profile</h1>
+<ul class="web_form">
+	<li><label for="first_name">First Name: </label>
+	<%= user.first_name %></li>
+	<li><label for="last_name">Last Name: </label>
+	<%= user.last_name %></li>
+	<li><label for="login">Login: </label>
+	<%= user.login %></li>
+	<li><label for="email">email: </label>
+	<%= user.email %></li>
+	<li><label for="gender">Gender: </label>
+	<%= Person::GENDERS.reject{|g| g[1] != user.gender}[0][0] %>
+	</li>
+
+	<li><label for="date_of_birth">Birthday: </label>
+	<%=h  user.date_of_birth %>
+	</li>
+		
+	<li>
+		<label>Groups:</label><br />
+		<ol>
+		<% for g in user.groups-%>
+			<li style="list-style:lower-roman;border:none;"><%=link_to g.name, :controller=>'group', :action=>'show', :id=>g.id %></li>
+		<% end-%>
+		</ol>
+	</li>
+	<li>
+		<label>Categories:</label><br />
+		<ol>
+		<% for c in user.categories -%>
+			<li style="list-style:lower-roman;border:none;"><%=link_to c.name, :controller=>'category', :action=>'show', :id=>c.id %></li>
+		<% end -%>
+		</ol>
+	</li>
+</ul>

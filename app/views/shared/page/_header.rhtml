@@ -1,0 +1,6 @@
+<%= 
+	render :partial=>'shared/page/user_menu' 
+-%>
+<%= 
+	 render :partial=>'shared/page/site_menu' unless current_user.nil?
+-%>

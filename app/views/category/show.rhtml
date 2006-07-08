@@ -1,0 +1,71 @@
+<ul class="bread_crumbs">
+<% if( @category.bread_crumbs.size > 0 ) -%>
+<%=	@category.bread_crumbs.map{|x| "<li>#{link_to(x.name, :controller=>'category',:action=>'show',:id=>x.id)} | </li>"} -%>
+<% end -%>
+<%= "<li>#{link_to(@category.name)} </li>"%>
+</ul>
+
+<p>
+  <h3><%=h @category.name %> 
+	  <%= link_to image_tag('/images/icons/feed.png'   ,{:title=>"Subscribe to #{@category.name}'s feed."}),{:controller=>'category',:action=>'feed',:id=>@category.id} %>
+	 <%= link_to( 'Edit', {:action => 'edit', :id => @category},{:style=>'font-size:80%;'}) if current_user.is_admin? %></h3>
+</p>
+	<% #Categories 
+	#todo draw the category tree based on the user's scope so that they do not see categories, which they do not belong to
+	%>
+	<h3>Sub-categories
+		<% unless @category.children.empty? -%> 
+		(<%= @category.children.size %>)
+		<a href="#" id="show_categories" title="Show Sub-categories" onclick="Element.toggle('sub_categories_toggle');
+		Element.toggle('show_categories');
+		Element.toggle('hide_categories');
+		return false;"><%= image_tag('/images/icons/bullet_toggle_plus.png')%></a>
+		
+		<a href="#" id="hide_categories" title="Hide Sub-categories" style="display:none;" onclick="Element.toggle('sub_categories_toggle');
+		Element.toggle('show_categories');
+		Element.toggle('hide_categories');
+		return false;"><%= image_tag('/images/icons/bullet_toggle_minus.png')%></a>
+	</h3>
+	<div id="sub_categories_toggle" style="display:none;">
+		<%= render :partial=>'category',:locals=>{:category,@category} unless @category.children.nil? %>
+	</div>
+	<% else -%>
+	</h3>
+		No Subcategories
+	<% end -%>
+	
+	<% #Groups
+	#todo draw the groups based on the user's scope
+	%>
+	<h3>You belong to (<span id="group_size"><%= @groups.size.to_s %></span>) groups with access to this category
+	
+		<a href="#" id="show_groups" title="Show Groups" onclick="Element.toggle('groups_toggle');
+		Element.toggle('show_groups');
+		Element.toggle('hide_groups');
+		return false;"><%= image_tag('/images/icons/bullet_toggle_plus.png')%></a>
+		
+		<a href="#" id="hide_groups" title="Hide Groups" style="display:none;" onclick="Element.toggle('groups_toggle');
+		Element.toggle('show_groups');
+		Element.toggle('hide_groups');
+		return false;"><%= image_tag('/images/icons/bullet_toggle_minus.png')%></a>
+		
+	</h3>
+	
+	<div id="groups_toggle" style="display:none;">
+		<ol id="group_list">	
+		<% for g in @groups -%>
+			<%= render :partial=>'group_item', :locals=>{:category=>@category,:group=>g} %>
+		<% end -%>
+		</ol>
+		<p id="new_group_form"><%= render :partial=>'new_group_button' %></p>
+	</div>
+	<% #Assets 
+	#display based on scope
+	%>
+	<h3>Available Assets</h3>
+	<%= render :partial=>'asset/list' %>
+	<p><%= render :partial=>'new_asset_button' %></p>
+	<p id="new_asset_form"></p>
+<br />
+
+<%= auto_discovery_link_tag(:rss, {:controller => 'category', :action => 'feed',:id=>@category.id}) %>

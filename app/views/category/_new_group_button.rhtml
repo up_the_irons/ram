@@ -1,0 +1,3 @@
+Add New Group 
+<%= link_to_remote( image_tag('/images/icons/add.png'), 
+									 :url => { :controller=>'category', :action => "show_group_form", :id => @category.id, :update=>'new_group_form' } ) %>

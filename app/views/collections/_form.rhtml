@@ -1,0 +1,16 @@
+<%= error_messages_for 'collection' %>
+
+<!--[form:collection]-->
+<p><label for="collection_name">Name</label><br/>
+<%= text_field 'collection', 'name'  %></p>
+
+<p><label for="collection_description">Description</label><br/>
+<%= text_area 'collection', 'description'  %></p>
+
+<p><label for="collection_public">Public</label><br/>
+<select id="collection_public" name="collection[public]"><option value="false">False</option><option value="true">True</option></select></p>
+
+<p><label for="collection_counter_cache">Counter cache</label><br/>
+<select id="collection_counter_cache" name="collection[counter_cache]"><option value="false">False</option><option value="true" selected>True</option></select></p>
+<!--[eoform:collection]-->
+

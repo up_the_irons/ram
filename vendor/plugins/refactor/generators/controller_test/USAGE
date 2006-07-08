@@ -1,0 +1,9 @@
+Description:
+    Generate test stubs for all public methods of Controllers.  
+    Saves a _test_stub.rb file to avoid overwriting a real test case.
+
+Example:
+    ./script/generate controller_test account
+
+    This will create:
+        test/functional/account_test_stub.rb

@@ -1,0 +1,1 @@
+@feed.build_xml("rss", 2.0, xml)

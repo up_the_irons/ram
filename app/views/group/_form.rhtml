@@ -1,0 +1,16 @@
+<%= error_messages_for 'group' %>
+
+<!--[form:group]-->
+<p><label for="group_name">Name</label><br/>
+<%= text_field 'group', 'name'  %></p>
+
+<p><label for="group_description">Description</label><br/>
+<%= text_area 'group', 'description'  %></p>
+
+<p><label for="group_public">Public</label><br/>
+<select id="group_public" name="group[public]"><option value="false">False</option><option value="true">True</option></select></p>
+
+<p><label for="group_counter_cache">Counter cache</label><br/>
+<select id="group_counter_cache" name="group[counter_cache]"><option value="false">False</option><option value="true" selected>True</option></select></p>
+<!--[eoform:group]-->
+

@@ -1,0 +1,18 @@
+Refactor plugin
+====
+
+This is a very basic plugin that provides these things:
+
+ * Generate test stubs for all public methods of Models and Controllers
+
+   ./script/generate model_test user
+   ./script/generate controller_test account
+
+ * Find views that do not correspond to a controller action
+
+   rake find_unused_views
+
+   app/views/account/list.rhtml
+   app/views/account/new.rhtml
+   app/views/account/show.rhtml
+   

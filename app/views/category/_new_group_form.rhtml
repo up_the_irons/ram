@@ -1,0 +1,7 @@
+<form>
+Add New Group 
+<select id='add_group_form' onchange='new Ajax.Request("/category/add_group/<%= @category.id %>?update=new_group_form&group_id="+$(this).value);' >	
+	<option>Your Remaining Groups</option>
+<%= options_for_select groups %>
+</select>
+</form>

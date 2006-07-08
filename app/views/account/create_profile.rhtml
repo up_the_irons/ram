@@ -1,0 +1,24 @@
+<%= error_messages_for 'user' %>
+
+<% form_for :user, @user do |user| -%>
+
+<ul class="web_form">
+  <%= render :partial=>'user_data_form', :locals=>{:user=>user}
+  %>
+</ul>
+<ul class="web_form">
+    <%= render :partial=>'personal_data_form'%>
+</ul>
+<p class="important_page_message" style="padding:2px;background-color:#cc0000;color:#ffffff">
+  <%= link_to('I am done for now',
+    {:controller=>'site',
+    :action=>'home'},
+    {:style=>'color:#ffffff'}) %> </p>
+<ul class="web_form">
+    <%= render :partial=>'profile_data_form'
+    %>
+</ul>
+<ul class="web_form">
+<li><label for="submit_button">Save My Profile:</label><%= submit_tag 'Submit' %></li>
+</ul>
+<% end -%>

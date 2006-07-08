@@ -1,0 +1,54 @@
+<%= 
+form_tag({:controller=>'asset', :action =>@action, :id=>@asset.id}, {:multipart => true}) %>
+
+<% #todo: show category select if @category is nil
+%>
+<input type="hidden" id="linking_category_id" name="category_id"value="<%= @category.id unless @category.nil? %>" />
+<input type="hidden" id="update" name="update" value="asset_form" />
+<ul class="web_form">
+	<li><label>Category:</label><%= @category.name unless @category.nil? %> &nbsp;</li>
+	
+	<% unless @asset.new_record? -%>
+	<li>	
+		<label>Group Availability: </label>
+		<table id="asset_form_group_list">
+			<tr>
+				<th>Name</th>
+				<th>Options</th>
+			</tr>
+		<% @assigned_groups.each do |group| -%>
+			<%= render :partial=>'group_item', :locals=>{:group=>group}%>
+		<% end -%>
+		</table>
+	</li>	
+	
+		<% 	unless @remaining_groups.nil? || @remaining_groups.empty? -%>
+		<li>
+		<p>Add New Group</p>
+		<select id='add_group_form' onchange='new Ajax.Request("/asset/add_group/<%= @asset.id %>?update=asset_form_group_list&category_id=<%= @category.id %>&group_id="+$(this).value);' >	
+		<option>Add A New Group</option>
+		<%= 
+		options_for_select(@remaining_groups.map{|g| [g.name, g.id]}) %>
+		</select>
+		</li>
+		<% end -%>
+		
+	
+	<li id="image_field"><label>File: </label>
+		<%= display_as @asset -%>
+	</li>
+	<% else -%>	
+	<li id="image_field"><label>File: </label> <%= file_field :asset, :uploaded_data %></li>
+	<% end -%>
+    <li><label>Description: </label><%= text_area :asset, :description,{:rows=>4} %></li>
+	<li><label><%= image_tag '/images/icons/tag_blue.png' %>Tags:</label>coming soon(ish)</li>
+	<li>
+	<%= submit_tag "Submit" %>  <%= link_to_remote('cancel upload',:url=>{
+																		:controller=>'asset',
+																		:action=>'cancel_update',
+																		:category_id=>@category.id,
+																		:update=>'new_asset_form'
+																		}) if @asset.new_record? %>
+	</li>
+</ul>
+<%= end_form_tag %>

@@ -1,0 +1,20 @@
+<% for column in Group.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @group.send(column.name) %>
+</p>
+<% end %>
+<p>
+	<b>Leader:</b> <%= h User.find(@group.user_id).login %>
+</p>
+<h3>Users</h3>
+	<%= render :partial=> 'users', :locals=>{:group=>@group} unless @group.users.nil? %>
+<h3>Categories</h3>	
+	<% for c in @group.categories %>
+	<%= 
+		#TODO: display the categories within their parent/child context where applicable.
+		# render :partial=> 'category/category', :locals=>{:category=>c} 
+		"#{c.name}<br/>"
+	-%>
+	<% end unless @group.categories.nil?%>
+<%= link_to 'Edit', :action => 'edit', :id => @group %> |
+<%= link_to 'Back', :action => 'list' %>

@@ -1,0 +1,12 @@
+<tr id="asset_group_<%= group.id %>" style="list-style:lower-roman;">
+	<td><%= group.name %></td>
+	<td><%= link_to_remote(image_tag('/images/icons/cross.png'),:url=>{
+																		:controller=>'asset',
+																		:action=>'remove_group',
+																		:category_id=>@category.id,
+																		:id=>@asset.id,
+																		:group_id=>group.id,
+																		:update=>"asset_group_#{group.id}"
+																		},
+																		:confirm=>"Are you sure you want to remove #{ h group.name}'s access to this asset?") %></td>
+</tr>

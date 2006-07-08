@@ -1,0 +1,65 @@
+# Schema as of Sat Jun 24 11:18:29 PDT 2006 (schema version 6)
+#
+#  id                  :integer(11)   not null
+#  user_id             :integer(11)   
+#  created_on          :datetime      
+#  updated_on          :datetime      
+#  bio                 :text          
+#  address_line1       :string(255)   default()
+#  address_line2       :string(255)   default()
+#  city                :string(255)   default()
+#  state               :string(255)   default()
+#  country             :string(255)   default()
+#  postal_code         :string(255)   default()
+#  telephone           :string(255)   default()
+#  fax                 :string(255)   default()
+#
+
+user_4:
+  id: 1
+  bio: I invented Atari and Chuck E Cheeses
+  user_id: 4
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
+user_5:
+  id: 2
+  bio: I was an important guy in Nintendo
+  user_id: 5
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
+quentin:
+  id: 3
+  bio: My name is quentin I am the sample admin
+  user_id: 1
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
+user_2:
+  id: 4
+  bio: I worked at Sega
+  user_id: 2
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
+user_6:
+  id: 5
+  bio: I hold the patent on the videogame (that you play on your TV)
+  user_id: 6
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
+user_3:
+  id: 6
+  bio: I wrote this here puter applimication
+  user_id: 3
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
+pending_user:
+  id: 7
+  user_id: 8
+  bio: ""
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
+suspended_user: 
+  id: 8
+  user_id: 9
+  bio: ""
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>

@@ -1,0 +1,13 @@
+<li id=<%="asset_#{asset.id}"%> style="list-style:lower-roman;">
+	<%= link_to_remote(image_tag('/images/icons/cross.png'),
+					   :url=>{
+							 	:controller=>'category',
+							 	:action=>'remove_asset',
+							    :id=>category.id,
+								:group_id=>asset.id,
+								:update=>"asset_#{asset.id}"
+							 },
+						:confirm=>"Remove #{ h asset.name} from #{h category.name}?"
+						) %>
+	<%= link_to asset.filename, :controller=>'asset', :action=>'show', :id=>asset.id %>
+</li>

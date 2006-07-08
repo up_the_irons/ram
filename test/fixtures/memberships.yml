@@ -1,0 +1,39 @@
+# Schema as of Sat Jun 24 11:18:29 PDT 2006 (schema version 6)
+#
+#  id                  :integer(11)   not null
+#  user_id             :integer(11)   
+#  collection_id       :integer(11)   
+#  collection_type     :string(255)   
+#  state_id            :integer(11)   default(0)
+#  created_at          :datetime      
+#
+
+--- 
+membership_1: 
+  id: 1
+  collection_type: Group
+  user_id: 4
+  state_id: 1
+  created_at: 2006-06-09 11:01:07 -07:00
+  collection_id: 1
+membership_2: 
+  id: 2
+  collection_type: Group
+  user_id: 2
+  state_id: 1
+  created_at: 2006-06-04 11:01:07 -07:00
+  collection_id: 4
+membership_3:
+  id: 3
+  collection_type: Group
+  user_id: 1
+  state_id: 1
+  created_at: 2006-06-04 11:01:07 -07:00
+  collection_id: 31
+membership_4:
+  id: 4
+  collection_type: Group
+  user_id: 1
+  state_id: 1
+  created_at: 2006-06-04 11:01:07 -07:00
+  collection_id: 1

@@ -1,0 +1,8 @@
+<ul>
+<% for c in category.children %>
+	<li style="padding:2px 2px 2px 20px">
+		<labe><%= link_to c.name, :controller=>'category', :action=>'show', :id=>c.id %></label>
+			<%= render :partial=>'category/category', :locals=>{:category=>c} unless c.children.nil? %>
+		</li>
+	<% end %>
+</ul>

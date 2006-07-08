@@ -1,0 +1,11 @@
+<li><label for="first_name">First Name: </label>
+<%= text_field :person, :first_name %></li>
+
+<li><label for="last_name">Last Name: </label>
+<%=text_field :person, :last_name %></li>
+
+<li><label for="gender">Gender: </label>
+<%= select :person, :gender, Person::GENDERS %></li>
+
+<li><label for="date_of_birth">Birthday: </label>
+<%= date_select :person, :date_of_birth, :start_year=>1910 %></li>

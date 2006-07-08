@@ -1,0 +1,23 @@
+<%= error_messages_for 'category' -%>
+
+<!--[form:category]-->
+<ul class="web_form">
+<li><label for="category_name">Name: </label>
+<%= text_field 'category', 'name'  -%></li>
+
+<li><label for="category_description">Description: </label>
+<%= text_area 'category', 'description',{:rows=>5}  -%></li>
+
+<li><label for="category_public">Make Public: </label>
+<%= check_box :category, :public%>
+</li>
+
+<li><label for="category_counter_cache">Counter Cache: </label>
+<%= check_box :category, :counter_cache %>
+</li>
+<% categories = Category.find_all_by_public(true).map{|c|[c.name,c.id]} -%>
+<li><label>Parent Category: </label><%= select :category,:parent_id, categories,{:include_blank=>true} unless categories == [] -%></li>
+</ul>
+
+<!--[eoform:category]-->
+

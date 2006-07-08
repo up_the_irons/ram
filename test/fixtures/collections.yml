@@ -1,0 +1,327 @@
+# Schema as of Sat Jun 24 11:18:29 PDT 2006 (schema version 6)
+#
+#  id                  :integer(11)   not null
+#  name                :string(255)   
+#  description         :text          
+#  public              :boolean(1)    default(true)
+#  user_id             :integer(11)   
+#  type                :string(255)   
+#  state_id            :integer(11)   
+#  parent_id           :integer(11)   
+#  counter_cache       :boolean(1)    default(true)
+#
+
+# Schema as of Sun Jun 04 11:25:18 PDT 2006 (schema version 6)
+#
+#  id                  :integer(11)   not null
+#  name                :string(255)   
+#  description         :text          
+#  public              :boolean(1)    default(true)
+#  user_id             :integer(11)   
+#  type                :string(255)   
+#  state_id            :integer(11)   
+#  parent_id           :integer(11)   
+#  counter_cache       :boolean(1)    default(true)
+#
+
+--- 
+collection_3: 
+  name: Nintendo
+  public: true
+  counter_cache: true
+  type: Group
+  id: 3
+  description: A Group for Nintendo fans only!
+  user_id: 1
+  state_id: 1
+  parent_id: 
+collection_4: 
+  name: Sega
+  public: true
+  counter_cache: true
+  type: Group
+  id: 4
+  description: A Group For Sega fans only
+  user_id: 1
+  state_id: 1
+  parent_id: 
+collection_5: 
+  name: Mavens and Mavericks
+  public: true
+  counter_cache: true
+  type: Group
+  id: 5
+  description: From the insanely bright to just the insane
+  user_id: 1
+  state_id: 1
+  parent_id: 
+collection_1: 
+  name: Atari
+  public: true
+  counter_cache: true
+  type: Group
+  id: 1
+  description: A Group for Atari Fans Only
+  user_id: 1
+  state_id: 1
+  parent_id: 
+collection_2: 
+  name: Magnavox Odyssey
+  public: true
+  counter_cache: true
+  type: Group
+  id: 2
+  description: For anyone who loved the Magnavox Odyssey.
+  user_id: 1
+  state_id: 1
+  parent_id:
+collection_31:
+  name: Administrators
+  public: true
+  counter_cache: true
+  type: Group
+  id: 31
+  description: Admins have access to all categories
+  user_id: 1
+  state_id: 1
+  parent_id:    
+collection_28: 
+  name: Games
+  public: true
+  counter_cache: true
+  type: Category
+  id: 28
+  description: All the great games for the NES
+  user_id: 1
+  state_id: 
+  parent_id: 10
+collection_17: 
+  name: Cheats
+  public: true
+  counter_cache: true
+  type: Category
+  id: 17
+  description: Cheats for the Magnavox Odyssey
+  user_id: 1
+  state_id: 
+  parent_id: 12
+collection_30: 
+  name: Roms
+  public: true
+  counter_cache: true
+  type: Category
+  id: 30
+  description: All your favorite Nintendo games in ROM format.
+  user_id: 1
+  state_id: 
+  parent_id: 10
+collection_18: 
+  name: Roms
+  public: true
+  counter_cache: true
+  type: Category
+  id: 18
+  description: Roms for the Magnavox Odyssey.
+  user_id: 1
+  state_id: 
+  parent_id: 12
+collection_29: 
+  name: Cheats
+  public: true
+  counter_cache: true
+  type: Category
+  id: 29
+  description: A collection of cheats for the NES.
+  user_id: 1
+  state_id: 
+  parent_id: 10
+collection_19: 
+  name: Games
+  public: true
+  counter_cache: true
+  type: Category
+  id: 19
+  description: Games for the Atari 2600
+  user_id: 1
+  state_id: 
+  parent_id: 9
+collection_20: 
+  name: Cheats
+  public: true
+  counter_cache: true
+  type: Category
+  id: 20
+  description: Cheats for the Atari 2600
+  user_id: 1
+  state_id: 
+  parent_id: 9
+collection_6: 
+  name: Video Game Database
+  public: true
+  counter_cache: true
+  type: Category
+  id: 6
+  description: A site dedicated to collecting the history of video games.
+  user_id: 1
+  state_id: 1
+  parent_id: 
+collection_21: 
+  name: Roms
+  public: true
+  counter_cache: true
+  type: Category
+  id: 21
+  description: Roms for the Atari 2600, play at home! (er... on your computer at home).
+  user_id: 1
+  state_id: 
+  parent_id: 9
+collection_7: 
+  name: Console Games
+  public: true
+  counter_cache: true
+  type: Category
+  id: 7
+  description: Games you can play at home.
+  user_id: 1
+  state_id: 1
+  parent_id: 6
+collection_10: 
+  name: Nintendo Entertainment System
+  public: true
+  counter_cache: true
+  type: Category
+  id: 10
+  description: The most imported 8-bit console of all time
+  user_id: 1
+  state_id: 1
+  parent_id: 7
+collection_11: 
+  name: Sega Genesis
+  public: true
+  counter_cache: true
+  type: Category
+  id: 11
+  description: One of the most popular 8-bit consoles of all time.
+  user_id: 4
+  state_id: 1
+  parent_id: 7
+collection_8: 
+  name: Coin-Op Games
+  public: true
+  counter_cache: true
+  type: Category
+  id: 8
+  description: Insert Quarter to play these games
+  user_id: 1
+  state_id: 1
+  parent_id: 6
+collection_9: 
+  name: Atari 2600
+  public: true
+  counter_cache: true
+  type: Category
+  id: 9
+  description: The Classic wood-grained masterpiece
+  user_id: 1
+  state_id: 1
+  parent_id: 7
+collection_12: 
+  name: Magnavox Odyssey
+  public: true
+  counter_cache: true
+  type: Category
+  id: 12
+  description: The first videogame console system ever.
+  user_id: 1
+  state_id: 1
+  parent_id: 7
+collection_23: 
+  name: Atari
+  public: true
+  counter_cache: true
+  type: Category
+  id: 23
+  description: All Things Atari
+  user_id: 1
+  state_id: 
+  parent_id: 6
+collection_24: 
+  name: History
+  public: true
+  counter_cache: true
+  type: Category
+  id: 24
+  description: The History of Atari.
+  user_id: 1
+  state_id: 
+  parent_id: 23
+collection_13: 
+  name: Atari Coin-Op
+  public: true
+  counter_cache: true
+  type: Category
+  id: 13
+  description: Atari's Coin-op
+  user_id: 1
+  state_id: 1
+  parent_id: 8
+collection_14: 
+  name: Nintendo Coin-Op
+  public: true
+  counter_cache: true
+  type: Category
+  id: 14
+  description: Nintendo's Arcade games
+  user_id: 1
+  state_id: 1
+  parent_id: 8
+collection_25: 
+  name: Nintendo
+  public: true
+  counter_cache: true
+  type: Category
+  id: 25
+  description: All Things Nintendo
+  user_id: 1
+  state_id: 
+  parent_id: 6
+collection_26: 
+  name: 10NES
+  public: true
+  counter_cache: true
+  type: Category
+  id: 26
+  description: Detailed Documentation on the 10NES security chips.
+  user_id: 1
+  state_id: 
+  parent_id: 25
+collection_15: 
+  name: Sega Coin-Op
+  public: true
+  counter_cache: true
+  type: Category
+  id: 15
+  description: Sega Arcade games
+  user_id: 1
+  state_id: 1
+  parent_id: 8
+collection_16: 
+  name: Games
+  public: true
+  counter_cache: true
+  type: Category
+  id: 16
+  description: Games for the Magnavox Odyssey
+  user_id: 1
+  state_id: 
+  parent_id: 12
+collection_27: 
+  name: Marketing Archive
+  public: true
+  counter_cache: true
+  type: Category
+  id: 27
+  description: A colleciton of all the hits and misses Nintendo advertisements over the years.
+  user_id: 1
+  state_id: 
+  parent_id: 25

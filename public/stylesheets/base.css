@@ -1,0 +1,176 @@
+img{ border:none;}
+body
+{ 
+	background-color  :#999999;
+	color             : #333; 
+	margin            : 0;
+	padding           : 0;
+	/* background-image  : url('/images/application_background.jpg'); */
+	background-repeat : repeat-x;
+}
+form, ul, li
+{
+	padding          : 0;
+	margin           : 0;
+	list-style       : none;
+}
+div
+{
+		/* border       : 1px solid grey; */
+}
+a:link, a:visited
+{
+	color            : #C5495F;
+	text-decoration  : none;
+}
+a:hover {
+	color               : #9AF178;
+	text-decoration     : none;
+	border-bottom-width : 1px;
+	border-bottom-style : solid;
+	border-bottom-color : #9AF178;
+	background          : none;
+}
+.clear_both
+{
+	display           : block;
+	clear             : both;
+}
+.inline_list, .bread_crumbs
+{
+	list-style       : none;
+}
+.inline_list li, .bread_crumbs li
+{
+	display          : inline;
+}
+.bread_crumbs
+{
+	display          : block;
+	background-color : #333;
+	margin           : auto;
+	height           : 15px;
+	padding          : 5px 10px 5px 10px;
+	border           : 1px solid #000000;
+}
+.page_message, .important_page_message, #page_flash
+{
+	font-weight      : bolder;
+	width            : 100%;
+	text-align       : center;
+	display          : block;
+	clear            : both;
+}
+.important_page_message, #page_flash
+{
+	font-size        : 120%;
+}
+#page_flash
+{
+	background-color : #FFFF99;
+	color            : #282E1A;
+}
+.web_form
+{
+	display          : inline;
+	list-style       : none;
+}
+.web_form li
+{
+	border-top       : 1px solid #dcdcdc;
+	padding          : 10px 0 10px 0;
+}
+.web_form label
+{
+	display          : block;
+	width            : 150px;
+	padding-right    : 10px;
+	text-align       : right;
+	float            : left;
+	font-size        : 110%;
+}
+.web_form input, .web_form select, .web_form textarea
+{
+	border           : 1px solid #dcdcdc;
+	font-size        : 120%;
+	background-color : #efefee;
+}
+.web_form dt
+{
+	font-size       : 110%;
+	font-weight     : bolder;
+}
+.web_form dd
+{
+	padding          : 2px 0 2px 0
+}
+.label
+{
+	margin           : 0;
+	padding          : 0;
+}
+.mice_type
+{
+	font-size        : 0.7em;
+}
+#site_menu, #user_menu
+{
+	display          : block;
+	float            : right;
+	list-style       : none;
+}
+#site_menu{
+	float:left;
+}
+#site_menu li, #user_menu li {
+	display          : inline;
+}
+#page_container, #menu_container,#page_footer
+{
+	margin           : 0 auto;
+	padding          : 0;
+	display          : block;
+	background-color : #FFFFFF;
+	clear            : both;
+}
+#menu_container
+{
+    border           : none;
+	display          : block;
+	padding          : 10px;
+	margin           : auto;
+	background-color : #000;
+	color            : #CCCCCC;
+}
+
+#page_content, #page_left_gutter
+{
+	/*float            : left;*/
+	display          : block;
+	clear            : right;
+	padding          : 10px;
+}
+#page_right_gutter
+{
+	display          : block;
+	float            : left;
+	margin           : 5px;
+}
+#page_right_gutter ul
+{
+	list-style       : none;
+	padding          : 5px;
+}
+#page_right_gutter .header
+{
+	padding          : 0;
+	margin           : 0;
+	text-align       : center;
+	background-color : #2279e5;
+	color            : #fff;
+	font-weight      : bolder;
+}
+#page_footer
+{
+
+}

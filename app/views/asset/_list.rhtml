@@ -1,0 +1,44 @@
+<p>total assets: <%=
+@total_assets.size %>
+<%= 
+@total_assets.map{|a| link_to( a.name,{},{:title=>a.groups.find(:all).map{|g| g.name}.join(', ')} ) }.join(', ') unless @total_assets.nil?
+%></p>
+<table border="1">
+	<tr>
+		<th>Name</th>
+		<th>Groups</th>
+		<th>Options</th>
+	</tr>
+	
+<% for asset in @assets -%>
+	<tr id=<%="asset_#{asset.id}"%> style="list-style:lower-roman;">
+		<td><%= link_to asset.name, :controller=>'asset', :action=>'show', :id=>asset.id %></td>
+		<td><%= asset.groups.find(:all).map{|g| link_to(g.name, :action=>'show',:controller=>'group',:id=>g.id)}.join(', ') %></td>
+		<td>
+		<%= link_to_remote(image_tag('/images/icons/pencil.png'),
+							   :url=>{
+									 	:controller=>'asset',
+									 	:action=>'edit',
+									    :id=>"#{asset.id}",
+									    :category_id=>@category.id,
+									    :item_row=>"asset_#{asset.id}",
+										:update=>"new_asset_form"
+									 }
+								) 
+		%>
+		<%= link_to_remote(image_tag('/images/icons/cross.png'),
+						   :url=>{
+								 	:controller=>'asset',
+								 	:action=>'destroy',
+								    :id=>asset.id,
+									:category_id=>@category.id,
+									:update=>"asset_#{asset.id}"
+								 },
+							:confirm=>"Are you sure you want to delete #{ h asset.name}?"
+							) 
+			%>
+		</td>
+	</tr>
+<% end unless @assets.nil? %>
+</table>
+	
