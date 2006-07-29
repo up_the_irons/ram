@@ -80,5 +80,23 @@ class AdminControllerTest < Test::Unit::TestCase
   def test_admin_shall_edit_users
   
   end
+
+  def test_group_add_member
+    login_as :quentin
+
+    c = collections(:collection_3)
+    pre_count = c.users.size
+
+    xhr :get, :group_add_member, :id => c.id, :user_id => users(:user_5).id
+    assert_response :success
+
+    assert_rjs :replace_html, 'group_members'
+    assert_rjs :visual_effect, :highlight, 'group_members'
+
+    post_count = Collection.find(c.id).users.size
+
+    assert_equal pre_count + 1, post_count
+    assert assigns['group']
+  end
   
 end

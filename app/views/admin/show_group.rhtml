@@ -6,24 +6,12 @@
 <p>
 	<b>Leader:</b> <%= h User.find(@group.user_id).login %>
 </p>
-<dl>
-<dt>Members</dt>
-<% for u in @group.users -%>
-	<%= "<dd id=\"group_member_#{u.id}\"> #{link_to u.login, :controller=>'account',:action=>'profile',:id=>u.id}" %>
-	<%= link_to_remote(image_tag('/images/icons/cross.png',{:title=>"Remove #{u.login} from #{@group.name}"}),:url=>{
-																		:controller=>'admin',
-																		:action=>'remove_group_member',
-																		:user_id=>u.id,
-																		:group_id=>@group.id,
-																		:update=>"group_member_#{u.id}"
-																		},
-																		:confirm=>"Are you sure you want to remove #{ h u.login}'s access to this group?")
-	%></dd>
-<% end -%>
-</dl>
+
+<%= render :partial => "group_members" %>
+
 <p>Add User To Group
 	<form>
-		<select id='add_group_form' onchange='new Ajax.Request("/admin/group_add_member/<%= @group.id %>?update=new_group_form&group_id="+$(this).value);' >	
+		<select id='add_group_form' onchange='new Ajax.Request("/admin/group_add_member/<%= @group.id %>?update=new_group_form&user_id="+$(this).value);' >	
 			<option>Available Members</option>
 			<%= options_for_select @non_members %>
 		</select>

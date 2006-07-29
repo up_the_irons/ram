@@ -43,6 +43,21 @@ class AdminController < ProtectedController
     end
     @non_members = (User.find(:all) - @group.users).map{|m| [m.login,m.id]}
   end
+
+  def group_add_member
+    if params[:id].to_s.match(/^\d+$/)
+      @group = Group.find(params[:id])
+    else
+      @group = Group.find_by_login(params[:id])
+    end
+
+    @group.users << User.find(params[:user_id])
+ 
+    render :update do |page|
+      page.replace_html 'group_members', :partial => 'group_members'
+      page.visual_effect :highlight, 'group_members'
+    end
+  end
   
   protected
   def admin_access_required
