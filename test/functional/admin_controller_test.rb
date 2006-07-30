@@ -91,11 +91,34 @@ class AdminControllerTest < Test::Unit::TestCase
     assert_response :success
 
     assert_rjs :replace_html, 'group_members'
+    assert_rjs :replace_html, 'available_members'
+
     assert_rjs :visual_effect, :highlight, 'group_members'
 
     post_count = Collection.find(c.id).users.size
 
     assert_equal pre_count + 1, post_count
+    assert assigns['group']
+  end
+
+  def test_group_remove_member
+    login_as :quentin
+
+    c = collections(:collection_3)
+    u = users(:user_5)
+
+    c.users << u
+    pre_count = c.users.size
+
+    xhr :get, :group_remove_member, :id => c.id, :user_id => u.id
+    assert_response :success
+
+    assert_rjs :replace_html, 'group_members'
+    assert_rjs :replace_html, 'available_members'
+
+    post_count = c.users(true).size
+
+    assert_equal pre_count - 1, post_count
     assert assigns['group']
   end
   

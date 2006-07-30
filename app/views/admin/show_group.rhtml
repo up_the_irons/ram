@@ -11,10 +11,7 @@
 
 <p>Add User To Group
 	<form>
-		<select id='add_group_form' onchange='new Ajax.Request("/admin/group_add_member/<%= @group.id %>?update=new_group_form&user_id="+$(this).value);' >	
-			<option>Available Members</option>
-			<%= options_for_select @non_members %>
-		</select>
+    <%= render :partial => 'add_group_member_dropdown' %>
 	</form>
 </p>
 <h3>Categories</h3>	

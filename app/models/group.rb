@@ -24,7 +24,11 @@ class Group < Collection
 	    )
 	    m.save!
 		
-		#TODO: add category ids to user's category tree
+      # After we add a user to a group, we want the associated 'users' object to have the current list of users automatically,
+      # so we must reload the users cache here. If this behavior is not desired, comment out this line.
+      @owner.users(true) 
+
+		  #TODO: add category ids to user's category tree
       end
 	end
 	
@@ -77,4 +81,8 @@ class Group < Collection
   
   #todo after save add user that created group to membership list
   
+  # Returns an array of User objects that are not members of this group
+  def non_members(reload = false)
+    User.find(:all) - users(reload)
+  end
 end
