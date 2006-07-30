@@ -133,6 +133,13 @@ class User < ActiveRecord::Base
     person.save
     #todo create a unique token which can be unsed to identify the user for events like uploading in a sessionless state or reading a feed without supplying username and pasword
   end
+
+  class <<self
+    def find_by_id_or_login(id)
+      id.to_s.match(/^\d+$/) ? find(id) : find_by_login(id)
+    end
+    # TODO: DRY this up, the same function appears in the Group model
+  end
   
   protected
   # before filter 

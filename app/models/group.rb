@@ -85,4 +85,10 @@ class Group < Collection
   def non_members(reload = false)
     User.find(:all) - users(reload)
   end
+
+  class <<self
+    def find_by_id_or_login(id)
+      id.to_s.match(/^\d+$/) ? find(id) : find_by_login(id)
+    end
+  end
 end
