@@ -4,9 +4,7 @@
 <% for group in @groups %>
   <dt><%= link_to(h(group.name),:controller=>'admin',:action=>'show_group', :id=>group) %></dt>
   <dd style="display:inline;"><%= h group.description %>
-  [ <%= link_to('Edit', :controller=>'admin',:action=>'edit', :id =>group)%> | 
-  <%= link_to('Destroy', { :controller=>'admin', :action=>'destroy', :id =>group }, :confirm => 'Are you sure?', :post => true ) %> ]
-<% end -%>
+  <% end -%>
 </dl>
 
 <%= link_to 'Previous page', { :page =>@group_pages.current.previous } if @group_pages.current.previous %>
