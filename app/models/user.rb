@@ -66,8 +66,6 @@ class User < ActiveRecord::Base
     u && u.authenticated?(password) ? u : nil
   end
   
-  #works like a transparent "componsed_of" relationship, if an attribute is not found it will introspect the other models.
-  #todo there is a bug that occurs if the composed of model and the self model share the same variable, i have worked around it by converting the args to a symbol but i am not sure it that works for all cases.
   def method_missing(*args)
     if self[args[0].to_sym]
       self[args[0].to_sym]
