@@ -16,6 +16,8 @@ class AccountController < ProtectedController
       if current_user.account_active?
         flash[:notice] = "Logged in Successfully"
         redirect_back_or_default(:controller => '/account', :action => 'index')
+        current_user.last_login_at = Time.now
+        current_user.save
       else
         flash[:error] = current_user.account_status
         session[:user] = self.current_user = nil

@@ -51,9 +51,12 @@ end
 # end
 
 # Include your application configuration below
-
+require 'openssl'
+require 'base64'
 #required for acts_as_attachable
 require 'RMagick'
 
 #required for building rss feeds
 require 'feed_tools'
+
+RAM_SALT = 'foodz'

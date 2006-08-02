@@ -60,11 +60,7 @@ class AdminControllerTest < Test::Unit::TestCase
     assert assigns(:non_members)
     assert_equal assigns(:group).users - assigns(:non_members), assigns(:group).users
   end
-  
-  def test_admin_shall_remove_users_from_groups
-  
-  end
-  
+   
   def test_admin_shall_assign_groups_to_categories
   
   end

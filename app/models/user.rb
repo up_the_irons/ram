@@ -60,11 +60,6 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email
   before_save :encrypt_password
 
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  def self.authenticate(login, password)
-    u = find_by_login(login) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
-  end
   
   def method_missing(*args)
     if self[args[0].to_sym]
@@ -91,9 +86,9 @@ class User < ActiveRecord::Base
     #categories = categories.uniq
   end
 
-  # Encrypts some data with the salt.
-  def self.encrypt(password, salt)
-    Digest::SHA1.hexdigest("--#{salt}--#{password}--")
+  
+  def encrypt_login
+    self.class.encrypt_string(login)
   end
 
   # Encrypts the password with the user salt
@@ -136,7 +131,37 @@ class User < ActiveRecord::Base
     def find_by_id_or_login(id)
       id.to_s.match(/^\d+$/) ? find(id) : find_by_login(id)
     end
+    
+    # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
+    def authenticate(login, password)
+      u = find_by_login(login) # need to get the salt
+      u && u.authenticated?(password) ? u : nil
+    end
+    
     # TODO: DRY this up, the same function appears in the Group model
+    
+    # Encrypts some data with the salt.
+    def encrypt(password, salt)
+      Digest::SHA1.hexdigest("--#{salt}--#{password}--")
+    end
+    
+    # Encrypts some data with the salt.
+    def encrypt_string(clear_text)
+      enc = OpenSSL::Cipher::Cipher.new('DES-EDE3-CBC')
+      enc.encrypt(RAM_SALT)
+      data = enc.update(clear_text)
+      Base64.encode64(data << enc.final)
+    end
+    
+    # getter method to decrypt password
+    def decrypt_string(encrypted_string)  
+      enc = OpenSSL::Cipher::Cipher.new('DES-EDE3-CBC')
+      enc.decrypt(RAM_SALT)
+      text = enc.update(Base64.decode64(encrypted_string))
+      decrypted_string = (text << enc.final)
+    rescue
+      nil
+    end
   end
   
   protected

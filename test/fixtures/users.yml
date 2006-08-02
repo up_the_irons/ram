@@ -26,6 +26,7 @@ user_4:
   login: nolan_bushnell
   email: nolan@atari.com
   created_at: 2006-05-07 13:57:23 -07:00
+  last_login_at: 2006-05-07 13:57:23 -07:00
 user_5: 
   salt: 9e0955edff598a9cae5ecedee29d47ae6c41417c
   updated_at: 2006-05-07 13:59:58 -07:00
@@ -38,6 +39,7 @@ user_5:
   login: minoru_arkawa
   email: minoru_arkawa@nintendo.com
   created_at: 2006-05-07 13:59:58 -07:00
+  last_login_at: 2006-05-07 13:57:23 -07:00
 quentin: 
   salt: 62a636a58d0648eadf7410aa2e4444866174c96e
   updated_at: 2006-05-07 13:52:41 -07:00
@@ -50,6 +52,7 @@ quentin:
   login: quentin
   email: quentin@example.com
   created_at: 2006-05-02 13:16:30 -07:00
+  last_login_at: 2006-05-07 13:57:23 -07:00
 arthur: 
   salt: 55bc51360864c82dcd7ff4bcfec56a8d8e79e751
   updated_at: 2006-05-07 13:56:30 -07:00
@@ -62,6 +65,7 @@ arthur:
   login: yuji_naka
   email: yuji_naka@sega.com
   created_at: 2006-05-06 13:16:30 -07:00
+  last_login_at: 2006-05-07 13:57:23 -07:00
 ralph_baer: 
   salt: 55bc51360864c82dcd7ff4bcfec56a8d8e79e751
   updated_at: 2006-05-07 13:56:30 -07:00
@@ -74,6 +78,7 @@ ralph_baer:
   login: ralph_baer
   email: ralph_baer@magnavox.com
   created_at: 2006-05-06 13:16:30 -07:00
+  last_login_at: 2006-05-07 13:57:23 -07:00  
 user_3: 
   salt: 7e3b27b7b3b41d7c167bbb594995fcadcf5bab3b
   updated_at: 2006-05-07 13:55:25 -07:00
@@ -86,6 +91,7 @@ user_3:
   login: mark
   email: heavysixer@gmail.com
   created_at: 2006-05-07 13:37:11 -07:00
+  last_login_at: 2006-05-07 13:57:23 -07:00
 user_7: 
   salt: 7e3b27b7b3b41d7c167bbb594995fcadcf5bab3b
   updated_at: 2006-05-07 13:55:25 -07:00
@@ -98,6 +104,7 @@ user_7:
   login: n00b
   email: n00b@2600.com
   created_at: 2006-05-07 13:37:11 -07:00
+  last_login_at: 2006-05-07 13:57:23 -07:00
 pending_user: 
   salt: 7e3b27b7b3b41d7c167bbb594995fcadcf5bab3b
   updated_at: 2006-05-07 13:55:25 -07:00
@@ -110,6 +117,7 @@ pending_user:
   login: pending_user
   email: pendingb@not_yet.com
   created_at: 2006-05-07 13:37:11 -07:00
+  last_login_at: 2006-05-07 13:57:23 -07:00
 suspended_user: 
   salt: 7e3b27b7b3b41d7c167bbb594995fcadcf5bab3b
   updated_at: 2006-05-07 13:55:25 -07:00
@@ -122,3 +130,4 @@ suspended_user:
   login: suspended_user
   email: suspended_user@not_again.com
   created_at: 2006-05-07 13:37:11 -07:00
+  last_login_at: 2006-05-07 13:57:23 -07:00

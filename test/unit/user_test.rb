@@ -89,6 +89,15 @@ class UserTest < Test::Unit::TestCase
       assert u.errors.on(:password_confirmation)
     end
   end
+  
+  def test_shall_encrypt_login
+    u = User.find(:first)
+    login = u.login
+    encrypted = u.encrypt_login 
+    assert encrypted != login
+    assert_equal User.decrypt_string(encrypted), login
+    
+  end
 
   def test_should_require_email
     assert_no_difference User, :count do

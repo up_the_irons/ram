@@ -89,6 +89,14 @@ class AccountControllerTest < Test::Unit::TestCase
     assert_equal User.find_by_login('nolan_bushnell') , assigns(:user)
   end
   
+  def test_should_save_the_last_login_time_each_time_a_user_logs_in
+    old_time = User.find_by_login('quentin').last_login_at
+    post :login, :login => 'quentin', :password => 'quentin'
+    assert session[:user]
+    assert old_time != User.find_by_login('quentin').last_login_at
+    
+  end
+  
 
   def test_should_logout
     login_as :quentin
