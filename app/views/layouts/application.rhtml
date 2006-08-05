@@ -6,9 +6,8 @@
   <%= javascript_include_tag :defaults %> 
 </head>
 <body>
-  <div id="throbber" style="display:none;background-color:#fff;border:1px inset #000;color:#000;font-size:110%;padding:10px;">
-    <%= image_tag 'ajax-loader.gif' %>
-    <span id="message">Loading...</span>
+  <div id="throbber" style="width:100%;position:absolute;z-index:1;opacity:0.8;display:none;background-color:#fff;border:1px inset #000;color:#000;font-size:110%;">
+    <p style="padding:10px;" id="message"><%= image_tag 'ajax-loader.gif' %>&nbsp;&nbsp;Loading...</p>
   </div>
 	<div id="page_container" style="width:740px;margin:auto;">
 		<div id="menu_container">
