@@ -60,3 +60,6 @@ require 'RMagick'
 require 'feed_tools'
 
 RAM_SALT = 'foodz'
+#codename generated from the dictionary
+REVISION_NUMBER = `svn info`.split("\n")[4][/\d+/].to_i
+APP_CODENAME  = IO.readlines("/usr/share/dict/words")[REVISION_NUMBER]
