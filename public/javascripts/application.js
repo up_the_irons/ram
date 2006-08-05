@@ -1,2 +1,13 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
+//Throbber for Ajax events
+Ajax.Responders.register({
+	onCreate: function(request) {
+		var throbber = $('throbber');
+	    throbber.style.display = 'block';
+	},
+	onComplete: function(request)
+	{
+		var throbber = $('throbber');
+	    throbber.style.display = 'none';
+	}
+}
+)
