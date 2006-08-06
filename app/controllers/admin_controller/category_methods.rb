@@ -16,6 +16,7 @@ module AdminController::CategoryMethods
   end
   
   def add_group_to_category
+    #breakpoint
      unless params[:group_id].nil?
 
        #@category = Category.find(params[:id])
@@ -24,7 +25,9 @@ module AdminController::CategoryMethods
        @group = g if current_user.groups.include? g
        if @category.nil?
          flash[:notice] = 'Your do not have acces to this category.'
-         redirect_to :action=>'categories'
+         render :update do |page|
+             page.redirect_to :action=>'categories'
+         end
        else
          unless @group.nil?
            @category.groups << @group

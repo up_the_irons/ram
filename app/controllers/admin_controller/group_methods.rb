@@ -21,6 +21,17 @@ module AdminController::GroupMethods
       end
     end
     
+    def show_category_to_group_form
+      @group = find_in_users_groups params[:group_id]
+      render :update do |page|      
+        unless @group.nil?
+          page.replace_html 'add_group_to_category_form', :partial=>'group/category_tree_form'
+        else
+          #they don't have access to this group
+        end
+      end
+    end
+    
     def group_remove_member
       @group       = Group.find_by_id_or_login(params[:id])
 

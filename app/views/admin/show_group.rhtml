@@ -22,8 +22,9 @@
 		"#{c.name}<br/>"
 	-%>
 	<% end unless @group.categories.nil?%>
-<p>Add Category To Group 
+<p id="add_group_to_category_form">Add This Group To A Category
 	<%= link_to_remote( image_tag('/images/icons/add.png'), 
-											 :url => { :controller=>'admin', :action => "add_group_category", :group_id =>@group.id, :update=>'new_category_form' } ) %></p>
+											 :url => { :controller=>'admin', :action => "show_category_to_group_form", :group_id =>@group.id, :update=>'new_category_form' } ) %>
+</p>
 <%= link_to 'Edit', :action => 'edit', :id => @group %> |
 <%= link_to 'Back', :action => 'list' %>
