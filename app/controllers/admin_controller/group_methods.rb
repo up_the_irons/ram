@@ -21,16 +21,22 @@ module AdminController::GroupMethods
       end
     end
     
-    def show_category_to_group_form
-      @group = find_in_users_groups params[:group_id]
-      render :update do |page|      
-        unless @group.nil?
-          page.replace_html 'add_group_to_category_form', :partial=>'group/category_tree_form'
-        else
-          #they don't have access to this group
-        end
-      end
-    end
+    # For now it is probably best to keep the code DRY and only add groups within the cateory methods 
+    # def add_group_to_category
+    # 
+    # end
+    # 
+    # def show_category_to_group_form
+    #   @group = find_in_users_groups params[:group_id]
+    #   render :update do |page|      
+    #     unless @group.nil?
+    #       @categories = current_user.categories
+    #       page.replace_html 'add_group_to_category_form', :partial=>'group/category_form'
+    #     else
+    #       #they don't have access to this group
+    #     end
+    #   end
+    # end
     
     def group_remove_member
       @group       = Group.find_by_id_or_login(params[:id])
