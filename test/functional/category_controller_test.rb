@@ -30,28 +30,7 @@ class CategoryControllerTest < Test::Unit::TestCase
     assert assigns(:groups)
   end
   
-  def test_create_category
-    get :create
-    assert_response :success
-    assert_no_difference Category, :count do
-      post :create, :category => { :name => '' }
-      assert assigns(:category).new_record?
-    end
-    
-    assert_difference Category, :count  do
-      post :create, :category => { :name =>'knock-offs',:user_id=>User.find(:first),:parent_id=>@@existing_category_id }
-      assert_redirected_to :action => 'list'
-      assert assigns(:category)
-    end
-  end
   
-  def test_update_category
-    new_name = 'Atari Promotions'
-    post :update, :id => @@existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first)}
-    assert_response :redirect
-    category_after_update = Category.find(@@existing_category_id)
-    assert_equal new_name, category_after_update.name
-  end
   
   def test_add_group_to_category
     c = Category.find(@@existing_category_id)

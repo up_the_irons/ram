@@ -6,6 +6,10 @@ class AdminController; def rescue_action(e) raise e end; end
 
 class AdminControllerTest < Test::Unit::TestCase
   fixtures :collections, :linkings, :attachments, :db_files, :users, :memberships
+  @@existing_category_id = 8
+  @@user_with_access_to_all_categories = 1
+  @@user_with_access_to_no_categories = 7
+  
   def setup
     @controller = AdminController.new
     @request    = ActionController::TestRequest.new
@@ -25,19 +29,19 @@ class AdminControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_list_users
-    get :list_users
+    get :users
     assert :success
     assert assigns(:users)
   end
   
   def test_shall_list_groups
-    get :list_groups
+    get :groups
     assert :success
     assert assigns(:groups)
   end
   
   def test_shall_list_categories
-      get :list_categories
+      get :categories
       assert :success
       assert assigns(:categories)
   end
@@ -66,15 +70,45 @@ class AdminControllerTest < Test::Unit::TestCase
   end
   
   def test_admin_shall_edit_categories
+    get :edit_category
+    assert_redirected_to :action=>'categories'
+    get :edit_category, :id=>@@existing_category_id
+    assert :success
   
   end
   
   def test_admin_shall_edit_groups
-  
+    get :edit_group
+    assert_redirected_to :action=>'groups'
+    get :edit_group, :id=>current_user.groups[0].id
+    assert :success
   end
   
   def test_admin_shall_edit_users
   
+  end
+  
+  def test_create_category
+    get :create_category
+    assert_response :success
+    assert_no_difference Category, :count do
+      post :create_category, :category => { :name => '' }
+      assert assigns(:category).new_record?
+    end
+    
+    assert_difference Category, :count  do
+      post :create_category, :category => { :name =>'knock-offs',:user_id=>User.find(:first),:parent_id=>@@existing_category_id }
+      assert_redirected_to :action => 'categories'
+      assert assigns(:category)
+    end
+  end
+  
+  def test_update_category
+    new_name = 'Atari Promotions'
+    post :update, :id => @@existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first)}
+    assert_response :redirect
+    category_after_update = Category.find(@@existing_category_id)
+    assert_equal new_name, category_after_update.name
   end
 
   def test_group_add_member

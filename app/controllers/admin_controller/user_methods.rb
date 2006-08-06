@@ -1,7 +1,7 @@
 module AdminController::UserMethods
-  def list_users
+  def users
      @user_pages, @users = paginate :users, :per_page => 10
-     render 'admin/list_users'
+     render 'admin/users'
    end
 
    def show_user

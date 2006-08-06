@@ -28,27 +28,27 @@ class CategoryController < ProtectedController
     end
   end
 
-  def new
-    @category = Category.new
-  end
-
-  def create
-    case request.method
-      when :get
-        @category = Category.new
-        render :action=> 'new'
-      when :post
-        @category = Category.create(params[:category])
-  	    @category.user_id = current_user
-  	    @category.save
-        if @category.save
-          flash[:notice] = 'Category was successfully created.'
-          redirect_to :action => 'list'
-        else
-          render :action => 'new'
-        end
-    end
-  end
+ # def new
+ #   @category = Category.new
+ # end
+ #
+ # def create
+ #   case request.method
+ #     when :get
+ #       @category = Category.new
+ #       render :action=> 'new'
+ #     when :post
+ #       @category = Category.create(params[:category])
+ # 	    @category.user_id = current_user
+ # 	    @category.save
+ #       if @category.save
+ #         flash[:notice] = 'Category was successfully created.'
+ #         redirect_to :action => 'list'
+ #       else
+ #         render :action => 'new'
+ #       end
+ #   end
+ # end
 
   def edit
     #@category = Category.find(params[:id])
@@ -186,22 +186,22 @@ class CategoryController < ProtectedController
     end
   end
 
-  def update
-    #@category = Category.find(params[:id])
-    @category = find_in_users_categories(params[:id])
-    if @category.update_attributes(params[:category])
-      flash[:notice] = 'Category was successfully updated.'
-      redirect_to :action => 'show', :id => @category
-    else
-      render :action => 'edit'
-    end
-  end
+ #def update
+ #  #@category = Category.find(params[:id])
+ #  @category = find_in_users_categories(params[:id])
+ #  if @category.update_attributes(params[:category])
+ #    flash[:notice] = 'Category was successfully updated.'
+ #    redirect_to :action => 'show', :id => @category
+ #  else
+ #    render :action => 'edit'
+ #  end
+ #end
 
-  def destroy
-    #Category.find(params[:id]).destroy
-    find_in_users_categories(params[:id]).destroy
-    redirect_to :action => 'list'
-  end
+#def destroy
+#  #Category.find(params[:id]).destroy
+#  find_in_users_categories(params[:id]).destroy
+#  redirect_to :action => 'list'
+#end
   
   def feed
     #only show if this category appears inside the user's list of categories

@@ -27,7 +27,7 @@
 		return false;"><%= image_tag('/images/icons/bullet_toggle_minus.png')%></a>
 	</h3>
 	<div id="sub_categories_toggle" style="display:none;">
-		<%= render :partial=>'category',:locals=>{:category,@category} unless @category.children.nil? %>
+		<%= render :partial=>'category/category',:locals=>{:category,@category} unless @category.children.nil? %>
 	</div>
 	<% else -%>
 	</h3>
@@ -54,17 +54,17 @@
 	<div id="groups_toggle" style="display:none;">
 		<ol id="group_list">	
 		<% for g in @groups -%>
-			<%= render :partial=>'group_item', :locals=>{:category=>@category,:group=>g} %>
+			<%= render :partial=>'category/group_item', :locals=>{:category=>@category,:group=>g} %>
 		<% end -%>
 		</ol>
-		<p id="new_group_form"><%= render :partial=>'new_group_button' %></p>
+		<p id="new_group_form"><%= render :partial=>'category/new_group_button' %></p>
 	</div>
 	<% #Assets 
 	#display based on scope
 	%>
 	<h3>Available Assets</h3>
 	<%= render :partial=>'asset/list' %>
-	<p><%= render :partial=>'new_asset_button' %></p>
+	<p><%= render :partial=>'category/new_asset_button' %></p>
 	<p id="new_asset_form"></p>
 <br />
 

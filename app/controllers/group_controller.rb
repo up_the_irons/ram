@@ -23,35 +23,35 @@ class GroupController < ProtectedController
     @group = Group.new
   end
 
-  def create
-    @group = Group.new(params[:group])
-    if @group.save
-      flash[:notice] = 'Group was successfully created.'
-      redirect_to :action => 'list'
-    else
-      render :action => 'new'
-    end
-  end
-
-  def edit
-    @group = find_in_users_groups params[:id]
-    render :text=>'Could not find this group in your account' if @group.nil?
-  end
-
-  def update
-    @group = find_in_users_groups params[:id]
-    if @group.update_attributes(params[:group])
-      flash[:notice] = 'Group was successfully updated.'
-      redirect_to :action => 'show', :id => @group
-    else
-      render :action => 'edit'
-    end
-  end
-
-  def destroy
-    @group = find_in_users_groups params[:id]
-    @group.destroy unless @group.nil?
-    redirect_to :action => 'list'
-  end
+ # def create
+ #   @group = Group.new(params[:group])
+ #   if @group.save
+ #     flash[:notice] = 'Group was successfully created.'
+ #     redirect_to :action => 'list'
+ #   else
+ #     render :action => 'new'
+ #   end
+ # end
+ #
+ # def edit
+ #   @group = find_in_users_groups params[:id]
+ #   render :text=>'Could not find this group in your account' if @group.nil?
+ # end
+ #
+ # def update
+ #   @group = find_in_users_groups params[:id]
+ #   if @group.update_attributes(params[:group])
+ #     flash[:notice] = 'Group was successfully updated.'
+ #     redirect_to :action => 'show', :id => @group
+ #   else
+ #     render :action => 'edit'
+ #   end
+ # end
+ #
+ # def destroy
+ #   @group = find_in_users_groups params[:id]
+ #   @group.destroy unless @group.nil?
+ #   redirect_to :action => 'list'
+ # end
   
 end

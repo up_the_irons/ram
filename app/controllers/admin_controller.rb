@@ -16,6 +16,10 @@ class AdminController
 
   end
   
+  def show
+    #todo introspect to determine what to show category group user etc.
+  end
+  
   protected
   def admin_access_required
     redirect_to :controller=>'account',:action=>'index' unless current_user.is_admin?

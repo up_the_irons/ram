@@ -1,7 +1,7 @@
 module AdminController::GroupMethods
-  def list_groups
+  def groups
      @group_pages, @groups = paginate :groups, :per_page => 10
-     render 'admin/list_groups'
+     render 'admin/groups'
    end
    
    def show_group
@@ -41,4 +41,39 @@ module AdminController::GroupMethods
         page.replace_html 'available_members', :partial => 'add_group_member_dropdown'
       end
     end
+    
+    def new_group
+       @group = Group.new
+     end
+
+     def create_group
+       @group = Group.new(params[:group])
+       if @group.save
+         flash[:notice] = 'Group was successfully created.'
+         redirect_to :action => 'groups'
+       else
+         render :action => 'group/new'
+       end
+     end
+
+     def edit_group
+       @group = find_in_users_groups params[:id]
+       render :text=>'Could not find this group in your account' if @group.nil?
+     end
+
+     def update_group
+       @group = find_in_users_groups params[:id]
+       if @group.update_attributes(params[:group])
+         flash[:notice] = 'Group was successfully updated.'
+         redirect_to :action => 'group/show', :id => @group
+       else
+         render :action => 'group/edit'
+       end
+     end
+
+     def destroy_group
+       @group = find_in_users_groups params[:id]
+       @group.destroy unless @group.nil?
+       redirect_to :action => 'groups'
+     end
 end
