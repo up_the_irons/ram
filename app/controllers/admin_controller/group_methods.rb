@@ -44,36 +44,53 @@ module AdminController::GroupMethods
     
     def new_group
        @group = Group.new
+       render 'group/new'
      end
 
      def create_group
-       @group = Group.new(params[:group])
-       if @group.save
-         flash[:notice] = 'Group was successfully created.'
-         redirect_to :action => 'groups'
-       else
-         render :action => 'group/new'
-       end
+         @group = Group.new(params[:group])
+         if @group.save
+           flash[:notice] = 'Group was successfully created.'
+           redirect_to :action => 'groups'
+         else
+           render 'group/new'
+         end
      end
 
      def edit_group
-       @group = find_in_users_groups params[:id]
-       render :text=>'Could not find this group in your account' if @group.nil?
+       unless params[:id].nil?
+         @group = find_in_users_groups params[:id]
+         render 'group/edit'
+         render :text=>'Could not find this group in your account' if @group.nil?
+       else
+         flash[:notice] = "Cannot find group without an ID."
+         redirect_to :action=>'groups'
+       end
      end
 
      def update_group
-       @group = find_in_users_groups params[:id]
-       if @group.update_attributes(params[:group])
-         flash[:notice] = 'Group was successfully updated.'
-         redirect_to :action => 'group/show', :id => @group
+       unless params[:id].nil?
+         @group = find_in_users_groups params[:id]
+         if @group.update_attributes(params[:group])
+           flash[:notice] = 'Group was successfully updated.'
+           redirect_to :action => 'group/show', :id => @group
+         else
+           render :action => 'group/edit'
+         end
        else
-         render :action => 'group/edit'
+         flash[:notice] = "Cannot find group without an ID."
+         redirect_to :action=>'groups'
        end
      end
 
      def destroy_group
-       @group = find_in_users_groups params[:id]
-       @group.destroy unless @group.nil?
-       redirect_to :action => 'groups'
+       unless params[:id].nil?
+         @group = find_in_users_groups params[:id]
+         @group.destroy unless @group.nil?
+         redirect_to :action => 'groups'
+        else
+          flash[:notice] = "Cannot find group without an ID."
+          redirect_to :action=>'groups'
+        end
      end
 end

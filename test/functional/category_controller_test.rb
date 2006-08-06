@@ -30,8 +30,6 @@ class CategoryControllerTest < Test::Unit::TestCase
     assert assigns(:groups)
   end
   
-  
-  
   def test_add_group_to_category
     c = Category.find(@@existing_category_id)
     s = c.groups.size
@@ -85,24 +83,5 @@ class CategoryControllerTest < Test::Unit::TestCase
   
   def test_removing_group_from_category_removes_assets_linked_only_to_that_group
     
-  end
-  
-  def test_destroy_category_with_and_without_children
-      #no children to destroy
-      assert_difference Category, :count, -1 do
-        post :destroy, :id => 15
-        assert_redirected_to :action => 'list'
-      end
-      #three children to destroy
-      assert_difference Category, :count, -4 do
-        post :destroy, :id => 10
-        assert_redirected_to :action => 'list'
-      end
-      #already deleted
-      assert_no_difference Category, :count do
-        assert_raise(ActiveRecord::RecordNotFound) {
-          post :destroy, :id => 10
-        }
-      end
   end
 end

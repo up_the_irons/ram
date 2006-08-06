@@ -8,6 +8,9 @@ class AdminController
   include CategoryMethods
   before_filter :admin_access_required
   
+  verify :method => :post, :only => [ :destroy_group, :create_group, :update_group, :destroy_category, :create_category, :update_category ],
+          :redirect_to => { :action => :dashboard }
+          
   def index
     redirect_to :action=>'dashboard'
   end
