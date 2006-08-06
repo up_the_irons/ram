@@ -57,7 +57,7 @@
 			<%= render :partial=>'category/group_item', :locals=>{:category=>@category,:group=>g} %>
 		<% end -%>
 		</ol>
-		<p id="new_group_form"><%= render :partial=>'category/new_group_button' %></p>
+		<p id="new_group_form"><%= render :partial=>'category/new_group_button' if current_user.is_admin? %></p>
 	</div>
 	<% #Assets 
 	#display based on scope
