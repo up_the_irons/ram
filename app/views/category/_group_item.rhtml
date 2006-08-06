@@ -1,8 +1,8 @@
 <li id=<%="group_#{group.id}"%> style="list-style:lower-roman;">
 	<%= link_to_remote(image_tag('/images/icons/cross.png'),
 					   :url=>{
-							 	:controller=>'category',
-							 	:action=>'remove_group',
+							 	:controller=>'admin',
+							 	:action=>'remove_group_from_category',
 							    :id=>category.id,
 								:group_id=>group.id,
 								:update=>"group_#{group.id}"
