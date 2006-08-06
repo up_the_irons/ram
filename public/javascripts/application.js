@@ -8,7 +8,7 @@ Ajax.Responders.register({
 	{
 		var throbber = $('throbber');
 	    throbber.style.display = 'none';
-	}
+	},
 	onFailure: function(request)
 	{
 		alert('Error contacting server.');

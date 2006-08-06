@@ -50,10 +50,10 @@ class CategoryController < ProtectedController
  #   end
  # end
 
-  def edit
-    #@category = Category.find(params[:id])
-    @category = find_in_users_categories(params[:id])
-  end
+ # def edit
+ #   #@category = Category.find(params[:id])
+ #   @category = find_in_users_categories(params[:id])
+ # end
   
   #def show_asset_form
   # 
@@ -120,8 +120,7 @@ class CategoryController < ProtectedController
   #  end
   #end
   
-  def show_group_form
-    
+  def show_group_form  
     #@category = Category.find(params[:id])
     @category = find_in_users_categories(params[:id])
     
