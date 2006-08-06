@@ -4,13 +4,11 @@ Ajax.Responders.register({
 		var throbber = $('throbber');
 	    throbber.style.display = 'block';
 	},
-	onComplete: function(request)
-	{
+	onComplete: function(request){
 		var throbber = $('throbber');
 	    throbber.style.display = 'none';
 	},
-	onFailure: function(request)
-	{
+	onFailure: function(request){
 		alert('Error contacting server.');
 		//add exception notification here 
 	}

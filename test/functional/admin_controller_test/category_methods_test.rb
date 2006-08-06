@@ -27,6 +27,37 @@ module IncludedTests::CategoryMethodsTest
     end
   end
   
+  def test_remove_group_from_category
+    s = Category.find(6).groups.size
+    post :remove_group_from_category, :id=>6, :group_id=>1
+    assert_equal Category.find(6).groups.size, s-1
+    assert assigns(:category)
+  end
+  
+  def test_removing_group_from_category_removes_assets_linked_only_to_that_group
+    
+  end
+  
+  def test_add_group_to_category
+     c = Category.find(@existing_category_id)
+     s = c.groups.size
+     post :add_group_to_category, :id=>c.id, :group_id=> 1, :update=>'new_group_form'
+     assert flash[:notice] == 'Your Group has been added'
+     assert_equal Category.find(@existing_category_id).groups.size, s+1   
+   end
+
+   def test_user_shall_not_add_a_group_to_a_category_that_they_do_not_belong_to
+     get :dashboard
+     current_user = assigns(:current_user)
+     all = Category.find(:all)
+     excluded = all - current_user.categories
+     c = excluded[0]
+     s = c.groups.size
+     post :add_group_to_category, :id=>c.id, :group_id=> 1, :update=>'new_group_form'
+     assert_equal Category.find(c.id).groups.size, s
+   end
+  
+  
   def test_destroy_category_with_and_without_children
       #no children to destroy
       assert_difference Category, :count, -1 do

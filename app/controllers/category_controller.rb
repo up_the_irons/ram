@@ -136,54 +136,7 @@ class CategoryController < ProtectedController
     end
   end
   
-  def add_group
-    unless params[:group_id].nil?
-      
-      #@category = Category.find(params[:id])
-      @category = find_in_users_categories(params[:id])
-      g = Group.find(params[:group_id])
-      @group = g if current_user.groups.include? g
-      unless @group.nil?
-        @category.groups << @group
-        @category.reload
-        flash[:notice] = 'Your Group has been added'
-        render :update do |page|
-          page.replace_html(params[:update], :partial=>'new_group_button')
-          page.replace_html('group_size', @category.groups.size)
-          page.insert_html(  :bottom    , "group_list", :partial=>'group_item',:locals=>{:group=>@group,:category=>@category})
-          page.visual_effect :highlight , "group_#{@group.id}", :duration=>1
-          page.visual_effect :highlight , params[:update], :duration=>1
-          page.replace_html('page_flash', flash[:notice] )
-        end
-      else
-        #group could not be added because it does not belong to the user.
-        flash[:notice] = "This group could not be located within your account."
-        render :update do |page|
-          page.replace_html('page_flash', flash[:notice] )
-        end
-      end
-    else
-      #todo no group supplied display error or something.
-    end 
-  end
-  
-  def remove_group
-    #todo scope this find to the user's categories
-    @links = Linking.find_all_by_category_id_and_group_id(params[:id],params[:group_id])
-    unless @links.empty?
-      for l in @links
-        # todo remove any assets in the presentation layer that depend on this linkage as well.
-        l.destroy
-      end
-      #@category = Category.find(params[:id])
-      @category = find_in_users_categories(params[:id])
-      render :update do |page|
-        page.replace_html('group_size', @category.groups.size)
-        page.visual_effect :highlight , 'group_size', :duration=>1
-        page.remove params[:update]
-      end
-    end
-  end
+ 
 
  #def update
  #  #@category = Category.find(params[:id])

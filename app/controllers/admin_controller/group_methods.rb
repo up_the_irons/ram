@@ -20,7 +20,7 @@ module AdminController::GroupMethods
         page.visual_effect :highlight, 'group_members'
       end
     end
-
+    
     def group_remove_member
       @group       = Group.find_by_id_or_login(params[:id])
 
