@@ -16,7 +16,7 @@ class AdminController
   end
   
   def dashboard
-
+    @events = Event.find_all_by_recipient_id(current_user.id)
   end
   
   def show

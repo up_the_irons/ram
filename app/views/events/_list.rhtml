@@ -1,0 +1,25 @@
+<% if @events.size > 0 %>
+<div id='events_table'>
+<table class="event_inbox" cellpadding="5" border="0">
+	<caption style="text-align:left;"><%= link_to 'Events Inbox', :controller => 'events', :action => 'list' %></caption>
+	<tr>
+		<th></th>
+		<th style="text-align:left;">Type</th>
+		<th style="text-align:left;">Subject</th>
+		<th style="text-align:left;">Date Received</th>
+		<th style="text-align:left;">Action</th>
+	</tr>
+<% @events.each do |e| -%>
+  <tr id='event_<%= e.id %>'>
+		<td><%= image_tag('/images/icons/email.png') %></td>
+		<td>System Message</td>
+    <td><%= e.subject %></td>
+		<td><%= e.created_at %></td>
+    <td><%= link_to_remote 'Delete', :url => { :controller => 'events', :action => 'delete', :id => e.id }, :confirm => "Are you sure you want to delete this event?" %></td>
+	</tr>
+<% end -%>
+</table>
+</div>
+<% else -%>
+No events in your Inbox.
+<% end -%>
