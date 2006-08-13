@@ -22,5 +22,4 @@ class ProtectedController < ApplicationController
     end
     return nil
   end
-  
 end

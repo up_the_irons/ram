@@ -26,9 +26,6 @@ a:link, a:visited
 a:hover {
 	color               : #9AF178;
 	text-decoration     : none;
-	border-bottom-width : 1px;
-	border-bottom-style : solid;
-	border-bottom-color : #9AF178;
 	background          : none;
 }
 .clear_both

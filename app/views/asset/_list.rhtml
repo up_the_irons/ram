@@ -8,6 +8,7 @@
 		<th>Name</th>
 		<th>Groups</th>
 		<th>Options</th>
+		<th></th>
 	</tr>
 	
 <% for asset in @assets -%>
@@ -38,6 +39,7 @@
 							) 
 			%>
 		</td>
+		<td><%= link_to 'Add to Folio', {:controller=>'folio', :action=>'add', :category_id=>@category.id,:asset_id=>asset.id},:post=>true %> </td>
 	</tr>
 <% end unless @assets.nil? %>
 </table>

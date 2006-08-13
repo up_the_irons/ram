@@ -45,6 +45,19 @@ class AccountControllerTest < Test::Unit::TestCase
       assert_response :redirect
     end
   end
+  
+  def test_should_save_last_login_time
+    u  = User.find_by_login('quentin')
+    ll = u.last_login_at
+    post :login, :login => 'quentin', :password => 'quentin'
+    assert_equal u.login , assigns(:current_user).login
+    assert ll != assigns(:current_user).last_login_at
+  end
+  
+  def test_should_have_an_empty_folio_at_login
+    post :login, :login => 'quentin', :password => 'quentin'
+    assert_equal assigns(:session)[:folio], []
+  end
 
   def test_should_require_login_on_signup
     assert_no_difference User, :count do

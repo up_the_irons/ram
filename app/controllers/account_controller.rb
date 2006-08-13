@@ -15,9 +15,9 @@ class AccountController < ProtectedController
     if current_user
       if current_user.account_active?
         flash[:notice] = "Logged in Successfully"
+        after_login
         redirect_back_or_default(:controller => '/account', :action => 'index')
-        current_user.last_login_at = Time.now
-        current_user.save
+        
       else
         flash[:error] = current_user.account_status
         session[:user] = self.current_user = nil
@@ -65,7 +65,9 @@ class AccountController < ProtectedController
   def login_as
     self.current_user = User.find(params[:user_id])
     if current_user.account_active?
+      after_login
       render :update do |page|
+        
         page.redirect_to :controller=>'category', :action=>'list'
       end
     else
@@ -73,5 +75,13 @@ class AccountController < ProtectedController
         page.replace_html 'page_flash', current_user.account_status
       end
     end
+  end
+  protected 
+  def after_login
+    current_user.last_login_at = Time.now
+    current_user.save
+    session[:folio] = []
+    
+    #TODO find a secure way to build the user's access lists so that we can save DB hits
   end
 end
