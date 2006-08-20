@@ -1,5 +1,5 @@
-<ul id="site_menu">
-	<li>[ <%= link_to('Categories', :controller=>'category') %> | </li>
-	<li><%= link_to('Groups', :controller=>'group')%> ]</li>
-	<%= "<li>[#{link_to('Administration Dashboard',:controller=>'admin')} ] " if current_user.is_admin? %>
-</ul>
+<ul>
+		<li>[ <%= link_to('Categories', :controller=>'category') %> | </li>
+		<li><%= link_to('Groups', :controller=>'group')%> ]</li>
+		<%= "<li>[#{link_to('Administration Dashboard',:controller=>'admin')} ] " if current_user.is_admin? %>
+</ul>	

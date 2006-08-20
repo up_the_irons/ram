@@ -79,6 +79,7 @@ class AccountController < ProtectedController
   protected 
   def after_login
     current_user.last_login_at = Time.now
+    flash[:notice] = "Welcom #{current_user.login}!"
     current_user.save
     session[:folio] = []
     

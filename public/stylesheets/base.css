@@ -62,8 +62,30 @@ a:hover {
 {
 	font-size        : 120%;
 }
+.flash_notice, .flash_warning, .flash_error{
+	border           : 2px solid #ffff00;
+	padding          : 7px;
+	padding-bottom   : 12px;
+	margin-bottom    : 20px;
+	background-color : #ffff66;
+    display          : block;
+	clear            : both;
+	font-size        : 120%;
+	padding          : 10px;
+	text-align       :center;
+}
+.flash_notice a,.flash_notice a:link, .flash_notice a:visited,.flash_notice a:hover,.flash_notice a:active {
+	color:#000;
+	text-decoration:underline;
+}
+.flash_error{
+	background-color:#cc0000;
+	border           : 2px solid #aa0000;
+	color           :#fff;
+}
 #page_flash
 {
+	display          : block;
 	background-color : #FFFF99;
 	color            : #282E1A;
 }

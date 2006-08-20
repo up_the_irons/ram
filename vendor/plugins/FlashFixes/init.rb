@@ -1,0 +1,1 @@
+require 'flash_fixes'

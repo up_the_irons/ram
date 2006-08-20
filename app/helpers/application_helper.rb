@@ -1,6 +1,12 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
+  def display_flash_message
+    flash_types = [:error, :warning, :notice ]
+    flash_type = flash_types.detect{ |a| flash.keys.include?(a) }
+    "<div class='flash_%s'>%s</div>" % [flash_type.to_s, flash[flash_type]] if flash_type
+  end
+  
   def display_as asset
     case asset.content_type
       when 'image/jpeg','image/jpg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png'

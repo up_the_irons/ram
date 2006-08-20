@@ -1,6 +1,7 @@
-<%= 
-	render :partial=>'shared/page/user_menu' 
--%>
+<h1 style="font-size:130%;margin-top:2px;"><%= APP_NAME %></h1>
 <%= 
 	 render :partial=>'shared/page/site_menu' unless current_user.nil?
+-%>
+<%= 
+	render :partial=>'shared/page/user_menu' 
 -%>

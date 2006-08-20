@@ -1,36 +1,49 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>RAM: <%= controller.action_name %></title>
-  <%= stylesheet_link_tag 'scaffold' %>
-  <%= stylesheet_link_tag 'base' %>
+  <title><%= APP_NAME %>: <%= @page_title || controller.action_name %></title>
+  <%= stylesheet_link_tag 'base','main','file_viewer','admin' %>
   <%= javascript_include_tag :defaults %> 
 </head>
 <body>
   <div id="throbber" style="width:100%;position:absolute;z-index:1;opacity:0.8;display:none;background-color:#fff;border:1px inset #000;color:#000;font-size:110%;">
     <p style="padding:10px;" id="message"><%= image_tag 'ajax-loader.gif' %>&nbsp;&nbsp;Loading...</p>
   </div>
-	<div id="page_container" style="width:740px;margin:auto;">
-		<div id="menu_container">
-			<%= render :partial=>'shared/page/header'%>
-			<br style="display:block;clear:both;" />
-		</div>
-		<p id="page_flash">
-		<%= flash[:notice] %>
-		
-		<%= 
-		#todo: color the error another way.
-		flash[:error] %>
-		</p>
-		<div id="page_content" style="width:720px;">
-		
-			<%= @content_for_layout %>
-		<br class="clear_both" />
-		</div>
-		<br class="clear_both" />
+  <div id="topNav">
+		<%= render :partial=>'shared/page/header'%>
 	</div>
-	<div id="page_footer" style="width:740px;margin:auto">
-			<%= render :partial=>'shared/page/footer'%>
-	</div>
+  <div id="applicationHeader">
+    <%= display_flash_message %>
+    <% if current_user %>
+    <form action="">
+  	  <input class="searchField" type="text" tabindex="1" alt="search box" />
+  	  <input class="searchSubmit" type="submit" value="Search" alt="search button" />
+    </form>
+    <div id="breadcrumb">
+      <ul>
+        <%= yield :bread_crumbs %>
+      </ul>
+    </div>
+    <% end %>
+    <%= yield :application_header %>
+    <div id="pageHeader">
+			<ul>
+			  <% if current_user -%>
+				<li class="selected"><a href="#">Inbox</a></li>
+				<li><a href="#">Profile</a></li>
+				<% end -%>
+			</ul><%= yield :sub_categories %>
+		</div>
+  </div>
+  	<div id="pageContent">	
+			<%= yield :layout %>
+		</div>
+    <div id="applicationFooter">
+      <%= yield :page_meta %>
+      <%= render :partial=>'shared/page/footer'%>
+		</div>    
+	
+		
 	
 	<% #used to display a spinner on ajax events. %>
 	<div id='spinner' style='display:none; padding: 5px; background-color: white; line-height: 200px; text-align:center; width: 100px; height: 100px'><%= image_tag 'ajax-loader.gif' %></div>

@@ -15,17 +15,28 @@ class CategoryController < ProtectedController
   end
 
   def show
-    #only show if this category appears inside the user's list of categories
-    @category = find_in_users_categories(params[:id])
-    unless @category.nil? 
-      @groups = @category.groups & current_user.groups
-      #@assets = @category.assets.find(:all, :conditions => ["linkable_type='Asset' AND category_id=#{@category.id} AND group_id IN (?)", @groups.collect{|g| g.id}.join(",")])
-      @total_assets = @category.assets.find(:all).uniq
-      @or_conditions = @groups[1..@groups.length].map{|g| "OR group_id=#{g.id}"}
-      @assets = @category.assets.find(:all, :conditions=>"linkable_type='Asset' AND category_id=#{@category.id} AND group_id=#{@groups[0].id} #{@or_conditions}").uniq
-    else
-      render :text=>'This category could not be found in your access list'
+    #TODO "Confirm that the responds_to is actually working, I think it is not"
+    respond_to do |wants|
+      wants.html do
+        #only show if this category appears inside the user's list of categories
+        @category = find_in_users_categories(params[:id])
+        unless @category.nil? 
+          @groups = @category.groups & current_user.groups
+          #@assets = @category.assets.find(:all, :conditions => ["linkable_type='Asset' AND category_id=#{@category.id} AND group_id IN (?)", @groups.collect{|g| g.id}.join(",")])
+          @total_assets = @category.assets.find(:all).uniq
+          @or_conditions = @groups[1..@groups.length].map{|g| "OR group_id=#{g.id}"}
+          @assets = @category.assets.find(:all, :conditions=>"linkable_type='Asset' AND category_id=#{@category.id} AND group_id=#{@groups[0].id} #{@or_conditions}").uniq
+        else
+          render :text=>'This category could not be found in your access list'
+        end
+      end
+      wants.js do 
+        render :update do |page|
+          page.redirect_to :action=>'show',:id=>params[:id]
+        end
+      end
     end
+
   end
 
  # def new

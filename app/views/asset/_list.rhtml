@@ -1,19 +1,22 @@
-<p>total assets: <%=
-@total_assets.size %>
-<%= 
-@total_assets.map{|a| link_to( a.name,{},{:title=>a.groups.find(:all).map{|g| g.name}.join(', ')} ) }.join(', ') unless @total_assets.nil?
-%></p>
-<table border="1">
+<table class="dataGrid">
 	<tr>
-		<th>Name</th>
+		<th>Name <span class="miceType">(click file to view)</span></th>
+		<th>Size</th>
+		<th>Type</th>
+		<th>Date Modified</th>
 		<th>Groups</th>
-		<th>Options</th>
+		<th>Actions</th>
+		<th>Save</th>
 		<th></th>
 	</tr>
 	
 <% for asset in @assets -%>
-	<tr id=<%="asset_#{asset.id}"%> style="list-style:lower-roman;">
+  <%row_class =  cycle("even", "odd") %>
+	<tr id="<%="asset_#{asset.id}"%>" onmouseover="this.className='highlighted'" onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>">
 		<td><%= link_to asset.name, :controller=>'asset', :action=>'show', :id=>asset.id %></td>
+		<td><%= asset.size %>Bytes</td>
+		<td><%= asset.content_type %></td>
+		<td><%= asset.updated_on %></td>
 		<td><%= asset.groups.find(:all).map{|g| link_to(g.name, :action=>'show',:controller=>'group',:id=>g.id)}.join(', ') %></td>
 		<td>
 		<%= link_to_remote(image_tag('/images/icons/pencil.png'),

@@ -5,7 +5,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '1.1.2'
+RAILS_GEM_VERSION = '1.1.6'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -62,6 +62,7 @@ require 'RMagick'
 require 'feed_tools'
 
 RAM_SALT = 'foodz'
+APP_NAME = 'RAM'
 #codename generated from the dictionary
 REVISION_NUMBER = `svn info`.split("\n")[4][/\d+/].to_i
 APP_CODENAME  = IO.readlines("/usr/share/dict/words")[REVISION_NUMBER]

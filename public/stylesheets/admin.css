@@ -1,0 +1,106 @@
+a.editOptions
+{
+	color               : #EC6428;
+	font-size           : 10px;
+}
+
+.roundBox
+{
+	width               : 480px;;
+	display             : block;
+	margin              : 5px;
+}
+.roundBox .topRightCorner, .roundBox .topLeftCorner, .roundBox .bottomLeftCorner, .roundBox .bottomRightCorner
+{
+	background-repeat   : no-repeat;
+	display             : block;
+	height              : 10px;
+	width               : 100%;
+}
+.roundBox .bottomRightCorner
+{
+	background-image    : url(/images/corner-br-light-blue.gif);
+	background-position : bottom right;
+	float               : right;
+}
+.roundBox .bottomLeftCorner
+{
+	background-image    : url(/images/corner-bl-light-blue.gif);
+	background-position : bottom left;
+}
+.roundBox .topRightCorner
+{
+	background-image    : url(/images/corner-tr-light-blue.gif);
+	background-position : top right;
+	float               : right;
+}
+.roundBox .topLeftCorner
+{
+	background-image    : url(/images/corner-tl-light-blue.gif);
+	background-position : top left;
+}
+
+.roundBox .content
+{
+	border-left         : #DBD9D9 solid 1px;
+	border-right        : #DBD9D9 solid 1px;
+	background-color    : #FAFAFA;
+	padding             : 0 10px 0 10px;
+}
+.content li
+{
+	display             : inline
+}
+
+.profileImage
+{
+	width               : 110px;
+	text-align          : center;
+	float               : left;
+	margin              : 0 5px 0 0;
+}
+.profileImage img
+{
+	border              : solid 4px #666666;
+}
+.profileImage a
+{
+	font-size           : 0.7em;
+}
+
+.profileData
+{
+	width               : 330px;
+	list-style          : none;
+	float               : left;
+}
+
+.content ul
+{
+	padding             : 10px 0 10px 0;
+}
+.content h1
+{
+	font-size           : 1.4em;
+	margin-bottom       : 10px;
+}
+.content h2
+{
+	font-size           : 1.0em;
+	margin-bottom       : 10px;
+}
+.content h3
+{
+	font-size           : 0.9em;
+	font-weight         : lighter;
+}
+.content h4
+{
+	font-size           : 0.7em;
+	font-weight         : lighter;
+}
+.content .roles li
+{
+	border-right        : solid 1px #DBD9D9;
+	padding             : 0 5px 0 5px;
+}

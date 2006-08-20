@@ -17,6 +17,7 @@ module Collectivex
     
     def initialize(branch, new_branch = false, options=OpenStruct.new)
       super()      
+      $stderr.puts "\n Subversion Tools \n_________________\n You can run this command manually:\n "
       @debug = options.debug
       if version < 1.3
         $stderr.puts "Sorry, this requires subversion >= 1.3.0"
@@ -71,15 +72,15 @@ module Collectivex
       $stderr.puts `#{svn}` unless @debug
     end
    
-    def unbranch
-      return unless @path && @branch
-      svn = "svn merge #{'--dry-run ' if @debug}-r #{first_rev}:#{last_rev} #{root}/branches/#{@branch} ."
-      puts svn
-      $stderr.puts `#{svn}`
-    end
+    #def unbranch
+    #  return unless @path && @branch
+    #  svn = "svn merge #{'--dry-run ' if @debug}-r #{first_rev}:#{last_rev} #{root}/branches/#{@branch} ."
+    #  puts svn
+    #  $stderr.puts `#{svn}`
+    #end
     
     def branch
-      return if @path  
+      return if @path
       @path = File.dirname(__FILE__) + "/../../"
       svn = "svn cp #{url} #{root}/branches/#{@branch} -m 'Creating branch for #{@branch} [#{last_rev}]'"
       puts svn
@@ -114,7 +115,27 @@ module Collectivex
       svn = "svn merge #{root}/trunk@#{last_trunk} #{root}/trunk@#{head_rev}" 
       puts svn
       $stderr.puts `#{svn}` unless @debug
-      $stderr.puts `svn propset svn:trunk #{head_rev} .` 
+      $stderr.puts `svn propset svn:trunk #{head_rev} .` unless @debug
+    end
+
+    def unbranch
+      return unless @path && @branch
+      #puts "Did you remember to uptrunk your branch? :)"
+      unbranch_diff = "unbranch_#@branch.diff"
+      if @debug
+        File.chmod(0644, unbranch_diff)         if File.exist?(unbranch_diff) 
+        svn = "svn diff #{root}/trunk #{root}/branches/#{@branch} > #{unbranch_diff}"
+      else
+        svn = "svn merge #{root}/trunk #{root}/branches/#{@branch}"
+      end
+      puts svn
+      $stderr.puts `#{svn}` 
+      if @debug
+        $stderr.puts "Loading diff in textmate for review."
+        `chmod 0444 #{unbranch_diff}; mate #{unbranch_diff}`
+      else
+        `svn propdel svn:trunk .`
+      end
     end
 
   end

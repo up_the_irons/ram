@@ -1,35 +1,30 @@
-<h1><%= user.full_name unless user.full_name.nil? %>'s Profile</h1>
-<ul class="web_form">
-	<li><label for="first_name">First Name: </label>
-	<%= user.first_name %></li>
-	<li><label for="last_name">Last Name: </label>
-	<%= user.last_name %></li>
-	<li><label for="login">Login: </label>
-	<%= user.login %></li>
-	<li><label for="email">email: </label>
-	<%= user.email %></li>
-	<li><label for="gender">Gender: </label>
-	<%= Person::GENDERS.reject{|g| g[1] != user.gender}[0][0] %>
-	</li>
-
-	<li><label for="date_of_birth">Birthday: </label>
-	<%=h  user.date_of_birth %>
-	</li>
-		
-	<li>
-		<label>Groups:</label><br />
-		<ol>
-		<% for g in user.groups-%>
-			<li style="list-style:lower-roman;border:none;"><%=link_to g.name, :controller=>'group', :action=>'show', :id=>g.id %></li>
-		<% end-%>
-		</ol>
-	</li>
-	<li>
-		<label>Categories:</label><br />
-		<ol>
-		<% for c in user.categories -%>
-			<li style="list-style:lower-roman;border:none;"><%=link_to c.name, :controller=>'category', :action=>'show', :id=>c.id %></li>
-		<% end -%>
-		</ol>
-	</li>
-</ul>
+<div class="roundBox">
+	<div class="topRightCorner"><div class="topLeftCorner"></div></div>
+		<div class="content">
+			
+			<div class="profileImage">
+			  *profile image*
+			</div>
+			<div class="profileData">
+				<h1><%= user.full_name unless user.full_name.nil? %><span class="mice_type">(<%= user.login %>)</span> <%= link_to 'edit', {},{:class=>'editOptions'} %></h1>
+				<h2>*Job Title* <a class="editOptions" href="">edit</a></h2>
+				<h3>*Company*</h3>
+				<h4>Phone Number: *Phone Number*</h4>
+				<h4>Email Address: <%= user.email %></h4>
+				<ul>
+					<li class="label">Groups:</li>
+					<%= user.groups.map{|g| "<li>#{g.name}, </li>" } %>
+				</ul>
+				<ul>
+					<li class="label">Categories:</li>
+					<%= user.categories.map{|c| "<li>#{c.name}, </li>" } %>
+				</ul>
+			</div>
+			<div class="row"></div>
+			<ul class="roles">
+				<li class="label">Roles:</li>
+				<%= "Admin" if user.is_admin? %>
+			</ul>
+		</div>
+	<div class="bottomRightCorner"><div class="bottomLeftCorner"></div></div>				
+</div>

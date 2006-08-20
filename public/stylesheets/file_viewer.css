@@ -1,0 +1,150 @@
+#inboxMenu
+{
+	margin           : 5px;
+	display          : block;
+	float            : left;
+	background-color : #F7F8D8;
+	padding          : 5px;
+	border           : solid 1px #D5D6B2;
+	width            : 190px;
+	height           : 100%;
+}
+
+#inboxMenu li
+{
+	list-style       : none;
+}
+
+#inboxMenu li.menuLabel, #inboxMenu li.menuLabel_selected
+{
+	font-size        : 1.2em;
+	font-weight      : lighter;
+	padding          : 5px 0 5px 0;
+	border-bottom    : solid 1px #D5D6B2;
+}
+
+#inboxMenu li.menuLabel_selected
+{
+	background-color : #F5F7B8;
+}
+#inboxMenu li.menuData ul
+{
+	padding          : 0;
+	margin           : 0;
+}
+
+#inboxMenu li.menuData ul li
+{
+	padding          : 2px 0 2px 5px;
+	border-bottom    : solid 1px #D5D6B2;
+	font-size:0.8em;
+}
+
+#inboxMenu li.menuDataItem_even
+{
+	background-color : #FAFBE7;
+}
+
+#inboxMenu li.menuDataItem_odd
+{
+	background-color : #E7E8D5;
+}
+
+#inboxMenu a.newItems
+{
+	font-size        : 0.6em;
+	font-weight      : normal;
+	text-decoration  : underline;
+	color            : #EC6428;
+	
+}
+
+#inboxMenu li.menuData
+{
+	padding          : 5px 0 5px 5px;
+}
+
+.post
+{
+	display:block;
+	float:left;
+	width:580px;
+	background-color : #FAFAFA;
+	border           : solid 1px #E9E8E8;
+	padding          : 10px;
+	color            : #3F3F3F;
+	margin           : 5px;
+}
+.post p
+{
+	margin           : 10px 0 10px 0;
+}
+
+.post h1
+{
+	font-size        : 1.5em;
+	font-weight      : lighter;
+	margin           : 10px 0 10px 0;
+}
+
+.post ul.postHeader li, .post ul.tags li, .post ul.tags label
+{
+	display          : inline;
+	color            : #C0C0C0;
+	font-size        : 0.8em;
+	border-right     : solid 1px #C2C2C2;
+	padding          : 5px;
+}
+.post ul.tags
+{
+	margin           : 10px 0 10px 0;
+}
+.post ul.tags li
+{
+	border           : none;
+}
+.post ul.tags label
+{
+	font-size        : 1em;
+}
+.dataGrid
+{
+	margin           : 5px;
+}
+
+.dataGrid tr.odd
+{
+	background-color : #FDFDFB;
+}
+
+.dataGrid tr.even
+{
+	background-color : #F8F8F4;
+}
+.dataGrid tr.selected
+{
+	background-color : #F9F7C4;
+}
+
+.dataGrid tr.highlighted
+{
+	background-color : #FDF766;
+}
+
+.dataGrid th
+{
+	font-size        : 1.1em;
+	font-weight      : lighter;
+	border-bottom    : solid 4px #BCBCCB;
+	text-align       : left;
+	padding          : 5px;
+}
+.dataGrid td
+{
+	padding          : 0 5px 0 5px;
+}
+.dataGrid td li
+{
+	list-style       : none;
+	display          : inline;
+}
