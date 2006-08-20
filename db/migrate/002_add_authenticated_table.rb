@@ -10,7 +10,6 @@ class AddAuthenticatedTable < ActiveRecord::Migration
 	    t.column :state            , :integer, :default=>0
       t.column :created_at       , :datetime
       t.column :updated_at       , :datetime
-      t.column :last_login_at    , :datetime
       t.column :role             , :integer, :default=>0
     end
   end
