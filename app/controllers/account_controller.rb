@@ -1,4 +1,5 @@
 class AccountController < ProtectedController
+  observer :user_observer
 
   def index
     redirect_to(:action => 'signup') unless logged_in? or User.count > 0

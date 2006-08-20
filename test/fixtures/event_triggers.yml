@@ -1,0 +1,10 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+user_signup:
+  id: 1
+  code: UserSignup
+user_deleted:
+  id: 2
+  code: UserDeleted
+user_suspended:
+  id: 3
+  code: UserSuspended

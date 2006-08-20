@@ -4,7 +4,7 @@ class UserTest < Test::Unit::TestCase
   # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead.
   # Then, you can remove it from this and the functional test.
   include AuthenticatedTestHelper
-  fixtures :users, :collections, :memberships, :linkings
+  fixtures :users, :collections, :memberships, :linkings, :event_subscriptions
 
   def test_should_associate_groups
     u = User.find(5)
@@ -96,7 +96,6 @@ class UserTest < Test::Unit::TestCase
     encrypted = u.encrypt_login 
     assert encrypted != login
     assert_equal User.decrypt_string(encrypted), login
-    
   end
 
   def test_should_require_email
@@ -120,8 +119,30 @@ class UserTest < Test::Unit::TestCase
     assert_equal users(:quentin), User.authenticate('quentin', 'quentin')
   end
 
+  # An Event should be recored after a user is created
+  def test_after_create
+    # Two users are subscribed to the UserSignup event, so we should get two more Events created
+    assert_difference Event, :count, 2 do
+      create_user(:login => 'garry')
+    end
+  end
+
+  def test_event_subscriptions
+    es = users(:quentin).event_subscriptions
+
+    e1 = event_subscriptions(:quentin_1)
+    e2 = event_subscriptions(:quentin_2)
+
+    assert es.include?(e1)
+    assert es.include?(e2)
+
+    assert_equal 2, es.size
+  end
+
   protected
+
   def create_user(options = {})
     User.create({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
   end
+
 end

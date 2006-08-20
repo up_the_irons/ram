@@ -24,5 +24,18 @@ module ApplicationHelper
     #  return "#{link_to asset.name, :controller=>'asset', :action=>'show',:id=>@asset.id}"
     #end
   end
-  
+
+  def sort_arrow(sort)
+    !sort.nil? ? sort == 'asc' ? '&uarr;' : '&darr;' : ''
+  end
+
+  def sort_header(opts = {})
+    title = opts[:title]
+    name  = opts[:name]
+    
+    url_options = { :sort => name, :sort_dir => @sort_dir[name] == 'asc' ? 'desc' : 'asc' }
+    url_options.merge!(opts[:url]) if opts[:url]
+
+    link_to_remote(title, :url => url_options) + sort_arrow(@sort_dir[name])
+  end 
 end

@@ -1,8 +1,20 @@
 class EventsController < ProtectedController
+  include Sortable
+
   before_filter :admins_only
+  sortable      :list, :delete
 
   def list
-    @events = Event.find_all_by_recipient_id(current_user.id)
+    @events = Event.find_all_by_recipient_id(current_user.id, :order => @order)
+
+    respond_to do |wants|
+      wants.html
+      wants.js do
+        render :update do |page|
+          page.replace_html 'events_table', :partial => 'list'
+        end
+      end
+    end
   end
 
   def delete
@@ -12,10 +24,6 @@ class EventsController < ProtectedController
       @event.destroy
 
       list
-
-      render :update do |page|
-        page.replace_html 'events_table', :partial => 'list'
-      end
     end
   end
 

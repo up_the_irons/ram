@@ -5,8 +5,8 @@
 	<tr>
 		<th></th>
 		<th style="text-align:left;">Type</th>
-		<th style="text-align:left;">Subject</th>
-		<th style="text-align:left;">Date Received</th>
+    <th style="text-align:left;"><%= sort_header(:title => 'Subject',       :name => 'subject',    :url => { :controller => 'events', :action => 'list' }) %></th>
+    <th style="text-align:left;"><%= sort_header(:title => 'Date Received', :name => 'created_at', :url => { :controller => 'events', :action => 'list' }) %></th>
 		<th style="text-align:left;">Action</th>
 	</tr>
 <% @events.each do |e| -%>

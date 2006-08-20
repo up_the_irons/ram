@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 	has_one  :person
 	has_one  :profile
 	has_many :memberships
+  has_many :event_subscriptions
 	#has_many :taggings
 	
   #has_many :collections, :through => :memberships
