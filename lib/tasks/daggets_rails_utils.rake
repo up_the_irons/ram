@@ -21,6 +21,23 @@ end
 desc "Load fixtures data into the test database"
 task :load_fixtures_to_development => :environment do
   require 'active_record/fixtures'
+
+  class Fixtures 
+    alias :original_insert_fixtures :insert_fixtures
+
+    def insert_fixtures
+      # Deactivate foreign keys with MySQL to prevent failing foreign key constraints b/c fixtures were loaded in the
+      # wrong order
+      if @connection.kind_of? ActiveRecord::ConnectionAdapters::MysqlAdapter
+        @connection.update "SET FOREIGN_KEY_CHECKS = 0", 'Fixtures deactivate foreign key checks.';
+        original_insert_fixtures
+        @connection.update "SET FOREIGN_KEY_CHECKS = 1", 'Fixtures activate foreign key checks.';
+      else
+        original_insert_fixtures
+      end
+    end
+  end
+
   ActiveRecord::Base.establish_connection(:development)
   Dir.glob(File.join(RAILS_ROOT, 'test', 'fixtures', '*.{yml,csv}')).each do |fixture_file|
     Fixtures.create_fixtures('test/fixtures', File.basename(fixture_file, '.*'))
