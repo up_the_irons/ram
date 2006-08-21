@@ -63,4 +63,15 @@ class EventsControllerTest < Test::Unit::TestCase
       end
     end
   end
+
+  def test_show
+    u = users(:quentin)
+    login_as u.login
+
+    id = events(:quentin_msg_1_unread).id
+    xhr :get, :show, :id => id
+
+    assert_rjs :toggle, "event_body_container_#{id}"
+    assert_rjs :replace_html, "event_body_#{id}", events(:quentin_msg_1_unread).msg_body
+  end
 end

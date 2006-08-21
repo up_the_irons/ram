@@ -2,6 +2,7 @@ class EventsController < ProtectedController
   include Sortable
 
   before_filter :admins_only
+  before_filter :find_single_event, :only => [:delete, :show]
   sortable      :list, :delete
 
   def list
@@ -18,13 +19,27 @@ class EventsController < ProtectedController
   end
 
   def delete
-    @event = Event.find(params[:id], :conditions => ["recipient_id = ?", current_user.id])
-
     if @event
       @event.destroy
-
       list
     end
+  end
+
+  def show
+    render :update do |page|
+      page.toggle       "event_body_container_#{params[:id]}"
+      page.replace_html "event_body_#{params[:id]}", @event.msg_body
+
+      # Replace the onclick handler that got us here with a simple element toggler. We already have the msg
+      # body loaded, so we don't need to call this action again.
+      page << "$('a_href_#{params[:id]}').onclick = function() { $('event_body_container_#{params[:id]}').toggle(); return false }"
+    end if @event
+  end
+
+  protected
+
+  def find_single_event
+    @event = Event.find(params[:id], :conditions => ["recipient_id = ?", current_user.id])
   end
 
   # Same code is in AdminController, let's DRY this up soon...
