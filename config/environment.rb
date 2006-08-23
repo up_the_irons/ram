@@ -65,5 +65,5 @@ require 'feed_tools'
 RAM_SALT = 'foodz'
 APP_NAME = 'RAM'
 #codename generated from the dictionary
-REVISION_NUMBER = `svn info`.split("\n")[4][/\d+/].to_i
+REVISION_NUMBER = YAML.load(`svn info`)['Revision'] 
 APP_CODENAME  = IO.readlines("/usr/share/dict/words")[REVISION_NUMBER]
