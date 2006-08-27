@@ -62,18 +62,8 @@ class Category < Collection
     end  
   end
   
-  #has_many :assets, :through=> :linkings, :source=>:asset, :select => "DISTINCT linkings.linkable_id", :conditions=>"linkings.linkable_type='Asset'" do
-	has_many :assets, :through=> :linkings, :source=>:asset, :conditions=>"linkings.linkable_type='Asset'" do
-	  def <<(asset)
-	    return false if @owner.assets.include?asset
-	    l = Linking.create(
-	      :linkable_id => asset.id,
-	      :linkable_type => 'Asset',
-	      :category_id => @owner.id
-	    )
-	    l.save!
-	  end
-	end
+  has_many :assets
+
   
   def bread_crumbs
     crumbs = Array.new

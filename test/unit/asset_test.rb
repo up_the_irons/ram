@@ -33,8 +33,8 @@ class AssetTest < Test::Unit::TestCase
   end
   
   def test_assets_should_have_categories
-    Asset.find(:all).each do |a |
-      assert a.categories.size >= 0
+    Asset.find(:all).each do |a|
+      assert a.category
     end
   end
   

@@ -31,6 +31,7 @@ attachment_1:
   size: 4
   type: 'Asset'
   description: Ruby on snails
+  category_id: 8
 attachment_2:
   id: 2
   filename: 'atari-games-stacked.jpg'
@@ -39,6 +40,7 @@ attachment_2:
   size: 24
   type: 'Asset'
   description: Some of the all-time greats
+  category_id: 19
 attachment_3:
   id: 3
   filename: 'atari-xe-large.jpg'
@@ -47,6 +49,7 @@ attachment_3:
   size: 88
   type: 'Asset'
   description: This was never as successful as the Atari2600 
+  category_id: 9
 attachment_4:
   id: 4
   filename: 'atari2600_console01.jpg'
@@ -55,6 +58,7 @@ attachment_4:
   size: 20
   type: 'Asset'
   description: The one the only "Heavy Sixer"
+  category_id: 9
 attachment_5:
   id: 5
   filename: 'famicom_disk_system.jpg'
@@ -63,6 +67,7 @@ attachment_5:
   size: 40
   type: 'Asset'
   description: The Famicom was the "Family Computer"  
+  category_id: 10
 attachment_6:
   id: 6
   filename: 'genesis800.jpg'
@@ -71,6 +76,7 @@ attachment_6:
   size: 396
   type: 'Asset'
   description: The genesis became popular in large part because it shipped with the run-away hit "Altered Beast"
+  category_id: 11
 attachment_7:
   id: 7
   filename: 'nes.jpg'
@@ -79,3 +85,4 @@ attachment_7:
   size: 48
   type: 'Asset'
   description: The Nintendo Entertainment System was the king of the 8-bit consoles.
+  category_id: 10

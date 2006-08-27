@@ -25,7 +25,7 @@ class CategoryController < ProtectedController
           #@assets = @category.assets.find(:all, :conditions => ["linkable_type='Asset' AND category_id=#{@category.id} AND group_id IN (?)", @groups.collect{|g| g.id}.join(",")])
           @total_assets = @category.assets.find(:all).uniq
           @or_conditions = @groups[1..@groups.length].map{|g| "OR group_id=#{g.id}"}
-          @assets = @category.assets.find(:all, :conditions=>"linkable_type='Asset' AND category_id=#{@category.id} AND group_id=#{@groups[0].id} #{@or_conditions}").uniq
+          @assets = @category.assets
         else
           render :text=>'This category could not be found in your access list'
         end

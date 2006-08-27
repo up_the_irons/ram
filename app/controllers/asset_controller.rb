@@ -157,6 +157,7 @@ class AssetController < ProtectedController
     @asset = Asset.find_by_id(params[:id]) || Asset.new
     @action = 'update'
     @category = find_in_users_categories(params[:category_id])
+    @asset.category = @category
     @groups = @asset.groups - current_user.groups || current_user.groups unless @asset.new_record?
     params[:groups] = current_user.groups.map{|g| g.id } if @asset.new_record?
     if request.post?
@@ -164,7 +165,6 @@ class AssetController < ProtectedController
       @asset.attributes = params[:asset]
       if @asset.save
         @groups = @asset.groups
-        @categories = @asset.categories
         #todo this only adds groups we need to remove them too if the user wants to delete a group.
 
         for g in params[:groups]

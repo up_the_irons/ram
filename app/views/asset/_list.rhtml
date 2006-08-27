@@ -1,8 +1,5 @@
 <%= render :partial =>'layouts/page_view_options', :locals=>{:view_options=>['thumbnails','details','icons'] }%>
-<% 
-#TODO REMOVE THIS HATEFUL HACK BEFORE GARRY KILLS ME.
 
-@category ||= Category.new %>
 <table class="dataGrid">
 	<tr>
 		<th>Name <span class="miceType">(click file to view)</span></th>
@@ -29,7 +26,7 @@
 									 	:controller=>'asset',
 									 	:action=>'edit',
 									    :id=>"#{asset.id}",
-									    :category_id=>@category.id,
+									    :category_id=>asset.category.id,
 									    :item_row=>"asset_#{asset.id}",
 										:update=>"new_asset_form"
 									 }
@@ -40,13 +37,13 @@
 								 	:controller=>'asset',
 								 	:action=>'destroy',
 								    :id=>asset.id,
-									:category_id=>@category.id,
+									:category_id=>asset.category.id,
 									:update=>"asset_#{asset.id}"
 								 },
 							:confirm=>"Are you sure you want to delete #{ h asset.name}?"
 							) 
 			%>
-			<%= link_to image_tag('/images/icons/add.png',{:title=>'Add to Folio to Download'}), {:controller=>'folio', :action=>'add', :category_id=>@category.id,:asset_id=>asset.id},:post=>true %> 
+			<%= link_to image_tag('/images/icons/add.png',{:title=>'Add to Folio to Download'}), {:controller=>'folio', :action=>'add', :category_id=>asset.category.id,:asset_id=>asset.id},:post=>true %> 
 		</td>
 		<% else -%>
 		<td>

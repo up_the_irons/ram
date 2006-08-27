@@ -49,18 +49,7 @@ class Asset < ActiveRecord::Base
     
    end
    
-   has_many :categories, :through=> :linkings do
-    def << (category)
-      return if @owner.categories.include?category
-      l = Linking.create(
-          :linkable_id => @owner.id,
-          :linkable_type => "Asset",
-          :category_id => category.id
-       )
-   	  l.errors.each_full { |msg| puts msg } unless l.save
-    end
-   end
-
+   belongs_to :category
    belongs_to :user
 
    #TODO: make this validation work
@@ -70,7 +59,7 @@ class Asset < ActiveRecord::Base
      def search(query, groups)
        groups = [groups].flatten
 
-       find(:all, :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ?)", "%#{query}%", "%#{query}%"], :group => "attachments.id")
+       find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ?)", "%#{query}%", "%#{query}%"], :group => "attachments.id")
      end
 
      def find_with_data(quantity, options = {})
