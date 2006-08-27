@@ -55,17 +55,24 @@ class Asset < ActiveRecord::Base
       l = Linking.create(
           :linkable_id => @owner.id,
           :linkable_type => "Asset",
-          :group_id => category.id
-  	    )
-  	  l.errors.each_full { |msg| puts msg } unless l.save
+          :category_id => category.id
+       )
+   	  l.errors.each_full { |msg| puts msg } unless l.save
     end
-    
    end
+
    belongs_to :user
+
    #TODO: make this validation work
    #validates_uniqueness_of :filename, :scope => [:groups]
    
    class << self    
+     def search(query, groups)
+       groups = [groups].flatten
+
+       find(:all, :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ?)", "%#{query}%", "%#{query}%"], :group => "attachments.id")
+     end
+
      def find_with_data(quantity, options = {})
        find quantity, options.merge(:select => 'attachments.*, db_files.data', :joins => 'LEFT OUTER JOIN db_files ON attachments.db_file_id = db_files.id')
      end

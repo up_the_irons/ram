@@ -69,7 +69,7 @@ class Category < Collection
 	    l = Linking.create(
 	      :linkable_id => asset.id,
 	      :linkable_type => 'Asset',
-	      :group_id => @owner.id
+	      :category_id => @owner.id
 	    )
 	    l.save!
 	  end

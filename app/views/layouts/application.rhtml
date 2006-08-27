@@ -15,10 +15,10 @@
   <div id="applicationHeader">
     <%= display_flash_message %>
     <% if current_user %>
-    <form action="">
-  	  <input class="searchField" type="text" tabindex="1" alt="search box" />
+    <%= form_tag :controller => 'search', :action => 'all' %>
+  	  <input class="searchField" type="text" name='query' tabindex="1" alt="search box" />
   	  <input class="searchSubmit" type="submit" value="Search" alt="search button" />
-    </form>
+    <%= end_form_tag %>
     <div id="breadcrumb">
       <ul>
         <%= yield :bread_crumbs %>

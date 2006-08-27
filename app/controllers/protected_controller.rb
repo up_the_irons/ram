@@ -1,17 +1,16 @@
 class ProtectedController < ApplicationController
   include AuthenticatedSystem
+
   before_filter :set_current_user
   before_filter :login_required, :except => [ :login, :signup, :create_profile, :password_recovery, :login_as, :feed ]
-
   
   def set_current_user
     User.current = session[:user]
   end
   
   #helper methods for scope relative searches
-  def find_in_users_groups id
+  def find_in_users_groups(id)
     g = Group.find(id)
-    #puts g.to_yaml
     return g if current_user.groups.include? g
   end
   

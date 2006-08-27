@@ -12,24 +12,18 @@
 
 
 class Linking < ActiveRecord::Base
-  #belongs_to :group
-  #belongs_to :category
-  #belongs_to :user
-  
-  belongs_to :user, :foreign_key=>'user_id'
-
-        belongs_to :group, :class_name=>"Group",
-                     :foreign_key=>"group_id"
-
-        belongs_to :category, :class_name=>"Category",
-                        :foreign_key=>"category_id"
-                        
-  belongs_to :linkable, :polymorphic =>true
-  belongs_to :asset,    :class_name =>'Asset', :foreign_key =>:linkable_id
+  belongs_to :user,     :foreign_key => 'user_id' 
+  belongs_to :group,    :foreign_key => 'group_id',    :class_name => 'Group'
+  belongs_to :category, :foreign_key => 'category_id', :class_name => 'Category'
+  belongs_to :asset,    :foreign_key => 'linkable_id', :class_name => 'Asset'
+             
+  belongs_to :linkable, :polymorphic => true
   
   validates_uniqueness_of :linkable_id, :scope => [:group_id,:category_id], :message=>'Asset already added.'
+
   #validates_uniqueness_of :category_id, :scope => [:group_id]
   #validates_uniqueness_of :group_id   , :scope => [:category_id]   
+  #
   def validate 
     # TODO: in the cases where a user user only supplies a partial record (category but no group or vice versa) 
     # query the db to determine that an existing partial record does not actually complete this new record and 
