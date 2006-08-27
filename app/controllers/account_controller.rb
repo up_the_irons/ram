@@ -17,7 +17,7 @@ class AccountController < ProtectedController
       if current_user.account_active?
         flash[:notice] = "Logged in Successfully"
         after_login
-        redirect_back_or_default(:controller => '/account', :action => 'index')
+        redirect_back_or_default(:controller => '/inbox', :action => 'index')
         
       else
         flash[:error] = current_user.account_status
@@ -69,7 +69,7 @@ class AccountController < ProtectedController
       after_login
       render :update do |page|
         
-        page.redirect_to :controller=>'category', :action=>'list'
+        page.redirect_to :controller=>'inbox'
       end
     else
       render :update do |page|

@@ -24,6 +24,12 @@ module ApplicationHelper
     #  return "#{link_to asset.name, :controller=>'asset', :action=>'show',:id=>@asset.id}"
     #end
   end
+  
+  def link_to_if_editable(name,options={},html_options=nil,*parameters_for_method_reference)
+    if current_user.is_admin? || current_user.id == options[:id]
+      url = link_to name,options,html_options,*parameters_for_method_reference
+    end
+  end
 
   def sort_arrow(sort)
     !sort.nil? ? sort == 'asc' ? '&uarr;' : '&darr;' : ''

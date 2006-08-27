@@ -26,10 +26,13 @@ class EventsController < ProtectedController
   end
 
   def show
+    @event[:author] = "unknown"
+    @event[:author] = User.find(@event.sender_id).full_name if @event.sender_id
+    @event[:typeof] = "event"
     render :update do |page|
       page.toggle       "event_body_container_#{params[:id]}"
-      page.replace_html "event_body_#{params[:id]}", @event.msg_body
-
+      #page.replace_html "event_body_#{params[:id]}", @event.msg_body
+      page.replace_html "event_body_#{params[:id]}", :partial=>'layouts/post',:locals=>{:post=>@event}
       # Replace the onclick handler that got us here with a simple element toggler. We already have the msg
       # body loaded, so we don't need to call this action again.
       page << "$('a_href_#{params[:id]}').onclick = function() { $('event_body_container_#{params[:id]}').toggle(); return false }"

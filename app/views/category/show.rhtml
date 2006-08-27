@@ -19,19 +19,12 @@
 	  </select>
 	</form>
 <% end %>
-<div class="pageViewOptions">
-	<dl>
-		<dt>View Contents As:</dt>
-		<dd><a href="#">Thumbnails</a></dd>
-		<dd><a href="#">Details</a></dd>
-		<dd><a href="#">Icons</a></dd>
-	</dl>												
-</div>
 
 <div class="pageActionOptions">
 	From here you can:
 	<dl>
-		<dd><a href="#">Add A file</a></dd>
+		<dd><%= link_to_remote( 'Add A file', 
+											 :url => { :controller=>'asset', :action => "edit", :category_id =>@category.id, :update=>'new_asset_form' } ) %></dd>
 	</dl>											
 </div>
 

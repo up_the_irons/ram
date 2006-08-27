@@ -6,7 +6,7 @@ module IncludedTests::UserMethodsTest
    end
    
    def test_admin_shall_edit_users
-
+     todo "Allow admins to edit users."
    end
    
    def test_shall_find_users_by_login_or_by_id

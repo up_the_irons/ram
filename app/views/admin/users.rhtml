@@ -1,6 +1,7 @@
-<h1>Listing Users</h1>
+<%= render :partial =>'layouts/page_view_options', :locals=>{:view_options=>['thumbnails','details','icons'] }%>
 
-<table>
+<h1>Listing Users</h1>
+<table class="dataGrid">
 	<tr>
 		<th></th>
 		<th>Login</th>
@@ -9,14 +10,15 @@
 	</tr>
 	
 <% for user in @users %>
-	<tr>
-		<td><%= image_tag('/images/icons/user.png')%></td>
-  		<td><%= link_to(h(user.login),:controller=>'admin',:action=>'show_user', :id=>user) %></td>
-  		<td><%= user.email unless user.email.nil? -%></td>
-  		<td><%= User::STATUS[user.state] -%></td>
-  	</tr>
-<% end -%>
+  <%row_class =  cycle("even", "odd") %>
+	<tr id="<%="user_#{user.id}"%>" onmouseover="this.className='highlighted'" onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>">
+		<% ["#{image_tag('/images/icons/user.png')}","#{user.login}", "#{user.email unless user.email.nil?}","#{User::STATUS[user.state]}"].each do|txt| -%> 
+			<td>
+				<%= link_to txt,{:controller=>'admin',:action=>'show_user', :id=>user}, {:title=>"show #{user.login}\'s Profile" }  %>
+			</td>
+		<%end -%>
+	</tr>
+<% end unless @users.nil? %>
 </table>
-
 <%= link_to 'Previous page', { :page => @user_pages.current.previous } if @user_pages.current.previous %>
 <%= link_to 'Next page', { :page => @user_pages.current.next } if @user_pages.current.next %> 

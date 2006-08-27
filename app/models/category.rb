@@ -1,3 +1,16 @@
+# Schema as of Sat Aug 26 15:14:40 PDT 2006 (schema version 12)
+#
+#  id                  :integer(11)   not null
+#  name                :string(255)   
+#  description         :text          
+#  public              :boolean(1)    default(true)
+#  user_id             :integer(11)   
+#  type                :string(255)   
+#  state_id            :integer(11)   
+#  parent_id           :integer(11)   
+#  counter_cache       :boolean(1)    default(true)
+#
+
 # Schema as of Sat Jun 24 11:18:29 PDT 2006 (schema version 6)
 #
 #  id                  :integer(11)   not null

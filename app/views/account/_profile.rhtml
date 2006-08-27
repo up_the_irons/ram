@@ -6,8 +6,12 @@
 			  *profile image*
 			</div>
 			<div class="profileData">
-				<h1><%= user.full_name unless user.full_name.nil? %><span class="mice_type">(<%= user.login %>)</span> <%= link_to 'edit', {},{:class=>'editOptions'} %></h1>
-				<h2>*Job Title* <a class="editOptions" href="">edit</a></h2>
+				<h1>
+					<%= user.full_name unless !defined?(user.full_name) || user.full_name.nil? %>
+					<span class="mice_type">(<%= user.login %>)</span> 
+					<%= link_to_if_editable "edit",{:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"} %>
+				</h1>
+				<h2>*Job Title* <%= link_to_if_editable "edit",{:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"} %></h2>
 				<h3>*Company*</h3>
 				<h4>Phone Number: *Phone Number*</h4>
 				<h4>Email Address: <%= user.email %></h4>

@@ -1,3 +1,8 @@
+<%= render :partial =>'layouts/page_view_options', :locals=>{:view_options=>['thumbnails','details','icons'] }%>
+<% 
+#TODO REMOVE THIS HATEFUL HACK BEFORE GARRY KILLS ME.
+
+@category ||= Category.new %>
 <table class="dataGrid">
 	<tr>
 		<th>Name <span class="miceType">(click file to view)</span></th>
@@ -6,8 +11,6 @@
 		<th>Date Modified</th>
 		<th>Groups</th>
 		<th>Actions</th>
-		<th>Save</th>
-		<th></th>
 	</tr>
 	
 <% for asset in @assets -%>
@@ -18,6 +21,8 @@
 		<td><%= asset.content_type %></td>
 		<td><%= asset.updated_on %></td>
 		<td><%= asset.groups.find(:all).map{|g| link_to(g.name, :action=>'show',:controller=>'group',:id=>g.id)}.join(', ') %></td>
+		
+		<% unless params[:controller] == 'folio' -%>
 		<td>
 		<%= link_to_remote(image_tag('/images/icons/pencil.png'),
 							   :url=>{
@@ -41,8 +46,15 @@
 							:confirm=>"Are you sure you want to delete #{ h asset.name}?"
 							) 
 			%>
+			<%= link_to image_tag('/images/icons/add.png',{:title=>'Add to Folio to Download'}), {:controller=>'folio', :action=>'add', :category_id=>@category.id,:asset_id=>asset.id},:post=>true %> 
 		</td>
-		<td><%= link_to 'Add to Folio', {:controller=>'folio', :action=>'add', :category_id=>@category.id,:asset_id=>asset.id},:post=>true %> </td>
+		<% else -%>
+		<td>
+			<%= link_to image_tag('/images/icons/cross.png'),
+		                  {:controller=>'folio', :action=>'remove', :id=>asset.id},
+		                  {:confirm=> "Are you sure you want to remove #{ h asset.name}?", :post=>true} %>
+		</td>
+		<% end -%>
 	</tr>
 <% end unless @assets.nil? %>
 </table>

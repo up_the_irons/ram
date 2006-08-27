@@ -12,11 +12,17 @@ class AssetController < ProtectedController
     @asset = Asset.find(params[:id])
     
     if @asset.image?
-      send_data @asset.data, :filename => @asset.filename, :type => @asset.content_type, :disposition => 'inline'
+      #send_data @asset.data, :filename => @asset.filename, :type => @asset.content_type, :disposition => 'inline'
+      
     else
        headers['Content-Type'] = @asset.content_type
        render :text => @asset.data
     end
+  end
+  
+  def show_inline
+    @asset = Asset.find(params[:id])
+    send_data @asset.data, :filename => @asset.filename, :type => @asset.content_type, :disposition => 'inline'
   end
   
   #def new

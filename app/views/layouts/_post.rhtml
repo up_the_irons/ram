@@ -1,0 +1,15 @@
+<div class="post">	
+	<ul class="postHeader">
+		<li>From: <%= post.author %></li>
+		<li>Type: <%= post.typeof %></li>
+		<li>Delivered On: <%=post.created_at %></li>
+	</ul>
+	<h1><%= post.subject %></h1>
+	<p id="post_body_#{post.id}"><%= post.body %></p>
+	<% if defined?(tags) %>
+	<ul class="tags">
+		<label>Tags</label>
+		<li><a href="#">Add A New Tag</a></li>
+	</ul>
+	<% end -%>												
+</div>

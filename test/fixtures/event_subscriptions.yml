@@ -1,3 +1,10 @@
+# Schema as of Sat Aug 26 15:14:40 PDT 2006 (schema version 12)
+#
+#  id                  :integer(11)   not null
+#  user_id             :integer(11)   
+#  event_trigger_id    :integer(11)   
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 quentin_1:
   id: 1

@@ -1,21 +1,4 @@
-<h3>Folio Items</h3>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>type</th>
-    <th>Action</th>
-  </tr>
-  <% session[:folio].each do |i|
-      a = Asset.find(i)
-  -%>
-  <tr>
-    <td><%= a.name %></td>
-    <td><%= a.type %></td>
-    <td><%= link_to image_tag('/images/icons/cross.png'),
-                  {:controller=>'folio', :action=>'remove', :id=>a.id},
-                  {:confirm=> "Are you sure you want to remove #{ h a.name}?", :post=>true} %></td>
-  </tr>
-  <% end -%>
-</table>
+<h1>Folio Items</h1>
+<%= render :partial=>'asset/list'%>
 <p><%= link_to'Empty Folio', {:controller=>'folio', :action=>'remove_all'},{:post=>true} %></p>
 <p><%= link_to'Download Archive of folio as a .zip file', :action=>'zip' %></p>

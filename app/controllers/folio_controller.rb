@@ -11,7 +11,16 @@ class FolioController < ProtectedController
   
   
   def list
-    flash[:notice] = "Your folio is empty." if session[:folio].empty?
+      @assets = []
+    if session[:folio].empty?
+      flash[:notice] = "Your folio is empty." 
+    else
+      session[:folio].map do |a| 
+        asset = Asset.find(a)
+        @assets << asset if asset
+      end
+    end
+    
   end
   
   def add

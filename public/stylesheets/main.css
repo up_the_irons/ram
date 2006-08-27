@@ -43,7 +43,7 @@ a:link, a:visited
 }	
 body
 {
-	background-color : #eee;
+	background-color : #333257;
 }
 
 #applicationWrapper
@@ -104,7 +104,7 @@ body
 	background-image  : url(/images/header-background.gif);
 	background-repeat : repeat-x;
 	padding           : 10px 10px 5px 10px;
-	background-color  : #eee;
+	background-color  : #333257;
 }
 	
 #applicationHeader h1
@@ -175,7 +175,7 @@ body
 {
 	float             : left;
 	width             : 100%;
-	background-color  : #eee;
+	background-color  : #333257;
 	line-height       : normal;
 }
 
@@ -208,7 +208,7 @@ body
 	background        : url("/images/tab-right.gif") no-repeat right top;
 	padding           : 5px 15px 4px 6px;
 	text-decoration   : none;
-	color             : #eee
+	color             : #333257
 }	
 
 #pageHeader li.selected a
@@ -232,8 +232,45 @@ body
 {
 	display          : block;
 	clear            : both;
-	padding          : 20px;
+	padding          : 5px 20px 20px 20px;
 	background-color : #FFF;
+	font-family      : "Century Gothic",arial,sans-serif;
+	text-align       : left;
+	font-style       : normal;
+	font-variant     : normal;
+	font-weight      : normal;
+	line-height      : normal;
+	font-size-adjust : none;
+	font-stretch     : normal;
+}
+#pageContent h1{
+	font-family        : "Century Gothic",arial,sans-serif;
+	text-align         : left;
+	font-style         : normal;
+	font-variant       : normal;
+	font-weight        : normal;
+	line-height        : normal;
+	font-size-adjust   : none;
+	font-stretch       : normal;
+	margin-bottom      : 0.5em;
+	padding-bottom     : 0.5em;
+	color              : #333;
+	font-size          : 1.9em;
+	border-bottom      : 1px solid #efefef;
+}
+#pageContent dl.listings{
+	border            : 1px solid #efefef;
+	padding           : 0 20px 20px 20px;
+	margin-bottom     : 10px;
+}
+#pageContent dl.listings dd{
+	padding-left      : 10px;
+
+}
+#pageContent dl.listings dt{
+	font-size         : 1.2em;
+	margin-bottom     : 5px;
+	margin-top        : 20px;
 }
 .pageActionOptions
 {

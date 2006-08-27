@@ -1,4 +1,4 @@
-# Schema as of Sat Jun 24 11:18:29 PDT 2006 (schema version 6)
+# Schema as of Sat Aug 26 15:14:40 PDT 2006 (schema version 12)
 #
 #  id                  :integer(11)   not null
 #  login               :string(40)    
@@ -11,6 +11,7 @@
 #  created_at          :datetime      
 #  updated_at          :datetime      
 #  role                :integer(11)   default(0)
+#  last_login_at       :datetime      
 #
 
 require 'digest/sha1'

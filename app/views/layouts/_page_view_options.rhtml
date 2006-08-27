@@ -1,0 +1,15 @@
+<% 
+	content_for('page_view_options') do 
+		unless !defined?(view_options) || view_options.nil? || view_options.empty?
+-%>
+<div class="pageViewOptions">
+	<dl>
+		<dt><%= title ||= "View Contents As" %>: </dt>
+		<% for option in view_options -%>
+		<dd><a href="#" onclick="Content.display_as('<%= option.downcase.underscore.gsub(/\s+/,'_')%>');return false;"><%= option.titleize %></a></dd>
+		<% end -%>
+	</dl>												
+</div>
+<%		end
+	end
+ -%>

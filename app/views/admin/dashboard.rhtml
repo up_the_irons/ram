@@ -1,8 +1,37 @@
-<dl class="inline_list">
-	<dt>From here you can manage:</dt>
-	<dd style="display:inline"><%= link_to 'Users', :controller=>'admin', :action=>'users' %></dd>
-	<dd style="display:inline"><%= link_to 'Groups', :controller=>'admin', :action=>'groups' %></dd>
-	<dd style="display:inline"><%= link_to 'Categories', :controller=>'admin', :action=>'categories' %></dd>
-</dl>
-		
+<%= render :partial =>'layouts/page_view_options'%>
+<h1>Administrator's Dashboard</h1>
+<!-- /Page Options //-->
+<div class="pageActionOptions" style="width:480px;">
+	<dl class="inline_list">
+		<dt>From here you can manage:</dt>
+		<dd style="display:inline"><%= link_to 'Users', :controller=>'admin', :action=>'users' %></dd>
+		<dd style="display:inline"><%= link_to 'Groups', :controller=>'admin', :action=>'groups' %></dd>
+		<dd style="display:inline"><%= link_to 'Categories', :controller=>'admin', :action=>'categories' %></dd>
+	</dl>											
+</div>
+<div class="row"></div>
+<div id="inboxMenu">
+	<ul>
+		<li class="menuLabel_selected"><%= link_to 'My Messages', :controller => 'events', :action => 'list' %></li>
+		<li class="menuData"></li>
+		<!-- 
+		TODO Implement this functionality
+		<li class="menuLabel"><a href="#">My Tasks</a> <a class="newItems" href="#">(0) New</a></li>
+		<li class="menuData"></li>
+		<li class="menuLabel"><a href="#">My Watch List</a> <a class="newItems" href="#">(23234) New</a></li>
+		<li class="menuData"></li>
+		<li class="menuLabel"><a href="#">My Recent Files</a></li>
+		<li class="menuData">
+			<ul>
+				<li class="menuDataItem_odd"><a href="#">TODO</a></li>	
+				<li class="menuDataItem_even"><a href="#">THISTO</a></li>
+			</ul>
+		</li>
+		-->
+	</ul>																								
+</div>
+<!-- /inbox menu //-->
 <%= render :partial => 'events/list' %>
+<!-- /Post //-->
+<div class="row"></div>	
+
