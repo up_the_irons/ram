@@ -1,7 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AssetTest < Test::Unit::TestCase
-  fixtures :collections, :attachments,:db_files, :linkings, :users, :memberships
+  fixtures :collections, :attachments, :db_files, :linkings, :users, :memberships
+
   def setup
   		@model = Asset
   		@record_one = Asset.find(1)
@@ -52,6 +53,22 @@ class AssetTest < Test::Unit::TestCase
     assert_difference Linking, :count, -11 do
       Asset.find(:all). each do |a|
         a.destroy()
+      end
+    end
+  end
+
+  def test_search
+    [{:groups => [collections(:collection_4).id, collections(:collection_3).id], :expected_num_of_results => 2},
+     {:groups => [collections(:collection_4).id], :expected_num_of_results => 1}].each do |h|
+      groups = h[:groups]
+      results = Asset.search('nes', groups)
+
+      # With current fixture data, we expect 2 results
+      assert_equal h[:expected_num_of_results], results.size
+
+      results.each do |r|
+        # Assert we got assets only in the groups we queried
+        assert !(r.groups.map { |o| o.id } & groups).empty? 
       end
     end
   end
