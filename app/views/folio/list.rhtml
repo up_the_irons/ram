@@ -1,4 +1,6 @@
 <h1>Folio Items</h1>
-<%= render :partial=>'asset/list'%>
+<%= render :partial=>'asset/list' -%>
+<% if session[:folio].size > 0 %>
 <p><%= link_to'Empty Folio', {:controller=>'folio', :action=>'remove_all'},{:post=>true} %></p>
 <p><%= link_to'Download Archive of folio as a .zip file', :action=>'zip' %></p>
+<% end -%>
