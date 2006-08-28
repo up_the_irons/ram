@@ -15,8 +15,7 @@
 			
 		<% ["#{image_tag('/images/icons/email.png')}","System Message", "#{e.subject}","#{e.created_at}"].each do|txt| -%> 
 			<td>
-				<%#= link_to_remote txt, { :url => { :controller => 'events', :action => 'show', :id => e.id }}, { :id => "a_href_#{e.id}" }  %>
-				<a href="#" onclick="(content.in_cache($('event_body_container_<%= e.id %>')))?$('event_body_container_<%= e.id %>').toggle() : new Ajax.Request('/events/show/<%= e.id %>', {asynchronous:true, evalScripts:true}); return false;"><%= txt %></a>
+        <a href="#" onclick="(content.in_cache($('event_body_container_<%= e.id %>')))?$('event_body_container_<%= e.id %>').toggle() : <%= remote_function(:url => { :controller => 'events', :action => 'show', :id => e.id }) %>; return false;"><%= txt %></a>
 			</td>
 		<%end -%>
 			
