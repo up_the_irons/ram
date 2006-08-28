@@ -35,7 +35,8 @@ class EventsController < ProtectedController
       page.replace_html "event_body_#{params[:id]}", :partial=>'layouts/post',:locals=>{:post=>@event}
       # Replace the onclick handler that got us here with a simple element toggler. We already have the msg
       # body loaded, so we don't need to call this action again.
-      page << "$('a_href_#{params[:id]}').onclick = function() { $('event_body_container_#{params[:id]}').toggle(); return false }"
+      page << "$(content.cache.push($('event_body_container_#{params[:id]}')))"
+      #page << "$('a_href_#{params[:id]}').onclick = function() { $('event_body_container_#{params[:id]}').toggle(); return false }"
     end if @event
   end
 

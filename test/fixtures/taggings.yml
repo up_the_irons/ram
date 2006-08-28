@@ -1,0 +1,76 @@
+--- 
+taggings1: 
+  id: 1
+  taggable_id: 1
+  tag_id: 1
+  taggable_type: Asset
+taggings2: 
+  id: 2
+  taggable_id: 1
+  tag_id: 2
+  taggable_type: Asset
+taggings3: 
+  id: 3
+  taggable_id: 1
+  tag_id: 3
+  taggable_type: Asset  
+taggings4: 
+  id: 4
+  taggable_id: 2
+  tag_id: 4
+  taggable_type: Asset  
+taggings5: 
+  id: 5
+  taggable_id: 2
+  tag_id: 5
+  taggable_type: Asset  
+taggings6: 
+  id: 6
+  taggable_id: 2
+  tag_id: 6
+  taggable_type: Asset
+taggings7: 
+  id: 7
+  taggable_id: 4
+  tag_id: 7
+  taggable_type: Asset  
+taggings8: 
+  id: 8
+  taggable_id: 4
+  tag_id: 4
+  taggable_type: Asset  
+taggings9: 
+  id: 9
+  taggable_id: 4
+  tag_id: 8
+  taggable_type: Asset
+taggings10: 
+  id: 10
+  taggable_id: 5
+  tag_id: 9
+  taggable_type: Asset
+taggings11: 
+  id: 11
+  taggable_id: 5
+  tag_id: 10
+  taggable_type: Asset
+taggings12: 
+  id: 12
+  taggable_id: 6
+  tag_id: 11
+  taggable_type: Asset
+taggings13: 
+  id: 13
+  taggable_id: 6
+  tag_id: 12
+  taggable_type: Asset
+taggings14: 
+  id: 14
+  taggable_id: 7
+  tag_id: 9
+  taggable_type: Asset
+taggings15: 
+  id: 15
+  taggable_id: 7
+  tag_id: 13
+  taggable_type: Asset

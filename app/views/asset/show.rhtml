@@ -10,8 +10,10 @@
 		<p>
 		<%= @asset.description %></p>
 		<ul class="tags">
-			<label>Tags</label>
-			<li></li>
+			<label><%= image_tag('/images/icons/tag_blue.png')%> Tags</label>
+			<% for tag in @asset.tags -%>
+			<li><%= tag.name %></li>
+			<% end -%>
 		</ul>
 </div>
 <br class="clear_both" />

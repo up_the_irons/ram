@@ -1,23 +1,15 @@
 <h1>Listing groups</h1>
 
-<table>
-  <tr>
-  <% for column in Group.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
-  </tr>
-  
+<dl class="listings">  
 <% for group in @groups %>
-  <tr>
-  <% for column in Group.content_columns %>
-    <td><%=h group.send(column.name) %></td>
-  <% end %>
-    <td><%= link_to 'Show', :action => 'show', :id => group %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => group %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => group }, :confirm => 'Are you sure?', :post => true %></td>
-  </tr>
-<% end %>
-</table>
+  <dt><%= link_to(h(group.name),:controller=>'group',:action=>'show', :id=>group) %></dt>
+  <dd style="display:inline;"><%= h group.description %>
+  <% if current_user.is_admin? %>
+  [ <%= link_to('Edit', :controller=>'admin', :action => 'edit_group', :id => group)%> | 
+  <%= link_to('Destroy', { :controller=>'admin', :action => 'destroy_group', :id => group }, :confirm => 'Are you sure?', :post => true ) %> ]
+  <% end -%>
+<% end -%>
+</dl>
 
 <%= link_to 'Previous page', { :page => @group_pages.current.previous } if @group_pages.current.previous %>
 <%= link_to 'Next page', { :page => @group_pages.current.next } if @group_pages.current.next %> 

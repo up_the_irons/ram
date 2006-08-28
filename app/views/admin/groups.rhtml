@@ -1,6 +1,6 @@
 <h1>Listing Groups</h1>
 
-<dl>  
+<dl class="listings">  
 <% for group in @groups %>
   <dt><%= link_to(h(group.name),:controller=>'admin',:action=>'show_group', :id=>group) %></dt>
   <dd style="display:inline;"><%= h group.description %>

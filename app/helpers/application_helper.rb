@@ -10,7 +10,7 @@ module ApplicationHelper
   def display_as asset
     case asset.content_type
       when 'image/jpeg','image/jpg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png'
-        return "<img src='#{url_for :controller=>"asset", :action=>"show", :id=>@asset.id }' />"
+        return "<img src='#{url_for :controller=>"asset", :action=>"show_inline", :id=>@asset.id }' />"
       when 'application/pdf'
         return "#{image_tag('/images/icons/page_white_acrobat.png')} #{link_to( asset.name, :controller=>'asset', :action=>'show',:id=>@asset.id)}"
       else

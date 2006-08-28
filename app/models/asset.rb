@@ -25,9 +25,9 @@
 
 #class Asset < Attachment
 class Asset < ActiveRecord::Base  
-   acts_as_attachment
-  
-   set_table_name "attachments"
+  acts_as_attachment
+  acts_as_taggable
+  set_table_name "attachments"
    # has_and_belongs_to_many :access_contexts, :table_name=>'access_contacts_attachments', :foreign_key=>'access_context'
    #has_and_belongs_to_many :access_contexts,
    #                         :join_table=>'access_contexts_attachments', 
@@ -77,6 +77,11 @@ class Asset < ActiveRecord::Base
    def name
      filename
    end
+   
+  def tags= (str)
+    arr = str.split(",").uniq
+    self.tag_with arr.map{|a| a}.join(",") unless arr.empty?
+  end
 
    # Read from the model's attributes if it's available.
    def data

@@ -35,7 +35,7 @@ module IncludedTests::CategoryMethodsTest
   end
   
   def test_removing_group_from_category_removes_assets_linked_only_to_that_group
-    
+    todo
   end
   
   def test_add_group_to_category

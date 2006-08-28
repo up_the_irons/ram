@@ -35,7 +35,7 @@ module ToDoExtensionsPlugin
             stackLine =  caller(1)[0]
             stackLine=~/(\w*)\.rb\:(\w*)\:\s*in\s*\`(\w*)'/
 
-            puts "-----------------------------------"
+            puts "\n-----------------------------------"
             puts "TODO   : #{message}"
             puts "Class  : Oxxxx{::#{$1}:::>"
             puts "Method : #{$3}"

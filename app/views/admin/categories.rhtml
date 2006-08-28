@@ -1,6 +1,6 @@
 <h1>Listing categories</h1>
 
-<dl>  
+<dl class="listings">  
 <% for category in @categories %>
   <dt><%= link_to(h(category.name),:controller=>'category',:action=>'show', :id=>category) %></dt>
   <dd style="display:inline;"><%= h category.description %>

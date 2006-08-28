@@ -181,13 +181,14 @@ class AssetController < ProtectedController
         respond_to do |wants|
           wants.js do 
             render :update do |page|
+              #TODO There is a bug with Safari and this event, It renders the response inline as text instead of executing javascript. maybe it has something to do with the post?
               page.replace_html(params[:update],  'Asset was saved.')
             end
           end
-          wants.html do |wants|
-            flash[:notice] = 'asset has been saved.'
-            redirect_to :controller=>'category', :action=>'show', :id=>@category.id 
-          end
+          #wants.html do |wants|
+          #  flash[:notice] = 'Asset has been saved.'
+          #  redirect_to :controller=>'category', :action=>'show', :id=>@category.id 
+          #end
         end
       end
     end

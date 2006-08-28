@@ -1,9 +1,0 @@
-<h1>Editing collection</h1>
-
-<%= start_form_tag :action => 'update', :id => @collection %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
-
-<%= link_to 'Show', :action => 'show', :id => @collection %> |
-<%= link_to 'Back', :action => 'list' %>

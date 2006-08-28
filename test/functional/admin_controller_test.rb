@@ -37,7 +37,7 @@ class AdminControllerTest < Test::Unit::TestCase
   
   
   def test_admin_shall_assign_groups_to_categories
-  
+    todo
   end
     
 end

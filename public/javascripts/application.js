@@ -15,10 +15,21 @@ Ajax.Responders.register({
 }
 )
 
-Content ={
+content ={
 	//TODO: This is where the toggling of display options should be implemented.
+	cache: [],
 	display_as: function(str){
 		alert('display content as: '+str);
+	},
+	in_cache: function(element){
+		if(content.cache.include(element)){
+			return true;
+		}else{
+			return false;
+		}
+	},
+	add_to_cache: function(e){
+		content.cache.push(e);
 	}
 }
 
