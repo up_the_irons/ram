@@ -4,7 +4,7 @@ module ApplicationHelper
   def display_flash_message
     flash_types = [:error, :warning, :notice ]
     flash_type = flash_types.detect{ |a| flash.keys.include?(a) }
-    "<div class='flash_%s'>%s</div>" % [flash_type.to_s, flash[flash_type]] if flash_type
+    "<div id='page_flash' class='flash_%s'>%s</div>" % [flash_type.to_s, flash[flash_type]] if flash_type
   end
   
   def display_as asset

@@ -179,16 +179,16 @@ class AssetController < ProtectedController
             end
         end unless params[:groups].nil?
         respond_to do |wants|
+          wants.html do |wants|
+            flash[:notice] = "Asset was saved"
+            redirect_to :controller=>'category', :action=>'show', :id=>params[:category_id]
+          end
           wants.js do 
             render :update do |page|
-              #TODO There is a bug with Safari and this event, It renders the response inline as text instead of executing javascript. maybe it has something to do with the post?
+              #TODO There is a bug with Safari and this event, It renders the response inline as text instead of executing javascript. maybe it has something to do with the post
               page.replace_html(params[:update],  'Asset was saved.')
             end
           end
-          #wants.html do |wants|
-          #  flash[:notice] = 'Asset has been saved.'
-          #  redirect_to :controller=>'category', :action=>'show', :id=>@category.id 
-          #end
         end
       end
     end
