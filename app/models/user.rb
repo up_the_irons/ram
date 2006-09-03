@@ -1,3 +1,19 @@
+# Schema as of Sat Sep 02 01:11:01 PDT 2006 (schema version 15)
+#
+#  id                  :integer(11)   not null
+#  login               :string(40)    
+#  email               :string(100)   
+#  crypted_password    :string(40)    
+#  salt                :string(40)    
+#  activation_code     :string(40)    
+#  activated_at        :datetime      
+#  state               :integer(11)   default(0)
+#  created_at          :datetime      
+#  updated_at          :datetime      
+#  role                :integer(11)   default(0)
+#  last_login_at       :datetime      
+#
+
 # Schema as of Sat Aug 26 15:14:40 PDT 2006 (schema version 12)
 #
 #  id                  :integer(11)   not null

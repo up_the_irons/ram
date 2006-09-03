@@ -1,4 +1,4 @@
-# Schema as of Sat Aug 26 15:14:40 PDT 2006 (schema version 12)
+# Schema as of Sat Sep 02 01:11:01 PDT 2006 (schema version 15)
 #
 #  id                  :integer(11)   not null
 #  name                :string(255)   
@@ -10,6 +10,7 @@
 #  parent_id           :integer(11)   
 #  counter_cache       :boolean(1)    default(true)
 #
+
 
 class Group < Collection
 	has_many :memberships, :foreign_key=>:collection_id

@@ -1,0 +1,2 @@
+class ArticleController < ProtectedController
+end

@@ -1,0 +1,28 @@
+<% content_for('bread_crumbs') do -%>
+  <% if( !@category.nil? && @category.bread_crumbs.size > 0 ) -%>
+    <%=	@category.bread_crumbs.map{|x| "<li>#{link_to(x.name, :controller=>'category',:action=>'show',:id=>x.id)} </li>"} -%>
+  <% end -%>
+  <%= "<li>#{link_to(@category.name,:controller=>'category',:action=>'show',:id=>@category.id)} </li>" unless @category.nil?%>
+  <%= "<li>Bulk Uploader </li>"%>
+<% end -%>
+
+<h1>Bulk Uploader</h1>
+<div class="pageInstructions" style="width:550px;">
+  <dl>
+    <dt><strong>File Uploading</strong></dt>
+   	<dd>You can upload <strong>files only</strong>; you cannot upload folders.</dd>
+   	<dd>You can select <strong>multiple files</strong> from your harddrive.</dd>
+   	<dd>There is a <strong><%=number_to_human_size(@size_limit) %></strong> upload limit (per file).</dd>
+  <dl>										
+</div>
+
+<div id="flash_uploader_container"></div>
+<script type="text/javascript">
+  /* <![CDATA[ */
+ 	var so = new SWFObject('/swfs/fileUploader.swf?<%= @url_params %>','uploader', '550','400', '8', '#ffffff');
+ 	so.addParam('allowScriptAccess', 'sameDomain');
+ 	so.addParam('quality', 'high');
+ 	so.addParam('align', 'middle');
+   so.write('flash_uploader_container')
+   /* ]]> */ 
+</script>

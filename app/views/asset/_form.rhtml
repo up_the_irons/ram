@@ -32,12 +32,14 @@ form_tag({:controller=>'asset', :action =>@action, :id=>@asset.id}, {:multipart 
 		</select>
 		</li>
 		<% end -%>
-	
+
 		<li id="image_field"><label>File:</label>
 			<%= display_as @asset -%>
 		</li>
-	<% else -%>	
+	<% else -%>
+		<li><label>&nbsp;</label><h4>Have a lot of files to upload? You should try the "<%= link_to "Bulk Uploader", :controller=>'asset',:action=>'bulk_upload',:id=>@category.id %>"</h4></li>
 		<li id="image_field"><label>File: </label> <%= file_field :asset, :uploaded_data %></li>
+
 	<% end -%>
     <li><label>Description: </label><%= text_area :asset, :description,{:rows=>4} %></li>
 	<li><label><%= image_tag '/images/icons/tag_blue.png' %>Tags:</label><input id="asset_tags" name="asset[tags]" size="30" value="<%= @asset.tags.map{|t| t.name}.join(", ")%>" type="text"></li>

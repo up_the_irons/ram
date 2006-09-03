@@ -1,4 +1,4 @@
-# Schema as of Sat Aug 26 15:14:40 PDT 2006 (schema version 12)
+# Schema as of Sat Sep 02 01:11:01 PDT 2006 (schema version 15)
 #
 #  id                  :integer(11)   not null
 #  content_type        :string(100)   
@@ -21,6 +21,7 @@
 #  created_on          :datetime      
 #  updated_on          :datetime      
 #  type                :string(255)   
+#  category_id         :integer(11)   
 #
 
 #class Asset < Attachment
@@ -54,7 +55,29 @@ class Asset < ActiveRecord::Base
 
    #TODO: make this validation work
    #validates_uniqueness_of :filename, :scope => [:groups]
-   
+   def name
+     filename
+  end
+
+   def tags= (str)
+     arr = str.split(",").uniq
+     self.tag_with arr.map{|a| a}.join(",") unless arr.empty?
+   end
+
+    # Read from the model's attributes if it's available.
+    def data
+      read_attribute(:data) || write_attribute(:data, (db_file_id ? db_file.data : nil))
+    end
+
+    # set the model's data attribute and attachment_data
+    def data=(value)
+      self.attachment_data = write_attribute(:data, value)
+    end
+
+    def full_path
+      (path && filename) ? File.join(path, filename) : (filename || path)
+    end
+    
    class << self    
      def search(query, groups)
        groups = [groups].flatten
@@ -72,32 +95,76 @@ class Asset < ActiveRecord::Base
        path     = pieces.join '/'
        find_with_data :first, :conditions => ['path = ? and filename = ?', path, filename]
      end
+      def mime_type (ext)
+    		re = /(\.)/
+    		md = re.match(ext)
+    		type = case md.post_match.downcase
+    				when "hqx"  : "application/mac-binhex40"
+    				when "doc"  : "application/msword"
+    				when "exe"  : "application/octet-stream"
+    				when "pdf"  : "application/pdf"
+    				when "prf"  : "application/pics-rules"
+    				when "ai"   : "application/postscript"
+    				when "eps"  : "application/postscript"
+    				when "ps"   : "application/postscript"
+    				when "rtf"  : "application/rtf"
+    				when "xla"  : "application/vnd.ms-excel"
+    				when "xlc"  : "application/vnd.ms-excel"
+    				when "xlm"  : "application/vnd.ms-excel"
+    				when "xls"  : "application/vnd.ms-excel"
+    				when "xlt"  : "application/vnd.ms-excel"
+    				when "xlw"  : "application/vnd.ms-excel"
+    				when "pot"  : "application/vnd.ms-powerpoint"
+    				when "pps"  : "application/vnd.ms-powerpoint"
+    				when "ppt"  : "application/vnd.ms-powerpoint"
+    				when "dcr"  : "application/x-director"
+    				when "dir"  : "application/x-director"
+    				when "dxr"  : "application/x-director"
+    				when "dvi"  : "application/x-dvi"
+    				when "gtar" : "application/x-gtar"
+    				when "gz"   : "application/x-gzip"
+    				when "js"   : "application/x-javascript"
+    				when "zip"  : "application/zip"
+    				when "au"   : "audio/basic"
+    				when "snd"  : "audio/basic"
+    				when "mid"  : "audio/mid"
+    				when "rmi"  : "audio/mid"
+    				when "mp3"  : "audio/mpeg"
+    				when "m3u"  : "audio/x-mpegurl"
+    				when "wav"  : "audio/x-wav"
+    				when "bmp"  : "image/bmp"
+    				when "gif"  : "image/gif"
+    				when "jpe"  : "image/jpeg"
+    				when "jpeg" : "image/jpeg"
+    				when "jpg"  : "image/jpeg"
+    				when "jfif" : "image/pipeg"
+    				when "tif"  : "image/tiff"
+    				when "tiff" : "image/tiff"
+    				when "htm"  : "text/html"
+    				when "html" : "text/html"
+    				when "txt"  : "text/plain"
+    				when "mp2"  : "video/mpeg"
+    				when "mpa"  : "video/mpeg"
+    				when "mpe"  : "video/mpeg"
+    				when "mpeg" : "video/mpeg"
+    				when "mpg"  : "video/mpeg"
+    				when "mpv2" : "video/mpeg"
+    				when "mov"  : "video/quicktime"
+    				when "qt"   : "video/quicktime"
+    				when "avi"  : "video/x-msvideo"
+    				else "application/octet-stream"
+    			end
+    	end
+    	
+    	#Adobe Flash 8 uses a nonstandard syntax for their multipart form posts
+    	#Acts_as_attachment expects the standard format, which this method simulates through an open struct
+    	def translate_flash_post(filedata)
+    	  translated = Struct.new(:content_type,:original_filename,:read)
+        t = translated.new( "#{Asset.mime_type(filedata.original_filename)}",
+                            "#{filedata.original_filename.gsub(/[^a-zA-Z0-9.]/, '_')}",
+                            filedata.read
+                          )
+      end
    end
-   
-   def name
-     filename
-   end
-   
-  def tags= (str)
-    arr = str.split(",").uniq
-    self.tag_with arr.map{|a| a}.join(",") unless arr.empty?
-  end
-
-   # Read from the model's attributes if it's available.
-   def data
-     read_attribute(:data) || write_attribute(:data, (db_file_id ? db_file.data : nil))
-   end
-
-   # set the model's data attribute and attachment_data
-   def data=(value)
-     self.attachment_data = write_attribute(:data, value)
-   end
-
-   def full_path
-     (path && filename) ? File.join(path, filename) : (filename || path)
-   end
-   
-   private
-   
 end
 

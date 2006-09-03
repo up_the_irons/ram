@@ -19,6 +19,6 @@ class CreateCollections < ActiveRecord::Migration
 
   def self.down
     drop_table :collections
-	drop_table :memberships
+	  drop_table :memberships
   end
 end

@@ -14,7 +14,7 @@
   <%row_class =  cycle("even", "odd") %>
 	<tr id="<%="asset_#{asset.id}"%>" onmouseover="this.className='highlighted'" onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>">
 		<td><%= link_to asset.name, :controller=>'asset', :action=>'show', :id=>asset.id %></td>
-		<td><%= asset.size %>Bytes</td>
+		<td><%= number_to_human_size asset.size %></td>
 		<td><%= asset.content_type %></td>
 		<td><%= asset.updated_on %></td>
 		<td><%= asset.groups.find(:all).map{|g| link_to(g.name, :action=>'show',:controller=>'group',:id=>g.id)}.join(', ') %></td>

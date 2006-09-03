@@ -15,7 +15,25 @@ class AssetControllerTest < Test::Unit::TestCase
   end
 
  #todo not sure this needs to be tested since it is just the base of the STI
+ def test_bulk_upload
+  login_as :quentin
+  @user = User.find(@request.session[:user])
+  get :bulk_upload, :id=>@category_with_asset
+  assert_equal assigns(:login), CGI.escape(@user.encrypt_login)
+  assert_response :success
+  assert assigns(:url_params)
+ end
  
+ def test_create_en_masse
+   login_as :quentin
+   get :create_en_masse
+   assert_redirected_to :action=>:index
+   login_as :quentin
+   @user = User.find(@request.session[:user])
+   post :create_en_masse, :hash=>CGI.escape(@user.encrypt_login)
+   assert_redirected_to :action=>:upload_results
+ end
+
  def test_assigned_and_remaining_groups
    todo
  end

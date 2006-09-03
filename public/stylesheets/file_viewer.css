@@ -1,12 +1,12 @@
 #inboxMenu
 {
-	margin           : 5px;
+	margin           : 10px 0 0 0;
 	display          : block;
 	float            : left;
 	background-color : #F7F8D8;
 	padding          : 5px;
 	border           : solid 1px #D5D6B2;
-	width            : 190px;
+	width            : 220px;
 	height           : 100%;
 }
 

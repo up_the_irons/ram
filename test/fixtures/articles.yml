@@ -1,0 +1,54 @@
+# Schema as of Sat Sep 02 01:11:01 PDT 2006 (schema version 15)
+#
+#  id                  :integer(11)   not null
+#  parent_id           :integer(11)   
+#  user_id             :integer(11)   
+#  title               :string(255)   
+#  permalink           :string(255)   
+#  excerpt             :text          
+#  body                :text          
+#  excerpt_html        :text          
+#  body_html           :text          
+#  created_at          :datetime      
+#  updated_at          :datetime      
+#  published_at        :datetime      
+#  children_count      :integer(11)   
+#  type                :string(255)   
+#  allow_comments      :boolean(1)    
+#  status              :integer(11)   default(0), not null
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first:
+  id: 1
+  parent_id:
+  user_id: 1         
+  title: 'What is the best Game system of all time?'           
+  permalink: ''       
+  excerpt: 'Let me know your favorites'         
+  body: "Let me know your favorites of alltime, I am making a list"                   
+  excerpt_html: "Let <b>me</b> know your favorites"   
+  body_html: "Let <b>me</b> know your favorites of alltime, I am making a list"       
+  created_at: "#{Time.now.to_s}"         
+  updated_at: "#{Time.now.to_s}"         
+  published_at: "#{Time.now.to_s}"   
+  type:
+  children_count: 1            
+  allow_comments: 0  
+  status: 1
+another:
+  id: 2
+  parent_id: 1
+  user_id: 1         
+  title: 'Atari is the best there ever was.'           
+  permalink: ''       
+  excerpt: 'Atari Rules'         
+  body: "Atari Rules Seriously, it does."                   
+  excerpt_html: "<b>Atari Rules</b>"   
+  body_html: "<b>Atari Rules</b> Seriously, it does."       
+  created_at: "#{Time.now.to_s}"         
+  updated_at: "#{Time.now.to_s}"         
+  published_at: "#{Time.now.to_s}"   
+  type: Comment            
+  allow_comments: 0  
+  status: 1          

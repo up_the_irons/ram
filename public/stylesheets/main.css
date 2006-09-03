@@ -3,8 +3,7 @@
 		padding          : 0;
 	}
 
-body
-	{
+body{
 		font             : 0.8125em Verdana, sans-serif;
 		color            : #333;
 		background       : #FFF;
@@ -18,64 +17,66 @@ body
 * html #applicationHeader {height: 1%;} /* for IE/Win */
 *>html #applicationHeader {he\ight: auto;} /* for IE5/Mac */
 
-a   
-	{
+a{
 		text-decoration  : underline;
 	}
 	
-a img
-	{
+a img{
 		border           : none;
 	}
 	
-a:link, a:visited
-	{
+a:link, a:visited{
 		color		     : #555; 
 		/* border-bottom    : 1px solid #555; */
 	}
-.subscribe a
-{
+.subscribe a{
 	color:#fff;
 	background-color:#FF9900;
 	padding:3px;
 	font-size: 0.8em;
 	text-decoration:none
 }	
-body
-{
+body{
 	background-color : #333257;
 }
 
-#applicationWrapper
-{
+#applicationWrapper{
 	width            : 900px;
 	margin           : auto;
 	background-color : #ffffff;
 	margin-bottom	 : 10px;
 }
 
-#topNav
-{
+#topNav{
 	display           : block;
 	width             : 100%;
-	height            : 2em;
+	padding-top       : 10px;
+	height            : 40px;
 	color             : #FFF;
 	margin            : auto;
 	background-color  : #000;
 	text-align        : right;
+	background-image  : url(/images/nav_background.jpg);
+	background-repeat : repeat-x;
 }
 
-#topNav h1
-{
+#topNav h1{
 	font-size         : 2em;
 	font-weight       : bold;
 	display           : inline;
 	float             : left;
 	padding-left      : 10px;
+	font-family      : "Century Gothic",arial,sans-serif;
+	text-align       : left;
+	font-style       : normal;
+	font-variant     : normal;
+	font-weight      : normal;
+	line-height      : normal;
+	font-size-adjust : none;
+	font-stretch     : normal;
 }
 
-#topNav ul
-{
+#topNav ul{
 	display           : inline;
 	font-family       : Verdana, Arial, Helvetica, sans-serif;
 	height            : 2em;
@@ -84,53 +85,45 @@ body
 	top               : 5px;
 }
 	
-#topNav ul a:link, #topNav ul a:visited
-{
+#topNav ul a:link, #topNav ul a:visited{
 	text-decoration   : underline;
 	color             : #FFFFFF;
 }
 	
-#topNav li
-{
+#topNav li{
 	margin            : 0;
 	padding-left      : 5px;
 	padding-right     : 5px;
-	border-right      : 1px solid #FFFFFF;
 	display           : inline;
 }
 	
-#applicationHeader
-{
+#applicationHeader{
 	background-image  : url(/images/header-background.gif);
 	background-repeat : repeat-x;
 	padding           : 10px 10px 5px 10px;
 	background-color  : #333257;
 }
 	
-#applicationHeader h1
-{
+#applicationHeader h1{
 	color             : #FFFFFF;
 	font-size         : 2em;
 	font-weight       : lighter;
 	margin            : 10px 0 10px 0;
 }
 
-.searchField, .searchSubmit
-{
+.searchField, .searchSubmit{
 	padding           : 2px;
 	color             : #ffffff;
 	background-color  : #5A5878;
 	border            : solid 1px #2C2951;
 }
 
-.searchField
-{
+.searchField{
 	color             :#333;
 	background-color  :#ffffff;
 }
 
-#breadcrumb
-{
+#breadcrumb{
 	margin            : 10px 10px 10px 0;     
 	background-color  : #E8F8D8;
 	border            : 1px solid #000000;
@@ -139,55 +132,46 @@ body
 	font-size         : .7em;
 }
 
-#breadcrumb a
-{
+#breadcrumb a{
 	text-decoration   : none;
 	border-bottom     : 1px solid #000; 
 }	
 
-#breadcrumb ul a:link, #breadcrumb ul a:visited
-{
+#breadcrumb ul a:link, #breadcrumb ul a:visited{
 	color             : #000;
 }
 
-#breadcrumb ul a:hover 
-{
+#breadcrumb ul a:hover {
 	color             : #000;
 	background-color  : #B3DA8B;
 }
 
-#breadcrumb li
-{
+#breadcrumb li{
 	display           : inline;
 }
 	
-#breadcrumb ul li:before
-{
+#breadcrumb ul li:before{
 	content           : " \00BB \0020 ";
 }
 	
-#breadcrumb ul li.first:before
-{
+#breadcrumb ul li.first:before{
 	content           : " ";
 }
 	
-#pageHeader
-{
+#pageHeader{
 	float             : left;
 	width             : 100%;
 	background-color  : #333257;
 	line-height       : normal;
 }
 
-#pageHeader ul
-{
+#pageHeader ul{
 	margin            : 0 0 0 10px;
 	list-style        : none;
 	padding           : 0;
 }
 
-#pageHeader li
-{
+#pageHeader li{
 	
 	background        : url("/images/tab-left.gif") no-repeat left top;
 	float             : left;
@@ -196,13 +180,28 @@ body
 	margin            : 0 10px 0 0;
 }
 	
-#pageHeader li.selected
-{
+#pageHeader li.selected{
 	background        : url("/images/tab-left-selected.gif") no-repeat left top;
 }
-	
-#pageHeader a
-{
+#sideMenuNav li{
+	border: 1px solid #dfdfdf;
+	padding: 2px;
+	display: inline;
+}
+#sideMenuNav{
+	border-bottom : 1px solid #dfdfdf;
+	padding       : 3px 0 2px 0;
+	margin-right  : 30px;
+	margin-bottom : 10px;
+}
+
+li.selected{
+	border: 1px solid #dfdfdf;
+	background-color: #eeeeff;
+	padding: 2px;
+	display: inline;
+}
+#pageHeader a{
 	float             : left;
 	display           : block;
 	background        : url("/images/tab-right.gif") no-repeat right top;
@@ -211,28 +210,24 @@ body
 	color             : #333257
 }	
 
-#pageHeader li.selected a
-{
+#pageHeader li.selected a{
 	 background       : url("/images/tab-right-selected.gif") no-repeat right top;
 }	
   
-#pageHeader ul a:link, #pageHeader ul a:visited
-{
+#pageHeader ul a:link, #pageHeader ul a:visited{
 	color             : #000;
 }
 	
-#pageHeader ul a:hover 
-{
+#pageHeader ul a:hover {
 	color            : #000;
 	background-color : transparent;
 	text-decoration  : underline;
 }
 
-#pageContent
-{
+#pageContent{
 	display          : block;
 	clear            : both;
-	padding          : 5px 20px 20px 20px;
+	padding          : 5px 20px 20px 10px;
 	background-color : #FFF;
 	font-family      : "Century Gothic",arial,sans-serif;
 	text-align       : left;
@@ -272,8 +267,7 @@ body
 	margin-bottom     : 5px;
 	margin-top        : 20px;
 }
-.pageActionOptions
-{
+.pageActionOptions, .pageInstructions{
 	clear             : both;
 	display           : block;
 	border            : 1px solid #D5D6B2;
@@ -282,8 +276,7 @@ body
 	background-color  : #F7F8D8;
 }	
 
-.pageViewOptions
-{
+.pageViewOptions{
 	padding           : 5px 0 5px 0;
 	text-align        : right;
 	float             : right;
@@ -298,15 +291,13 @@ body
 .pageViewOptions dl{
 	margin            : 0 0 10px 0;
 }
-.pageViewOptions dd, .pageViewOptions dt, .pageActionOptions dd, .pageActionOptions dt
-{
+.pageViewOptions dd, .pageViewOptions dt, .pageActionOptions dd, .pageActionOptions dt{
 	display           : inline;
 	border-right      : 1px solid #333;
 	padding           : 0 5px 0 5px;
 }
 
-#applicationFooter
-{
+#applicationFooter{
 	display           : block;
 	background-color  : #ffffff;
 	border-top        : 1px solid #BCBCCB;
@@ -315,19 +306,16 @@ body
 	text-align        : right;
 }
 
-#applicationFooter li
-{
+#applicationFooter li{
 	text-align        : right;
 	list-style        : none;
 }
 
-.row
-{
+.row{
 	display           : block;
 	width             : 100%;
 	clear             : both;
 }
-.miceType
-{
+.miceType{
 	font-size         : 0.7em;
 }

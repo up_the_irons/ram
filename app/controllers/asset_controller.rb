@@ -5,7 +5,7 @@ class AssetController < ProtectedController
   end
   
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
+  verify :method => :post, :only => [ :destroy, :create, :update,:create_en_masse ],
          :redirect_to => { :action => :index }
          
   def show
@@ -15,8 +15,17 @@ class AssetController < ProtectedController
       #send_data @asset.data, :filename => @asset.filename, :type => @asset.content_type, :disposition => 'inline'
       
     else
-       headers['Content-Type'] = @asset.content_type
-       render :text => @asset.data
+      redirect_to :action=>'download',:id=>@asset.filename
+    end
+  end
+  
+  def download
+    @asset = Asset.find_by_filename(params[:id])
+    if @asset
+      headers['Content-Type'] = @asset.content_type
+      render :text => @asset.data
+    else
+      render :text=>'could not find asset'
     end
   end
   
@@ -58,7 +67,38 @@ class AssetController < ProtectedController
   #    end
   #end
 
+  #the bulk upload process is initiated from flash.
+  def bulk_upload
+    @size_limit = 50000*1024
+    if @category = find_in_users_categories(params[:id])
+      @login = CGI.escape(current_user.encrypt_login)
+      @url_params = "maxFileSize=#{@size_limit}"
+      @url_params <<"&url=#{url_for(:action=>'create_en_masse', :only_path=>true, :id=>@category.id,:hash=>@login)}"
+    end
+  end
   
+  #called repeatedly through flash
+  def create_en_masse
+    @login = User.decrypt_string(params[:hash])
+    unless @login.nil?
+      @user = User.find_by_login(@login)
+      if @user
+        @asset = Asset.new({
+                            "category_id"=>params[:id], 
+                            "description"=>'',
+                            "user_id"=>@user.id
+                            })
+        
+        @asset.uploaded_data = Asset.translate_flash_post @params[:Filedata]
+        @asset.save
+      end
+    end
+    render :text=>"\n", :layout=>false
+  end
+  
+  def upload_results
+  
+  end
   
   def edit
     @asset = Asset.find_by_id(params[:id]) || Asset.new
@@ -190,6 +230,9 @@ class AssetController < ProtectedController
             end
           end
         end
+      else
+        flash[:error] = "Could not save your asset."
+        redirect_to :controller=>'category', :action=>'show', :id=>params[:category_id]
       end
     end
   end
@@ -234,5 +277,5 @@ class AssetController < ProtectedController
     remaining = users_groups - assigned 
     return [assigned,remaining]
   end
-  
+    
 end

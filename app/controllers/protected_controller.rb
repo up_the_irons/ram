@@ -2,7 +2,7 @@ class ProtectedController < ApplicationController
   include AuthenticatedSystem
 
   before_filter :set_current_user
-  before_filter :login_required, :except => [ :login, :signup, :create_profile, :password_recovery, :login_as, :feed ]
+  before_filter :login_required, :except => [ :login, :signup, :create_profile, :password_recovery, :login_as, :feed, :create_en_masse ]
   
   def set_current_user
     User.current = session[:user]
