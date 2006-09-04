@@ -113,7 +113,8 @@ class AssetController < ProtectedController
         wants.js do 
           render :update do |page|
             page.replace_html(params[:update],  :partial=>'form')
-            page.visual_effect :BlindDown , params[:update], :duration=>1
+            #IE has problems rendering the BlindDown
+            #page.visual_effect :BlindDown , params[:update], :duration=>1
           end
         end
       end
