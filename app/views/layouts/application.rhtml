@@ -29,14 +29,19 @@
   	<div id="pageContent">
 	<table>
 		<tr>
+				<% if current_user 
+				  display_open_as  = display_close_as = "none"
+				  if session[:view][:expand_menu]
+				    display_open_as  = "block"
+				  else
+				    display_close_as = "block"
+			    end
+				-%>
 			
 			
-			<% if current_user -%>
-			
-			
-			<td id="sideMenu" valign="top" style="border-right:1px solid #cfcfcf;">
+			<td id="sideMenu" valign="top" style="border-right:1px solid #cfcfcf;display:<%= display_open_as %>;">
 				<div style="width:250px;">
-				<a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');"><%= image_tag('/images/icons/arrow_left.png', {:style=>"display:block;position:absolute;left:240px;padding:1px;border: 1px solid #ccc;"})%></a>
+				<a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');new Ajax.Request('/account/toggle_menu');"><%= image_tag('/images/icons/arrow_left.png', {:style=>"display:block;position:absolute;left:240px;padding:1px;border: 1px solid #ccc;"})%></a>
 				<ul id="sideMenuNav">
 				  
 					<li <%= "class=\"selected\"" if params[:controller] == 'inbox'%>><%= link_to 'Inbox', :controller=>'inbox' %></li>
@@ -50,11 +55,12 @@
 				<% end -%>
 				
 				<%= yield :side_menu %>
+				<br class="clear_both" />
 				</div>
 			</td>
-			<td id="sideMenuCollapsed"  valign="top" style="border-right:1px solid #cfcfcf;display:none;">
+			<td id="sideMenuCollapsed"  valign="top" style="border-right:1px solid #cfcfcf;display:<%=display_close_as %>;">
 				<div style="width:25px">
-			<a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');"><%= image_tag('/images/icons/arrow_right.png', {:style=>"display:block;padding:1px;border: 1px solid #ccc;"})%></a>
+			<a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');new Ajax.Request('/account/toggle_menu');"><%= image_tag('/images/icons/arrow_right.png', {:style=>"display:block;padding:1px;border: 1px solid #ccc;"})%></a>
 				</div>
 			</td>
 			

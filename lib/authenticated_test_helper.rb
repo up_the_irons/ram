@@ -3,6 +3,7 @@ module AuthenticatedTestHelper
   def login_as(user)
     @request.session[:user] = users(user).id
     @request.session[:folio] = []
+    @request.session[:view] = {:expand_menu=>true}
   end
 
   # Assert the block redirects to the login

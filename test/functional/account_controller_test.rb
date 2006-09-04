@@ -110,6 +110,12 @@ class AccountControllerTest < Test::Unit::TestCase
     
   end
   
+  def test_shall_allow_session_based_toggling_of_side_menu
+    login_as :quentin
+    assert_equal true, @request.session[:view][:expand_menu]
+    xhr :get, :toggle_menu
+    assert_equal false, @request.session[:view][:expand_menu]
+  end
 
   def test_should_logout
     login_as :quentin

@@ -77,12 +77,23 @@ class AccountController < ProtectedController
       end
     end
   end
+  
+  def toggle_menu
+    if session[:view][:expand_menu]
+      session[:view][:expand_menu] = false
+    else
+      session[:view][:expand_menu] = true
+    end
+    render :nothing =>true
+  end
+  
   protected 
   def after_login
     current_user.last_login_at = Time.now
     flash[:notice] = "Welcome #{current_user.login}!"
     current_user.save
     session[:folio] = []
+    session[:view]={:expand_menu=>true}
     
     #TODO find a secure way to build the user's access lists so that we can save DB hits
   end
