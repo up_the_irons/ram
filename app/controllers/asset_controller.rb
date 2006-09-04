@@ -73,6 +73,7 @@ class AssetController < ProtectedController
     if @category = find_in_users_categories(params[:id])
       @login = CGI.escape(current_user.encrypt_login)
       @url_params = "maxFileSize=#{@size_limit}"
+      @url_params = "&onCompleteCallback=show_upload_results"
       @url_params <<"&url=#{url_for(:action=>'create_en_masse', :only_path=>true, :id=>@category.id,:hash=>@login)}"
     end
   end
@@ -96,8 +97,8 @@ class AssetController < ProtectedController
     render :text=>"\n", :layout=>false
   end
   
-  def upload_results
-  
+  def show_upload_results
+    #todo need to find a way to retrive the files, which flash uploaded and display them to the user. The problem is that flash opperates outside the session.
   end
   
   def edit

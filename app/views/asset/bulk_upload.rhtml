@@ -19,6 +19,9 @@
 <div id="flash_uploader_container"></div>
 <script type="text/javascript">
   /* <![CDATA[ */
+	function show_upload_results(){
+		window.location = '<%= "/category/show/#{params[:id]}/"%>'
+	}
  	var so = new SWFObject('/swfs/fileUploader.swf?<%= @url_params %>','uploader', '550','400', '8', '#ffffff');
  	so.addParam('allowScriptAccess', 'sameDomain');
  	so.addParam('quality', 'high');
