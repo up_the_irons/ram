@@ -6,7 +6,37 @@ module AdminController::GroupMethods
    
    def show_group
       @group       = Group.find_by_id_or_login(params[:id])
-      @non_members = @group.non_members.map{ |m| [m.login, m.id] }
+      #@non_members = @group.non_members.map{ |m| [m.login, m.id] }
+      @non_members = @group.non_members
+    end
+    
+    def update_group_memberships
+      @group = Group.find(params[:id])
+      if params[:group] && params[:group][:user_ids]
+        @group = Group.find(params[:id])
+        @existing_members = @group.members
+
+        @members_from_params  = params[:group][:user_ids].map do |u| 
+          user = User.find(u)
+          user if user
+        end
+        #find the members to add and remove
+        @members_to_add = @members_from_params - @existing_members
+        @members_to_remove = @existing_members - @members_from_params
+        
+        #do the adding and deleting of memberships
+        @members_to_add.each{|m| @group.users << m}
+        @members_to_remove.each{|m| remove_a_member(@group,m)}
+        
+        @group.users(true) #reload
+        
+        flash[:notice] = "The group members have been modified. Added (#{@members_to_add.size}) and removed (#{@members_to_remove.size})"
+      else
+        #no members were returned in this form so implicitly they want to remove "everyone" from this group.
+        remove_all_members(@group)
+        flash[:notice] = "All Members of this group were removed."
+      end if current_user.is_admin?
+      redirect_to :back
     end
 
     def group_add_member
@@ -109,5 +139,15 @@ module AdminController::GroupMethods
           flash[:notice] = "Cannot find group without an ID."
           redirect_to :action=>'groups'
         end
+     end
+     protected
+     def remove_all_members(group)
+       group.members.each do| m | 
+         remove_a_member(group,m)
+       end
+     end
+     def remove_a_member(group,member)
+       membership = Membership.find_by_user_id_and_collection_id(member.id, group.id)
+       membership.destroy if membership     
      end
 end

@@ -1,0 +1,74 @@
+<%
+=begin
+this partial requires the View.FormHelper javascript class to be inlcuded on the page where this is to be used.
+Required Local variables are :
+
+Usage: 
+  parent    : Instance of a model
+  selected  : Array
+  available : Array
+
+Example:
+  <%= render :partial=>'selected_or_available', :locals=>{:parent=>@group,:selected=>@group.members', :available=>Group.find(:all) - @group.members} % >
+=end
+
+  
+  #some object won't respond to name or will have name linked to something not intended for this method. In this case use
+  #the name_alias option
+  name_sym  = :name
+  name_sym  = name_alias if defined?(name_alias)
+  
+  parent_class = parent.class.name.downcase
+  child_class = "child"
+  child_class = selected[0].class.name if selected.size > 0
+  child_class = available[0].class.name if available.size > 0
+  child_class = child_class.downcase
+  #parse the objects into a generic form, which the function expects
+  object_stub = Struct.new(:id,:name)
+  selected  = selected.map{ |m| object_stub.new(m.id,m[name_sym])}
+  available = available.map{|m| object_stub.new(m.id,m[name_sym])}
+  
+-%>
+   <select style="display:none;" id="selected_items_to_submit" name="<%= parent_class %>[<%= child_class %>_ids][]" size="5" multiple="multiple"></select>
+   <table class="has_many_sort_helper" width="100%">
+     <tr>
+       <th>Existing <%= child_class.pluralize.titleize %></th>
+       <th></th>
+       <th>Available <%= child_class.pluralize.titleize %></th>
+     </tr>
+     <tr>
+       <td valign="top" width="45%">
+         <select style="width:100%" id="selected_items_to_display" name="selected_items" size="5" multiple="multiple" onDblClick="View.HasManySortHelper.move(this.form.selected_items,this.form.available,this.form.elements['<%= parent_class %>[<%= child_class %>_ids][]'])">
+         <%= options_from_collection_for_select(selected, "id", "name" ) %>
+         </select>
+       </td>
+       <td valign="top" align="center">
+         <ul>
+           <li>
+             <input width="4" type="button"  value="&rsaquo;" onclick="View.HasManySortHelper.move(this.form.selected_items,this.form.available)" />
+           </li>
+           <li>
+             <input width="4" type="button" alt="Add the Selected Available Item " value="&lsaquo;" onclick="View.HasManySortHelper.move(this.form.available,this.form.selected_items,this.form.elements['<%= parent_class %>[<%= child_class %>_ids][]'])" />
+           </li>
+           <li>
+             <input width="4" type="button" value="&raquo;" onclick="View.HasManySortHelper.move_all(this.form.selected_items,this.form.available,this.form.elements['<%= parent_class %>[<%= child_class %>_ids][]'])" />
+           </li>
+           <li>
+             <input width="4" type="button" alt="Add All Available Items" value="&laquo;" onclick="View.HasManySortHelper.move_all(this.form.available,this.form.selected_items,this.form.elements['<%= parent_class %>[<%= child_class %>_ids][]'])"  />
+           </li>
+         </ul>
+       </td>
+       <td valign="top" width="45%">
+         <select style="width:100%" name="available" size="5" multiple="multiple" onDblClick="View.HasManySortHelper.move(this.form.available,this.form.selected_items,this.form.elements['<%= parent_class %>[<%= child_class %>_ids][]'])" >
+         <%= options_from_collection_for_select(available, "id", "name") %>
+         </select>
+       </td>
+     </tr>
+   </table>
+    <script language="javascript" type="text/javascript">
+      /* <![CDATA[ */
+      View.HasManySortHelper.hidden_selected_items_to_submit = document.getElementById('selected_items_to_submit');
+      View.HasManySortHelper.selelected_items_to_display     = document.getElementById('selected_items_to_display');
+      View.HasManySortHelper.clone_select(View.HasManySortHelper.selelected_items_to_display , View.HasManySortHelper.hidden_selected_items_to_submit)
+      /* ]]> */ 
+    </script>

@@ -4,13 +4,23 @@
 </p>
 
 <dl class="listings">
+
+	<div id='group_members'>
+	  	<h3>Members (<a href="#" class="mice_type" onclick="View.flip_flop('group_members','edit_group_members');"><%= image_tag "/images/icons/pencil.png" %>edit members</a>)</h3>
+	    <%= render :partial=>'user_grid', :locals=>{:users=>@group.users} %>
+  </div>
+  
 	
-	<%= render :partial => "group_members" %>
+	<div id="edit_group_members" style="display:none;">
+	  <h3>Manage Group Memberships</h3>
+	  
+	  <%= start_form_tag :action=>'update_group_memberships',:id=>@group.id %>
+      <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@group,:selected=>@group.members,:available=>@non_members,:name_alias=>:login}%>
+	    <%= submit_tag "cancel",{:onclick=>"View.flip_flop('group_members','edit_group_members');return false;"} %> <%= submit_tag "submit" %>
+	  </form>
 	
-	<dt>Add New Member</dt>
-	<form>
-    <%= render :partial => 'add_group_member_dropdown' %>
-	</form>
+	</div>
+	
 	
 	<dt>Categories</dt>
 	<% for c in @group.categories %>
@@ -21,5 +31,6 @@
 	-%>
 	<% end unless @group.categories.nil?%>
 </dl>
+
 <%= link_to 'Edit', :action => 'edit', :id => @group %> |
 <%= link_to 'Back', :action => 'list' %>

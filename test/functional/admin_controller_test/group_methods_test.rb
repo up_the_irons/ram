@@ -41,6 +41,25 @@ module IncludedTests::GroupMethodsTest
      assert_response :redirect
    end
    
+   def test_group_add_member_from_multiselect
+     login_as :quentin
+     c = collections(:collection_3)
+     @request.env["HTTP_REFERER"] = "show_group/1"
+     add_some_members_to_group(c, 3)
+     assert_equal c.users(true).size, 3
+     
+     #remove all but one user
+     post :update_group_memberships, :id=>c.id, :group=>{:user_ids=>[c.users[0].id]}
+     assert_response :redirect
+     assert_equal c.users(true).size, 1
+     
+     users = User.find(:all) - c.members
+     post :update_group_memberships, :id=>c.id, :group=>{:user_ids=>[c.users[0].id, users[0].id]}
+     assert_equal c.users(true).size, 2
+     assert c.users.find(users[0].id)
+     assert_response :redirect
+   end
+   
    def test_group_add_member
       login_as :quentin
 
@@ -118,6 +137,14 @@ module IncludedTests::GroupMethodsTest
         assert_redirected_to :action => 'groups'
         assert_equal 0, assigns(:group).errors.count
         assert assigns(:group)
+      end
+    end
+    
+    protected
+    def add_some_members_to_group(group, num = 1)
+      users = User.find(:all) - group.members
+      num.times do |u|
+        group.members << users[u] unless u >= users.length
       end
     end
 end

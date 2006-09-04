@@ -63,6 +63,10 @@ class Group < Collection
       end
 	end
 	
+	def members
+    users
+  end
+	
 	def leader
 		User.find(@owner.user_id)
 	end

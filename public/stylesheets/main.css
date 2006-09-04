@@ -17,18 +17,20 @@ body{
 * html #applicationHeader {height: 1%;} /* for IE/Win */
 *>html #applicationHeader {he\ight: auto;} /* for IE5/Mac */
 
+ 
 a{
 		text-decoration  : underline;
-	}
+}
 	
 a img{
 		border           : none;
-	}
+}
 	
 a:link, a:visited{
 		color		     : #555; 
 		/* border-bottom    : 1px solid #555; */
-	}
+}
+
 .subscribe a{
 	color:#fff;
 	background-color:#FF9900;
@@ -36,6 +38,7 @@ a:link, a:visited{
 	font-size: 0.8em;
 	text-decoration:none
 }	
+
 body{
 	background-color : #333257;
 }
@@ -257,6 +260,7 @@ li.selected{
 	border            : 1px solid #efefef;
 	padding           : 0 20px 20px 20px;
 	margin-bottom     : 10px;
+	width             : 500px;
 }
 #pageContent dl.listings dd{
 	padding-left      : 10px;

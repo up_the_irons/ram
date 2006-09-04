@@ -25,9 +25,6 @@
     </div>
     <% end %>
     <%= yield :application_header %>
-    <div id="pageHeader">
-		
-	</div>
   	</div>
   	<div id="pageContent">
 	<table>
@@ -39,7 +36,7 @@
 			
 			<td id="sideMenu" valign="top" style="border-right:1px solid #cfcfcf;">
 				<div style="width:250px;">
-				<a href="#" onclick="$('sideMenu').toggle();$('sideMenuCollapsed').toggle();return false;"><%= image_tag('/images/icons/arrow_left.png', {:style=>"display:block;position:absolute;left:240px;padding:1px;border: 1px solid #ccc;"})%></a>
+				<a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');"><%= image_tag('/images/icons/arrow_left.png', {:style=>"display:block;position:absolute;left:240px;padding:1px;border: 1px solid #ccc;"})%></a>
 				<ul id="sideMenuNav">
 				  
 					<li <%= "class=\"selected\"" if params[:controller] == 'inbox'%>><%= link_to 'Inbox', :controller=>'inbox' %></li>
@@ -57,15 +54,12 @@
 			</td>
 			<td id="sideMenuCollapsed"  valign="top" style="border-right:1px solid #cfcfcf;display:none;">
 				<div style="width:25px">
-			<a href="#" onclick="$('sideMenu').toggle();$('sideMenuCollapsed').toggle();return false;"><%= image_tag('/images/icons/arrow_right.png', {:style=>"display:block;padding:1px;border: 1px solid #ccc;"})%></a>
+			<a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');"><%= image_tag('/images/icons/arrow_right.png', {:style=>"display:block;padding:1px;border: 1px solid #ccc;"})%></a>
 				</div>
 			</td>
 			
 			<% end -%>
-			
-			
-			
-			
+				
 			<td id="page" style="border-left:1px solid #efefef;padding-left:10px;">
 				<%= yield :page_view_options %>
 				<%= yield :layout %>

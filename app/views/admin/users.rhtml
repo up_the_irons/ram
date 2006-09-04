@@ -1,24 +1,6 @@
 <%= render :partial =>'layouts/page_view_options', :locals=>{:view_options=>['thumbnails','details','icons'] }%>
 
 <h1>Listing Users</h1>
-<table class="dataGrid">
-	<tr>
-		<th></th>
-		<th>Login</th>
-		<th>Email Address</th>
-		<th>Status</th>
-	</tr>
-	
-<% for user in @users %>
-  <%row_class =  cycle("even", "odd") %>
-	<tr id="<%="user_#{user.id}"%>" onmouseover="this.className='highlighted'" onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>">
-		<% ["#{image_tag('/images/icons/user.png')}","#{user.login}", "#{user.email unless user.email.nil?}","#{User::STATUS[user.state]}"].each do|txt| -%> 
-			<td>
-				<%= link_to txt,{:controller=>'admin',:action=>'show_user', :id=>user}, {:title=>"show #{user.login}\'s Profile" }  %>
-			</td>
-		<%end -%>
-	</tr>
-<% end unless @users.nil? %>
-</table>
+<%= render :partial=>'user_grid', :locals=>{:users=>@users} %>
 <%= link_to 'Previous page', { :page => @user_pages.current.previous } if @user_pages.current.previous %>
 <%= link_to 'Next page', { :page => @user_pages.current.next } if @user_pages.current.next %> 

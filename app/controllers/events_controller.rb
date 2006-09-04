@@ -35,7 +35,7 @@ class EventsController < ProtectedController
 
       # Replace the onclick handler that got us here with a simple element toggler. We already have the msg
       # body loaded, so we don't need to call this action again.
-      page << "$(content.cache.push($('event_body_container_#{params[:id]}')))"
+      page << "$(Content.cache.push($('event_body_container_#{params[:id]}')))"
     end if @event
   end
 

@@ -1,6 +1,5 @@
 img{ border:none;}
-body
-{ 
+body{ 
 	background-color  :#999999;
 	color             : #333; 
 	margin            : 0;
@@ -8,41 +7,34 @@ body
 	/* background-image  : url('/images/application_background.jpg'); */
 	background-repeat : repeat-x;
 }
-form, ul, li
-{
+form, ul, li{
 	padding          : 0;
 	margin           : 0;
 	list-style       : none;
 }
-div
-{
+div{
 		/* border       : 1px solid grey; */
 }
-a:link, a:visited
-{
+a:link, a:visited{
 	color            : #C5495F;
 	text-decoration  : none;
 }
-a:hover {
+a:hover{
 	color               : #9AF178;
 	text-decoration     : none;
 	background          : none;
 }
-.clear_both
-{
+.clear_both{
 	display           : block;
 	clear             : both;
 }
-.inline_list, .bread_crumbs
-{
+.inline_list, .bread_crumbs{
 	list-style       : none;
 }
-.inline_list li, .bread_crumbs li
-{
+.inline_list li, .bread_crumbs li{
 	display          : inline;
 }
-.bread_crumbs
-{
+.bread_crumbs{
 	display          : block;
 	background-color : #333;
 	margin           : auto;
@@ -50,18 +42,18 @@ a:hover {
 	padding          : 5px 10px 5px 10px;
 	border           : 1px solid #000000;
 }
-.page_message, .important_page_message, #page_flash
-{
+.page_message, .important_page_message, #page_flash{
 	font-weight      : bolder;
 	width            : 100%;
 	text-align       : center;
 	display          : block;
 	clear            : both;
 }
-.important_page_message, #page_flash
-{
+
+.important_page_message, #page_flash{
 	font-size        : 120%;
 }
+
 .flash_notice, .flash_warning, .flash_error{
 	border           : 2px solid #ffff00;
 	padding          : 7px;
@@ -74,33 +66,35 @@ a:hover {
 	padding          : 10px;
 	text-align       :center;
 }
-.flash_notice a,.flash_notice a:link, .flash_notice a:visited,.flash_notice a:hover,.flash_notice a:active {
+
+.flash_notice a,.flash_notice a:link, .flash_notice a:visited,.flash_notice a:hover,.flash_notice a:active{
 	color:#000;
 	text-decoration:underline;
 }
+
 .flash_error{
 	background-color:#cc0000;
 	border           : 2px solid #aa0000;
 	color           :#fff;
 }
-#page_flash
-{
+
+#page_flash{
 	display          : block;
 	background-color : #FFFF99;
 	color            : #282E1A;
 }
-.web_form
-{
+
+.web_form{
 	display          : inline;
 	list-style       : none;
 }
-.web_form li
-{
+
+.web_form li{
 	border-top       : 1px solid #dcdcdc;
 	padding          : 10px 0 10px 0;
 }
-.web_form label
-{
+
+.web_form label{
 	display          : block;
 	width            : 150px;
 	padding-right    : 10px;
@@ -108,52 +102,81 @@ a:hover {
 	float            : left;
 	font-size        : 110%;
 }
-.web_form input, .web_form select, .web_form textarea
-{
+
+.web_form input, .web_form select, .web_form textarea{
 	border           : 1px solid #dcdcdc;
 	font-size        : 120%;
 	background-color : #efefee;
 }
-.web_form dt
-{
+
+.web_form dt{
 	font-size       : 110%;
 	font-weight     : bolder;
 }
-.web_form dd
-{
+
+.web_form dd{
 	padding          : 2px 0 2px 0
 }
-.label
-{
+
+.label{
 	margin           : 0;
 	padding          : 0;
 }
-.mice_type
-{
+
+.mice_type{
 	font-size        : 0.7em;
 }
-#site_menu, #user_menu
-{
+
+.has_many_sort_helper{
+	border-top       : 1px solid #dfdfdf;
+}
+.has_many_sort_helper th{
+	margin-bottom    : 0.5em;
+	font-size        : 1.1em;
+	text-align       : center ;
+}
+.has_many_sort_helper input{
+	padding          : 1px 10px 1px 10px;
+	background-color : #dfdfdf;
+	border           : 1px solid #ccc;
+	margin           : 2px;
+	width            : 2em;
+	overflow         : hidden;
+}
+.has_many_sort_helper select{
+	border           : 1px solid #ccc;
+}
+.has_many_sort_helper option{
+	padding          : 0 0.2em 0 0.2em;
+}
+.has_many_sort_helper br{
+	position         :relative;
+	clear            :both;
+}
+
+#site_menu, #user_menu{
 	display          : block;
 	float            : right;
 	list-style       : none;
 }
+
 #site_menu{
 	float:left;
 }
+
 #site_menu li, #user_menu li {
 	display          : inline;
 }
-#page_container, #menu_container,#page_footer
-{
+
+#page_container, #menu_container,#page_footer{
 	margin           : 0 auto;
 	padding          : 0;
 	display          : block;
 	background-color : #FFFFFF;
 	clear            : both;
 }
-#menu_container
-{
+
+#menu_container{
     border           : none;
 	display          : block;
 	padding          : 10px;
@@ -162,26 +185,25 @@ a:hover {
 	color            : #CCCCCC;
 }
 
-#page_content, #page_left_gutter
-{
+#page_content, #page_left_gutter{
 	/*float            : left;*/
 	display          : block;
 	clear            : right;
 	padding          : 10px;
 }
-#page_right_gutter
-{
+
+#page_right_gutter{
 	display          : block;
 	float            : left;
 	margin           : 5px;
 }
-#page_right_gutter ul
-{
+
+#page_right_gutter ul{
 	list-style       : none;
 	padding          : 5px;
 }
-#page_right_gutter .header
-{
+
+#page_right_gutter .header{
 	padding          : 0;
 	margin           : 0;
 	text-align       : center;
@@ -189,7 +211,7 @@ a:hover {
 	color            : #fff;
 	font-weight      : bolder;
 }
-#page_footer
-{
+
+#page_footer{
 
 }

@@ -2,15 +2,7 @@
 <dl>
 <dt>Members</dt>
 <% for u in @group.users -%>
-  <%= "<dd id=\"group_member_#{u.id}\"> #{link_to u.login, :controller=>'account',:action=>'profile',:id=>u.id}" %>
-  <%= link_to_remote(image_tag('/images/icons/cross.png',{:title=>"Remove #{u.login} from #{@group.name}"}),:url=>{
-                                    :controller=>'admin',
-                                    :action=>'group_remove_member',
-                                    :id=>@group.id,
-                                    :user_id=>u.id
-                                    },
-                                    :confirm=>"Are you sure you want to remove #{ h u.login}'s access to this group?")
-  %></dd>
+  <%= "<dd id=\"group_member_#{u.id}\"> #{link_to u.login, :controller=>'account',:action=>'profile',:id=>u.id}" %></dd>
 <% end -%>
 </dl>
 </div>
