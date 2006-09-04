@@ -19,12 +19,25 @@ class SearchControllerTest < Test::Unit::TestCase
     post :all, :query => 'nes'
     assert a = assigns['assets']
     assert_equal 0, a.size
+
+    post :all, :query => 'game'
+    assert cats = assigns['cats']
+    assert_equal 2, cats.size
+
+    res = cats.map { |o| o.name }
+    assert res.include?('Video Game Database')
+    assert res.include?('Games')
   end
 
-  def test_search_for_user2
+  def test_search_all_for_user2
     login_as :quentin # admin
     post :all, :query => 'nes'
     assert a = assigns['assets']
     assert_equal 1, a.size
+
+    assert cats = assigns['cats']
+    assert_equal 1, cats.size
+
+    assert_equal 'Sega Genesis', cats[0].name
   end
 end

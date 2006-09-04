@@ -1,2 +1,4 @@
-<h2>Your Search Returned <%= @assets.size %> Results</h2>
+<h2>Your Search Returned <%= pluralize(@assets.size, 'Asset') %></h2>
 <%= render :partial => 'asset/list' %>
+<h2>Your Search Returned <%= pluralize(@cats.size, 'Category') %></h2>
+<%= render :partial => 'category/list' %>

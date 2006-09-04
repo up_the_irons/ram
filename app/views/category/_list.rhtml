@@ -1,0 +1,16 @@
+<table class="dataGrid">
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+	</tr>
+	
+  <% @cats.each do |cat| -%>
+  <% row_class = cycle("even", "odd") -%>
+  <tr id="<%="cat_#{cat.id}"%>" onmouseover="this.className='highlighted'; this.style.cursor = 'pointer'" 
+                                onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>"
+                                onclick="window.location='<%= url_for :controller => 'category', :action => 'show', :id => cat.id %>'">
+    <td><%= cat.name %></td>
+    <td><%= cat.description %></td>
+  </tr>
+  <% end -%>
+</table>

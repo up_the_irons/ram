@@ -76,18 +76,14 @@ class User < ActiveRecord::Base
   end
   
   def categories
-    # todo: the list of categories don't change often so you should find some way to cache this to prevent having to query for it everytime.
-    categories = []
-    #for g in groups
-    #  for c in g.categories
-    #    categories << c
-    #  end
-    #end
-    groups.map{|g| categories << g.categories }.flatten.uniq
-    #categories = categories.flatten
-    #categories = categories.uniq
+    groups.map { |g| g.categories }.flatten.uniq
   end
 
+  # Return categories whose names match 'query', scoped to this user
+  def categories_search(query)
+    Collection.find(:all, :select => 'DISTINCT collections.*', :joins => 'INNER JOIN linkings ON collections.id = linkings.category_id',
+                          :conditions => ["(linkings.group_id IN (#{groups.map { |o| o.id }.join(',')})) AND ( (collections.`type` = 'Category' ) ) AND (collections.name like ?)", "%#{query}%"])
+  end
   
   def encrypt_login
     self.class.encrypt_string(login)

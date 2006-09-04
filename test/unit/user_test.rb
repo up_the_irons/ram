@@ -139,6 +139,26 @@ class UserTest < Test::Unit::TestCase
     assert_equal 2, es.size
   end
 
+  def test_categories_search
+    u = users(:quentin)
+    cats = u.categories_search('nintendo')
+
+    assert_equal 1, cats.size
+    assert_equal collections(:collection_10).name, cats[0].name
+
+    u = users(:user_4)
+    cats = u.categories_search('')
+
+    assert_equal 3, cats.size
+
+    cats = u.categories_search('game')
+
+    assert_equal 2, cats.size
+    res = cats.map { |o| o.name }
+    assert res.include?('Video Game Database')
+    assert res.include?('Games')
+  end
+
   protected
 
   def create_user(options = {})
