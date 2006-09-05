@@ -1,0 +1,16 @@
+<table class="dataGrid">
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+	</tr>
+	
+  <% @groups.each do |group| -%>
+  <% row_class = cycle("even", "odd") -%>
+  <tr id="<%="group_#{group.id}"%>" onmouseover="this.className='highlighted'; this.style.cursor = 'pointer'" 
+                                    onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>"
+                                    onclick="window.location='<%= url_for :controller => 'group', :action => 'show', :id => group.id %>'">
+    <td><%= group.name %></td>
+    <td><%= group.description %></td>
+  </tr>
+  <% end -%>
+</table>

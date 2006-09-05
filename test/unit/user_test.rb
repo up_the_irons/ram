@@ -4,7 +4,7 @@ class UserTest < Test::Unit::TestCase
   # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead.
   # Then, you can remove it from this and the functional test.
   include AuthenticatedTestHelper
-  fixtures :users, :collections, :memberships, :linkings, :event_subscriptions
+  fixtures :users, :collections, :memberships, :linkings, :event_subscriptions, :attachments
 
   def test_should_associate_groups
     u = User.find(5)
@@ -139,6 +139,20 @@ class UserTest < Test::Unit::TestCase
     assert_equal 2, es.size
   end
 
+  def test_assets_search
+    u = users(:user_4)
+    assets = u.assets_search('nes')
+    assert_equal 0, assets.size
+
+    assets = u.assets_search('atari')
+    assert_equal 3, assets.size
+
+    res = assets.map { |o| o.name }
+    assert res.include?('atari2600_console01.jpg')
+    assert res.include?('atari-xe-large.jpg')
+    assert res.include?('atari-games-stacked.jpg')
+  end
+
   def test_categories_search
     u = users(:quentin)
     cats = u.categories_search('nintendo')
@@ -157,6 +171,29 @@ class UserTest < Test::Unit::TestCase
     res = cats.map { |o| o.name }
     assert res.include?('Video Game Database')
     assert res.include?('Games')
+  end
+
+  def test_groups_search
+    u = users(:user_4)
+
+    p = Proc.new do |names, groups|
+      names = [names].flatten
+      assert_equal names.size, groups.size
+
+      names.each do |n|
+        assert groups.map { |o| o.name }.include?(n)
+      end
+    end
+
+    groups = u.groups_search('only')
+    p.call('Atari', groups)
+
+    groups = u.groups_search('atari')
+    p.call('Atari', groups)
+
+    u = users(:quentin)
+    groups = u.groups_search('a')
+    p.call(['Atari', 'Administrators'], groups)
   end
 
   protected

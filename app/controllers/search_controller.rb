@@ -1,6 +1,7 @@
 class SearchController < ProtectedController
   def all
-    @assets = Asset.search(params[:query], current_user.groups.map { |o| o.id })
+    @assets = current_user.assets_search(params[:query])
     @cats   = current_user.categories_search(params[:query])
+    @groups = current_user.groups_search(params[:query])
   end
 end

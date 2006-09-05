@@ -79,10 +79,18 @@ class User < ActiveRecord::Base
     groups.map { |g| g.categories }.flatten.uniq
   end
 
-  # Return categories whose names match 'query', scoped to this user
+  def assets_search(query)
+    Asset.search(query, groups.map { |o| o.id })
+  end
+
+  # Returns categories this user belongs to, refined by 'query'
   def categories_search(query)
     Collection.find(:all, :select => 'DISTINCT collections.*', :joins => 'INNER JOIN linkings ON collections.id = linkings.category_id',
                           :conditions => ["(linkings.group_id IN (#{groups.map { |o| o.id }.join(',')})) AND ( (collections.`type` = 'Category' ) ) AND (collections.name like ?)", "%#{query}%"])
+  end
+
+  def groups_search(query)
+    groups.find(:all, :conditions => ["name like ? OR description like ?", "%#{query}%", "%#{query}%"])
   end
   
   def encrypt_login
