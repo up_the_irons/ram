@@ -30,11 +30,11 @@ class AssetControllerTest < Test::Unit::TestCase
    assert_redirected_to :action=>:index
    login_as :quentin
    @user = User.find(@request.session[:user])
-   post :create_en_masse, :hash=>CGI.escape(@user.encrypt_login)
+   post :create_en_masse, :hash=>CGI.escape(@user.encrypt_login), :user=>{:group_ids=>[@user.groups.join(",")]}
    
    #todo find a way to stub out the flash portions of the app so that they too can be tested.
  end
- 
+
  def test_assigned_and_remaining_groups
    todo
  end

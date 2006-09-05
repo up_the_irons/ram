@@ -93,6 +93,12 @@ class AssetController < ProtectedController
         @asset.uploaded_data = Asset.translate_flash_post @params[:Filedata]
         @asset.save
       end
+      #the js in the view returns the items a comma delimited string and NOT an array like you would expect.
+      #so we must convert the string into an array.
+      @groups_from_params  = params[:user][:group_ids][0].split(',').map do |g| 
+        group = @user.groups.find(g)
+        create_linkage_for(@asset, group) if group
+      end
     end
     render :text=>"\n", :layout=>false
   end
@@ -278,6 +284,11 @@ class AssetController < ProtectedController
     assigned = assets_groups - restricted_assigned_groups
     remaining = users_groups - assigned 
     return [assigned,remaining]
+  end
+    
+  def create_linkage_for(asset,group)
+    @link = Linking.find_or_create_by_linkable_id_and_linkable_type_and_group_id(asset.id,'Asset',group.id)
+    @link.save!
   end
     
 end

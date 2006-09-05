@@ -7,25 +7,71 @@
 <% end -%>
 
 <h1>Bulk Uploader</h1>
-<div class="pageInstructions" style="width:550px;">
-  <dl>
-    <dt><strong>File Uploading</strong></dt>
-   	<dd>You can upload <strong>files only</strong>; you cannot upload folders.</dd>
-   	<dd>You can select <strong>multiple files</strong> from your harddrive.</dd>
-   	<dd>There is a <strong><%=number_to_human_size(@size_limit) %></strong> upload limit (per file).</dd>
-  <dl>										
+
+
+<div id="group_select">
+	<div class="pageInstructions" style="width:550px;">
+		<h3 style="margin-bottom:10px;">Step 1 of 1</h3>
+	  <dl>
+	    <dt><strong>Select Groups</strong></dt>
+	   	<dd>Please select which groups will have access to these assets (this is a required step).</dd>
+	  <dl>										
+	</div> 	
+	<form action="">
+		<%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>current_user,:selected=>current_user.groups,:available=>[]}%>
+	 	<%= submit_tag "Select These Groups",{:onclick=>"show_uploader();return false;"} %>
+	</form>
 </div>
 
-<div id="flash_uploader_container"></div>
+<div id="flash_uploader_container" style="display:none;">
+	<div class="pageInstructions" style="width:550px;">
+	  <h3 style="margin-bottom:10px;">Step 2 of 2</h3>
+	  <dl>
+	    <dt><strong>File Uploading</strong></dt>
+	   	<dd>You can upload <strong>files only</strong>; you cannot upload folders.</dd>
+	   	<dd>You can select <strong>multiple files</strong> from your harddrive.</dd>
+	   	<dd>There is a <strong><%=number_to_human_size(@size_limit) %></strong> upload limit (per file).</dd>
+	  <dl>										
+	</div>
+
+	<div id="uploader">
+	</div>	
+</div>
 <script type="text/javascript">
   /* <![CDATA[ */
 	function show_upload_results(){
 		window.location = '<%= "/category/show/#{params[:id]}/"%>'
 	}
- 	var so = new SWFObject('/swfs/fileUploader.swf?<%= @url_params %>','uploader', '550','400', '8', '#ffffff');
- 	so.addParam('allowScriptAccess', 'sameDomain');
- 	so.addParam('quality', 'high');
- 	so.addParam('align', 'middle');
-   so.write('flash_uploader_container')
+	function serialize_multi_select(sel){
+		var is_first_selection = false;
+		str = sel.name + '='
+		for(var j = 0; j < sel.options.length; j++) {
+			var currOpt = sel.options[j];
+		    if(currOpt.selected) {
+				if (is_first_selection) {
+		        	str += ',' + escape(currOpt.value);
+		        }else {
+		        	str += escape(currOpt.value);
+		            is_first_selection = true;
+		        }
+			}
+		}
+		return str
+	}
+	function show_uploader(){
+		if($('selected_items_to_submit').selectedIndex > -1)
+		{
+			$('group_select').toggle();
+			$('flash_uploader_container').toggle();
+			var selected_groups = serialize_multi_select($('selected_items_to_submit'));
+ 			var so = new SWFObject('/swfs/fileUploader.swf?<%= @url_params %>'+escape('&')+selected_groups,'uploader', '550','400', '8', '#ffffff');
+ 			so.addParam('allowScriptAccess', 'sameDomain');
+ 			so.addParam('quality', 'high');
+ 			so.addParam('align', 'middle');
+   			so.write('uploader')
+		}else{
+			alert('You must select at least one group.')
+		}
+	}
    /* ]]> */ 
 </script>

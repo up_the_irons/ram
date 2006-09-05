@@ -15,7 +15,7 @@
 	<%= 
 		#TODO: display the categories within their parent/child context where applicable.
 		# render :partial=> 'category/category', :locals=>{:category=>c} 
-		"<dd>#{c.name}</dd>"
+		"<dd>#{link_to c.name, :controller=>'category',:action=>'show',:id=>c.id}</dd>"
 	-%>
 	<% end unless @group.categories.nil?%>
 </dl>
