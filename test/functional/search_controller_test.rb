@@ -60,47 +60,4 @@ class SearchControllerTest < Test::Unit::TestCase
     assert res.include?("Administrators")
     assert res.include?("Atari")
   end
-
-  def test_search_all_for_user3
-    login_as :user_4
-
-    post :all, :query => '2600'
-    assert :success
-    assert a = assigns['assets']
-    assert c = assigns['cats']
-
-    assert_equal 3, a.size
-    res = a.map { |o| o.name }
-    res.include?("atari-xe-large.jpg")
-    res.include?("atari-games-stacked.jpg")
-    res.include?("atari2600_console01.jpg")
-
-    assert_equal 1, c.size
-    res = c.map { |o| o.name }
-    res.include?('Atari 2600')
-
-    post :all, :query => 'carts'
-    assert :success
-    assert a = assigns['assets']
-    assert c = assigns['cats']
-    assert g = assigns['groups']
-
-    assert_equal 1, a.size
-    assert_equal 0, c.size
-    assert_equal 0, g.size
-    res = a.map { |o| o.name }
-    res.include?("atari-games-stacked.jpg")
-
-    post :all, :query => 'logo'
-    assert :success
-    assert a = assigns['assets']
-    assert c = assigns['cats']
-    assert g = assigns['groups']
-
-    assert_equal 1, a.size
-    assert_equal 0, c.size
-    assert_equal 0, g.size
-    res = a.map { |o| o.name }
-    res.include?("rails.png")
-  end
 end

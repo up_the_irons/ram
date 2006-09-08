@@ -77,7 +77,12 @@ class ArticleTest < Test::Unit::TestCase
   end
   
   def test_article_shall_use_a_counter_cache
-    todo
+    a = an_article({:allow_comments=>true})
+    assert_equal a.allow_comments, true
+    assert_equal a.children_count, 0
+    c = a_comment({:parent_id=>a.id})
+    a = Article.find(a.id)
+    assert_equal a.children_count, 1
   end
   
   def test_shall_allow_comments
@@ -96,12 +101,4 @@ class ArticleTest < Test::Unit::TestCase
     assert_equal false, c.valid?
   end
   
-  
-  def an_article(opts={})
-    Article.create( {:user_id=>User.find(:first),:title=>"Game Time is #{Time.now.to_s}",:body=>"My favorite time to play game is #{Time.now.to_s}" }.merge(opts))
-  end
-  
-  def a_comment(opts={})
-    Comment.create( {:user_id=>User.find(:first),:title=>"Game Time is #{Time.now.to_s}",:body=>"My favorite time to play game is #{Time.now.to_s}"}.merge(opts))
-  end
 end

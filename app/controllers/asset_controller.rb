@@ -227,7 +227,7 @@ class AssetController < ProtectedController
             end
         end unless params[:groups].nil?
         respond_to do |wants|
-          wants.html do |wants|
+          wants.html do
             flash[:notice] = "Asset was saved"
             redirect_to :controller=>'category', :action=>'show', :id=>params[:category_id]
           end

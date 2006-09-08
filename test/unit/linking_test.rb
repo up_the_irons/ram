@@ -38,10 +38,7 @@ class LinkingTest < Test::Unit::TestCase
 	unit_update @model, @id, @new_values
   end
   
-  def test_linkings_shall_be_unique_within_a_group_linkable_item_and_category
- 
-  end
-  
+
   def test_linkings_shall_look_for_partial_records_to_complete_before_creating_new_partials
     #TODO
   end

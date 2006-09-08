@@ -1,7 +1,8 @@
-# Schema as of Sat Sep 02 01:11:01 PDT 2006 (schema version 15)
+# Schema as of Tue Sep 05 23:25:32 PDT 2006 (schema version 15)
 #
 #  id                  :integer(11)   not null
 #  parent_id           :integer(11)   
+#  category_id         :integer(11)   
 #  user_id             :integer(11)   
 #  title               :string(255)   
 #  permalink           :string(255)   
@@ -18,6 +19,8 @@
 #  status              :integer(11)   default(0), not null
 #
 
+# TODO: Remove the status row if it is not going to be used. 
+
 class Article < ActiveRecord::Base
   acts_as_tree
   acts_as_taggable
@@ -26,12 +29,17 @@ class Article < ActiveRecord::Base
   belongs_to :user
   has_one :category
   
+  
   #snipped from mephisto (http://www.mephistoblog.com/)
   after_validation :convert_to_utc
   before_create :create_permalink
   
   def comments
     self.children
+  end
+  
+  def comment_count
+    self.children_count
   end
   
   

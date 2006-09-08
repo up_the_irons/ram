@@ -1,7 +1,8 @@
-# Schema as of Sat Sep 02 01:11:01 PDT 2006 (schema version 15)
+# Schema as of Tue Sep 05 23:25:32 PDT 2006 (schema version 15)
 #
 #  id                  :integer(11)   not null
 #  parent_id           :integer(11)   
+#  category_id         :integer(11)   
 #  user_id             :integer(11)   
 #  title               :string(255)   
 #  permalink           :string(255)   
@@ -19,7 +20,7 @@
 #
 
 class Comment < Article
-  belongs_to :article, :counter_cache=>:children_count
+  belongs_to :article,:counter_cache=>"children_count"
   has_one :user
   
   def validate
