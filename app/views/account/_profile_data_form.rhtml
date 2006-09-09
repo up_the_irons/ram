@@ -1,25 +1,29 @@
 <li>
     <dl>
-      <dt>Mailing Information</dt>
-      <dd><label>Address Line 1: </label><%= text_field :profile,:address_line1 %></dd>
-      <dd><label>Address Line 2: </label><%= text_field :profile,:address_line2 %></dd>
-      <dd><label>City: </label><%= text_field :profile,:city %></dd>
-      <dd><label>State: </label><%= text_field :profile,:state %></dd>
-      <dd><label>Country: </label><%= text_field :profile,:country %></dd>
-      <dd><label>Postal Code: </label><%= text_field :profile,:postal_code %></dd>
+      <dt style="margin-bottom:10px;">Mailing Information</dt>
+      <dd><label>Address Line 1: </label><%= text_field :profile, :address_line1 %></dd>
+      <dd><label>Address Line 2: </label><%= text_field :profile, :address_line2 %></dd>
+      <dd><label>City: </label><%= text_field :profile, :city %></dd>
+      <dd><label>State: </label><%= text_field :profile, :state %></dd>
+      <dd><label>Country: </label>
+        <select id="profile_country" name="profile[country]">
+          <%= country_options_for_select(@profile.country,['United States','United Kingdom']) %>
+        </select>
+      </dd>
+      <dd><label>Postal Code: </label><%= text_field :profile, :postal_code %></dd>
     </dl>
 </li>
 <li>
     <dl>
-      <dt>Contact Information</dt>
-      <dd><label>Telephone: </label><%= text_field :profile,:telephone %></dd>
-      <dd><label>Fax: </label><%= text_field :profile,:fax %></dd>
+      <dt style="margin-bottom:10px;">Contact Information</dt>
+      <dd><label>Telephone: </label><%= text_field :profile, :telephone %></dd>
+      <dd><label>Fax: </label><%= text_field :profile, :fax %></dd>
     </dl>
 </li>
 <li>
 	<dl>
-		<dt>Biographical Information</dt>
+		<dt style="margin-bottom:10px;">Biographical Information</dt>
 		<dd><label for="bio">Bio</label>
-		<%=text_area :profile, :bio, :rows=>5%></dd>
+		<%= text_area :profile, :bio, :rows=>5%></dd>
 	</dl>
 </li>

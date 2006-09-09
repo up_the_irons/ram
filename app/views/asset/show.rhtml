@@ -12,7 +12,7 @@
 		<ul class="tags">
 			<label><%= image_tag('/images/icons/tag_blue.png')%> Tags</label>
 			<% for tag in @asset.tags -%>
-			<li><%= tag.name %></li>
+			<li><%= link_to tag.name, {:controller=>'search',:action=>'all',:id=>tag.name},:post=>true %></li>
 			<% end -%>
 		</ul>
 </div>

@@ -2,11 +2,11 @@ class AccountController < ProtectedController
   observer :user_observer
 
   def index
-    redirect_to(:action => 'signup') unless logged_in? or User.count > 0
+    redirect_to :action=>'my_profile' if logged_in? and return
   end
   
   def directory
-    #localize this directory to the group list
+    #TODO scope this directory to the group list
 		 @user_pages, @users = paginate :users, :per_page => 10
 	end
 
@@ -38,6 +38,7 @@ class AccountController < ProtectedController
   end
   
   def profile
+    #TODO scope this request so that people don't see profiles that they should not.
     if params[:id].to_s.match(/^\d+$/)
         @user = User.find(params[:id])
       else
@@ -55,9 +56,27 @@ class AccountController < ProtectedController
   		:layout=>'application' unless @user.nil?
   end
   
+  def edit
+    @user    = current_user
+    @user    = User.find(params[:id]) if current_user.is_admin?
+    @person  = @user.person 
+    @profile = @user.profile
+    if request.post? && @user
+      
+      #used to prevent users from forging the request to reset attributes we want to protect.
+      safe_hash = {:email=>''}
+      safe_hash[:email] = params[:user][:email] if params[:user] && params[:user][:email]
+      
+      if @user.update_attributes(safe_hash) && @user.person.update_attributes(params[:person]) &&  @user.profile.update_attributes(params[:profile])
+        flash[:notice] = "Your changes have been saved."
+      else
+        flash[:notice] = "There was an error saving your information."
+      end 
+    end
+  end
+  
   def logout
     self.current_user = nil
-    
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(:controller => '/account', :action => 'login')
     session[:nil]

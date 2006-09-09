@@ -15,7 +15,7 @@
     <%= display_flash_message %>
     <% if current_user %>
     <%= form_tag :controller => 'search', :action => 'all' %>
-  	  <input class="searchField" type="text" name='query' tabindex="1" alt="search box" />
+  	  <input class="searchField" type="text" name='id' tabindex="1" alt="search box" />
   	  <input class="searchSubmit" type="submit" value="Search" alt="search button" />
     <%= end_form_tag %>
     <div id="breadcrumb">

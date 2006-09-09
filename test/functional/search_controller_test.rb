@@ -16,12 +16,12 @@ class SearchControllerTest < Test::Unit::TestCase
   def test_search_all_for_user
     login_as :user_4 # nolan bushnell
 
-    post :all, :query => 'nes'
+    post :all, :id => 'nes'
     assert :success
     assert a = assigns['assets']
     assert_equal 0, a.size
 
-    post :all, :query => 'game'
+    post :all, :id => 'game'
     assert :success
     assert cats = assigns['cats']
     assert_equal 2, cats.size
@@ -30,7 +30,7 @@ class SearchControllerTest < Test::Unit::TestCase
     assert res.include?('Video Game Database')
     assert res.include?('Games')
 
-    post :all, :query => 'only'
+    post :all, :id => 'only'
     assert :success
     assert groups = assigns['groups']
     assert_equal 1, groups.size
@@ -39,7 +39,7 @@ class SearchControllerTest < Test::Unit::TestCase
 
   def test_search_all_for_user2
     login_as :quentin # admin
-    post :all, :query => 'nes'
+    post :all, :id => 'nes'
     assert :success
     assert a = assigns['assets']
     assert_equal 1, a.size
@@ -52,7 +52,7 @@ class SearchControllerTest < Test::Unit::TestCase
     assert groups = assigns['groups']
     assert_equal 0, groups.size
 
-    post :all, :query => 'a'
+    post :all, :id => 'a'
     assert :success
     assert groups = assigns['groups']
     assert_equal 2, groups.size

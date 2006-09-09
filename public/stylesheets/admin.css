@@ -1,12 +1,11 @@
 a.editOptions
 {
 	color               : #EC6428;
-	font-size           : 10px;
 }
 
 .roundBox
 {
-	width               : 480px;;
+	width               : 480px;
 	display             : block;
 	margin              : 5px;
 }

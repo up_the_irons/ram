@@ -7,21 +7,27 @@
 			</div>
 			<div class="profileData">
 				<h1>
-					<%= user.full_name unless !defined?(user.full_name) || user.full_name.nil? %>
-					<span class="mice_type">(<%= user.login %>)</span> 
-					<%= link_to_if_editable "edit",{:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"} %>
+					<%= 
+					unless !defined?(user.full_name) || user.full_name.nil?
+					  user.full_name
+					else
+					'No Full Name Provided'
+					end  %>
+					<span class="mice_type">(<%= user.login %>)
+					<%= link_to_if_editable "#{image_tag('/images/icons/pencil.png')} Edit Profile", {:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"} %>
+					</span> 
 				</h1>
-				<h2>*Job Title* <%= link_to_if_editable "edit",{:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"} %></h2>
+				<h2>*Job Title*</h2>
 				<h3>*Company*</h3>
-				<h4>Phone Number: *Phone Number*</h4>
-				<h4>Email Address: <%= user.email %></h4>
+				<h3>Phone Number: *Phone Number*</h3>
+				<h3>Email Address: <%= user.email %></h3>
 				<ul>
 					<li class="label">Groups:</li>
-					<%= user.groups.map{|g| "<li>#{g.name}, </li>" } %>
+					<%= user.groups.map{|g| "<li>#{g.name}" }.join(", </li>") %>
 				</ul>
 				<ul>
 					<li class="label">Categories:</li>
-					<%= user.categories.map{|c| "<li>#{c.name}, </li>" } %>
+					<%= user.categories.map{|c| "<li>#{c.name}" }.join(", </li>") %>
 				</ul>
 			</div>
 			<div class="row"></div>

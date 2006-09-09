@@ -14,22 +14,6 @@
 #  last_login_at       :datetime      
 #
 
-# Schema as of Sat Sep 02 01:11:01 PDT 2006 (schema version 15)
-#
-#  id                  :integer(11)   not null
-#  login               :string(40)    
-#  email               :string(100)   
-#  crypted_password    :string(40)    
-#  salt                :string(40)    
-#  activation_code     :string(40)    
-#  activated_at        :datetime      
-#  state               :integer(11)   default(0)
-#  created_at          :datetime      
-#  updated_at          :datetime      
-#  role                :integer(11)   default(0)
-#  last_login_at       :datetime      
-#
-
 require 'digest/sha1'
 class User < ActiveRecord::Base
 	has_one  :person
@@ -69,14 +53,14 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
-  validates_presence_of     :login, :email
-  validates_presence_of     :password,                   :if => :password_required?
-  validates_presence_of     :password_confirmation,      :if => :password_required?
-  validates_length_of       :password, :within => 5..40, :if => :password_required?
-  validates_confirmation_of :password,                   :if => :password_required?
-  validates_length_of       :login,    :within => 3..40
-  validates_length_of       :email,    :within => 3..100
-  validates_uniqueness_of   :login, :email
+  validates_presence_of     :login    , :email
+  validates_presence_of     :password ,                   :if => :password_required?
+  validates_presence_of     :password_confirmation,       :if => :password_required?
+  validates_length_of       :password , :within => 5..40, :if => :password_required?
+  validates_confirmation_of :password ,                   :if => :password_required?
+  validates_length_of       :login    , :within => 3..40
+  validates_length_of       :email    , :within => 3..100
+  validates_uniqueness_of   :login    , :email
   before_save :encrypt_password
 
   

@@ -1,0 +1,16 @@
+
+<h1>Edit <%=@user.login%>'s Profile</h1>
+
+<%= error_messages_for 'user'         %>
+<%= error_messages_for 'person'       %>
+<%= error_messages_for 'profile'      %>
+
+<%= start_form_tag :action => "edit" ,:id=>@user.id -%>
+<ul class="web_form">
+<%= render :partial=>'admin_options' if current_user.is_admin?%>
+<%= render :partial=>'user_data_form'     %>
+<%= render :partial=>'personal_data_form' %>
+<%= render :partial=>'profile_data_form'  %>
+<%= submit_tag "Save Profile"             %>
+</ul>
+</form>

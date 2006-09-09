@@ -123,10 +123,62 @@ class AccountControllerTest < Test::Unit::TestCase
     assert_nil session[:user]
     assert_response :redirect
   end
+  
+  def test_should_edit_info
+    login_as :quentin
+    get :edit, :id=>users(:quentin).id
+    assert assigns(:user)
+    assert assigns(:profile)
+    assert assigns(:person)
+  end
+  
+  def test_users_shall_only_edit_their_profile_unless_admin
+    login_as :user_4 #non admin
+    @user = users(:user_4)
+    assert @user.profile
+    assert @user.person
+    get :edit, :id=>users(:user_3).id
+    [:person,:profile].each do | sym |
+      assert_equal assigns(sym).id, @user.send(sym).id
+    end 
+    
+    post :edit, :id=>users(:user_3).id, :person=>{:first_name=>'foo'}
+    [:person,:profile].each do | sym |
+      assert_equal assigns(sym).id, @user.send(sym).id
+    end
+  end
+  
+  def test_users_shall_not_edit_status_or_login
+    login_as :user_4 #non admin
+    @user = users(:user_4)
+    state = @user.state
+    email = @user.email
+    login = @user.login
+    post :edit, :id=>@user.id, :user=>{:login=>"Foo_#{Time.now.to_s}",:state=>9,:email=>'foo-bar-baz@bar.com'}
+    assert_response :success
+    assert_equal assigns(:user).email, 'foo-bar-baz@bar.com' #Password was changed
+    assert_equal assigns(:user).state, state #state was not changed.
+    assert_equal assigns(:user).login, login #state was not changed.
+  end
 
   protected
   def create_user(options = {})
     post :signup, :user => { :login => 'quire', :email => 'quire@example.com', 
                              :password => 'quire', :password_confirmation => 'quire' }.merge(options)
+  end
+  
+  def a_profile(opts={})
+    t = Time.now.to_s
+    @attributes={
+                :city=>"city_#{t}", 
+                :address_line1=>"address_line1_#{t}", 
+                :postal_code=>"postal_code_#{t}",
+                :address_line2=>"address_line2_#{t}",
+                :country=>"",
+                :fax=>"fax_#{t}",
+                :telephone=>"telephone_#{t}",
+                :bio=>"Bio_#{t}",
+                :state=>"state_#{t}"
+                }
   end
 end
