@@ -1,5 +1,6 @@
 <h2>Your Search Returned <%= pluralize(@assets.size, 'Asset') %></h2>
 <%= render :partial => 'asset/list' %>
+<div id="new_asset_form"></div>
 <h2>Your Search Returned <%= pluralize(@cats.size, 'Category') %></h2>
 <%= render :partial => 'category/list' %>
 <h2>Your Search Returned <%= pluralize(@groups.size, 'Group') %></h2>
