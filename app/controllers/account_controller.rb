@@ -11,6 +11,7 @@ class AccountController < ProtectedController
 	end
 
   def login
+    redirect_to :controller=>'inbox' if current_user
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
     if current_user
@@ -66,6 +67,9 @@ class AccountController < ProtectedController
       #used to prevent users from forging the request to reset attributes we want to protect.
       safe_hash = {:email=>''}
       safe_hash[:email] = params[:user][:email] if params[:user] && params[:user][:email]
+      
+      #override this for admins
+      safe_hash[:state] = params[:user][:state].to_i if params[:user] && params[:user][:state] && current_user.is_admin?
       
       if @user.update_attributes(safe_hash) && @user.person.update_attributes(params[:person]) &&  @user.profile.update_attributes(params[:profile])
         flash[:notice] = "Your changes have been saved."

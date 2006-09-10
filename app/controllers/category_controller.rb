@@ -20,15 +20,18 @@ class CategoryController < ProtectedController
       wants.html do
         #only show if this category appears inside the user's list of categories
         @category = find_in_users_categories(params[:id])
-        unless @category.nil? 
-          @groups = @category.groups & current_user.groups
-          #@assets = @category.assets.find(:all, :conditions => ["linkable_type='Asset' AND category_id=#{@category.id} AND group_id IN (?)", @groups.collect{|g| g.id}.join(",")])
-          @total_assets = @category.assets.find(:all).uniq
-          @or_conditions = @groups[1..@groups.length].map{|g| "OR group_id=#{g.id}"}
-          @assets = @category.assets
-        else
-          render :text=>'This category could not be found in your access list'
+        
+        @good_assets = []
+        @groups = @category.groups & current_user.groups
+        #@assets = @category.assets.find(:all, :conditions => ["linkable_type='Asset' AND category_id=#{@category.id} AND group_id IN (?)", @groups.collect{|g| g.id}.join(",")])
+        #@total_assets = @category.assets.find(:all).uniq
+        #@or_conditions = @groups[1..@groups.length].map{|g| "OR group_id=#{g.id}"}
+        @assets = @category.assets
+          
+        @assets.each do |asset|
+          @good_assets << asset unless (asset.groups & @groups).empty?
         end
+        @assets = @good_assets
       end
       wants.js do 
         render :update do |page|
@@ -36,7 +39,9 @@ class CategoryController < ProtectedController
         end
       end
     end
-
+  rescue 
+    redirect_to :controller=>'inbox'
+    flash[:notice] = 'This category could not be found in your access list'
   end
 
  # def new

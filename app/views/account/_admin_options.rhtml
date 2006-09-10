@@ -1,14 +1,12 @@
-<% if false 
-#TODO Enable this for admins  
--%>
 <li>
-  <div class="pageActionOptions">
+  <div class="adminOptions">
   <dl>
-    <dt>Admin Options</dt>
-    <dd>Change Status</dd>
-    <dd>Become this User</dd>
-    <dd>Reset Password</dd>
+    <dt>Admin Only Options</dt>
+    <% 
+    status_options = [] 
+    User::STATUS.map{|s|status_options << [s, User::STATUS.index(s)]}
+    -%>
+    <dd><label>Change Status: </label><%= select :user, :state,  status_options %></dd>
   </dl>
   </div>
 <li>
-<% end -%>

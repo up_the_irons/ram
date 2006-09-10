@@ -1,5 +1,5 @@
 <h1>Folio Items</h1>
-<h2>Your folio contains <%= pluralize (session[:folio].size, 'asset') %></h2>
+<h2>Your folio contains <%= pluralize(session[:folio].size, 'asset') %></h2>
 <%= render :partial=>'asset/list' -%>
 <% if session[:folio].size > 0 %>
 <p><%= link_to'Empty Folio', {:controller=>'folio', :action=>'remove_all'},{:post=>true} %></p>

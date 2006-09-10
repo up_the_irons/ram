@@ -111,6 +111,14 @@ class User < ActiveRecord::Base
     self[:state] > 1
   end
   
+  #used to force state because the profile object also uses "state" but in a geographic context and we don't want it to get set through the method missing.
+  def state
+    self[:state]
+  end
+  def state=(status)
+    self[:state] = status
+  end
+  
   def account_status
     case self[:state]
       when 1
