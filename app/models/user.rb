@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
     end
     #delete all the old memberships, which are no longer needed.
     old_groups.each do |g |
-      membership = Membership.find_by_collection_id(g.id)
+      membership = Membership.find_by_collection_id_and_user_id(g.id,self.id)
       Membership.destroy(membership.id)
     end
   end

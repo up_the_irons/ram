@@ -7,7 +7,6 @@ module AdminController::UserMethods
      @user    = User.find(params[:id])
      @person  = @user.person
      @profile = @user.profile
-     @all_groups = Group.find(:all)
      if request.post? && @user
        if params[:user][:group_ids]
          groups = []

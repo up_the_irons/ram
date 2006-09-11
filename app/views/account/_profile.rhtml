@@ -23,7 +23,7 @@
 				<h3>Email Address: <%= user.email %></h3>
 				<ul>
 					<li class="label">Groups:</li>
-					<%= user.groups.map{|g| "<li>#{g.name}" }.join(", </li>") %>
+					<%= user.groups.map{|g| "<li>#{ link_to g.name, :controller=>'group',:action=>'show',:id=>g.id}" }.join(", </li>") %>
 				</ul>
 				<ul>
 					<li class="label">Categories:</li>

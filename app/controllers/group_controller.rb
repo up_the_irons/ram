@@ -1,4 +1,5 @@
 class GroupController < ProtectedController
+  
   def index
     list
     render :action => 'list'
@@ -16,7 +17,10 @@ class GroupController < ProtectedController
   def show
    #@group = Group.find(params[:id])
    @group = find_in_users_groups params[:id]
-   render :text=>'Could not find this group in your account' if @group.nil?
+   raise if @group.nil?
+  rescue 
+     redirect_to :controller=>'inbox'
+     flash[:notice] = 'This group could not be found in your access list'
   end
 
   def new

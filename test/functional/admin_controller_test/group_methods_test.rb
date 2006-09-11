@@ -5,6 +5,15 @@ module IncludedTests::GroupMethodsTest
      assert assigns(:groups)
    end
    
+   def test_admins_will_automatically_get_assigned_to_new_groups
+     login_as :quentin
+     @user = users(:quentin)
+     before = @user.groups.size
+     Group.create({ :name => "Group_#{Time.now.to_s}",:user_id=>users(:user_2).id })
+     @user = User.find(@user.id)
+     assert_equal before+1,@user.groups.size
+   end
+   
    def test_shall_show_groups
      login_as :quentin
      get :show_group, :id=>2

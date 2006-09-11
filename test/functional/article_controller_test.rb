@@ -4,7 +4,8 @@ require 'article_controller'
 # Re-raise errors caught by the controller.
 class ArticleController; def rescue_action(e) raise e end; end
 class ArticleControllerTest < Test::Unit::TestCase
-  fixtures :articles, :collections, :linkings, :users, :memberships
+  #fixtures :articles, :collections, :users, :linkings, :memberships
+  fixtures :users, :articles
   def setup
     @controller = ArticleController.new
     @request    = ActionController::TestRequest.new
@@ -20,11 +21,12 @@ class ArticleControllerTest < Test::Unit::TestCase
 
   
   def test_create_article
-    [true, false].each do |allow_comments|
-      post :write, :article=>article_params({"allow_comments"=>allow_comments})
-      assert assigns(:article)
-      assert_equal assigns(:article).allow_comments, allow_comments
-    end
+    #[true, false].each do |allow_comments|
+      post :write, :article=>article_params({:allow_comments=>true})
+      assert_response :success
+      assert assigns(:article), "Article should be assigned"
+      assert_equal assigns(:article).allow_comments?, true, "Allow Comments should be #{true}"
+    #end
   end
   
   def test_read

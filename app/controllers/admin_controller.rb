@@ -8,6 +8,7 @@ class AdminController
   include CategoryMethods
   include Sortable
 
+  #observer :group_observer
   before_filter :admin_access_required
   
   verify :method => :post, :only => [ :destroy_group, :create_group, :update_group, :destroy_category, :create_category, :update_category ],
