@@ -1,0 +1,19 @@
+<h1>
+<% if @group.new_record? -%>
+  Create A New Group
+<% else -%>
+  Edit <%= @group.name %>
+<% end -%>
+</h1>
+<%= start_form_tag :controller=>'admin',:action=>'edit_group',:id=>@group.id %>
+<ul class="web_form">
+<%= render :partial=>'group/form' %>
+<li>
+<%= render :partial=>'group/admin_options'%>
+</li>
+<li>
+  <label for="submit">Save Changes: </label>
+  <%= submit_tag "submit" %>
+</li>
+</ul>
+</form>

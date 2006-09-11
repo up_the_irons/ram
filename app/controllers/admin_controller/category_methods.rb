@@ -82,9 +82,9 @@ module AdminController::CategoryMethods
         @or_conditions = @groups[1..@groups.length].map{|g| "OR group_id=#{g.id}"}
         @assets = @category.assets.find(:all, :conditions=>"linkable_type='Asset' AND category_id=#{@category.id} AND group_id=#{@groups[0].id} #{@or_conditions}").uniq
         render 'category/show'
-      else
-        render :text=>'This category could not be found in your access list'
       end
+  rescue
+      flash[:notice] = 'This category could not be found in your access list' 
   end
   
   def new_category

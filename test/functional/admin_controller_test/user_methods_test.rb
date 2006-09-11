@@ -7,7 +7,7 @@ module IncludedTests::UserMethodsTest
    
    def test_admins_shall_edit_users_profile
      login_as :quentin #admin
-     post :edit, :id=>users(:user_3).id, :user=>{:email=>'foo@bar.com'},:person=>{:first_name=>'foo'}
+     post :edit_user, :id=>users(:user_3).id, :user=>{:email=>'foo@bar.com'},:person=>{:first_name=>'foo'}
      assert_equal assigns(:user).first_name, 'foo'
      assert_equal assigns(:user).email, 'foo@bar.com'
    end
@@ -17,7 +17,7 @@ module IncludedTests::UserMethodsTest
       @user = users(:user_2)
       assert_equal @user.groups.size, 1
       assert_equal @user.groups[0].id, 4
-      post :edit, :id=>users(:user_2).id, :user=>{:group_ids=>[1,2,3]}, :profile=>{},:person=>{}     
+      post :edit_user, :id=>users(:user_2).id, :user=>{:group_ids=>[1,2,3]}, :profile=>{},:person=>{}     
       assert assigns(:user)
       assert_equal assigns(:flash)[:notice] , "Your changes have been saved."
       user = User.find(assigns(:user).id) #force a reload
@@ -50,7 +50,7 @@ module IncludedTests::UserMethodsTest
       assert @user.profile
       assert @user.person
 
-      post :edit, :id=>users(:user_4).id, :user=>{:state=>new_state}
+      post :edit_user, :id=>users(:user_4).id, :user=>{:state=>new_state}
       assert_equal assigns(:user).state, new_state
     end
     

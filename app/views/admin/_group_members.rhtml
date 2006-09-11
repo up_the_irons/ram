@@ -1,8 +1,0 @@
-<div id='group_members'>
-<dl>
-<dt>Members</dt>
-<% for u in @group.users -%>
-  <%= "<dd id=\"group_member_#{u.id}\"> #{link_to u.login, :controller=>'account',:action=>'profile',:id=>u.id}" %></dd>
-<% end -%>
-</dl>
-</div>

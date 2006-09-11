@@ -3,7 +3,7 @@ module AdminController::UserMethods
      @user_pages, @users = paginate :users, :per_page => 10
      render 'admin/users'
    end
-   def edit
+   def edit_user
      @user    = User.find(params[:id])
      @person  = @user.person
      @profile = @user.profile

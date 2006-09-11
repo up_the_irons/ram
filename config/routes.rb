@@ -12,7 +12,17 @@ ActionController::Routing::Routes.draw do |map|
   # You can have the root of your site routed by hooking up '' 
   # -- just remember to delete public/index.html.
   map.connect '', :controller => "account", :action=>"login"
-
+  
+  ['groups','users','categories'].each do | model |
+    ['edit', 'show'].each do | action |
+      #create a catch for singular models as well e.g. user/edit/
+      map.connect "admin/#{action}/#{model.singularize}/:id",:controller=>'admin',:action=>"#{action}_#{model.singularize}"
+      #create a catch for plural models e.g. users/edit
+      map.connect "admin/#{action}/#{model}/:id",:controller=>'admin',:action=>"#{action}_#{model.singularize}"
+      map.connect "admin/#{model}",:controller=>'admin',:action=>"#{model}"
+    end
+  end
+  map.connect "admin/disband/group/:id", :controller=>'admin',:action=>'disband_group'
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'

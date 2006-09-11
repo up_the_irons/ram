@@ -278,7 +278,10 @@ li.selected{
 	padding           : 5px;
 	margin            : 5px;
 	background-color  : #F7F8D8;
-}	
+}
+.pageInstructions{
+	background-color  : #F0F0E5;
+}
 
 .pageViewOptions{
 	padding           : 5px 0 5px 0;

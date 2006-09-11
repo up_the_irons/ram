@@ -15,7 +15,7 @@
 				<%= link_to txt,{:controller=>'admin',:action=>'show_user', :id=>user}, {:title=>"show #{user.login}\'s Profile" }  %>
 			</td>
 		<%end -%>
-		<td><%= link_to(image_tag('/images/icons/pencil.png'), :action=>'edit', :id=>"#{user.id}") %></td>
+		<td><%= link_to(image_tag('/images/icons/pencil.png'), :action=>'edit_user', :id=>"#{user.id}") %></td>
 	</tr>
 <% end unless users.nil? %>
 </table>

@@ -1,23 +1,36 @@
+<div class="adminOptions">
+  <dl>Admin Only Options<dl>
+    <dd><%= link_to "#{image_tag('/images/icons/pencil.png')} Edit Group", :controller=>'admin', :action=>'edit_group',:id=>@group %></dd>
+    <dd><%= link_to "#{image_tag('/images/icons/cross.png')} Disband Group", {:controller=>'admin', :action=>'disband_group',:id=>@group},{:confirm=>"Are you sure you want to disband all members from #{@group.name}?",:post=>true} %></dd>
+</div>
+
 <h1><%= @group.name %></h1>
-<p>
-	<%= @group.description %>
+<p class="pageInstructions">
+  <% if @group.public? %>
+  This group is <em>public</em>, which allows all members to see it.
+  <% else -%>
+  This group is <em>private</em>, which means only administrators can see this group and not even the group members.
+  <% end -%>
 </p>
-<p>
-	<b>Leader:</b> <%= h User.find(@group.user_id).login %>
-</p>
-<dl class="listings">
-	<dt>Users</dt>
-	<% for u in @group.users -%>
-	<dd><%=link_to u.login, :controller=>'account',:action=>'profile',:id=>u.id %></dd>
-	<% end -%>
-	<dt>Categories</dt>
-	<% for c in @group.categories %>
-	<%= 
-		#TODO: display the categories within their parent/child context where applicable.
-		# render :partial=> 'category/category', :locals=>{:category=>c} 
-		"<dd>#{link_to c.name, :controller=>'category',:action=>'show',:id=>c.id}</dd>"
-	-%>
-	<% end unless @group.categories.nil?%>
-</dl>
-<%= link_to 'Edit', :action => 'edit', :id => @group %> |
-<%= link_to 'Back', :action => 'list' %>
+<ul class="web_form">
+  <li>
+  	<label for="leader">Leader:</label> <%= h User.find(@group.user_id).login %>
+  </li>
+  <li>
+  	<label for="description">Description: </label><%= @group.description %>
+  </li>
+ </ul>    
+ <dl class="listings">
+  	  <dt>Users</dt>
+  	  <% for u in @group.users -%>
+  	  <dd><%=link_to u.login, :controller=>'account',:action=>'profile',:id=>u.id %></dd>
+  	  <% end -%>
+  	  <dt>Categories</dt>
+  	  <% for c in @group.categories %>
+  	  <%= 
+  		  #TODO: display the categories within their parent/child context where applicable.
+  		  # render :partial=> 'category/category', :locals=>{:category=>c} 
+  		  "<dd>#{link_to c.name, :controller=>'category',:action=>'show',:id=>c.id}</dd>"
+  	    -%>
+  	    <% end unless @group.categories.nil?%>
+  </dl>

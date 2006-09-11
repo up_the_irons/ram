@@ -6,8 +6,8 @@
     status_options = [] 
     User::STATUS.map{|s|status_options << [s, User::STATUS.index(s)]}
     -%>
-    <dd><label>Change Status: </label><%= select :user, :state,  status_options %></dd>
-    <dd><label>Manage Group Memberships: </label>
+    <dd><label>Status: </label><%= select :user, :state,  status_options %></dd>
+    <dd><label>Group Members: </label>
     <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@user,:selected=>@user.groups,:available=>current_user.groups - @user.groups}%>
     </dd>
   </dl>

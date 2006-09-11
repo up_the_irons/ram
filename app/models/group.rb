@@ -67,6 +67,10 @@ class Group < Collection
 	def members
     users
   end
+  
+  def public?
+    self.public
+  end
 	
 	def leader
 		User.find(@owner.user_id)

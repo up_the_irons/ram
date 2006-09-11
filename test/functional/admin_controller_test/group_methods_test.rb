@@ -18,36 +18,24 @@ module IncludedTests::GroupMethodsTest
      login_as :quentin
      get :show_group, :id=>2
      assert assigns(:group)
-     assert assigns(:non_members)
-     assert_equal assigns(:group).users - assigns(:non_members), assigns(:group).users
    end
    
    def test_admin_shall_edit_groups
-     get :edit_group
-     assert_redirected_to :action=>'groups'
-     get :edit_group, :id=>assigns(:current_user).groups[0].id
+     login_as :quentin
+     get :edit_group, :id=>users(:quentin).groups[0].id
      assert :success
+     assert assigns(:group)
    end
   
    def test_update_group
-     get :dashboard #needed to get the controller to assign current_user
-     g = assigns(:current_user).groups.find(:first)
+     login_as :quentin
+     g = users(:quentin).groups.find(:first)
      new_name = 'Atari Monkeys'
      assert_not_nil g
-     post :update_group, :id => g.id, :group =>{:name=>new_name}
-     assert_response :redirect
+     post :edit_group, :id => g.id, :group =>{:name=>new_name}
+     assert_response :success
      group_after_update = Group.find(g.id)
      assert_equal new_name, group_after_update.name
-   end
-   
-   def test_prevent_update_group_on_get
-     get :update_group
-     assert_response :redirect
-   end
-   
-   def test_prevent_create_group_on_get
-     get :create_group
-     assert_response :redirect
    end
    
    def test_group_add_member_from_multiselect
@@ -58,92 +46,60 @@ module IncludedTests::GroupMethodsTest
      assert_equal c.users(true).size, 3
      
      #remove all but one user
-     post :update_group_memberships, :id=>c.id, :group=>{:user_ids=>[c.users[0].id]}
-     assert_response :redirect
+     post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id]}
+     assert_response :success
      assert_equal c.users(true).size, 1
      
      users = User.find(:all) - c.members
-     post :update_group_memberships, :id=>c.id, :group=>{:user_ids=>[c.users[0].id, users[0].id]}
+     post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id, users[0].id]}
      assert_equal c.users(true).size, 2
      assert c.users.find(users[0].id)
-     assert_response :redirect
+     assert_response :success
    end
-   
-   def test_group_add_member
+
+    def test_disband_group
       login_as :quentin
-
-      c = collections(:collection_3)
-      pre_count = c.users.size
-
-      xhr :get, :group_add_member, :id => c.id, :user_id => users(:user_5).id
-      assert_response :success
-
-      assert_rjs :replace_html, 'group_members'
-      assert_rjs :replace_html, 'available_members'
-
-      assert_rjs :visual_effect, :highlight, 'group_members'
-
-      post_count = Collection.find(c.id).users.size
-
-      assert_equal pre_count + 1, post_count
-      assert assigns['group']
-    end
-    
-    def test_group_remove_member
-      login_as :quentin
-
-      c = collections(:collection_3)
-      u = users(:user_5)
-
-      c.users << u
-      pre_count = c.users.size
-
-      xhr :get, :group_remove_member, :id => c.id, :user_id => u.id
-      assert_response :success
-
-      assert_rjs :replace_html, 'group_members'
-      assert_rjs :replace_html, 'available_members'
-
-      post_count = c.users(true).size
-
-      assert_equal pre_count - 1, post_count
-      assert assigns['group']
-    end
-
-    def test_destroy_group
-      User.find(1).groups.each do |g|
-        post :destroy_group, :id=>g.id
-        assert :success
-        assert_raise(ActiveRecord::RecordNotFound) {
-          get :show_group, :id => g.id
-        }
+      users(:quentin).groups.each do |g|
+        post :disband_group, :id=>g.id
+        assert_redirect :groups
+        assert_equal assigns(:flash)[:notice], "You disbanded the group."
+        
+        get :show_group, :id=>g.id
+        assert_redirect :groups
+        assert_equal assigns(:flash)[:notice], "Could not find group."
       end
     end
+    
+    def test_rescue_on_invalid_disband
+      login_as :quentin
+      post :disband_group, :id=>-1000
+      assert_redirect :groups
+      assert_equal assigns(:flash)[:notice], "Could not find group."
+    end
 
-    def test_prevent_destroy_group_on_get
-      get :destroy_group
-      assert_response :redirect
+    def test_prevent_disband_group_on_get
+      get :disband_group
+      assert_redirected_to :action=>'groups'
     end
 
     def test_prevent_destroy_group_by_unauthorized_users
       login_as :user_7 #has no access to any groups 
       assert_no_difference Group, :count do
-        post :destroy_group, :id=>Group.find(:first).id
+        post :disband_group, :id=>Group.find(:first).id
       end
     end
     
     def test_create_group
       login_as :quentin
-      get :dashboard
       assert_no_difference Group, :count do
-        post :create_group, :group => { :name => '',:user_id=>assigns(:current_user).id }
+        post :edit_group, :group => { :name => '',:user_id=>users(:quentin).id }
         assert assigns(:group).new_record?
         assert_equal 1, assigns(:group).errors.count
       end
 
       assert_difference Group, :count  do
-        post :create_group, :group => { :name =>'Guest Group',:user_id=>assigns(:current_user).id }
-        assert_redirected_to :action => 'groups'
+        post :edit_group, :group => { :name =>'Guest Group',:user_id=>users(:quentin).id }
+        assert_redirected_to :action => 'edit_group'
         assert_equal 0, assigns(:group).errors.count
         assert assigns(:group)
       end

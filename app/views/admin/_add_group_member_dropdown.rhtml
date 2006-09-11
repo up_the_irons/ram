@@ -1,6 +1,0 @@
-<div id='available_members'>
-<select id='add_group_form' onchange='new Ajax.Request("/admin/group_add_member/<%= @group.id %>?update=new_group_form&user_id="+$(this).value);' > 
-  <option>Available Members</option>
-  <%= options_for_select @non_members %>
-</select>
-</div>
