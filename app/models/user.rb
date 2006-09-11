@@ -79,6 +79,19 @@ class User < ActiveRecord::Base
   def categories
     groups.map { |g| g.categories }.flatten.uniq
   end
+  
+  def groups=(new_groups)
+    old_groups = self.groups - new_groups #remove all groups which don't appear in the new_groups list
+    new_groups = new_groups - self.groups #remove the groups the user already belongs to.
+    new_groups.each do | g |
+      self.groups << g
+    end
+    #delete all the old memberships, which are no longer needed.
+    old_groups.each do |g |
+      membership = Membership.find_by_collection_id(g.id)
+      Membership.destroy(membership.id)
+    end
+  end
 
   def assets_search(query)
     Asset.search(query, groups.map { |o| o.id })
@@ -139,7 +152,6 @@ class User < ActiveRecord::Base
     profile.save
     person = Person.find_or_create_by_user_id(id)
     person.save
-    #todo create a unique token which can be unsed to identify the user for events like uploading in a sessionless state or reading a feed without supplying username and pasword
   end
 
   class <<self

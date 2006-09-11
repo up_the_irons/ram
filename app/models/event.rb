@@ -20,6 +20,8 @@ class Event < ActiveRecord::Base
 
   class <<self
     # Timestamp new Events automatically
+    
+    # Doesn't ActiveRecord do this automagically?
     def create(attributes = nil)
       super({ :created_at => Time.now }.merge(attributes ? attributes : {}))
     end

@@ -1,6 +1,5 @@
 class AccountController < ProtectedController
   observer :user_observer
-
   def index
     redirect_to :action=>'my_profile' if logged_in? and return
   end
@@ -42,12 +41,12 @@ class AccountController < ProtectedController
     #TODO scope this request so that people don't see profiles that they should not.
     if params[:id].to_s.match(/^\d+$/)
         @user = User.find(params[:id])
-      else
+    else
         @user = User.find_by_login(params[:id])
-      end
-      render :partial=>'account/profile',
-    	  :locals=>{:user=> @user},
-    		:layout=>'application' unless @user.nil?
+    end
+    render :partial=>'account/profile',
+    	:locals=>{:user=> @user},
+    	:layout=>'application' unless @user.nil?
   end
   
   def my_profile
@@ -59,7 +58,6 @@ class AccountController < ProtectedController
   
   def edit
     @user    = current_user
-    @user    = User.find(params[:id]) if current_user.is_admin?
     @person  = @user.person 
     @profile = @user.profile
     if request.post? && @user
@@ -67,9 +65,6 @@ class AccountController < ProtectedController
       #used to prevent users from forging the request to reset attributes we want to protect.
       safe_hash = {:email=>''}
       safe_hash[:email] = params[:user][:email] if params[:user] && params[:user][:email]
-      
-      #override this for admins
-      safe_hash[:state] = params[:user][:state].to_i if params[:user] && params[:user][:state] && current_user.is_admin?
       
       if @user.update_attributes(safe_hash) && @user.person.update_attributes(params[:person]) &&  @user.profile.update_attributes(params[:profile])
         flash[:notice] = "Your changes have been saved."

@@ -54,7 +54,7 @@ quentin:
   email: quentin@example.com
   created_at: 2006-05-02 13:16:30 -07:00
   last_login_at: 2006-05-07 13:57:23 -07:00
-arthur: 
+user_2: 
   salt: 55bc51360864c82dcd7ff4bcfec56a8d8e79e751
   updated_at: 2006-05-07 13:56:30 -07:00
   activated_at: 

@@ -132,7 +132,7 @@ class AccountControllerTest < Test::Unit::TestCase
     assert assigns(:person)
   end
   
-  def test_users_shall_only_edit_their_profile_unless_admin
+  def test_users_shall_only_edit_their_profile
     login_as :user_4 #non admin
     @user = users(:user_4)
     assert @user.profile

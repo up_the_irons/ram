@@ -1,5 +1,3 @@
-<%= render :partial =>'layouts/page_view_options', :locals=>{:view_options=>['thumbnails','details','icons'] }%>
-
 <h1>Listing Users</h1>
 <%= render :partial=>'user_grid', :locals=>{:users=>@users} %>
 <%= link_to 'Previous page', { :page => @user_pages.current.previous } if @user_pages.current.previous %>

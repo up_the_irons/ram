@@ -7,10 +7,10 @@
 
 <%= start_form_tag :action => "edit" ,:id=>@user.id -%>
 <ul class="web_form">
-<%= render :partial=>'admin_options' if current_user.is_admin?%>
-<%= render :partial=>'user_data_form'     %>
-<%= render :partial=>'personal_data_form' %>
-<%= render :partial=>'profile_data_form'  %>
+<%= render :partial=>'account/admin_options' if current_user.is_admin? && params[:controller] =='admin'%>
+<%= render :partial=>'account/user_data_form'     %>
+<%= render :partial=>'account/personal_data_form' %>
+<%= render :partial=>'account/profile_data_form'  %>
 <%= submit_tag "Save Profile"             %>
 </ul>
 </form>

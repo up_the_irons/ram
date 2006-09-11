@@ -111,3 +111,7 @@ a.editOptions
 	margin            : 5px;
 	background-color  : #F7F8D8;	
 }
+.adminOptions li{
+	border            : none;
+	padding           : 0;
+}
