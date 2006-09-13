@@ -16,13 +16,20 @@ module ApplicationHelper
       else
         return "#{link_to asset.name, :controller=>'asset', :action=>'show',:id=>@asset.id}"
     end
-   
-      
-    #if @@content_types.include?(asset.content_type)
-    #  return "<img src='#{url_for :controller=>"asset", :action=>"show", :id=>@asset.id }' />"
-    #else
-    #  return "#{link_to asset.name, :controller=>'asset', :action=>'show',:id=>@asset.id}"
-    #end
+  end
+  
+  #used to create a category tree for use with the tree.js and tree.css files. This method is called recursivly
+  def parse_tree(branches)
+    code = ""
+    branches.each do |b|
+      link = link_to truncate(b[:name],25), :controller=>'category',:action=>'show',:id=>b[:id]
+      if b[:children].size > 0
+        code << "<li id=\"branch_#{b[:id]}\">#{link}\n\r" 
+        code << "<ul>#{parse_tree(b[:children])}</ul></li>\n\r"
+      end
+      code << "<li id=\"branch_#{b[:id]}\">#{link}</li>\n\r" if b[:children].size == 0
+    end
+    code
   end
   
   def link_to_if_editable(name,options={},html_options=nil,*parameters_for_method_reference)

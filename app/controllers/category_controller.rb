@@ -136,21 +136,21 @@ class CategoryController < ProtectedController
   #  end
   #end
   
-  def show_group_form  
-    #@category = Category.find(params[:id])
-    @category = find_in_users_categories(params[:id])
-    
-    #@groups = Group.find(:all) - @category.groups
-    @groups = current_user.groups - @category.groups
-    render :update do |page|
-      if(@groups.empty?)
-        page.replace_html(params[:update],  'All of your groups already have access to this category.')
-      else  
-        page.replace_html(params[:update], :partial=>'new_group_form',:locals=>{:groups=>@groups.map{|g| [g.name , g.id] } })
-      end
-      page.visual_effect :highlight, params[:update], :duration=>1
-    end
-  end
+ # def show_group_form  
+ #   #@category = Category.find(params[:id])
+ #   @category = find_in_users_categories(params[:id])
+ #   
+ #   #@groups = Group.find(:all) - @category.groups
+ #   @groups = current_user.groups - @category.groups
+ #   render :update do |page|
+ #     if(@groups.empty?)
+ #       page.replace_html(params[:update],  'All of your groups already have access to this category.')
+ #     else  
+ #       page.replace_html(params[:update], :partial=>'new_group_form',:locals=>{:groups=>@groups.map{|g| [g.name , g.id] } })
+ #     end
+ #     page.visual_effect :highlight, params[:update], :duration=>1
+ #   end
+ # end
   
  
 

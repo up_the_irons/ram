@@ -41,21 +41,27 @@
 			
 			<td id="sideMenu" valign="top" style="border-right:1px solid #cfcfcf;display:<%= display_open_as %>;">
 				<div style="width:250px;">
-				<a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');new Ajax.Request('/account/toggle_menu');"><%= image_tag('/images/icons/arrow_left.png', {:style=>"display:block;position:absolute;left:240px;padding:1px;border: 1px solid #ccc;"})%></a>
-				<ul id="sideMenuNav">
-				  
-					<li <%= "class=\"selected\"" if params[:controller] == 'inbox'%>><%= link_to 'Inbox', :controller=>'inbox' %></li>
-					<li <%= "class=\"selected\"" if params[:action] == 'my_profile' %>><%= link_to Profile, :controller=>'account',:action=>'my_profile' %></li>
-				</ul>
-				<%= yield :sub_categories %>
-				<% if current_user.is_admin? -%>
-					<%= render :partial=>'layouts/admin_side_menu' %>
-				<% else -%>
-					<%= render :partial=>'layouts/user_side_menu' %>
-				<% end -%>
+				  <a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');new Ajax.Request('/account/toggle_menu');"><%= image_tag('/images/icons/arrow_left.png', {:style=>"display:block;position:absolute;left:240px;padding:1px;border: 1px solid #ccc;"})%></a>
 				
-				<%= yield :side_menu %>
-				<br class="clear_both" />
+				
+				  <ul id="sideMenuNav">  
+					  <li><%= link_to 'Inbox', :controller=>'inbox' %></li>
+					  <li><%= link_to 'Profile', :controller=>'account',:action=>'my_profile' %></li>
+				  </ul>
+				  <div id="menu_content">
+				  <% unless params[:controller] == 'inbox' || params[:action] == 'dashboard'-%>
+				    <ul class="tree">
+  				    <%= parse_tree(session[:category_tree][:root][:children]) %>
+  				  </ul>
+  				<% else
+              if current_user.is_admin? -%>
+					  <%= render :partial=>'layouts/admin_side_menu' %>
+				  <%  else -%>
+					  <%= render :partial=>'layouts/user_side_menu' %>
+				  <%  end
+            end -%>
+				  </div>
+				  <br class="clear_both" />
 				</div>
 			</td>
 			<td id="sideMenuCollapsed"  valign="top" style="border-right:1px solid #cfcfcf;display:<%=display_close_as %>;">
@@ -66,7 +72,7 @@
 			
 			<% end -%>
 				
-			<td id="page" style="border-left:1px solid #efefef;padding-left:10px;">
+			<td id="page" valign="top" style="border-left:1px solid #efefef;padding-left:10px;">
 				<%= yield :page_view_options %>
 				<%= yield :layout %>
 			</td>

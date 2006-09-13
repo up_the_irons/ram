@@ -27,7 +27,7 @@
 				</ul>
 				<ul>
 					<li class="label">Categories:</li>
-					<%= user.categories.map{|c| "<li>#{c.name}" }.join(", </li>") %>
+					<%= user.categories.map{|c| "<li>#{link_to c.name, :controller=>'category', :action=>'show',:id=>c.id}" }.join(", </li>") %>
 				</ul>
 			</div>
 			<div class="row"></div>

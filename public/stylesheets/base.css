@@ -4,7 +4,7 @@ body{
 	color             : #333; 
 	margin            : 0;
 	padding           : 0;
-	/* background-image  : url('/images/application_background.jpg'); */
+	background-image  : url('/images/application_background.jpg');
 	background-repeat : repeat-x;
 }
 form, ul, li{

@@ -14,26 +14,10 @@
   </h1>
 <% end %>
 
-
-
-<% content_for('sub_categories') do %>
-	<% if @category.children.size > 0 -%>
-  	<form>
-	  <span>Sub Categories:</span>
-	  <select id='select_subcategory' onchange='new Ajax.Request("/category/show/?id="+$(this).value);' >	
-	    <option>-----------</option>
-	    <%= options_from_collection_for_select(@category.children, "id", "name") %>
-	  </select>
-	</form>
- 	<% else -%>
-		No Sub Categories
-	<% end -%>
-<% end %>
-
 <div class="pageActionOptions">
 	From here you can:
 	<dl>
-		<dd><%= link_to_remote( 'Add A file', 
+		<dd><%= link_to_remote( "#{image_tag('/images/icons/add.png')} Add A file", 
 											 :url => { :controller=>'asset', :action => "edit", :category_id =>@category.id, :update=>'new_asset_form' } ) %></dd>
 	</dl>											
 </div>

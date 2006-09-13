@@ -4,6 +4,7 @@ module AuthenticatedTestHelper
     @request.session[:user] = users(user).id
     @request.session[:folio] = []
     @request.session[:view] = {:expand_menu=>true}
+    @request.session[:category_tree] ={:root=>{:parent=>nil,:children=>[],:name=>"",:id=>nil}}
   end
 
   # Assert the block redirects to the login

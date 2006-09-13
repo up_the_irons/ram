@@ -70,21 +70,34 @@ module AdminController::CategoryMethods
          page.remove params[:update]
        end
      end
-   end
-  
+  end
+   
+  #TODO: This show method looks EXACTLY like the one in the category controller. Find some way to refactor them so that only one method is needed.
   def show_category
-      #only show if this category appears inside the user's list of categories
-      @category = find_in_users_categories(params[:id])
-      unless @category.nil? 
-        @groups = @category.groups & current_user.groups
-        #@assets = @category.assets.find(:all, :conditions => ["linkable_type='Asset' AND category_id=#{@category.id} AND group_id IN (?)", @groups.collect{|g| g.id}.join(",")])
-        @total_assets = @category.assets.find(:all).uniq
-        @or_conditions = @groups[1..@groups.length].map{|g| "OR group_id=#{g.id}"}
-        @assets = @category.assets.find(:all, :conditions=>"linkable_type='Asset' AND category_id=#{@category.id} AND group_id=#{@groups[0].id} #{@or_conditions}").uniq
-        render 'category/show'
-      end
-  rescue
-      flash[:notice] = 'This category could not be found in your access list' 
+   respond_to do |wants|
+     wants.html do
+       #only show if this category appears inside the user's list of categories
+       @category = find_in_users_categories(params[:id])
+       
+       @good_assets = []
+       @groups = @category.groups & current_user.groups
+       @assets = @category.assets
+         
+       @assets.each do |asset|
+         @good_assets << asset unless (asset.groups & @groups).empty?
+       end
+       @assets = @good_assets
+       render 'category/show'
+     end
+     wants.js do 
+       render :update do |page|
+         page.redirect_to :action=>'show',:id=>params[:id]
+       end
+     end
+   end
+  rescue 
+   redirect_to :controller=>'inbox'
+   flash[:notice] = 'This category could not be found in your access list'
   end
   
   def new_category
