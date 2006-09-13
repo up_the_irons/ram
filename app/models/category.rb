@@ -59,12 +59,31 @@ class Category < Collection
     end
     crumbs
   end 
+  
+  # action_games_category.remove_all_groups
+  def remove_all_groups
+    self.groups.each do| m | 
+      remove_group(m)
+    end
+  end
+  
+  # action_games_category.remove_group
+  def remove_group(group)
+    linking =Linking.find_by_category_id_and_group_id(self.id, group.id)
+    linking.destroy if linking.valid?
+  end
+  
+  class <<self
+    def find_by_id_or_name(id)
+      id.to_s.match(/^\d+$/) ? find(id) : find_by_name(id)
+    end
+  end
 
-  validates_presence_of   :user_id,:name
+  validates_presence_of   :user_id, :name
   validates_uniqueness_of :name, :scope=>:parent_id
   
   #todo after create automatically add this category to the administrators group.
-  #todo after create automatically add this category to the user group list if none is supplied
+  #todo after create automatically add this category to the user group list if none is supplied || allow users to see categories where they are the owner.. even if they don't belong to a group containing that category.
   def validate
     errors.add_to_base "The category cannot specify itself as the parent" if parent_id == id and !new_record?
   end

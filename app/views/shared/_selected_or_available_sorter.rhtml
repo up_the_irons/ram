@@ -16,7 +16,7 @@ Example:
   #some object won't respond to name or will have name linked to something not intended for this method. In this case use
   #the name_alias option
   name_sym  = :name
-  name_sym  = name_alias if defined?(name_alias)
+  name_sym  = name_alias if defined?(name_alias) && !name_alias.nil?
   
   parent_class = parent.class.name.downcase
   child_class = "child"

@@ -7,7 +7,11 @@
 		<dd style="display:inline"><%= link_to 'Users', :controller=>'admin', :action=>'users' %></dd>
 		<dd style="display:inline"><%= link_to 'Groups', :controller=>'admin', :action=>'groups' %></dd>
 		<dd style="display:inline"><%= link_to 'Categories', :controller=>'admin', :action=>'categories' %></dd>
-	</dl>											
+	</dl>
+	<% 
+	  #TODO Add System tools here:
+	 
+	-%>											
 </div>
 <div class="row"></div>
 <%= render :partial => 'events/list' %>

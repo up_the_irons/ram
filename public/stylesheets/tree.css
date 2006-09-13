@@ -120,7 +120,7 @@ ul.tree li div {
 ul.tree div a  {
 	padding: 0;
 	background-image: none;
-	min-height: auto;
+	/*min-height: auto;*/
 	height: auto;
 }
 

@@ -1,0 +1,19 @@
+<h1>
+<% if @category.new_record? -%>
+  Create A New Category
+<% else -%>
+  Edit <%= @category.name %>
+<% end -%>
+</h1>
+<%= error_messages_for 'category' -%>
+<%= start_form_tag :action=>'edit_category' , :id=>@category %>
+<ul class="web_form">
+  <%= render :partial=>'category/form' %>
+  <%= render :partial=>'category/admin_options' %>
+  <li>
+    <label for="submit">Save Changes: </label>
+    <%= submit_tag "submit" %>
+  </li>
+
+</ul>
+<%= end_form_tag %>

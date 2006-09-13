@@ -32,6 +32,10 @@ module ApplicationHelper
     code
   end
   
+  def admin_only_content
+    yield if current_user.is_admin?
+  end
+  
   def link_to_if_editable(name,options={},html_options=nil,*parameters_for_method_reference)
     if current_user.is_admin? || current_user.id == options[:id]
       url = link_to name,options,html_options,*parameters_for_method_reference

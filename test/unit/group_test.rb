@@ -21,18 +21,18 @@ class GroupTest < Test::Unit::TestCase
   
   def test_group_shall_accept_new_members
   	g= Group.find(:first)
-	s = g.users.size
-	g.users << User.find(5)
-	assert g.save
-	assert_equal s+1, Group.find(g.id).users.size
+	  s = g.users.size
+	  g.users << User.find(5)
+	  assert g.save
+	  assert_equal s+1, Group.find(g.id).users.size
   end
   
   def test_group_shall_remove_members
   	g = Group.find(:first)
-	s = g.memberships.size
-	g.memberships[0].destroy
-	assert g.save
-	assert_equal s-1, Group.find(g.id).memberships.size
+	  s = g.memberships.size
+	  g.remove_member(g.members[0])
+	  assert g.save
+	  assert_equal s-1, Group.find(g.id).members.size
   end
   
   def test_group_shall_not_add_the_same_category_twice
@@ -43,9 +43,15 @@ class GroupTest < Test::Unit::TestCase
 	assert_equal s, Group.find(g.id).categories.size
   end
   
-  #TODO:
-  def test_destroying_group_nullifies_linkings_but_does_not_delete_them
-  
+
+  def test_remove_all_members
+    g = Group.find(:first)
+	  s = g.memberships.size
+	  g.remove_all_members
+	  assert g.save
+	  members = Group.find(g.id).members
+	  assert s > members.size
+	  assert_equal 0, members.size
   end
 	
 	def test_shall_not_add_duplicate_members

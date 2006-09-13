@@ -9,8 +9,6 @@ class CategoryController < ProtectedController
   #       :redirect_to => { :action => :list }
 
   def list
-    #todo list based on user's permissions
-    #@category_pages, @categories = :category, :per_page => 10
     @category_pages, @categories = paginate_collection current_user.categories, :page => @params[:page]
   end
 

@@ -27,17 +27,12 @@ class AdminControllerTest < Test::Unit::TestCase
   def test_shall_redirect_to_index_when_a_non_admin_accesses_controller
     login_as :user_7
     get :index
-    assert_redirected_to :controller=>'account', :action=>'index'
+    assert_redirected_to :controller=>'inbox'
   end
   
   def test_shall_allow_admin_access
     get :index
     assert_redirected_to :action=>'dashboard'
-  end
-  
-  
-  def test_admin_shall_assign_groups_to_categories
-    todo
   end
     
 end

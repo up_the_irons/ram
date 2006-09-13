@@ -90,6 +90,20 @@ class UserTest < Test::Unit::TestCase
     end
   end
   
+  def test_categories_as_tree
+    user = users(:quentin)
+    tree = user.categories_as_tree
+    user.categories.each do |c|
+      sym = "b_#{c.id}".to_sym
+      branch = {:children=> [], :id=>c.id,:name=> c.name,:parent=> (c.parent_id == nil)? :root : "b_#{c.parent_id}".to_sym} 
+      c.children.each{|child| branch[:children] << tree["b_#{child.id}".to_sym] if user.categories.find{|cat| cat.id == child.id}  }
+      assert_equal branch[:id]       , tree[sym][:id]
+      assert_equal branch[:parent]   , tree[sym][:parent]
+      assert_equal branch[:name]     , tree[sym][:name]
+      assert_equal branch[:children].map{|n| n[:name]  }.sort , tree[sym][:children].map{|n| n[:name]  }.sort
+    end
+  end
+  
   def test_shall_encrypt_login
     u = User.find(:first)
     login = u.login

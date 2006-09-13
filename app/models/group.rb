@@ -84,6 +84,19 @@ class Group < Collection
     m = Membership.create(:user_id => old_owner, :state_id => 2, :collection_id => self.id, :collection_type => 'Group')    
     memberships.find_by_user_id(new_owner).destroy rescue nil
   end
+  
+  # enemies.remove_all_members
+  def remove_all_members
+    self.members.each do| m | 
+      remove_member(m)
+    end
+  end
+  
+  # enemeies.remove_member
+  def remove_member(member)
+    membership = Membership.find_by_user_id_and_collection_id(member.id, self.id)
+    membership.destroy if membership     
+  end
 
   validates_presence_of :user_id, :name
   validates_uniqueness_of :name
@@ -96,8 +109,8 @@ class Group < Collection
   end
 
   class <<self
-    def find_by_id_or_login(id)
-      id.to_s.match(/^\d+$/) ? find(id) : find_by_login(id)
+    def find_by_id_or_name(id)
+      id.to_s.match(/^\d+$/) ? find(id) : find_by_name(id)
     end
   end
 end

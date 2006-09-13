@@ -80,6 +80,32 @@ class User < ActiveRecord::Base
     groups.map { |g| g.categories }.flatten.uniq
   end
   
+  def categories_as_tree
+    make_branch = Proc.new do
+      {:parent=>nil,:children=>[],:name=>"",:id=>nil}
+    end
+
+    tree = {:root=>make_branch.call}
+
+    self.categories.each do |t|
+      #breakpoint
+      sym = "b_#{t.id}".to_sym
+      tree[sym] = make_branch.call if tree[sym].nil?
+      tree[sym][:id] = t.id
+      tree[sym][:name] = t.name
+
+      if t.parent_id.nil?
+        parent = :root
+      else
+        parent = "b_#{t.parent_id}".to_sym
+        tree[parent] = make_branch.call if tree[parent].nil?
+      end
+      tree[sym][:parent] = parent 
+      tree[parent][:children] << tree[sym]
+    end
+    tree
+  end
+  
   def groups=(new_groups)
     old_groups = self.groups - new_groups #remove all groups which don't appear in the new_groups list
     new_groups = new_groups - self.groups #remove the groups the user already belongs to.

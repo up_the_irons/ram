@@ -26,6 +26,7 @@ class AdminController
   
   protected
   def admin_access_required
-    redirect_to :controller=>'account',:action=>'index' unless current_user.is_admin?
+    flash[:notice] = "Access Denied"
+    redirect_to :controller=>'inbox' unless current_user.is_admin?
   end
 end

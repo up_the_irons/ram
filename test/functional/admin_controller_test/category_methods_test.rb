@@ -6,30 +6,33 @@ module IncludedTests::CategoryMethodsTest
   end
   
   def test_admin_shall_edit_categories
-    get :edit_category
-    assert_redirected_to :action=>'categories'
     get :edit_category, :id=>@existing_category_id
     assert :success
   end
   
   def test_create_category
-    get :create_category
-    assert_response :redirect
+    get :edit_category
+    assert_response :success
+    assert assigns(:category).new_record?
     assert_no_difference Category, :count do
-      post :create_category, :category => { :name => '' }
+      post :edit_category, :category => { :name => '' }
+      assert assigns(:category).errors[:name]
+      assert !assigns(:category).valid?
       assert assigns(:category).new_record?
     end
     
     assert_difference Category, :count  do
-      post :create_category, :category => { :name =>'knock-offs',:user_id=>User.find(:first),:parent_id=>@existing_category_id }
-      assert_redirected_to :action => 'categories'
+      new_name = 'knock-offs'
+      post :edit_category, :category => { :name =>new_name ,:user_id=>users(:quentin).id ,:parent_id=>users(:quentin).categories[0].id }
+      assert_redirect :action=>'edit_category', :id=>assigns(:category).id
       assert assigns(:category)
+      assert assigns(:category).name = new_name
     end
   end
   
   def test_remove_group_from_category
     s = Category.find(6).groups.size
-    post :remove_group_from_category, :id=>6, :group_id=>1
+    post :edit_category, :id=>6, :category=>{:group_ids=>Category.find(6).groups[0..(s-2)].map{|g| g.id}}
     assert_equal Category.find(6).groups.size, s-1
     assert assigns(:category)
   end
@@ -39,21 +42,28 @@ module IncludedTests::CategoryMethodsTest
   end
   
   def test_add_group_to_category
+     login_as :quentin
      c = Category.find(@existing_category_id)
+     g = a_group({:user_id=>users(:quentin).id})
+     g.members << users(:quentin)
+     assert g.valid?
      s = c.groups.size
-     post :add_group_to_category, :id=>c.id, :group_id=> 1, :update=>'new_group_form'
-     assert flash[:notice] == 'Your Group has been added'
-     assert_equal Category.find(@existing_category_id).groups.size, s+1   
+     group_ids = c.groups.map{|cat| cat.id }
+     group_ids << g.id
+     post :edit_category, :id=>c.id, :category=>{:group_ids=>group_ids}
+     reloaded_category = Category.find(@existing_category_id)
+     assert_equal reloaded_category.groups.size, s+1
+     assert reloaded_category.groups.include?(g)
    end
 
    def test_user_shall_not_add_a_group_to_a_category_that_they_do_not_belong_to
-     get :dashboard
-     current_user = assigns(:current_user)
+     login_as :quentin
+     current_user = users(:quentin)
      all = Category.find(:all)
      excluded = all - current_user.categories
      c = excluded[0]
      s = c.groups.size
-     post :add_group_to_category, :id=>c.id, :group_id=> 1, :update=>'new_group_form'
+     post :edit_category, :id=>c.id, :group_ids=>current_user.groups.map{|g| g.id}
      assert_equal Category.find(c.id).groups.size, s
    end
   
@@ -71,18 +81,27 @@ module IncludedTests::CategoryMethodsTest
       end
       #already deleted
       assert_no_difference Category, :count do
-        assert_raise(ActiveRecord::RecordNotFound) {
-          post :destroy_category, :id => 10
-        }
+        post :destroy_category, :id => 10
+        assert assigns(:flash)[:notice], "Error Deleting Category"
       end
   end
   
   def test_update_category
     new_name = 'Atari Promotions'
-    post :update_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first)}
-    assert_response :redirect
+    post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first)}
+    assert_response :success
     category_after_update = Category.find(@existing_category_id)
     assert_equal new_name, category_after_update.name
+  end
+  
+  def test_prevent_bad_updates_to_categories
+    @category = users(:quentin).categories[0]
+    get :edit_category, :id => @category.id, :category =>{:name=>"New Name #{Time.now.to_s}"}
+    assert_equal assigns(:category).name, @category.name
+    
+    get :edit_category, :id => -1111111, :category =>{:name=>"New Name #{Time.now.to_s}"}
+    assert_response :redirect
+    assert_equal assigns(:flash)[:notice], 'Could not find category.'
   end
   
 end

@@ -13,6 +13,14 @@
     <%= link_to( 'Edit', {:controller=>'admin',:action => 'edit_category', :id => @category},{:style=>'font-size:80%;'}) if current_user.is_admin? %>
   </h1>
 <% end %>
+<% admin_only_content do -%>
+<div class="adminOptions">
+  <dl>Admin Only Options<dl>
+    <dd><%= link_to "#{image_tag('/images/icons/pencil.png')} Edit Category", :controller=>'admin', :action=>'edit_category',:id=>@category %></dd>
+    <dd><%= link_to "#{image_tag('/images/icons/cross.png')} Delete Category", {:controller=>'admin', :action=>'destroy_category',:id=>@category},{:confirm=>"Are you sure you want to disband all members from #{@category.name}?",:post=>true} %></dd>
+</div>
+<% end -%>
+
 
 <div class="pageActionOptions">
 	From here you can:
@@ -27,7 +35,6 @@
 	%>
 	<h3>Available Assets</h3>
 	<%= render :partial=>'asset/list' %>
-	<p><%= render :partial=>'category/new_asset_button' %></p>
 	<p id="new_asset_form"></p>
 <br />
 
