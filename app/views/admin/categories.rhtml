@@ -1,16 +1,11 @@
-<h1>Listing categories</h1>
+<% @page_actions = capture do -%>
 <div class="pageActionOptions">
 	From here you can:
 	<dl>
 		<dd><%= link_to "#{image_tag('/images/icons/add.png')} Create A New Category", :controller=>'admin', :action=>'edit_category' %></dd>
 	</dl>											
 </div>
-<dl class="listings">  
-<% for category in @categories %>
-  <dt><%= link_to(h(category.name),:controller=>'admin',:action=>'show_category', :id=>category) %></dt>
-  <dd style="display:inline;"><%= h category.description %>
 <% end -%>
-</dl>
 
-<%= link_to 'Previous page', { :page => @category_pages.current.previous } if @category_pages.current.previous %>
-<%= link_to 'Next page', { :page => @category_pages.current.next } if @category_pages.current.next %> 
+
+<%= render :partial=>'category/list' %>

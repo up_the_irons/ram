@@ -1,16 +1,19 @@
-<table class="dataGrid">
-	<tr>
-		<th>Name</th>
-		<th>Description</th>
-	</tr>
-	
-  <% @cats.each do |cat| -%>
-  <% row_class = cycle("even", "odd") -%>
-  <tr id="<%="cat_#{cat.id}"%>" onmouseover="this.className='highlighted'; this.style.cursor = 'pointer'" 
-                                onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>"
-                                onclick="window.location='<%= url_for :controller => 'category', :action => 'show', :id => cat.id %>'">
-    <td><%= cat.name %></td>
-    <td><%= cat.description %></td>
-  </tr>
-  <% end -%>
-</table>
+<h1>Listing Categories</h1>
+
+<%=  @page_actions ||="" %>
+
+<dl class="listings">  
+<% for category in @categories %>
+  <dt><%= link_to(h(category.name),:controller=>'category', :action=>'show', :id=>category) %>
+  
+  <%= admin_only_content do
+      "<span class='mice_type'>#{link_to(image_tag('/images/icons/pencil.png'), :action=>'edit_category', :id=>category.id)} edit</span>" 
+  end %>  
+  
+  </dt>
+  <dd style="display:inline;"><%= h category.description %>
+<% end -%>
+</dl>
+
+<%= link_to 'Previous page', { :page => @category_pages.current.previous } if @category_pages.current.previous %>
+<%= link_to 'Next page', { :page => @category_pages.current.next } if @category_pages.current.next %> 

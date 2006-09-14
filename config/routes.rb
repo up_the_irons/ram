@@ -22,10 +22,12 @@ ActionController::Routing::Routes.draw do |map|
       map.connect "admin/#{model}",:controller=>'admin',:action=>"#{model}"
     end
   end
+  
   map.connect "admin/disband/group/:id", :controller=>'admin',:action=>'disband_group'
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'
+
 
   # Install the default route as the lowest priority.
   map.connect ':controller/:action/:id'

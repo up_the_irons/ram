@@ -1,9 +1,5 @@
 class AssetController < ProtectedController
-  
-  def index
-  
-  end
-  
+
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   verify :method => :post, :only => [ :destroy, :create, :update,:create_en_masse ],
          :redirect_to => { :action => :index }
@@ -33,43 +29,10 @@ class AssetController < ProtectedController
     @asset = Asset.find(params[:id])
     send_data @asset.data, :filename => @asset.filename, :type => @asset.content_type, :disposition => 'inline'
   end
-  
-  #def new
-  #  #c = Category.find(params[:category])
-  #  c = find_in_users_categories(params[:category])
-  #  @asset = Asset.new
-  #  @linking = Linking.new
-  #  #TODO validate that the user does have access to this category and group and did not spoof the request
-  #  @linking.category_id = c.id
-    
-  #  #TODO Don't hard code this.
-  #  @linking.group_id = c.groups[0].id
-  #end
-  
-  #def create
-  #  #render :text=>"<pre>#{params.to_yaml}</pre>", :layout=>'application'
-  #  
-  #  
-  #  @asset = Asset.new(params[:asset])
-  #	@asset.user_id = current_user
-  #  if @asset.save
-  #    #you search for an existing linking first because creating a new linking that is not unique will cause an exeception.
-  #    #@linking = Linking.find_or_create_by_category_id_and_group_id(params[:linking]['category_id'], params[:linking]['group_id'])
-  #    @linking = Linking.create(params[:linking])
-  #    @linking.user_id = current_user
-  #    @linking.linkable_id = @asset.id
-  #    @linking.linkable_type = 'Asset'
-  #    @linking.save
-  #    flash[:notice] = 'Asset was successfully created.'
-  #    redirect_to :controller=>"category",:action=>"show",:id=>@linking.category_id
-  #    else
-  #      render :action => 'new'
-  #    end
-  #end
 
   #the bulk upload process is initiated from flash.
   def bulk_upload
-    @size_limit = 50000*1024
+    @size_limit = UPLOAD_SIZE_LIMIT #50000*1024
     if @category = find_in_users_categories(params[:id])
       @login = CGI.escape(current_user.encrypt_login)
       @url_params = "maxFileSize=#{@size_limit}"
@@ -103,8 +66,9 @@ class AssetController < ProtectedController
     render :text=>"\n", :layout=>false
   end
   
+  
   def show_upload_results
-    #todo need to find a way to retrive the files, which flash uploaded and display them to the user. The problem is that flash opperates outside the session.
+    #DON'T DELETE THIS METHOD Flash Needs to resolve to it.
   end
   
   def edit
@@ -195,7 +159,6 @@ class AssetController < ProtectedController
       #was a get instead of a post.
       logger.warn 'GET**************'
       render :update do |page|
-        page.alert 'foo'
       end
     end
   end

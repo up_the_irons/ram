@@ -1,11 +1,6 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   
-  #before_filter :stub_login
-  #def stub_login
-  #  session[:user] ||= User.find(:first).id
-  #end
-  
   def paginate_collection(collection, options = {})
     default_options = {:per_page => 10, :page => 1}
     options = default_options.merge options

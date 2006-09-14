@@ -111,7 +111,8 @@ a.editOptions
 	margin            : 5px;
 	background-color  : #F7F8D8;	
 }
-.adminOptions li{
+.adminOptions li, .adminOptions dd{
 	border            : none;
-	padding           : 0;
+	display           : inline;
+	padding           : 0 20px 0 0;
 }

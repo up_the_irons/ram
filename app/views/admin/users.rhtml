@@ -1,4 +1,10 @@
-<h1>Listing Users</h1>
-<%= render :partial=>'user_grid', :locals=>{:users=>@users} %>
-<%= link_to 'Previous page', { :page => @user_pages.current.previous } if @user_pages.current.previous %>
-<%= link_to 'Next page', { :page => @user_pages.current.next } if @user_pages.current.next %> 
+<% @page_actions = capture do -%>
+<div class="pageActionOptions">
+	From here you can:
+	<dl>
+		<dd><%= link_to "#{image_tag('/images/icons/add.png')} Add A New User", :controller=>'admin', :action=>'edit_user' %></dd>
+	</dl>											
+</div>
+<% end %>
+
+<%= render :partial=>'account/list' %>

@@ -300,7 +300,6 @@ li.selected{
 }
 .pageViewOptions dd, .pageViewOptions dt, .pageActionOptions dd, .pageActionOptions dt{
 	display           : inline;
-	border-right      : 1px solid #333;
 	padding           : 0 5px 0 5px;
 }
 

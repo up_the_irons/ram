@@ -1,7 +1,0 @@
-<form>
-Add Group To Category 
-<select id='add_group_form' onchange='new Ajax.Request("/admin/add_group_to_category/<%= @group.id %>?update=add_group_to_category_form&category_id="+$(this).value);' >	
-	<option>Your Remaining Categories</option>
-<%= options_from_collection_for_select(@categories, "id", "name") %>
-</select>
-</form>

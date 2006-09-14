@@ -1,16 +1,18 @@
-<table class="dataGrid">
-	<tr>
-		<th>Name</th>
-		<th>Description</th>
-	</tr>
-	
-  <% @groups.each do |group| -%>
-  <% row_class = cycle("even", "odd") -%>
-  <tr id="<%="group_#{group.id}"%>" onmouseover="this.className='highlighted'; this.style.cursor = 'pointer'" 
-                                    onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>"
-                                    onclick="window.location='<%= url_for :controller => 'group', :action => 'show', :id => group.id %>'">
-    <td><%= group.name %></td>
-    <td><%= group.description %></td>
-  </tr>
+<h1>Listing Groups</h1>
+<%=  @page_actions ||="" %>
+<dl class="listings">  
+<% for group in @groups %>
+  <dt><%= link_to(h(group.name),:controller=>'group', :action=>'show', :id=>group.id) %>
+  
+  <%= admin_only_content do
+    "<span class='mice_type'>#{link_to(image_tag('/images/icons/pencil.png'), :action=>'edit_group', :id=>group.id)} edit</span>" 
+  end %>
+  
+  </dt>
+  <dd style="display:inline;"><%= h group.description %>
   <% end -%>
-</table>
+</dl>
+
+<%= link_to 'Previous page', { :page =>@group_pages.current.previous } if @group_pages.current.previous %>
+<%= link_to 'Next page', { :page =>@group_pages.current.next } if @group_pages.current.next %> 
+

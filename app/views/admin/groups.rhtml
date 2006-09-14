@@ -1,16 +1,10 @@
-<h1>Listing Groups</h1>
+<% @page_actions = capture do -%>
 <div class="pageActionOptions">
 	From here you can:
 	<dl>
 		<dd><%= link_to "#{image_tag('/images/icons/add.png')} Create A New Group", :controller=>'admin', :action=>'edit_group' %></dd>
 	</dl>											
 </div>
-<dl class="listings">  
-<% for group in @groups %>
-  <dt><%= link_to(h(group.name),:controller=>'admin',:action=>'show_group', :id=>group) %></dt>
-  <dd style="display:inline;"><%= h group.description %>
-  <% end -%>
-</dl>
+<% end %>
 
-<%= link_to 'Previous page', { :page =>@group_pages.current.previous } if @group_pages.current.previous %>
-<%= link_to 'Next page', { :page =>@group_pages.current.next } if @group_pages.current.next %> 
+<%= render :partial=>'group/list'%>

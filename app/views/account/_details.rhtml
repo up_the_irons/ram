@@ -7,7 +7,7 @@
 		<th></th>
 	</tr>
 	
-<% for user in users %>
+<% for user in @users %>
   <%row_class =  cycle("even", "odd") %>
 	<tr id="<%="user_#{user.id}"%>" onmouseover="this.className='highlighted'" onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>">
 		<% ["#{image_tag('/images/icons/user.png')}","#{user.login}", "#{user.email unless user.email.nil?}","#{User::STATUS[user.state]}"].each do|txt| -%> 
@@ -17,5 +17,5 @@
 		<%end -%>
 		<td><%= link_to(image_tag('/images/icons/pencil.png'), :action=>'edit_user', :id=>"#{user.id}") %></td>
 	</tr>
-<% end unless users.nil? %>
+<% end unless @users.nil? %>
 </table>

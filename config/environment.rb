@@ -61,7 +61,7 @@ require 'RMagick'
 
 #required for building rss feeds
 require 'feed_tools'
-
+UPLOAD_SIZE_LIMIT = 50000*1024
 RAM_SALT = 'foodz'
 APP_NAME = 'RAM'
 #codename generated from the dictionary
