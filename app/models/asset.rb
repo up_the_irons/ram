@@ -82,7 +82,7 @@ class Asset < ActiveRecord::Base
      def search(query, groups)
        groups = [groups].flatten
 
-       find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ?)", "%#{query}%", "%#{query}%"], :group => "attachments.id")
+       find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = attachments.id AND taggings.taggable_type = 'Asset' AND tags.name LIKE ?) IS NOT NULL)", "%#{query}%", "%#{query}%", "%#{query}%"], :group => "attachments.id")
      end
 
      def find_with_data(quantity, options = {})
