@@ -13,7 +13,6 @@
 
 class Category < Collection
 	acts_as_tree 
-  acts_as_taggable
   has_many :children, :class_name=>'Collection',:foreign_key=>'parent_id' do
 		def << (category)
 			return if @owner.children.include?category
@@ -51,7 +50,11 @@ class Category < Collection
   end
   
   has_many :assets
+  has_many :articles
 
+  def contents
+    [articles,assets]
+  end
   
   def bread_crumbs
     crumbs = Array.new

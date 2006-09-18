@@ -23,14 +23,15 @@ class ArticleControllerTest < Test::Unit::TestCase
   def test_create_article
     #[true, false].each do |allow_comments|
       post :write, :article=>article_params({:allow_comments=>true})
-      assert_response :success
+      assert_redirected_to :action=>'write', :id=>assigns(:article).id
       assert assigns(:article), "Article should be assigned"
       assert_equal assigns(:article).allow_comments?, true, "Allow Comments should be #{true}"
     #end
   end
   
   def test_read
-    a = Article.find(:first)
+
+    a = @current_user.articles[0]
     [a.id, a.title].each do |id|
       get :read, :id=>id
       assert_response :success
@@ -86,9 +87,9 @@ class ArticleControllerTest < Test::Unit::TestCase
   def test_shall_not_view_articles_without_access
     login_as :user_4
     a = users(:quentin).articles[0]
-    assert_raise(ActiveRecord::RecordNotFound) do
-      get :read, :id=>a.id
-    end
+    get :read, :id=>a.id
+    assert_redirect :controller=>'inbox'
+    assert_equal "Could not find article.", assigns(:flash)[:notice]
   end
   
   def test_delete_article
@@ -100,21 +101,19 @@ class ArticleControllerTest < Test::Unit::TestCase
     end
   end
   
-  def test_non_published_articles_are_not_viewable_except_to_author
-    a = an_article({:user_id=>@current_user.id})
+  def test_non_published_articles_are_not_viewable_except_to_author_or_admin
+    login_as :user_4
+    a = an_article({:user_id=>users(:user_4).id})
     get :read, :id=>a.id
     assert_response :success
     assert_equal assigns(:article).title, a.title
     
     #now switch the user and assert that the article cannot be seen.
-    assert_raise(ActiveRecord::RecordNotFound) do
-      b = an_article({:user_id=>@another_user.id})
-      assert b.valid?
-      get :read, :id=>b.id
-      assert_response :success
-    end
+    b = an_article({:user_id=>@another_user.id})
+    assert b.valid?
+    get :read, :id=>b.id
+    assert_redirected_to :controller=>'inbox'
   end
-  
   
   
   def test_shall_prevent_on_gets
@@ -137,7 +136,8 @@ class ArticleControllerTest < Test::Unit::TestCase
     get :read, :id=>a.id
     assert_equal assigns(:article).title, a.title
     post :comment_on, :id=>a.id, :comment=>{:user_id=>users(:quentin).id ,:title=>'this is total bullocks',:body=>'How can you say that "Baby-Pac" was better than "Pac-Man" you are totally wrong you n00b.'}
-    assert_response :success
+    assert_redirected_to :controller=>'article',:id=>a.id
+    assert assigns(:comment).valid?
     assert_equal 'this is total bullocks', assigns(:comment).title
     assert_equal 1, Article.find(a.id).children_count
   end

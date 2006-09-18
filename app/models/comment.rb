@@ -28,4 +28,6 @@ class Comment < Article
         errors.add_to_base("Comments are not allowed.") unless Article.find(parent_id).allow_comments 
       end
   end
+  
+  validates_presence_of :body
 end

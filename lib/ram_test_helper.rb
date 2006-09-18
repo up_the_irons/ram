@@ -1,7 +1,8 @@
 module RamTestHelper
   
   def an_article(opts={})
-    o = {:user_id=>User.find(:first).id,:title=>"Game Time is #{Time.now.to_s}",:body=>"My favorite time to play game is #{Time.now.to_s}" }.merge(opts)
+    user = User.find(:first)
+    o = {:user_id=>user.id,:category_id=>user.categories[0].id,:title=>"Game Time is #{Time.now.to_s}",:body=>"My favorite time to play game is #{Time.now.to_s}" }.merge(opts)
     Article.create(o)
   end
   

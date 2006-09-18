@@ -1,6 +1,6 @@
-
+<% content_for('application_header') do -%>
 <h1>Edit <%=@user.login%>'s Profile</h1>
-
+<% end -%>
 <%= error_messages_for 'user'         %>
 <%= error_messages_for 'person'       %>
 <%= error_messages_for 'profile'      %>

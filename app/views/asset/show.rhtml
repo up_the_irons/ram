@@ -1,3 +1,7 @@
+<% content_for('application_header') do -%>
+  <h1><%=h @asset.name %> </h1>
+<% end %>
+
 <div class="post" style="width:auto;">
 		<ul class="postHeader">
 			<li>Content Type: <%= @asset.content_type %></li>

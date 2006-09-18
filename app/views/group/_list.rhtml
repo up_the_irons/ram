@@ -1,12 +1,18 @@
+<% content_for('application_header') do -%>
 <h1>Listing Groups</h1>
+<% end -%>
+
+
 <%=  @page_actions ||="" %>
+
+
 <dl class="listings">  
 <% for group in @groups %>
   <dt><%= link_to(h(group.name),:controller=>'group', :action=>'show', :id=>group.id) %>
   
-  <%= admin_only_content do
-    "<span class='mice_type'>#{link_to(image_tag('/images/icons/pencil.png'), :action=>'edit_group', :id=>group.id)} edit</span>" 
-  end %>
+  <% admin_only_content do -%>
+    <span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} edit", {:action=>'edit_group', :id=>group.id},{:class=>"editOptions"} ) -%></span>
+  <% end -%>  
   
   </dt>
   <dd style="display:inline;"><%= h group.description %>

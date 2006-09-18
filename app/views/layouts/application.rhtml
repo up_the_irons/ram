@@ -47,6 +47,7 @@
 				  <ul id="sideMenuNav">  
 					  <li><%= link_to 'Inbox', :controller=>'inbox' %></li>
 					  <li><%= link_to 'Profile', :controller=>'account',:action=>'my_profile' %></li>
+					  <li><%= link_to 'Notes', :controller=>'article',:action=>'write' %></li>
 				  </ul>
 				  <div id="menu_content">
 				  <% unless params[:controller] == 'inbox' || params[:action] == 'dashboard'-%>

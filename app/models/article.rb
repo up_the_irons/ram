@@ -38,10 +38,18 @@ class Article < ActiveRecord::Base
     self.children
   end
   
+  def author
+    user_id
+  end
+  
   def comment_count
     self.children_count
   end
   
+  def tags= (str)
+    arr = str.split(",").uniq
+    self.tag_with arr.map{|a| a}.join(",") unless arr.empty?
+  end
   
   #snipped from mephisto's post model (http://www.mephistoblog.com/)
   def published?

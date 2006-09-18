@@ -6,7 +6,9 @@
 </div>
 <% end -%>
 
-<h1><%= @group.name %></h1>
+<% content_for('application_header') do -%>
+  <h1><%=h @group.name %> </h1>
+<% end %>
 <p class="pageInstructions">
   <% if @group.public? %>
   This group is <em>public</em>, which allows all members to see it.

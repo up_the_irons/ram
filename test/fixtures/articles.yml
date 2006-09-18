@@ -30,13 +30,13 @@ first:
   body: "Let me know your favorites of alltime, I am making a list"                   
   excerpt_html: "Let <b>me</b> know your favorites"   
   body_html: "Let <b>me</b> know your favorites of alltime, I am making a list"       
-  created_at: "#{Time.now.to_s}"         
-  updated_at: "#{Time.now.to_s}"         
-  published_at: "#{Time.now.to_s}"   
+  created_at: <%= Time.now.to_s %>        
+  updated_at: <%= Time.now.to_s %>      
+  published_at: <%=Time.now.to_s %>
   type:
   children_count: 1            
   allow_comments: 0
-  category_id: 1  
+  category_id: 6  
   status: 1
 another:
   id: 2
@@ -53,5 +53,5 @@ another:
   published_at: "#{Time.now.to_s}"   
   type: Comment            
   allow_comments: 0
-  category_id: 1
+  category_id: 6
   status: 1          

@@ -84,17 +84,15 @@ class User < ActiveRecord::Base
     make_branch = Proc.new do
       {:parent=>nil,:children=>[],:name=>"",:id=>nil}
     end
-
+    category_ids = self.categories.map{|c|c.id}
     tree = {:root=>make_branch.call}
-
     self.categories.each do |t|
-      #breakpoint
       sym = "b_#{t.id}".to_sym
       tree[sym] = make_branch.call if tree[sym].nil?
       tree[sym][:id] = t.id
       tree[sym][:name] = t.name
-
-      if t.parent_id.nil?
+      #we use the category_id check to ensure that the tree displays children categories even if the user has no access to the parent.
+      if t.parent_id.nil? || !category_ids.include?(t.parent_id)
         parent = :root
       else
         parent = "b_#{t.parent_id}".to_sym
@@ -102,6 +100,7 @@ class User < ActiveRecord::Base
       end
       tree[sym][:parent] = parent 
       tree[parent][:children] << tree[sym]
+      #breakpoint
     end
     tree
   end
@@ -126,13 +125,11 @@ class User < ActiveRecord::Base
   # Returns categories this user belongs to, refined by 'query'
   def categories_search(query)
     Collection.find(:all, :select => 'DISTINCT collections.*', :joins => 'INNER JOIN linkings ON collections.id = linkings.category_id',
-                          :conditions => ["(linkings.group_id IN (#{groups.map { |o| o.id }.join(',')})) AND (( (collections.`type` = 'Category' ) ) AND ((collections.name like ?) OR \
-                                           (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = collections.id AND taggings.taggable_type = 'Category' AND tags.name LIKE ?) IS NOT NULL))", "%#{query}%", "%#{query}%"])
+                          :conditions => ["(linkings.group_id IN (#{groups.map { |o| o.id }.join(',')})) AND ( (collections.`type` = 'Category' ) ) AND (collections.name like ?)", "%#{query}%"])
   end
 
   def groups_search(query)
-    groups.find(:all, :conditions => ["name like ? OR description like ? OR \
-                                      (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = collections.id AND taggings.taggable_type = 'Group' AND tags.name LIKE ?) IS NOT NULL", "%#{query}%", "%#{query}%", "%#{query}%"])
+    groups.find(:all, :conditions => ["name like ? OR description like ?", "%#{query}%", "%#{query}%"])
   end
   
   def encrypt_login

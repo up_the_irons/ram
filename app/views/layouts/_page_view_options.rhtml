@@ -8,7 +8,7 @@
 		<% for option in view_options -%>
 		<dd><a href="#" onclick="Content.display_as('<%= option.downcase.underscore.gsub(/\s+/,'_')%>');return false;"><%= option.titleize %></a></dd>
 		<% end -%>
-	</dl>												
+	</dl>
 </div>
 <%		end
 	end

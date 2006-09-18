@@ -1,8 +1,10 @@
+<% content_for('application_header') do -%>
 <h1>
 <% if @group.new_record? -%>
   Create A New Group
 <% else -%>
   Edit <%= @group.name %>
+<% end -%>
 <% end -%>
 </h1>
 <%= error_messages_for 'group' %>

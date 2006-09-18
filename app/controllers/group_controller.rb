@@ -1,5 +1,4 @@
 class GroupController < ProtectedController
-  observer :group_observer
   
   def index
     list

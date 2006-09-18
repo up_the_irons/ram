@@ -18,12 +18,10 @@ class CategoryController < ProtectedController
         @category = find_in_users_categories(params[:id])
         
         @good_assets = []
-        @groups = @category.groups & current_user.groups
-        #@assets = @category.assets.find(:all, :conditions => ["linkable_type='Asset' AND category_id=#{@category.id} AND group_id IN (?)", @groups.collect{|g| g.id}.join(",")])
-        #@total_assets = @category.assets.find(:all).uniq
-        #@or_conditions = @groups[1..@groups.length].map{|g| "OR group_id=#{g.id}"}
-        @assets = @category.assets
-          
+        @groups   = @category.groups & current_user.groups
+        @assets   = @category.assets
+        @articles = @category.articles  #TODO: This needs to be scoped to a group in the same way assets are.
+        
         @assets.each do |asset|
           @good_assets << asset unless (asset.groups & @groups).empty?
         end

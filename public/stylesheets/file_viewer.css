@@ -107,6 +107,16 @@
 {
 	font-size        : 1em;
 }
+.comment{
+	border-top       : solid 1px #E9E8E8;
+	padding          : 10px;
+	color            : #3F3F3F;
+	
+}
+.comment dt{
+	font-size        : 1.2em;
+	margin-bottom    : 10px;
+}
 .dataGrid
 {
 	margin           : 5px;

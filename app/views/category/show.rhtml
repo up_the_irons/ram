@@ -28,9 +28,16 @@
 	<dl>
 		<dd><%= link_to_remote( "#{image_tag('/images/icons/add.png')} Add A file", 
 											 :url => { :controller=>'asset', :action => "edit", :category_id =>@category.id, :update=>'new_asset_form' } ) %></dd>
+		<dd><%= link_to "#{image_tag('/images/icons/add.png')} Add An Article", :controller=>'article',:action=>'write',:category_id=>@category.id %></dd>
 	</dl>											
 </div>
 
+<h3>Available Articles</h3>
+<ol>
+<% @articles.each do |a| -%>
+<li><%=link_to a.title, :controller=>'article', :action=>'read',:id=>a %></li>
+<% end -%>
+</ol>
 	<% #Assets 
 	#display based on scope
 	%>

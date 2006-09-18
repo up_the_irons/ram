@@ -1,0 +1,21 @@
+<!--[form:article]-->
+<%= hidden_field 'article', 'category_id'%>
+<li><label for="article_title">Title: </label>
+<%= text_field 'article', 'title'  -%></li>
+
+<li><label for="article_excerpt">Excerpt: </label>
+<%= text_area 'article', 'excerpt',{:rows=>2}  -%></li>
+
+<li><label for="article_body">Body: </label>
+<%= text_area 'article', 'body',{:rows=>5}  -%></li>
+
+<li><label for="article_state">State: </label>
+<%= select :article, :allow_comments, [['Comments are Allowed',true],['No Comments Please',false]] %>
+</li>
+<!--
+<li><label for="article_state">State: </label>
+<%#= select :article, :status, [['Publish','publish'],['Draft','draft']] %>
+</li>
+//-->
+<li><label><%= image_tag '/images/icons/tag_blue.png' %>Tags:</label><input id="article_tags" name="article[tags]" size="30" value="<%= @article.tags.map{|t| t.name}.join(", ")%>" type="text"></li>
+<!--[eoform:article]-->
