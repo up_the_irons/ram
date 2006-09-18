@@ -33,8 +33,18 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :sql
 
   # Activate observers that should always be running
-  # config.active_record.observers = :cacher, :garbage_collector
-  config.active_record.observers = :user_observer, :group_observer
+  # config.active_record.observers = :user_observer, :group_observer
+  #
+  # I commented out the above line b/c of this bug:
+  # http://rails.techno-weenie.net/question/2006/4/25/plugins_arent_being_loaded
+  #
+  # This ticket fixes the problem but is not in stable yet:
+  # http://dev.rubyonrails.org/ticket/5279
+  #
+  # However, only GroupObserver is affected by this, and not including 
+  # user_observer is throwing a test failure (I don't really know why the group
+  # one can be loaded in the controller but the user one must be loaded here)
+  config.active_record.observers = :user_observer
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
@@ -57,7 +67,6 @@ require 'base64'
 #require 'rubyzip'
 #required for acts_as_attachable
 require 'RMagick'
-
 
 #required for building rss feeds
 require 'feed_tools'

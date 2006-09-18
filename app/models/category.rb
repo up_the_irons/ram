@@ -13,6 +13,7 @@
 
 class Category < Collection
 	acts_as_tree 
+  acts_as_taggable
   has_many :children, :class_name=>'Collection',:foreign_key=>'parent_id' do
 		def << (category)
 			return if @owner.children.include?category

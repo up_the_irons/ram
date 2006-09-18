@@ -4,7 +4,7 @@ class UserTest < Test::Unit::TestCase
   # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead.
   # Then, you can remove it from this and the functional test.
   include AuthenticatedTestHelper
-  fixtures :users, :collections, :memberships, :linkings, :event_subscriptions, :attachments
+  fixtures :users, :tags, :collections, :memberships, :linkings, :event_subscriptions, :attachments, :taggings
 
   def test_should_associate_groups
     u = User.find(5)
@@ -174,6 +174,12 @@ class UserTest < Test::Unit::TestCase
     assert_equal 1, cats.size
     assert_equal collections(:collection_10).name, cats[0].name
 
+    cats = u.categories_search('purple')
+    assert_equal 2, cats.size
+    res = cats.map { |o| o.name }
+    assert res.include?(collections(:collection_9).name)
+    assert res.include?(collections(:collection_7).name)
+
     u = users(:user_4)
     cats = u.categories_search('')
 
@@ -185,6 +191,10 @@ class UserTest < Test::Unit::TestCase
     res = cats.map { |o| o.name }
     assert res.include?('Video Game Database')
     assert res.include?('Games')
+
+    cats = u.categories_search('secret')
+    assert_equal 1, cats.size
+    assert_equal collections(:collection_9).name, cats[0].name
   end
 
   def test_groups_search
@@ -208,6 +218,12 @@ class UserTest < Test::Unit::TestCase
     u = users(:quentin)
     groups = u.groups_search('a')
     p.call(['Atari', 'Administrators'], groups)
+
+    groups = u.groups_search('secret')
+    p.call('Administrators', groups)
+
+    groups = u.groups_search('purple')
+    p.call(['Administrators', 'Atari'], groups)
   end
 
 end
