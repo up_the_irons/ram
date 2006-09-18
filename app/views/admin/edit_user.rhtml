@@ -1,0 +1,16 @@
+<% content_for('application_header') do -%>
+<h1>Edit <%=@user.login%>'s Profile</h1>
+<% end -%>
+<%= error_messages_for 'user'         %>
+<%= error_messages_for 'person'       %>
+<%= error_messages_for 'profile'      %>
+
+<%= start_form_tag :action => "edit_user" ,:id=>@user.id -%>
+<ul class="web_form">
+<%= render :partial=>'account/admin_options' if current_user.is_admin? && params[:controller] =='admin'%>
+<%= render :partial=>'account/user_data_form'     %>
+<%= render :partial=>'account/personal_data_form' %>
+<%= render :partial=>'account/profile_data_form'  %>
+<%= submit_tag "Save Profile" %>
+</ul>
+</form>

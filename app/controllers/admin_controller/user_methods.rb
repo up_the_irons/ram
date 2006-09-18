@@ -26,7 +26,7 @@ module AdminController::UserMethods
          flash[:notice] = "There was an error saving your information."
        end 
      end
-     render 'account/edit'
+     #render 'account/edit'
    end
 
    def show_user
