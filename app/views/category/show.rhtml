@@ -39,7 +39,7 @@
 <% 
 #rather than make an explicit toggle for assets and articles the view simply looks for the variable and doesn't display anything if undefined.
 unless @articles.nil? -%>
-  <h1>Articles</h1>
+  <h1>Articles (<%=@articles.size%>)</h1>
 
   <% @articles.each do |a| -%>
     <%= render :partial=>'article/article' ,:locals=>{:article=>a}%>
@@ -48,7 +48,7 @@ unless @articles.nil? -%>
 <% end -%>
 
 <% unless @assets.nil? -%>
-<h1>Assets</h1>
+<h1>Assets (<%=@assets.size%>)</h1>
 <%= render :partial=>'asset/list' %>
 <p id="new_asset_form"></p>
 <% end -%>
