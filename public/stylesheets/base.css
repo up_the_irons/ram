@@ -153,6 +153,9 @@ a:hover{
 	position         :relative;
 	clear            :both;
 }
+#site_name a, #site_name a:link, #site_name a:visited, #site_name a:hover, #site_name a:active{
+	color            : #fff;
+}
 
 #site_menu, #user_menu{
 	display          : block;

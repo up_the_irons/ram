@@ -6,7 +6,6 @@
 <% end -%>
 
 
-
 <% content_for('application_header') do -%>
   <h1><%=h @category.name %> 
     <%= link_to image_tag('/images/icons/feed.png'   ,{:title=>"Subscribe to #{@category.name}'s feed."}),{:controller=>'category',:action=>'feed',:id=>@category.id} %>
@@ -26,25 +25,33 @@
 <div class="pageActionOptions">
 	From here you can:
 	<dl>
-		<dd><%= link_to_remote( "#{image_tag('/images/icons/add.png')} Add A file", 
+		<dd><%= link_to_remote( "#{image_tag('/images/icons/add.png')} Upload A file", 
 											 :url => { :controller=>'asset', :action => "edit", :category_id =>@category.id, :update=>'new_asset_form' } ) %></dd>
-		<dd><%= link_to "#{image_tag('/images/icons/add.png')} Add An Article", :controller=>'article',:action=>'write',:category_id=>@category.id %></dd>
+		<dd><%= link_to "#{image_tag('/images/icons/add.png')} Write An Article", :controller=>'article',:action=>'write',:category_id=>@category.id %></dd>
+		<dd>
+		  <select id="display" name="display" onchange="if($(this).value != 'ignore'){location.href = 'http://<%= "#{request.host_with_port}/#{params[:controller]}/#{params[:action]}/#{params[:id]}?" %>display='+$(this).value}">
+        <%= options_for_select([['Filter Page Content ','ignore'],["Show Everything", "everything"],["Show Only Assets", "assets"], ["Show Only Articles", "articles"]]) %>
+      </select>
+		</dd>
 	</dl>											
 </div>
 
-<h3>Available Articles</h3>
-<ol>
-<% @articles.each do |a| -%>
-<li><%=link_to a.title, :controller=>'article', :action=>'read',:id=>a %></li>
+<% 
+#rather than make an explicit toggle for assets and articles the view simply looks for the variable and doesn't display anything if undefined.
+unless @articles.nil? -%>
+  <h1>Articles</h1>
+
+  <% @articles.each do |a| -%>
+    <%= render :partial=>'article/article' ,:locals=>{:article=>a}%>
+  <% end -%>
+  <br class="clear_both"/>
 <% end -%>
-</ol>
-	<% #Assets 
-	#display based on scope
-	%>
-	<h3>Available Assets</h3>
-	<%= render :partial=>'asset/list' %>
-	<p id="new_asset_form"></p>
-<br />
+
+<% unless @assets.nil? -%>
+<h1>Assets</h1>
+<%= render :partial=>'asset/list' %>
+<p id="new_asset_form"></p>
+<% end -%>
 
 <% content_for('page_meta') do -%>
 <dl>

@@ -60,4 +60,11 @@ class SearchControllerTest < Test::Unit::TestCase
     assert res.include?("Administrators")
     assert res.include?("Atari")
   end
+  
+  def test_search_returns_no_results
+    login_as :quentin
+    post :all, :id => '-43gfffff4234f4fc34c3cf3333f'
+    assert :success
+    assert_equal assigns(:flash)[:notice], "Your search returned no results."
+  end
 end

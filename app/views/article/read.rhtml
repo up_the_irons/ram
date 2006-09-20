@@ -11,38 +11,4 @@
 <% content_for('application_header') do -%>
   <h1><%=h @article.title %> </h1>
 <% end %>
-
-<div class="post">
-  <% unless @article.published? -%>
-  <p class="pageInstructions"><%= "\"#{@article.title}\" is saved as a draft, which means others will not see it until it is published.\"" %></p>
-  <% end -%>
-  
-	<ul class="postHeader">
-		<li>Author: <%= User.find(@article.author).full_name %></li>
-		<li>Published On: <%=@article.published_at %></li>
-	</ul>
-	<h1><%= @article.title %>"<span class='mice_type'><%= link_to_if_editable("#{image_tag('/images/icons/pencil.png')} Edit", {:action=>'write', :id=>@article.id},{:class=>"editOptions"}) %></span> </h1>
-	<p id="article_body_#{article.id}"><%= @article.body %></p>
-	<ul class="tags">
-		<label><%= image_tag('/images/icons/tag_blue.png')%> Tags</label>
-		<% for tag in @article.tags -%>
-		<li><%= link_to tag.name, {:controller=>'search',:action=>'all',:id=>tag.name},:post=>true %></li>
-		<% end -%>
-	</ul>
-	
-	<% if @article.allow_comments? -%>
-	<h4>Comments (<%= @article.comment_count %>)</h4>
-  <%= error_messages_for 'article' -%>
-	<%= start_form_tag :action=>'comment_on' , :id=>@article %>
-	  <ul class="web_form">
-	  <%= render :partial=>'article/comment_form'%>
-	  <li><label>Save Changes:</label><%= submit_tag "Add Comment" %></li>
-	  </ul>
-	</form>
-	  <% @article.comments.each do | comment | -%>
-        <%= render :partial=>'comment',:locals=>{:comment=>comment} %>
-    <% end -%>
-	<% end -%>
-	
-	<%= "<p> Comments are not allowed.</p>"    unless @article.allow_comments? %>
-</div>
+<%= render :partial=>'article', :locals=>{:article=>@article} %>

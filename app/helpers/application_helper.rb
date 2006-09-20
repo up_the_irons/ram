@@ -37,7 +37,7 @@ module ApplicationHelper
   end
   
   def link_to_if_editable(name,options={},html_options=nil,*parameters_for_method_reference)
-    if current_user.is_admin? || current_user.id == options[:id]
+    if current_user.is_admin?
       url = link_to name,options,html_options,*parameters_for_method_reference
     end
   end
