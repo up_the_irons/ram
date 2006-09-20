@@ -2,7 +2,7 @@
   <% if( @category.bread_crumbs.size > 0 ) -%>
     <%=	@category.bread_crumbs.map{|x| "<li>#{link_to(x.name, :controller=>'category',:action=>'show',:id=>x.id)} </li>"} -%>
   <% end -%>
-  <%= "<li>#{link_to(@category.name)} </li>"%>
+  <%= "<li>#{link_to(@category.name, :controller=>'category',:action=>'show',:id=>@category.id)} </li>"%>
   <%= "<li>#{link_to("#{params[:action]}: #{@article.title}")} </li>"%>
 <% end -%>
 
