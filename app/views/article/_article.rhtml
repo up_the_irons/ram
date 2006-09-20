@@ -27,7 +27,7 @@
 	  </ul>
 	</form>
 	  <% article.comments.each do | comment | -%>
-        <%= render :partial=>'comment',:locals=>{:comment=>comment} %>
+        <%= render :partial=>'article/comment',:locals=>{:comment=>comment} %>
     <% end -%>
 	<% end -%>
 	
