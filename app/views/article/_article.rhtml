@@ -20,7 +20,7 @@
 	<% if article.allow_comments? -%>
 	<h4>Comments (<%= article.comment_count %>)</h4>
   <%= error_messages_for 'article' -%>
-	<%= start_form_tag :action=>'comment_on' , :id=>article %>
+	<%= start_form_tag :controller=>'article', :action=>'comment_on' , :id=>article %>
 	  <ul class="web_form">
 	  <%= render :partial=>'article/comment_form'%>
 	  <li><label>Save Changes:</label><%= submit_tag "Add Comment" %></li>
