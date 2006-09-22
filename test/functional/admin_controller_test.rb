@@ -9,7 +9,7 @@ require 'admin_controller'
 class AdminController; def rescue_action(e) raise e end; end
 
 class AdminControllerTest < Test::Unit::TestCase
-  fixtures :collections, :linkings, :attachments, :db_files, :users, :memberships
+  fixtures :collections, :attachments, :db_files, :users, :linkings, :memberships
   include IncludedTests::UserMethodsTest
   include IncludedTests::GroupMethodsTest
   include IncludedTests::CategoryMethodsTest
@@ -20,7 +20,7 @@ class AdminControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     @existing_category_id = 8
     @user_with_access_to_all_categories = 1
-    @user_with_access_to_no_categories = 7
+    @user_with_access_to_no_categories  = 7
     login_as :quentin #has admin_rights
   end
   

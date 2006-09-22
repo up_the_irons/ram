@@ -28,7 +28,7 @@ class ArticleController < ProtectedController
       end
     end
     @article = Article.new unless @article
-    @article.user_id = current_user.id
+    @article.user_id = current_user.id if @article.new_record?
     if request.post?
       @article.published_at = Time.now.to_s if params[:commit] == "Save And Publish"
       if @article.update_attributes(params[:article])

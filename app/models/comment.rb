@@ -25,7 +25,7 @@ class Comment < Article
   
   def validate
       if parent_id
-        errors.add_to_base("Comments are not allowed.") unless Article.find(parent_id).allow_comments 
+        errors.add_to_base("Comments are not allowed.") unless Article.find(parent_id).allow_comments? 
       end
   end
   

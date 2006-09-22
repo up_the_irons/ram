@@ -5,7 +5,7 @@
 <%= text_field :user, :email %></li>
 <% 
 #only allow the user to change their password not admins
-if current_user == @user -%>
+if current_user == @user || @user.new_record? -%>
 <li><label for="password">Password: </label>
 <%= password_field :user, :password, :value=>"#{'**********' unless @user.new_record?}" %></li>
 

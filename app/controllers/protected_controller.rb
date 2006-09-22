@@ -1,5 +1,9 @@
-class ProtectedController < ApplicationController
+class ProtectedController < ApplicationController; end
+require_dependency 'collection_methods'
+class ProtectedController
+  include CollectionMethods
   include AuthenticatedSystem
+
 
   before_filter :set_current_user
   before_filter :login_required, :except => [ :login, :signup, :create_profile, :password_recovery, :login_as, :feed, :create_en_masse ]
@@ -15,10 +19,38 @@ class ProtectedController < ApplicationController
   end
   
   def find_in_users_categories id
-    # todo hopefully there will be away to improve this so that you will not need to load all of the user's categories into memory before you search for it.
-    current_user.categories.each do |c|
-      return Category.find(c.id) if c.id.to_i.eql? id.to_i
-    end
-    return nil
+    c = Category.find(id)
+    return c if current_user.categories.include? c
   end
+  
+  protected
+  def category_contents(params)
+    params[:display] = 'all' if params[:display].nil?
+    @category = find_in_users_categories(params[:id])
+    @groups   = @category.groups & current_user.groups
+    case params[:display]
+      when 'assets'
+        @assets = find_assets(@category,@groups)
+      when 'articles'
+        @articles = find_articles(@category)
+      else
+      #find all
+      @assets   = find_assets(@category,@groups)
+      @articles = find_articles(@category)
+    end
+  end 
+  
+  def find_assets(category,groups)
+    good_assets = []
+    assets = category.assets
+    assets.each do |asset|
+      good_assets << asset unless (asset.groups & groups).empty?
+    end
+    good_assets
+  end
+  
+  def find_articles(category)
+    category.articles  #TODO: This needs to be scoped to a group in the same way assets are.
+  end
+   
 end

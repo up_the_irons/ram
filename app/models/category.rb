@@ -57,6 +57,7 @@ class Category < Collection
     [articles,assets]
   end
   
+  
   def bread_crumbs
     crumbs = Array.new
     for i in self.ancestors
@@ -65,14 +66,15 @@ class Category < Collection
     crumbs
   end 
   
-  # action_games_category.remove_all_groups
+  
   def remove_all_groups
+    logger.warn "************ REMOVE ALL GROUPS ******************"
     self.groups.each do| m | 
       remove_group(m)
     end
   end
   
-  # action_games_category.remove_group
+  
   def remove_group(group)
     linking =Linking.find_by_category_id_and_group_id(self.id, group.id)
     linking.destroy if linking.valid?

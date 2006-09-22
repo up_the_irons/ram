@@ -94,10 +94,18 @@ class Group < Collection
     end
   end
   
+  def remove_all_users
+    remove_all_members
+  end
+  
   # enemeies.remove_member
   def remove_member(member)
     membership = Membership.find_by_user_id_and_collection_id(member.id, self.id)
     membership.destroy if membership     
+  end
+
+  def remove_user(user)
+    remove_member(user)
   end
 
   validates_presence_of :user_id, :name

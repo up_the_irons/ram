@@ -11,12 +11,12 @@ module IncludedTests::GroupMethodsTest
      before = @user.groups.size
      Group.create({ :name => "Group_#{Time.now.to_s}",:user_id=>users(:user_2).id })
      @user = User.find(@user.id)
-     assert_equal before+1,@user.groups.size
+     assert_equal before+1, @user.groups.size
    end
    
    def test_shall_show_groups
      login_as :quentin
-     get :show_group, :id=>2
+     get :show_group, :id=>users(:quentin).groups[0].id
      assert assigns(:group)
    end
    
@@ -62,7 +62,7 @@ module IncludedTests::GroupMethodsTest
       users(:quentin).groups.each do |g|
         post :disband_group, :id=>g.id
         assert_redirect :groups
-        assert_equal assigns(:flash)[:notice], "You disbanded the group."
+        assert_equal "You disbanded the group.", assigns(:flash)[:notice]
         
         get :show_group, :id=>g.id
         assert_redirect :groups
