@@ -82,11 +82,13 @@ module IncludedTests::GroupMethodsTest
       assert_redirected_to :action=>'groups'
     end
 
-    def test_prevent_destroy_group_by_unauthorized_users
+    def test_prevent_disband_group_by_unauthorized_users
       login_as :user_7 #has no access to any groups 
       assert_no_difference Group, :count do
-        post :disband_group, :id=>Group.find(:first).id
+        @doomed = Group.find(:first).id
+        post :disband_group, :id=>@doomed
       end
+      assert Group.find(@doomed)
     end
     
     def test_create_group

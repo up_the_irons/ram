@@ -10,7 +10,7 @@ class AccountController < ProtectedController
 	end
 
   def login
-    redirect_to :controller=>'inbox' if current_user
+    redirect_to :controller=>'inbox' and return if current_user
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
     if current_user

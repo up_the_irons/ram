@@ -1,3 +1,14 @@
+<!--
+<div class="adminOptions" style="background-color:#efefef">
+  <dl>
+    <dt>Debug: Un-scoped Category Contents</dt>
+    <dd>Groups: <%= @category.groups.map{|g| g.name}.join(', ')%>
+    <dd>Assets: <%= Asset.find_all_by_category_id(@category.id).size %>
+    <dd>Articles: <%= Article.find_all_by_category_id(@category.id).size %>
+  </dl>
+</div>
+-->
+
 <% content_for('bread_crumbs') do -%>
   <% if( @category.bread_crumbs.size > 0 ) -%>
     <%=	@category.bread_crumbs.map{|x| "<li>#{link_to(x.name, :controller=>'category',:action=>'show',:id=>x.id)} </li>"} -%>

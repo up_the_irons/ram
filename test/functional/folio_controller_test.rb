@@ -26,7 +26,7 @@ class FolioControllerTest < Test::Unit::TestCase
   
   def test_shall_create_folio_on_login
     @controller = AccountController.new
-    post :login, :login => 'quentin', :password => 'quentin'
+    post :login, :login => 'quentin', :password => 'qazwsx'
     @controller = FolioController.new
     assert assigns(:session)[:user]    
     assert assigns(:session)[:folio]

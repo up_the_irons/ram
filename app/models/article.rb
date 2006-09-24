@@ -25,10 +25,19 @@ class Article < ActiveRecord::Base
   acts_as_tree
   acts_as_taggable
   validates_presence_of   :user_id, :body,:title, :message=>'cannot be blank'
-  has_many :comments, :dependent => true, :order => "created_at ASC"
+  has_many :comments, :dependent=> true, :order=>"created_at ASC"
   belongs_to :user
-  has_one :category
-  
+  belongs_to :category
+  has_many :linkings, :as=>:linkable, :dependent=>:destroy
+  has_many :groups, :through=> :linkings do
+    def << (group)
+      return if @owner.groups.include?group
+      l = Linking.find_or_create_by_linkable_id_and_linkable_type_and_group_id(@owner.id,"Article",group.id)
+  	  l.errors.each_full { |msg| puts msg } unless l.save
+  	  @owner.groups(true) #force the reload
+    end
+    
+  end
   
   #snipped from mephisto (http://www.mephistoblog.com/)
   after_validation :convert_to_utc
@@ -81,6 +90,18 @@ class Article < ActiveRecord::Base
   
   def allow_comments?
     allow_comments
+  end
+  
+  #TODO refactor this so that the classes which are linked though groups can share the same module instead of duplicating code.
+  def remove_all_groups
+    self.groups.each do| m | 
+      remove_group(m)
+    end
+  end
+  
+  def remove_group(group)
+    linking =Linking.find_by_linkable_id_and_linkable_type_and_group_id(self.id,'Article', group.id)
+    linking.destroy if linking.valid?
   end
   
   protected

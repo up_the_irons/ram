@@ -326,3 +326,21 @@ linking_28:
   user_id: 
   linkable_type: 'Asset' 
   linkable_id: 6
+linking_29: 
+  created_on: 2006-06-11 11:02:58 -07:00
+  updated_on: 2006-06-11 11:02:58 -07:00
+  id: 29
+  group_id: 31
+  category_id:
+  user_id: 
+  linkable_type: 'Article' 
+  linkable_id: 2
+linking_30: 
+  created_on: 2006-06-11 11:02:58 -07:00
+  updated_on: 2006-06-11 11:02:58 -07:00
+  id: 30
+  group_id: 31
+  category_id:
+  user_id: 
+  linkable_type: 'Article'
+  linkable_id: 1

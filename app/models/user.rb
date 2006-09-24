@@ -121,6 +121,12 @@ class User < ActiveRecord::Base
   def assets_search(query)
     Asset.search(query, groups.map { |o| o.id })
   end
+  
+  def accessible_articles
+    articles = groups.map{|g| g.articles}
+    articles = articles.flatten.uniq || []
+    articles
+  end
 
   # Returns categories this user belongs to, refined by 'query'
   def categories_search(query)

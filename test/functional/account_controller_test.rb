@@ -18,7 +18,7 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_login_and_redirect
-    post :login, :login => 'quentin', :password => 'quentin'
+    post :login, :login => 'quentin', :password => 'qazwsx'
     assert session[:user]
     assert_response :redirect
   end
@@ -49,13 +49,13 @@ class AccountControllerTest < Test::Unit::TestCase
   def test_should_save_last_login_time
     u  = User.find_by_login('quentin')
     ll = u.last_login_at
-    post :login, :login => 'quentin', :password => 'quentin'
+    post :login, :login => 'quentin', :password => 'qazwsx'
     assert_equal u.login , assigns(:current_user).login
     assert ll != assigns(:current_user).last_login_at
   end
   
   def test_should_have_an_empty_folio_at_login
-    post :login, :login => 'quentin', :password => 'quentin'
+    post :login, :login => 'quentin', :password => 'qazwsx'
     assert_equal assigns(:session)[:folio], []
   end
 
@@ -104,7 +104,7 @@ class AccountControllerTest < Test::Unit::TestCase
   
   def test_should_save_the_last_login_time_each_time_a_user_logs_in
     old_time = User.find_by_login('quentin').last_login_at
-    post :login, :login => 'quentin', :password => 'quentin'
+    post :login, :login => 'quentin', :password => 'qazwsx'
     assert session[:user]
     assert old_time != User.find_by_login('quentin').last_login_at
     
@@ -164,7 +164,7 @@ class AccountControllerTest < Test::Unit::TestCase
   protected
   def create_user(options = {})
     post :signup, :user => { :login => 'quire', :email => 'quire@example.com', 
-                             :password => 'quire', :password_confirmation => 'quire' }.merge(options)
+                             :password => 'qazwsx', :password_confirmation => 'qazwsx' }.merge(options)
   end
   
   def a_profile(opts={})

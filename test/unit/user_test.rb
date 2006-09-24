@@ -42,7 +42,7 @@ class UserTest < Test::Unit::TestCase
   end
   
   def test_user_shall_create_profile_and_person_after_create
-    u = User.create({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' })
+    u = User.create({ :login => 'quire', :email => 'quire@example.com', :password => 'qazwsx', :password_confirmation => 'qazwsx' })
     assert Profile.find_by_user_id(u.id), 'Should create profile on user create'
     assert Person.find_by_user_id(u.id), 'Should create person on user create'
   end
@@ -120,17 +120,17 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_should_reset_password
-    users(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-    assert_equal users(:quentin), User.authenticate('quentin', 'new password')
+    users(:quentin).update_attributes(:password => 'foobarbaz', :password_confirmation => 'foobarbaz')
+    assert_equal users(:quentin), User.authenticate('quentin', 'foobarbaz')
   end
 
   def test_should_not_rehash_password
     users(:quentin).update_attributes(:login => 'quentin2')
-    assert_equal users(:quentin), User.authenticate('quentin2', 'quentin')
+    assert_equal users(:quentin), User.authenticate('quentin2', 'qazwsx')
   end
 
   def test_should_authenticate_user
-    assert_equal users(:quentin), User.authenticate('quentin', 'quentin')
+    assert_equal users(:quentin), User.authenticate('quentin', 'qazwsx')
   end
 
   # An Event should be recored after a user is created

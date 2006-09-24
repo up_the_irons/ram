@@ -1,16 +1,13 @@
 class CategoryController < ProtectedController
   layout "application", :except => [:feed]
-  def initialize
-    #CollectionMethods.create_show_method_for('categories') 
-    #CollectionMethods.create_list_method_for('categories')
-  end
 
   def index
     list
   end
   
   def show
-    show_collection('categories')
+    #nest this in a boolean because show_collecction will return false if a resuce occurred
+    category_contents(params) if show_collection('categories')
   end
   
   def list

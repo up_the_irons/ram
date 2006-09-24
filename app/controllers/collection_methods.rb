@@ -35,6 +35,7 @@ module CollectionMethods
     model = Object.const_get(table.classify)
     #find the object in the user's model for example current_user.categories etc.
     instance_variable_set("@#{table.singularize}", send("find_in_users_#{table}", params[:id]))
+    raise ActiveRecord::RecordNotFound unless instance_variable_get("@#{table.singularize}")
     yield and return if block_given?
 
     respond_to do |wants|
@@ -50,8 +51,8 @@ module CollectionMethods
       end
     end
   rescue 
-    redirect_to :controller=>'inbox'
     flash[:notice] = "Could not find #{table.singularize}."  
+    redirect_to( :controller=>'inbox') and return false
   end
   
   def edit_collection(table=nil, many_elements=nil, opts={:on_success=>nil,:on_failure=>nil})

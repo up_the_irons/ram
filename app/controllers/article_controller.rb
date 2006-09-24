@@ -4,22 +4,22 @@ class ArticleController < ProtectedController
 
   @@article_404 = "Could not find article."
   def read
-    if @article = find_article_by( params[:id] )
-      if @article.published? || @article.user_id == current_user.id || current_user.is_admin?
-        @category = Category.find(@article.category_id)
-        render :action=>'read' and return
-      else
-        raise ActiveRecord::RecordNotFound
-      end
+    @article = find_article_by( params[:id] )
+    unless current_user.is_admin?
+
+      raise ActiveRecord::RecordNotFound unless current_user.accessible_articles.include?(@article)
+      #raise error if a user tries to view an article which is not published and they are not an admin or the author.
+      raise ActiveRecord::RecordNotFound  if !@article.published? && @article.user_id != current_user.id
     end
-    raise ActiveRecord::RecordNotFound
+      
+    render :action=>'read' and return if @category = Category.find(@article.category_id)      
   rescue
     flash[:notice] = @@article_404
     redirect_to :controller=>'inbox'
   end
   
   def write
-    @category =  (params[:category_id])? Category.find(params[:category_id]) : Category.new
+    #todo :not sure you should create a category here.
     Article.with_scope(:find => { :conditions => "user_id = #{current_user.id}", :limit => 1 }) do 
       begin
         @article = find_article_by params[:id] if params[:id]
@@ -28,11 +28,27 @@ class ArticleController < ProtectedController
       end
     end
     @article = Article.new unless @article
-    @article.user_id = current_user.id if @article.new_record?
+    if @article.new_record? || @article.category_id.nil?
+      @category =  (params[:category_id])? Category.find(params[:category_id]) : Category.new
+    else
+      @category = Category.find(@article.category_id)
+    end
     if request.post?
+      
+      @potential_groups = []
+      #don't allow the user_id to be passed in as a param.
+      params[:article].delete('user_id') unless params[:article][:user_id].nil? 
+      @article.user_id = current_user.id if @article.new_record?
+      unless params[:article][:group_ids].nil?
+        @potential_groups = params[:article][:group_ids] 
+        params[:article].delete('group_ids')
+      end
+        
       @article.published_at = Time.now.to_s if params[:commit] == "Save And Publish"
       if @article.update_attributes(params[:article])
+        @added, @removed  = update_has_many_collection( @article, 'groups', @potential_groups )
         flash[:notice] = "\"#{@article.title}\" was saved."
+        flash[:notice] << "<br/>Added (#{@added.size}) groups and removed (#{@removed.size})" if defined?(@added) && defined?(@removed)
         redirect_to :action=>'write', :id=>@article.id unless params[:id]  
       end
     end

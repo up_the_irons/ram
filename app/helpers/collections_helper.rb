@@ -1,3 +1,0 @@
-module CollectionsHelper
-
-end

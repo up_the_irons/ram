@@ -37,9 +37,6 @@ class Group < Collection
 	
 	has_many :linkings
 	
-	#TODO Add other linking types, which can be added to the group.
-	#TODO It only makes sense for an asset to be added to a category AND a group, therefore a category id should also be passed.
-	
 	#TODO: Possibly make this more generic and accept many polymorphic types by using @owner.class.class_name in place of assets
 	has_many :assets, :through=> :linkings, :source=>:asset, :conditions=>"linkings.linkable_type='Asset'" do
 	  def <<(asset)
@@ -53,6 +50,17 @@ class Group < Collection
 	  end
 	end
 	
+	has_many :articles, :through=> :linkings, :source=>:article, :conditions=>"linkings.linkable_type='Article'" do
+	  def <<(article)
+	    return false if @owner.articles.include?article
+	    l = Linking.create(
+	      :linkable_id => article.id,
+	      :linkable_type => 'Article',
+	      :group_id => @owner.id
+	    )
+	    l.save!
+	  end
+	end
 	
 	#has_many :categories, :through => :access_contexts, :foreign_key=>:category_id do
 	 has_many :categories, :through => :linkings, :select => "DISTINCT collections.*", :foreign_key=>:category_id do

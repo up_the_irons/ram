@@ -132,7 +132,7 @@ module Collectivex
       $stderr.puts `#{svn}` 
       if @debug
         $stderr.puts "Loading diff in editor for review."
-        `chmod 0444 #{unbranch_diff}; EDITOR #{unbranch_diff}`
+        `chmod 0444 #{unbranch_diff}; mate #{unbranch_diff}`
       else
         `svn propdel svn:trunk .`
       end

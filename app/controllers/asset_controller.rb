@@ -5,6 +5,7 @@ class AssetController < ProtectedController
          :redirect_to => { :action => :index }
          
   def show
+    #TODO: scope this call
     @asset = Asset.find(params[:id])
     
     if @asset.image?
@@ -16,6 +17,7 @@ class AssetController < ProtectedController
   end
   
   def download
+    #scope this call.
     @asset = Asset.find_by_filename(params[:id])
     if @asset
       headers['Content-Type'] = @asset.content_type
@@ -26,6 +28,7 @@ class AssetController < ProtectedController
   end
   
   def show_inline
+    #TODO :Scope this call.
     @asset = Asset.find(params[:id])
     send_data @asset.data, :filename => @asset.filename, :type => @asset.content_type, :disposition => 'inline'
   end
@@ -76,21 +79,17 @@ class AssetController < ProtectedController
     @category = find_in_users_categories(params[:category_id])
     #@remaining_groups = current_user.groups - @asset.groups
     @assigned_groups,  @remaining_groups = find_assigned_and_remaining_groups current_user.groups, @asset.groups
-    #todo: find a way to scope this group list
-    if request.post?
-      #submit
-      @action = 'update'
-      respond_to do |wants|
-        wants.js do 
-          render :update do |page|
-            page.replace_html(params[:update],  :partial=>'form')
-            #IE has problems rendering the BlindDown
-            #page.visual_effect :BlindDown , params[:update], :duration=>1
-          end
+    return unless request.post?
+    #submit
+    @action = 'update'
+    respond_to do |wants|
+      wants.js do 
+        render :update do |page|
+          page.replace_html(params[:update],  :partial=>'form')
+          #IE has problems rendering the BlindDown
+          #page.visual_effect :BlindDown , params[:update], :duration=>1
         end
       end
-    else
-      #get request
     end
   end
   
@@ -115,20 +114,19 @@ class AssetController < ProtectedController
   end
   
   def add_group
-    logger.warn "\n*************************ADD A GROUP***********************\n"
+
     #todo scope this find
-    if request.post?
-      logger.warn "\n*************************POST METHOD***********************\n"
+    return unless request.post?
+
       @asset = Asset.find_by_id(params[:id])
       @group = find_in_users_groups params[:group_id]
       @category = find_in_users_categories params[:category_id]
       unless @asset.nil? || @group.nil? || @category.nil?
-        logger.warn "\n*************************ASSET GROUP CATEGORY FOUND***********************\n"
+
         @link = Linking.find_or_create_by_linkable_id_and_linkable_type_and_category_id_and_group_id(@asset.id,'Asset',@category.id,@group.id)
         @link.save!
-        logger.warn "#{@link.to_yaml}"
+        
         unless @link.nil?
-           logger.warn "\n*************************LINKING SAVED***********************\n"
           respond_to do |wants|
             wants.js do
               flash[:notice] = 'Your Group has been added'
@@ -141,26 +139,12 @@ class AssetController < ProtectedController
             end
           end
         else
-           logger.warn "\n*************************LINKING COULD NOT BE SAVED***********************\n"
           #error creating linking
         end
       else
-        logger.warn "\n*************************ASSET GROUP CATEGORY NOT FOUND***********************\n"
-        logger.warn "asset"
-        logger.warn "#{@asset.to_yaml}"
-        logger.warn "category"
-        logger.warn "#{@category.to_yaml}"
-        logger.warn "group"
-        logger.warn "#{@group.to_yaml}"
         #could not find needed elements to create the linking raise exception
         render :text=>'could not find something.', :layout=>false
       end
-    else
-      #was a get instead of a post.
-      logger.warn 'GET**************'
-      render :update do |page|
-      end
-    end
   end
   
   #replaces modifications of exisitng records
@@ -212,7 +196,7 @@ class AssetController < ProtectedController
     respond_to do |wants|
       wants.js do 
         render :update do |page|
-          page.visual_effect :BlindUp , params[:update], :duration=>1
+          #page.visual_effect :BlindUp , params[:update], :duration=>1
         end
       end
       wants.html do |wants|
@@ -222,20 +206,19 @@ class AssetController < ProtectedController
   end
   
   def destroy
-    if request.post?
-      @asset = Asset.find(params[:id])
-      Linking.destroy_all "linkable_id" == @asset.id
-      @asset.destroy
-      respond_to do |wants|
-        wants.html do 
-          redirect_to :controller=>'category', :action => 'show', :id=>params[:category_id] 
-        end
-        wants.js do 
-          render :update do |page|
-            page.remove params[:update]
-            page.replace_html 'new_asset_form', ''
-            page.replace_html 'page_flash', 'You deleted the asset.'
-          end
+    return unless request.post?
+    @asset = Asset.find(params[:id])
+    #Linking.destroy_all "linkable_id" == @asset.id
+    @asset.destroy
+    respond_to do |wants|
+      wants.html do 
+        redirect_to :controller=>'category', :action => 'show', :id=>params[:category_id] 
+      end
+      wants.js do 
+        render :update do |page|
+          page.remove params[:update]
+          page.replace_html 'new_asset_form', ''
+          page.replace_html 'page_flash', 'You deleted the asset.'
         end
       end
     end

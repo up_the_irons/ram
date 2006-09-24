@@ -1,10 +1,4 @@
-class ProtectedController < ApplicationController; end
-require_dependency 'collection_methods'
-class ProtectedController
-  include CollectionMethods
-  include AuthenticatedSystem
-
-
+class ProtectedController < ApplicationController
   before_filter :set_current_user
   before_filter :login_required, :except => [ :login, :signup, :create_profile, :password_recovery, :login_as, :feed, :create_en_masse ]
   
@@ -27,30 +21,27 @@ class ProtectedController
   def category_contents(params)
     params[:display] = 'all' if params[:display].nil?
     @category = find_in_users_categories(params[:id])
+    raise unless @category
     @groups   = @category.groups & current_user.groups
     case params[:display]
       when 'assets'
-        @assets = find_assets(@category,@groups)
+        @assets = accessible_items(@category, 'assets', @groups)
       when 'articles'
-        @articles = find_articles(@category)
+        @articles = accessible_items(@category, 'articles', @groups)
       else
       #find all
-      @assets   = find_assets(@category,@groups)
-      @articles = find_articles(@category)
+      @assets   = accessible_items(@category, 'assets', @groups)
+      @articles = accessible_items(@category, 'articles', @groups)
     end
   end 
-  
-  def find_assets(category,groups)
-    good_assets = []
-    assets = category.assets
-    assets.each do |asset|
-      good_assets << asset unless (asset.groups & groups).empty?
+
+  def accessible_items(category,items,groups)
+    good_items = []
+    all_items = category.send(items)
+    all_items.each do |i|
+      good_items << i unless(i.groups & groups).empty?
     end
-    good_assets
-  end
-  
-  def find_articles(category)
-    category.articles  #TODO: This needs to be scoped to a group in the same way assets are.
+    good_items
   end
    
 end
