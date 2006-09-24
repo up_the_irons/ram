@@ -3,13 +3,13 @@
 <li><label for="article_title">Title: </label>
 <%= text_field 'article', 'title'  -%></li>
 
-<li><label for="article_excerpt">Excerpt: </label>
-<%= text_area 'article', 'excerpt',{:rows=>2}  -%></li>
+<li id="excerpt" style="display:none;"><label for="article_excerpt">Excerpt: </label>
+<%= text_area 'article', 'excerpt',{:rows=>4, :style=>"width:500px;"}  -%></li>
 
-<li><label for="article_body">Body: </label>
-<%= text_area 'article', 'body',{:rows=>5}  -%></li>
+<li><label for="article_body">Body <a class="mice_type" href="#" onclick="Element.toggle($('excerpt'))">(add an excerpt)</a>:</label>
+<%= text_area 'article', 'body',{:style=>"width:500px;height:400px;"}  -%></li>
 
-<li><label for="article_state">State: </label>
+<li><label for="article_comments">Comments: </label>
 <%= select :article, :allow_comments, [['Comments are Allowed',true],['No Comments Please',false]] %>
 </li>
 <li class="adminOptions" style="background-color:transparent;border:none;">

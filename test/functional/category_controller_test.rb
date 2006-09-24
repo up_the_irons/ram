@@ -20,7 +20,7 @@ class CategoryControllerTest < Test::Unit::TestCase
   end
 
   def test_category_shall_display_a_list_of_assets
-    get :show, :id=>6
+    get :show, :id=>6, :display=>'assets'
     assert assigns(:assets)
   end
   

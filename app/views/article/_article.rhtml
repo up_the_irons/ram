@@ -1,15 +1,15 @@
 
 <div class="post" id="article_<%= article.id %>">
-  <% unless article.published? -%>
-  <p class="pageInstructions"><%= "\"#{article.title}\" is saved as a draft, which means others will not see it until it is published.\"" %></p>
-  <% end -%>
-  
-	<ul class="postHeader">
-		<li>Author: <%= User.find(article.author).login  %></li>
-		<li>Published On: <%=article.published_at %></li>
-	</ul>
-	<h1><%= article.title %>"<span class='mice_type'><%= link_to_if_editable("#{image_tag('/images/icons/pencil.png')} Edit", {:controller=>'article',:action=>'write', :id=>article.id},{:class=>"editOptions"}) %></span> </h1>
-	<p id="article_body_#{article.id}"><%= article.body %></p>
+	<dl class="header">
+	  <dt class="title"><%= article.title %>"<span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} Edit", {:controller=>'article',:action=>'write', :id=>article.id},{:class=>"editOptions"}) if current_user.id == article.user_id %></span></dt>
+	  <dd class="author">Author: <%= User.find(article.author).login  %></dd>
+	  <dd class="published_on">Published On: <%=article.published_at %></dd>
+	  <% if article.allow_comments? -%>
+	  <dd class="comments">Comments: <%= article.comment_count %></dd>
+	  <% end -%>
+	</dl>
+
+	<p id="article_body_#{article.id}" class="body"><%= article.body %></p>
 	<ul class="tags">
 		<label><%= image_tag('/images/icons/tag_blue.png')%> Tags</label>
 		<% for tag in article.tags -%>
@@ -18,18 +18,22 @@
 	</ul>
 	
 	<% if article.allow_comments? -%>
-	<h4>Comments (<%= article.comment_count %>)</h4>
-  <%= error_messages_for 'article' -%>
-	<%= start_form_tag :controller=>'article', :action=>'comment_on' , :id=>article %>
-	  <ul class="web_form">
-	  <%= render :partial=>'article/comment_form'%>
-	  <li><label>Save Changes:</label><%= submit_tag "Add Comment" %></li>
-	  </ul>
-	</form>
+	  <h4>Comments (<%= article.comment_count %>) <em><a href="#comment_form_for_<%= article.id %>" onclick="Element.toggle($('comment_form_for_<%= article.id %>'))">make a comment</a></em></h4>
 	  <% article.comments.each do | comment | -%>
         <%= render :partial=>'article/comment',:locals=>{:comment=>comment} %>
     <% end -%>
+	
+	  <%= error_messages_for 'article' -%>
+	  <%= start_form_tag :controller=>'article', :action=>'comment_on' , :id=>article %>
+	    <ul class="web_form" id="comment_form_for_<%= article.id %>" style="display:none;">
+	    <%= render :partial=>'article/comment_form'%>
+	    <li><label>Add Comment:</label><%= submit_tag "Submit" %></li>
+	    </ul>
+	  </form>
 	<% end -%>
 	
 	<%= "<p> Comments are not allowed.</p>"    unless article.allow_comments? %>
+	<% unless article.published? -%>
+  <p class="pageInstructions"><%= "\"#{article.title}\" is saved as a draft, which means others will not see it until it is published.\"" %></p>
+  <% end -%>
 </div>

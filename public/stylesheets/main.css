@@ -15,7 +15,7 @@ body{
 
 /*Mac-modified Tan Hack Method*/
 * html #applicationHeader {height: 1%;} /* for IE/Win */
-*>html #applicationHeader {he\ight: auto;} /* for IE5/Mac */
+*>html #applicationHeader {height: auto;} /* for IE5/Mac */
 
  
 a{
@@ -103,7 +103,7 @@ body{
 #applicationHeader{
 	background-image  : url(/images/header-background.gif);
 	background-repeat : repeat-x;
-	padding           : 10px 10px 5px 10px;
+	padding           : 10px 10px 0px 10px;
 	background-color  : #333257;
 }
 	
@@ -185,6 +185,7 @@ body{
 	
 #pageHeader li.selected{
 	background        : url("/images/tab-left-selected.gif") no-repeat left top;
+	border: none;
 }
 #sideMenuNav li{
 	border: 1px solid #dfdfdf;
@@ -199,7 +200,6 @@ body{
 }
 
 li.selected{
-	border: 1px solid #dfdfdf;
 	background-color: #eeeeff;
 	padding: 2px;
 	display: inline;

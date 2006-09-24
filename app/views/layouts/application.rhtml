@@ -18,12 +18,17 @@
   	  <input class="searchField" type="text" name='id' tabindex="1" alt="search box" />
   	  <input class="searchSubmit" type="submit" value="Search" alt="search button" />
     <%= end_form_tag %>
-    <div id="breadcrumb">
-      <ul>
-        <%= yield :bread_crumbs %>
-      </ul>
-    </div>
-    <% end %>
+    <% 
+    #comment this out for now, because of scoping issues related to traversing the ancestors of a category
+    if false %>
+      <div id="breadcrumb">
+        <ul>
+          <li><%= link_to "List Categories", :controller=>'category', :action=>'list' %></li>
+          <%= yield :bread_crumbs %>
+        </ul>
+      </div>
+      <% end -%>
+    <% end -%>
     <%= yield :application_header %>
   	</div>
   	<div id="pageContent">

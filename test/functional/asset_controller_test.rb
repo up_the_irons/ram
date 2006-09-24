@@ -71,7 +71,7 @@ class AssetControllerTest < Test::Unit::TestCase
   login_as :quentin
   @controller = CategoryController.new
   
-  get :show, :id=>@category_with_asset
+  get :show, :id=>@category_with_asset, :display=>'assets'
   assert :success
   assert assigns(:assets)
   @controller = AssetController.new
@@ -89,7 +89,7 @@ class AssetControllerTest < Test::Unit::TestCase
  def test_shall_display_tags
    login_as :quentin
    @controller = CategoryController.new
-   get :show, :id=>@category_with_asset
+   get :show, :id=>@category_with_asset, :display=>'assets'
    assert :success
    assert assigns(:assets)
    @controller = AssetController.new

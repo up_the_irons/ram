@@ -26,7 +26,7 @@
   <p class="pageInstructions">
   <%= "\"#{@article.title}\" was published at \"#{@article.published_at}\"" if @article.published? %>
   <%= "\"#{@article.title}\" is saved as a draft, which means others will not see it until you publish it.\"" unless @article.published? %>
-  </p>
+  (<%= link_to 'View Article', :controller=>'article', :action=>'read', :id=>@article.id %>)</p>
 <% end -%>
 
 <%= start_form_tag :action=>'write' , :id=>@article %>

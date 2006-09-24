@@ -29,8 +29,7 @@ class ProtectedController < ApplicationController
       when 'articles'
         @articles = accessible_items(@category, 'articles', @groups)
       else
-      #find all
-      @assets   = accessible_items(@category, 'assets', @groups)
+      #find articles
       @articles = accessible_items(@category, 'articles', @groups)
     end
   end 

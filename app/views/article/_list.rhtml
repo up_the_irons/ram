@@ -1,0 +1,3 @@
+<% @articles.each do |a| -%>
+  <%= render :partial=>'article/article' ,:locals=>{:article=>a}%>
+<% end unless @articles.nil? -%>

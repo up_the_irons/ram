@@ -59,31 +59,38 @@
 	
 }
 
-#inboxMenu li.menuData
-{
+#inboxMenu li.menuData{
 	padding          : 5px 0 5px 5px;
 }
 
-.post
-{
-	display:block;
-	float:left;
-	width:580px;
+.post{
+	font-family      : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
+	display          : block;
+	float            : left;
+	width            : 580px;
 	background-color : #FAFAFA;
 	border           : solid 1px #E9E8E8;
 	padding          : 10px;
-	color            : #3F3F3F;
+	color            : #111;
 	margin           : 5px;
 }
-.post p
-{
+.post .header{
+	padding-bottom   : 1em;
+	border-bottom    : 1px dotted #000; 
+}
+.post .header .author,.post .header .published_on,.post .header .comments{
+	font-size        : 0.9em;
+}
+.post .body{
+	font-size        : 1.0em;
+	line-height      : 1.5em;
+}
+.post p{
 	margin           : 10px 0 10px 0;
 }
 
-.post h1
-{
-	font-size        : 1.5em;
-	font-weight      : lighter;
+.post .title{
+	font-size        : 2.0em;
 	margin           : 10px 0 10px 0;
 }
 
@@ -91,7 +98,6 @@
 {
 	display          : inline;
 	color            : #C0C0C0;
-	font-size        : 0.8em;
 	border-right     : solid 1px #C2C2C2;
 	padding          : 5px;
 }
