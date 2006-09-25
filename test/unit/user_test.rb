@@ -62,6 +62,14 @@ class UserTest < Test::Unit::TestCase
     u = User.find_by_login('suspended_user')
     assert_equal u.is_admin?, false
   end
+  
+  def test_adding_a_user_to_the_admin_group_makes_them_an_admin
+    u = User.find(2)
+    assert_equal false, u.is_admin?
+    u.groups << Group.find_by_name('Administrators')
+    u.reload
+    assert_equal true, u.is_admin?
+  end
 
   def test_should_create_user
     assert_difference User, :count do

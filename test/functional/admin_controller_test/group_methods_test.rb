@@ -60,13 +60,15 @@ module IncludedTests::GroupMethodsTest
     def test_disband_group
       login_as :quentin
       users(:quentin).groups.each do |g|
-        post :disband_group, :id=>g.id
-        assert_redirect :groups
-        assert_equal "You disbanded the group.", assigns(:flash)[:notice]
+        unless g.name == "Administrators"
+          post :disband_group, :id=>g.id 
+          assert_redirect :groups
+          assert_equal "You disbanded the group.", assigns(:flash)[:notice]
         
-        get :show_group, :id=>g.id
-        assert_redirect :groups
-        assert_equal assigns(:flash)[:notice], "Could not find group."
+          get :show_group, :id=>g.id
+          assert_redirect :groups
+          assert_equal assigns(:flash)[:notice], "Could not find group."
+        end
       end
     end
     

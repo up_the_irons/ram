@@ -1,4 +1,4 @@
-# Schema as of Tue Sep 05 23:25:32 PDT 2006 (schema version 15)
+# Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
 #
 #  id                  :integer(11)   not null
 #  user_id             :integer(11)   

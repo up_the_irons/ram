@@ -4,7 +4,8 @@ require 'article_controller'
 # Re-raise errors caught by the controller.
 class ArticleController; def rescue_action(e) raise e end; end
 class ArticleControllerTest < Test::Unit::TestCase
-  fixtures :users, :articles, :collections, :linkings, :memberships
+  #fixtures :users, :articles, :collections, :linkings, :memberships
+  fixtures :users, :articles, :tags, :collections, :memberships, :linkings, :taggings
   def setup
     @controller = ArticleController.new
     @request    = ActionController::TestRequest.new
@@ -102,7 +103,9 @@ class ArticleControllerTest < Test::Unit::TestCase
   def test_users_shall_not_see_article_unless_they_have_access_though_groups
     #login and get an article of this user
     login_as :user_4
+
     user = users(:user_4)
+    assert_equal false, user.is_admin?
     a = an_article(:user_id=>user.id, :category_id=>user.categories[0].id, :published_at=>Time.now.to_s)
     assert(a.valid?)
     
@@ -112,17 +115,19 @@ class ArticleControllerTest < Test::Unit::TestCase
     
     #find the groups that have access to the category where this article resides
     category = Category.find(a.category_id)
+    category.groups << Group.find_by_name('Mavens and Mavericks')
+    assert 3, category.groups(true).size
     category_groups = category.groups
-    assert category_groups.size > 1
     
     #assign the members of the first group in the category access to the article
     a.groups << category_groups[0]
     assert_equal a.groups(true).size, 1
     
     #get all active and remaing users, who don't already belong to one of these groups and are not admins. Then add them to the category's second group
-    remaining_users = (User.find(:all).reject{|u| u.account_active? != true && !u.is_admin? }) - (category_groups[0].users + category_groups[1].users).flatten.uniq!
-    assert_difference category.groups[1].users, :size do
-      category.groups[1].users << remaining_users[0]
+    remaining_users = User.find(:all).map{|u| u unless u.is_admin? || !u.account_active? }.compact
+    remaining_users = remaining_users - (category_groups[0].users + category_groups[1].users).flatten.uniq!
+    assert_difference category.groups[2].users, :size do
+      category.groups[2].users << remaining_users[0]
     end
     
     #ensure that current_user can read their article
@@ -134,9 +139,9 @@ class ArticleControllerTest < Test::Unit::TestCase
     @controller = AccountController.new
     post :logout
     post :login, :login=> remaining_users[0].login, :password => 'qazwsx'
+    
     @controller = ArticleController.new
     assert_equal assigns(:current_user).login, remaining_users[0].login
-    
     #now try to view the article as the user who has access to the category but not access to the group which controls the article
     get :read, :id=>a.id
     assert_redirected_to :controller=>'inbox'

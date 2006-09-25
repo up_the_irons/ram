@@ -1,4 +1,4 @@
-# Schema as of Tue Sep 05 23:25:32 PDT 2006 (schema version 15)
+# Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
 #
 #  id                  :integer(11)   not null
 #  login               :string(40)    
@@ -176,7 +176,8 @@ class User < ActiveRecord::Base
   
   def is_admin?
     #todo as the application grows this should be broken out into its own model probably somehthing like a role model
-    role == 1
+    #role == 1
+    (self.groups.find_by_name('Administrators'))? true : false 
   end
 
   def after_create

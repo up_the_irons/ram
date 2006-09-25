@@ -1,4 +1,4 @@
-# Schema as of Tue Sep 05 23:25:32 PDT 2006 (schema version 15)
+# Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
 #
 #  id                  :integer(11)   not null
 #  name                :string(255)   
@@ -9,6 +9,7 @@
 #  state_id            :integer(11)   
 #  parent_id           :integer(11)   
 #  counter_cache       :boolean(1)    default(true)
+#  permanent           :boolean(1)    
 #
 
 class Category < Collection

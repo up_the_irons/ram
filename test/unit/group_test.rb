@@ -27,6 +27,20 @@ class GroupTest < Test::Unit::TestCase
 	  assert_equal s+1, Group.find(g.id).users.size
   end
   
+  def test_cannot_destroy_a_permanent_group
+    g = Group.find_by_name('Administrators') #permanent group
+    assert_no_difference Group, :count do
+      assert_raise(RuntimeError) {g.destroy}
+    end
+    #now change the permanent flag to false and delete it
+    g.permanent = false
+    assert g.save
+    g.reload
+    assert_difference Group, :count, -1 do
+      g.destroy
+    end
+  end
+  
   def test_group_shall_remove_members
   	g = Group.find(:first)
 	  s = g.memberships.size
@@ -37,10 +51,10 @@ class GroupTest < Test::Unit::TestCase
   
   def test_group_shall_not_add_the_same_category_twice
   	g = Group.find(:first)
-	s = g.categories.size
-	g.categories << g.categories[0]
-	assert g.save
-	assert_equal s, Group.find(g.id).categories.size
+	  s = g.categories.size
+	  g.categories << g.categories[0]
+	  assert g.save
+	  assert_equal s, Group.find(g.id).categories.size
   end
   
 
