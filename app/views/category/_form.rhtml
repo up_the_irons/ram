@@ -10,5 +10,8 @@
 </li>
 <% categories = Category.find_all_by_public(true).map{|c|[c.name,c.id]} -%>
 <li><label>Parent Category: </label><%= select :category,:parent_id, categories,{:include_blank=>true} unless categories == [] -%></li>
+<li>
+<%= render :partial => 'shared/form_elements/tags', :locals => { :model => :category } %>
+</li>
 <!--[eoform:category]-->
 

@@ -37,7 +37,11 @@ module ActiveRecord
       module InstanceMethods
         def tag_with(list)
           Tag.transaction do
-            taggings.destroy_all
+            Tagging.destroy_all("taggable_id = #{id} AND taggable_type = '#{self.class.name}'") if id
+
+            # Can't call destroy_all() from association b/c it looks for the base-class taggable_type, yet we need the
+            # child class as taggable_type
+            # taggings.destroy_all
 
             Tag.parse(list).each do |name|
               if acts_as_taggable_options[:from]

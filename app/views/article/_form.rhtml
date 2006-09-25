@@ -15,6 +15,8 @@
 <li class="adminOptions" style="background-color:transparent;border:none;">
   <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@article,:selected=>@article.groups,:available=>@current_user.groups - @article.groups} %>
 </li>
-<li><label><%= image_tag '/images/icons/tag_blue.png' %>Tags:</label><input id="article_tags" name="article[tags]" size="30" value="<%= @article.tags.map{|t| t.name}.join(", ")%>" type="text"></li>
+<li>
+<%= render :partial => 'shared/form_elements/tags', :locals => { :model => :article } %>
+</li>
 <!--[eoform:article]-->
 

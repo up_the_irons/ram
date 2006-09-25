@@ -2,6 +2,10 @@ class Tagging < ActiveRecord::Base
   belongs_to :tag
   belongs_to :taggable, :polymorphic => true
 
+  def before_save
+    self.taggable_type = taggable.class.name
+  end
+
   def self.tagged_class(taggable)
     ActiveRecord::Base.send(:class_name_of_active_record_descendant, taggable.class).to_s
   end

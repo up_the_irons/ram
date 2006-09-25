@@ -15,6 +15,9 @@
 class Category < Collection
 	acts_as_tree 
   acts_as_taggable
+
+  include TagMethods
+
   has_many :children, :class_name=>'Collection',:foreign_key=>'parent_id' do
 		def << (category)
 			return if @owner.children.include?category
@@ -94,5 +97,5 @@ class Category < Collection
   def validate
     errors.add_to_base "The category cannot specify itself as the parent" if parent_id == id and !new_record?
   end
-  
+
 end

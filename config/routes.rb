@@ -13,11 +13,13 @@ ActionController::Routing::Routes.draw do |map|
   # -- just remember to delete public/index.html.
   map.connect '', :controller => "account", :action=>"login"
   
-  ['groups','users','categories'].each do | model |
-    ['edit', 'show'].each do | action |
-      #create a catch for singular models as well e.g. user/edit/
+  ['groups','users','categories'].each do |model|
+    ['edit', 'show'].each do |action|
+
+      # Create a catch for singular models as well (e.g. user/edit/)
       map.connect "admin/#{action}/#{model.singularize}/:id",:controller=>'admin',:action=>"#{action}_#{model.singularize}"
-      #create a catch for plural models e.g. users/edit
+
+      # Create a catch for plural models (e.g. users/edit)
       map.connect "admin/#{action}/#{model}/:id",:controller=>'admin',:action=>"#{action}_#{model.singularize}"
       map.connect "admin/#{model}",:controller=>'admin',:action=>"#{model}"
     end

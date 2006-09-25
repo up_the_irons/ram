@@ -14,6 +14,8 @@
 
 class Group < Collection
   acts_as_taggable
+  include TagMethods
+
 	has_many :memberships, :foreign_key=>:collection_id
 	has_many :users, :through => :memberships, :conditions => "memberships.collection_type = 'Group'" do
 	  def <<(user)

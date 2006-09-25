@@ -1,0 +1,6 @@
+<% model = model.to_s -%>
+<label>
+  <%= image_tag '/images/icons/tag_blue.png' %>
+  Tags:
+</label>
+<input id="<%= "#{model}_tags" %>" name="<%= model %>[tags]" size="30" value="<%= instance_variable_get('@' + model).tags.map{|t| t.name}.join(", ")%>" type="text">

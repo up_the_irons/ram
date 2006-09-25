@@ -42,7 +42,9 @@ form_tag({:controller=>'asset', :action =>@action, :id=>@asset.id}, {:multipart 
 
 	<% end -%>
     <li><label>Description: </label><%= text_area :asset, :description,{:rows=>4} %></li>
-	<li><label><%= image_tag '/images/icons/tag_blue.png' %>Tags:</label><input id="asset_tags" name="asset[tags]" size="30" value="<%= @asset.tags.map{|t| t.name}.join(", ")%>" type="text"></li>
+    <li>
+    <%= render :partial => 'shared/form_elements/tags', :locals => { :model => :asset } %>
+    </li>
 	<li>
 	<%= submit_tag "Submit" %>  <%= link_to_remote('cancel',:url=>{
 																		:controller=>'asset',

@@ -6,3 +6,7 @@
 
 <li><label for="group_public">Public</label>
 <select id="group_public" name="group[public]"><option value="false">False</option><option value="true">True</option></select></li>
+
+<li>
+<%= render :partial => 'shared/form_elements/tags', :locals => { :model => :group } %>
+</li>

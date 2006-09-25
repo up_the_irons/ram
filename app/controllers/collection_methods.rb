@@ -67,6 +67,7 @@ module CollectionMethods
     model_instance = instance_variable_get("@#{table.singularize}")
     model_sym = table.singularize.to_sym
     many_element = many_elements.singularize
+
     if request.post? && model_instance
       params[model_sym][:user_id] = current_user.id if model_instance.new_record?
       
@@ -88,7 +89,14 @@ module CollectionMethods
         add_elements = nil #delete the proc
       end  
       
-      
+      if model_instance.new_record?
+        model_instance.attributes = params[model_sym]
+        model_instance.save
+
+        # Tags must be assigned after the object is saved b/c they rely on the ID of the record
+        model_instance.tags = params[model_sym][:tags] if params[model_sym][:tags]
+      end
+
       if model_instance.update_attributes(params[model_sym])
         add_elements.call unless add_elements.nil?
         

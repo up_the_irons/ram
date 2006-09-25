@@ -1,8 +1,8 @@
 <%
 results =[]
-results << pluralize(@assets.size, 'Asset') if @assets.size > 0
-results << pluralize(@cats.size, 'Asset')   if @cats.size > 0
-results << pluralize(@groups.size, 'Asset') if @groups.size > 0
+results << pluralize(@assets.size, 'Asset')  if @assets.size > 0
+results << pluralize(@cats.size, 'Category') if @cats.size > 0
+results << pluralize(@groups.size, 'Group')  if @groups.size > 0
 -%>
 <h2>Your Search Returned <%=  results.join(", ") %> <%= "no results." if results.empty? %></h2>
 

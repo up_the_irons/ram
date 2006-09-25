@@ -23,10 +23,12 @@ module IncludedTests::CategoryMethodsTest
     
     assert_difference Category, :count  do
       new_name = 'knock-offs'
-      post :edit_category, :category => { :name =>new_name ,:user_id=>users(:quentin).id ,:parent_id=>users(:quentin).categories[0].id }
+      new_tags = ["atari", "2600"]
+      post :edit_category, :category => { :name =>new_name ,:user_id=>users(:quentin).id ,:parent_id=>users(:quentin).categories[0].id, :tags => new_tags.join(', ')}
       assert_redirect :action=>'edit_category', :id=>assigns(:category).id
       assert assigns(:category)
       assert assigns(:category).name = new_name
+      assert (new_tags - assigns(:category).tags.map { |o| o.name }).empty?
     end
   end
   
@@ -88,10 +90,21 @@ module IncludedTests::CategoryMethodsTest
   
   def test_update_category
     new_name = 'Atari Promotions'
-    post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first)}
+    new_tags = ["atari", "2600"]
+    post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first), :tags => new_tags.join(', ')}
     assert_response :success
     category_after_update = Category.find(@existing_category_id)
     assert_equal new_name, category_after_update.name
+    assert (new_tags - category_after_update.tags.map { |o| o.name }).empty?
+
+    # Now make sure the old tags get overwritten with new ones
+    new_tags = ['beach', 'bird','dog']
+    post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first), :tags => new_tags.join(', ')}
+    assert_response :success
+    category_after_update = Category.find(@existing_category_id)
+    assert_equal new_name, category_after_update.name
+    assert (new_tags - category_after_update.tags.map { |o| o.name }).empty?, "New tags (#{new_tags.join(',')}) expected, but were: #{category_after_update.tags.join(',')}"
+
   end
   
   def test_prevent_bad_updates_to_categories

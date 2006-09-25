@@ -40,7 +40,7 @@ class AssetController < ProtectedController
       @login = CGI.escape(current_user.encrypt_login)
       @url_params = "maxFileSize=#{@size_limit}"
       @url_params = "&onCompleteCallback=show_upload_results"
-      @url_params <<"&url=#{url_for(:action=>'create_en_masse', :only_path=>true, :id=>@category.id,:hash=>@login)}"
+      @url_params << "&url=#{url_for(:action=>'create_en_masse', :only_path=>true, :id=>@category.id,:hash=>@login)}" 
     end
   end
   

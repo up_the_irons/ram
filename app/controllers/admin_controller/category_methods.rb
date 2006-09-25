@@ -1,7 +1,6 @@
 module AdminController::CategoryMethods
   
   #TODO this should be refactored and abstracted to a more generalized "edit_collection" method since group and category look nearly identical
-  
   # def edit_category
   #   @category = Category.new
   #   @category = Category.find_by_id_or_name params[:id] if params[:id]
@@ -25,7 +24,14 @@ module AdminController::CategoryMethods
   #       add_groups.call
   #       add_groups = nil #delete the proc
   #     end  
-  #     
+  #
+  #     if @category.new_record?
+  #       @category.attributes = params[:category]
+  #       @category.save
+  #      
+  #       # Tags must be assigned after the object is saved b/c they rely on the ID of the record
+  #       @category.tags = params[:category][:tags] if params[:category][:tags]
+  #     end
   #     
   #     if @category.update_attributes(params[:category])
   #       add_groups.call unless add_groups.nil?

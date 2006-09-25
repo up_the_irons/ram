@@ -14,17 +14,27 @@
 
 class Collection < ActiveRecord::Base
 	belongs_to :user
+
   @@states = ['Pending', 'Denied', 'Approved']
+
   cattr_accessor :states
-  def state
-    self.class.states[self.state_id]
-  end
   attr_protected :permanent
-    
-  BOOLEAN = [true,false] 
+
   before_destroy :dont_delete_permanent_collections
   
   def dont_delete_permanent_collections
     raise "You cannot delete this." if self.permanent
   end
+
+  def state
+    self.class.states[self.state_id]
+  end
+    
+  BOOLEAN = [true, false] 
+
+  def tags=(str)
+    arr = str.split(",").uniq
+    self.tag_with arr.map { |a| a }.join(",") unless arr.empty?
+  end
+
 end

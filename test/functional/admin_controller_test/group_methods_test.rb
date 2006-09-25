@@ -29,13 +29,26 @@ module IncludedTests::GroupMethodsTest
   
    def test_update_group
      login_as :quentin
-     g = users(:quentin).groups.find(:first)
+
+     # User.is_admin? changed from looking at "role" field to seeing if the user is in group named "Administrators", so 
+     # if we change the name of this group, we get screwed; therefore, we filter out "Administrators" from this find()
+     g = users(:quentin).groups.find(:first, :conditions => "name != 'Administrators'")
      new_name = 'Atari Monkeys'
+     new_tags = ["atari", "2600"]
      assert_not_nil g
-     post :edit_group, :id => g.id, :group =>{:name=>new_name}
+     post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', ') }
      assert_response :success
      group_after_update = Group.find(g.id)
      assert_equal new_name, group_after_update.name
+     assert (new_tags - group_after_update.tags.map { |o| o.name }).empty?
+
+     # Now make sure the old tags get overwritten with new ones
+     new_tags = ['beach', 'bird','dog']
+     post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', ') }
+     assert_response :success
+     group_after_update = Group.find(g.id)
+     assert_equal new_name, group_after_update.name
+     assert (new_tags - group_after_update.tags.map { |o| o.name }).empty?, "New tags (#{new_tags.join(',')}) expected, but were: #{group_after_update.tags.join(',')}"
    end
    
    def test_group_add_member_from_multiselect
@@ -102,10 +115,12 @@ module IncludedTests::GroupMethodsTest
       end
 
       assert_difference Group, :count  do
-        post :edit_group, :group => { :name =>'Guest Group',:user_id=>users(:quentin).id }
+        new_tags = ["atari", "2600"]
+        post :edit_group, :group => { :name =>'Guest Group',:user_id=>users(:quentin).id, :tags => new_tags.join(', ')}
         assert_redirected_to :action => 'edit_group'
         assert_equal 0, assigns(:group).errors.count
         assert assigns(:group)
+        assert (new_tags - assigns(:group).tags.map { |o| o.name }).empty?
       end
     end
     
