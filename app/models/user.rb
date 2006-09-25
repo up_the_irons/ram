@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
 	has_one  :profile
 	has_many :memberships
 	has_many :articles
+	has_many :assets
   has_many :event_subscriptions
 	#has_many :taggings
 	

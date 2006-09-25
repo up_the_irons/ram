@@ -1,57 +1,35 @@
 <%= 
-form_tag({:controller=>'asset', :action =>@action, :id=>@asset.id}, {:multipart => true}) %>
-
-<% #todo: show category select if @category is nil
-%>
-<input type="hidden" id="linking_category_id" name="category_id"value="<%= @category.id unless @category.nil? %>" />
+form_tag({:controller=>'asset', :action =>'edit', :id=>@asset.id}, {:multipart => true}) %>
 <input type="hidden" id="update" name="update" value="asset_form" />
 <ul class="web_form">
-	<li><label>Category:</label><%= @category.name unless @category.nil? %> &nbsp;</li>
-	
-	<% unless @asset.new_record? -%>
-	<li>	
-		<label>Group Availability: </label>
-		<table id="asset_form_group_list">
-			<tr>
-				<th>Name</th>
-				<th>Options</th>
-			</tr>
-		<% @assigned_groups.each do |group| -%>
-			<%= render :partial=>'group_item', :locals=>{:group=>group}%>
-		<% end -%>
-		</table>
-	</li>	
-	
-		<% 	unless @remaining_groups.nil? || @remaining_groups.empty? -%>
-		<li>
-		<label>Add New Group</label>
-		<select id='add_group_form' onchange='new Ajax.Request("/asset/add_group/<%= @asset.id %>?update=asset_form_group_list&category_id=<%= @category.id %>&group_id="+$(this).value);' >	
-		<option>Add A New Group</option>
-		<%= 
-		options_for_select(@remaining_groups.map{|g| [g.name, g.id]}) %>
-		</select>
-		</li>
-		<% end -%>
-
-		<li id="image_field"><label>File:</label>
-			<%= display_as @asset -%>
-		</li>
-	<% else -%>
-		<li><label>&nbsp;</label><h4>Have a lot of files to upload? You should try the "<%= link_to "Bulk Uploader", :controller=>'asset',:action=>'bulk_upload',:id=>@category.id %>"</h4></li>
-		<li id="image_field"><label>File: </label> <%= file_field :asset, :uploaded_data %></li>
-
-	<% end -%>
-    <li><label>Description: </label><%= text_area :asset, :description,{:rows=>4} %></li>
-    <li>
-    <%= render :partial => 'shared/form_elements/tags', :locals => { :model => :asset } %>
-    </li>
+  <% unless @category.nil? %>
 	<li>
-	<%= submit_tag "Submit" %>  <%= link_to_remote('cancel',:url=>{
-																		:controller=>'asset',
-																		:action=>'cancel_update',
-																		:category_id=>@category.id,
-																		:update=>'new_asset_form'
-																		}) %>
+	  <label>Category:</label><%= @category.name %>
+	  <%= hidden_field :asset, :category_id, {:value=>@category.id} %>
+	</li>
+	<% end -%>
+	<li>
+	  <label>&nbsp;</label><h4>Have a lot of files to upload? You should try the "<%= link_to "Bulk Uploader", :controller=>'asset',:action=>'bulk_upload',:id=>@category.id %>"</h4>
+	</li>
+	<li id="image_field">
+  	  <label>File:</label><%= (@asset.new_record?)? file_field(:asset, :uploaded_data) : display_as(@asset) -%>
+	</li>
+	
+	<li class="adminOptions" style="background-color:transparent;border:none;">
+	  <p>While not required, if you do not select a group it will not be viewable to anyone!</p>
+    <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@asset,:selected=>@asset.groups,:available=>@current_user.groups - @asset.groups} %>
+  </li>
+
+  <li>
+    <label>Description: </label><%= text_area :asset, :description,{:rows=>4} %>
+  </li>
+  
+  <li>
+    <%= render :partial => 'shared/form_elements/tags', :locals => { :model => :asset } %>
+  </li>
+	
+	<li>
+	  <%= submit_tag "Submit" %>
 	</li>
 </ul>
 <%= end_form_tag %>

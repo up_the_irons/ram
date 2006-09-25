@@ -60,7 +60,7 @@ user_2:
   updated_at: 2006-05-07 13:56:30 -07:00
   activated_at: 
   crypted_password: 4c0a614bf9afb6e5e9b0352b163a6945a611e1be
-  activation_code: arthurscode
+  activation_code: yujiscode
   id: 2
   role: 0
   state: 2
@@ -73,7 +73,7 @@ ralph_baer:
   updated_at: 2006-05-07 13:56:30 -07:00
   activated_at: 
   crypted_password: 4c0a614bf9afb6e5e9b0352b163a6945a611e1be
-  activation_code: arthurscode
+  activation_code: ralphscode
   id: 6
   role: 0
   state: 2

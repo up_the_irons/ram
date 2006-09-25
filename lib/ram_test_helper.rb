@@ -1,4 +1,10 @@
 module RamTestHelper
+  def an_asset(opts={},file=nil)
+    file = "#{RAILS_ROOT}/test/fixtures/images/rails.png" if file.nil?
+    temp_file = uploaded_jpeg(file)
+    o = {:description=>"I made this asset on #{Time.now.to_s}", :category_id=>Category.find(:first), :user_id=>1, :uploaded_data=>temp_file}.merge(opts)
+    Asset.create(o)
+  end
   
   def an_article(opts={})
     user = User.find(:first)

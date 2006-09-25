@@ -29,15 +29,9 @@ class Asset < ActiveRecord::Base
   acts_as_attachment
   acts_as_taggable
   set_table_name "attachments"
-   # has_and_belongs_to_many :access_contexts, :table_name=>'access_contacts_attachments', :foreign_key=>'access_context'
-   #has_and_belongs_to_many :access_contexts,
-   #                         :join_table=>'access_contexts_attachments', 
-   #                         :foreign_key=>'attachment_id', 
-   #                        :class_name=>"AccessContext", 
-   #                        :table_name=>"attachments"
-   
-   has_many :linkings, :as =>:linkable,:dependent => :destroy
-   has_many :groups, :through=> :linkings do
+  
+  has_many :linkings, :as =>:linkable,:dependent => :destroy
+  has_many :groups, :through=> :linkings do
     def << (group)
       return if @owner.groups.include?group
       l = Linking.create(
@@ -53,8 +47,11 @@ class Asset < ActiveRecord::Base
    belongs_to :category
    belongs_to :user
 
-   #TODO: make this validation work
-   #validates_uniqueness_of :filename, :scope => [:groups]
+   #FIXME
+   #attr_protected :user_id
+   
+   #TODO Add support for acts_as_versioned.
+   
    def name
      filename
   end
@@ -76,6 +73,18 @@ class Asset < ActiveRecord::Base
 
     def full_path
       (path && filename) ? File.join(path, filename) : (filename || path)
+    end
+    
+    #TODO refactor this so that the classes which are linked though groups can share the same module instead of duplicating code.
+    def remove_all_groups
+      self.groups.each do| m | 
+        remove_group(m)
+      end
+    end
+
+    def remove_group(group)
+      linking =Linking.find_by_linkable_id_and_linkable_type_and_group_id(self.id,'Asset', group.id)
+      linking.destroy if linking.valid?
     end
     
    class << self    

@@ -30,6 +30,7 @@ attachment_1:
   content_type: 'image/png'
   db_file_id: 1
   size: 4
+  user_id: 1
   type: 'Asset'
   description: Ruby on snails
   category_id: 8
@@ -39,6 +40,7 @@ attachment_2:
   content_type: 'image/jpg'
   db_file_id: 2
   size: 24
+  user_id: 1
   type: 'Asset'
   description: Some of the all-time greats
   category_id: 19
@@ -49,6 +51,7 @@ attachment_3:
   db_file_id: 3
   size: 88
   type: 'Asset'
+  user_id: 1
   description: This was never as successful as the Atari2600 
   category_id: 9
 attachment_4:
@@ -58,6 +61,7 @@ attachment_4:
   db_file_id: 4
   size: 20
   type: 'Asset'
+  user_id: 1
   description: The one the only "Heavy Sixer"
   category_id: 9
 attachment_5:
@@ -67,6 +71,7 @@ attachment_5:
   db_file_id: 5
   size: 40
   type: 'Asset'
+  user_id: 5
   description: The Famicom was the "Family Computer"  
   category_id: 10
 attachment_6:
@@ -76,6 +81,7 @@ attachment_6:
   db_file_id: 6
   size: 396
   type: 'Asset'
+  user_id: 6
   description: The genesis became popular in large part because it shipped with the run-away hit "Altered Beast"
   category_id: 11
 attachment_7:
@@ -85,5 +91,6 @@ attachment_7:
   db_file_id: 7
   size: 48
   type: 'Asset'
+  user_id: 5
   description: The Nintendo Entertainment System was the king of the 8-bit consoles.
   category_id: 10

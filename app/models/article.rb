@@ -38,6 +38,8 @@ class Article < ActiveRecord::Base
     end
     
   end
+  #FIXME
+  #attr_protected :user_id
   
   #snipped from mephisto (http://www.mephistoblog.com/)
   after_validation :convert_to_utc
