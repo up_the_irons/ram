@@ -124,6 +124,16 @@ class FolioControllerTest < Test::Unit::TestCase
     assert !File.file?(assigns(:zip_file)), "Zip file should have been deleted."
   end
   
+  def test_zip_shall_mimic_category_hierarchy
+    login_as :quentin
+    assets = assets_for(current_user)
+    assets.map{|a| @request.session[:folio] << a.id}
+    assert_equal assets.size, @request.session[:folio].size
+    assert @request.session[:folio].size > 0
+    #breakpoint
+
+  end
+  
   protected
   def add_item_for(user)
     #get the first unique asset to add to the folio

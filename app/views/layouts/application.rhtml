@@ -8,16 +8,20 @@
   <div id="throbber" style="width:100%;position:absolute;z-index:1;opacity:0.8;display:none;background-color:#fff;border:1px inset #000;color:#000;font-size:110%;">
     <p style="padding:10px;" id="message"><%= image_tag 'ajax-loader.gif' %>&nbsp;&nbsp;Loading...</p>
   </div>
-  <div id="topNav">
+  <div id="topNav" style="margin-bottom:10px;">
 		<%= render :partial=>'shared/page/header'%>
 	</div>
-  <div id="applicationHeader">
-    <%= display_flash_message %>
+	<div>
+	  <%= display_flash_message %>
+	</div>
+  <div id="applicationHeader" style="height:40px;">
     <% if current_user %>
+    <div id="search_form" style="position:absolute;right:10px;">
     <%= form_tag :controller => 'search', :action => 'all' %>
   	  <input class="searchField" type="text" name='id' tabindex="1" alt="search box" />
   	  <input class="searchSubmit" type="submit" value="Search" alt="search button" />
     <%= end_form_tag %>
+    </div>
     <% 
     #comment this out for now, because of scoping issues related to traversing the ancestors of a category
     if false %>
@@ -42,12 +46,9 @@
 				    display_close_as = "block"
 			    end
 				-%>
-			
-			
-			<td id="sideMenu" valign="top" style="border-right:1px solid #cfcfcf;display:<%= display_open_as %>;">
-				<div style="width:250px;">
+			<td id="sideMenu" valign="top">
+				<div style="border-right:1px solid #cfcfcf;width:250px;display:<%= display_open_as %>;">
 				  <a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');new Ajax.Request('/account/toggle_menu');"><%= image_tag('/images/icons/arrow_left.png', {:style=>"display:block;position:absolute;left:240px;padding:1px;border: 1px solid #ccc;"})%></a>
-				
 				
 				  <ul id="sideMenuNav">  
 					  <li><%= link_to 'Inbox', :controller=>'inbox' %></li>
@@ -69,8 +70,8 @@
 				  <br class="clear_both" />
 				</div>
 			</td>
-			<td id="sideMenuCollapsed"  valign="top" style="border-right:1px solid #cfcfcf;display:<%=display_close_as %>;">
-				<div style="width:25px">
+			<td valign="top">
+				<div id="sideMenuCollapsed" style="border-right:1px solid #cfcfcf;width:25px;display:<%= display_close_as %>;">
 			<a href="#" onclick="View.flip_flop('sideMenu','sideMenuCollapsed');new Ajax.Request('/account/toggle_menu');"><%= image_tag('/images/icons/arrow_right.png', {:style=>"display:block;padding:1px;border: 1px solid #ccc;"})%></a>
 				</div>
 			</td>

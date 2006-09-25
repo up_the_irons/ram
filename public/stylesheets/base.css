@@ -8,50 +8,48 @@ body{
 	background-repeat : repeat-x;
 }
 form, ul, li{
-	padding          : 0;
-	margin           : 0;
-	list-style       : none;
+	padding           : 0;
+	margin            : 0;
+	list-style        : none;
 }
 div{
 		/* border       : 1px solid grey; */
 }
 a:link, a:visited{
-	color            : #C5495F;
-	text-decoration  : none;
+	text-decoration   : none;
 }
 a:hover{
-	color               : #9AF178;
-	text-decoration     : none;
-	background          : none;
+	text-decoration   : underline;
+	background        : none;
 }
 .clear_both{
 	display           : block;
 	clear             : both;
 }
 .inline_list, .bread_crumbs{
-	list-style       : none;
+	list-style        : none;
 }
 .inline_list li, .bread_crumbs li{
-	display          : inline;
+	display           : inline;
 }
 .bread_crumbs{
-	display          : block;
-	background-color : #333;
-	margin           : auto;
-	height           : 15px;
-	padding          : 5px 10px 5px 10px;
-	border           : 1px solid #000000;
+	display           : block;
+	background-color  : #333;
+	margin            : auto;
+	height            : 15px;
+	padding           : 5px 10px 5px 10px;
+	border            : 1px solid #000000;
 }
 .page_message, .important_page_message, #page_flash{
-	font-weight      : bolder;
-	width            : 100%;
-	text-align       : center;
-	display          : block;
-	clear            : both;
+	font-weight       : bolder;
+	width             : 100%;
+	text-align        : center;
+	display           : block;
+	clear             : both;
 }
 
 .important_page_message, #page_flash{
-	font-size        : 120%;
+	font-size         : 120%;
 }
 
 .flash_notice, .flash_warning, .flash_error{
@@ -90,8 +88,8 @@ a:hover{
 }
 
 .web_form li{
-	border-top       : 1px solid #dcdcdc;
-	padding          : 10px 0 10px 0;
+	/*border-top       : 1px solid #dcdcdc;*/
+	padding          : 0.5em 0 0.5em 0;
 }
 
 .web_form label{
@@ -103,7 +101,7 @@ a:hover{
 	font-size        : 110%;
 }
 
-.web_form input, .web_form select, .web_form textarea{
+.web_form input, .web_form select, .web_form textarea {
 	border           : 1px solid #dcdcdc;
 	font-size        : 120%;
 	background-color : #efefee;

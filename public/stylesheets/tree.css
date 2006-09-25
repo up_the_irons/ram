@@ -90,9 +90,11 @@ ul.tree a  {
 	background: url(/images/icons/folder.png) 0 50% no-repeat;
 }
 ul.tree span.a.children a {
+	background: no-repeat;
 	background-image: url(/images/icons/folder_page_white.png);
 }
 ul.tree span.a.children.spanClosed a {
+	background: no-repeat;
 	background-image: url(/images/icons/folder.png);
 }
 

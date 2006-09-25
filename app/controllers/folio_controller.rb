@@ -84,12 +84,28 @@ class FolioController < ProtectedController
   protected
   def create_zip(path)
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
-      zip.dir.mkdir('folio')
+      zip.dir.mkdir('folio') #acts as the root folder
       session[:folio].map do | a |
         asset = Asset.find a
-        zip.file.open("folio/#{asset.filename}", 'w'){|file| file << asset.data } unless asset.nil?
+        unless asset.nil?
+          path = "folio/#{create_category_tree(asset.category_id)}"
+          zip.dir.mkdir(path) unless zip.entries.find{|x| x.name =~ /#{path}/}
+          zip.file.open("#{path}#{asset.filename}", 'w'){|file| file << asset.data }
+        end
       end
     end
+  end
+  
+  #assumes that the user has logged in and assigned an access-scoped category tree
+  def create_category_tree(category_id)
+    @path = ""
+    tree = current_user.categories_as_tree
+    cat = tree["b_#{category_id}".to_sym]
+    while cat[:parent] != :root
+      @path =  "#{cat[:name]}/" << @path
+      cat = tree[cat[:parent]]
+    end
+    @path = @path.gsub(/\ +/, '-').downcase #remove white spaces from filenames
   end
   
   def find_asset_in_category_for_group_member(category_id = nil, asset_id = nil)

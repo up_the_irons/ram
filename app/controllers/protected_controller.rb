@@ -19,19 +19,12 @@ class ProtectedController < ApplicationController
   
   protected
   def category_contents(params)
-    params[:display] = 'all' if params[:display].nil?
     @category = find_in_users_categories(params[:id])
     raise unless @category
     @groups   = @category.groups & current_user.groups
-    case params[:display]
-      when 'assets'
-        @assets = accessible_items(@category, 'assets', @groups)
-      when 'articles'
-        @articles = accessible_items(@category, 'articles', @groups)
-      else
-      #find articles
-      @articles = accessible_items(@category, 'articles', @groups)
-    end
+    
+    @assets = accessible_items(@category, 'assets', @groups)
+    @articles = accessible_items(@category, 'articles', @groups)
   end 
 
   def accessible_items(category,items,groups)
