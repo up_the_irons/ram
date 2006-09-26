@@ -2,9 +2,19 @@
 module ApplicationHelper
   
   def display_flash_message
+
     flash_types = [:error, :warning, :notice ]
     flash_type = flash_types.detect{ |a| flash.keys.include?(a) }
-    "<div id='page_flash' class='flash_%s'>%s</div>" % [flash_type.to_s, flash[flash_type]] if flash_type
+    #"<div id='page_flash' class='flash_%s'>%s</div>" % [flash_type.to_s, flash[flash_type]] if flash_type 
+    grail_notify(flash_type.to_s.capitalize, flash[flash_type]) if flash_type
+  end
+  
+  def grail_notify(subject, body)
+    out =  "<script type='text/javascript'>\n"
+    out << "/* <![CDATA[ */\n"
+    out << "Loader.addOnLoad(function(){grail.notify({subject:\"#{subject}\",body:\"#{body}\"})})\r"
+    out << "/* ]]> */"
+    out << "</script>"
   end
   
   def display_as asset
