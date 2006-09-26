@@ -3,7 +3,7 @@ var Grail = Class.create();
 Grail.prototype = {
 	initialize: function(){
 		this.to_s = "Grail"
-		this.skin = new GrailSkin()
+		this.skin = null;
 		this.register_events();
 		//uncomment to test grail
 		//this.notify({type:this.skin, subject:'Alert', body:'Something awesome just happened.'});
@@ -21,20 +21,31 @@ Grail.prototype.register_events = function(){
 	);
 }
 Grail.prototype.on_remote_create = function(callback){
-	this.notify({subject:'Contacting Server',body:'Please wait...'})
+	//this.notify({subject:'Contacting Server',body:'Please wait...'})
 }
 Grail.prototype.on_remote_complete = function(callback){
-
+	//this.hide()
 }
 Grail.prototype.on_remote_failure = function(callback){
-	this.notify({subject:'Server Error',body:'There was a network error.'})
+	//this.notify({subject:'Server Error',body:'There was a network error.'})
 }
 
 //Call this method to render a Grail notification event to the interface
 Grail.prototype.notify = function(msg){
 	//this.skin.show(msg.subject, msg.body)
-	this.skin = new GrailSkin()
+	//msg.type = "music_video"
+	if(msg.type != null){
+		this.skin = new GrailSkin(msg.type)
+	}else{
+		this.skin = new GrailSkin()
+	}
+	//this.skin = new GrailSkin()
 	this.skin.show(msg.subject,msg.body)
+}
+
+Grail.prototype.hide = function(){
+	//alert(this.to_s)
+	//TODO clear these out.
 }
 
 //The Message is the container, which Grail uses to render text and image to the interface.
@@ -73,7 +84,6 @@ GrailSkin.prototype = {
 		this.message.appendChild(this.subject);
 		this.message.appendChild(this.body);
 		document.body.appendChild(this.container);
-		this.hide();
 		this.render();
 	}
 }
@@ -81,7 +91,12 @@ GrailSkin.prototype = {
 GrailSkin.prototype.render = function(){
 	skin = {};
 	switch(this.selected){
-		case 'music_video' : this.opts = this.music_video();
+		case 'music_video' : 
+		this.opts = this.music_video();
+		break;
+		default:
+			alert('style not found');
+			this.opts = this.music_video();
 	}
 	//apply inline css
 	for(var n in this.opts.style){
@@ -100,7 +115,7 @@ GrailSkin.prototype.onMotionFinished = function(){
 	//callBack by Tween class
 	if(this.index >= this.transitions.length){
 		this.index = 0;
-		this.hide();
+		Element.remove($(this.container))
 	}else{
 		this.start_transition(this.transitions[this.index]);
 		this.index++;
@@ -115,7 +130,6 @@ GrailSkin.prototype.show = function(subject,body){
 	this.subject.innerHTML = subject
 	this.body.innerHTML    =  body
 	this.index = 0;
-	this.container.show();
 	this.onMotionFinished();
 }
 
@@ -124,10 +138,6 @@ GrailSkin.prototype.start_transition = function(o){
 	t1 = new Tween(this.container.style,o.property,o.tween,pos[1] + o.start,pos[1] + o.end,o.duration,'px');
 	t1.addListener(this);
 	t1.start();
-}
-
-GrailSkin.prototype.hide = function(){
-	this.container.hide()
 }
 
 GrailSkin.prototype.music_video = function(){

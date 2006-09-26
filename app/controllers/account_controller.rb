@@ -91,7 +91,7 @@ class AccountController < ProtectedController
       end
     else
       render :update do |page|
-        page.call "grail.notify",{:type=>"grail.skin",:subject=>'Could not log you in',:body=>"#{current_user.account_status}."}
+        page.call "grail.notify",{:type=>"music_video",:subject=>'Could not log you in',:body=>"#{current_user.account_status}."}
         #page.replace_html 'page_flash', current_user.account_status
       end
     self.current_user = nil

@@ -1,5 +1,5 @@
 //Throbber for Ajax events
-/*
+
 Ajax.Responders.register({
 	onCreate: function(request) {
 		var throbber = $('throbber');
@@ -15,7 +15,7 @@ Ajax.Responders.register({
 	}
 }
 )
-*/
+
 
 Content ={
 	//TODO: This is where the toggling of display options should be implemented.
