@@ -118,20 +118,28 @@ class AssetController < ProtectedController
   end
   
   def destroy
-    #FIXME: This may prevent admins from deleting the files.
-    redirect_to :action=>'show', :id=>params[:id] and return false if request.get?
-    Asset.with_scope(:find => { :conditions => "user_id = #{current_user.id}", :limit => 1 }) do 
-      @asset = find_asset_by params[:id]
-      unless @asset.nil?
-        @asset.destroy
-        flash[:notice] = 'Your Asset was deleted.'
-      else
-        flash[:notice] = "Could not delete the asset."
+    raise if request.get?
+    @asset = find_asset_by params[:id]
+    raise if @asset.nil?
+    @category = Category.find(@asset.category_id)
+    raise unless accessible_items(@category,'assets',current_user.groups).include?(@asset)
+    raise unless @asset.destroy
+    
+    respond_to do |wants|
+      wants.html do
+        redirect_to :controller=>'category',:action=>'show', :id=>@asset.category_id
+      end
+        
+      wants.js do
+        render :update do |page|
+          page.call "grail.notify",{:type=>"grail.skin",:subject=>'Congratulations',:body=>"#{@asset.filename} was deleted."}
+          page.remove params[:update]
+        end
       end
     end
-    redirect_to :controller=>'category',:action=>'show', :id=>@asset.category_id
+    
   rescue
-    redirect_to :controller=>'inbox'
+    redirect_to :controller=>'inbox', :action=>'index'
     flash[:notice] = @@asset_404
   end
   

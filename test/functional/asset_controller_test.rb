@@ -96,6 +96,7 @@ class AssetControllerTest < Test::Unit::TestCase
   def test_delete_asset
     cat = @user.categories[0]
     @a = an_asset({:user_id=>@user.id,:category_id=>cat.id})
+    @a.groups << @user.groups[0]
     post :destroy, :id=>@a.id
     assert assigns(:flash)[:notice] = 'Your asset was deleted.'
     assert_redirected_to :controller=>'category', :action=>'show', :id=>@a.category_id
@@ -110,12 +111,12 @@ class AssetControllerTest < Test::Unit::TestCase
       get :destroy, :id=>@a.id
       assert assigns(:flash)[:notice] = 'Could not delete asset.'
     end
-    assert_redirected_to :id=>@a.id.to_s
+    assert_redirected_to :controller=>'inbox'
   end
     
   def test_shall_prevent_deletes_without_access
     @a = @user.assets[0]
-    login_as :user_4
+    login_as :user_7
     assert_no_difference Asset, :count do
       post :destroy, :id=>@a.id
       assert assigns(:flash)[:notice] = 'Could not delete asset.'

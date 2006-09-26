@@ -20,7 +20,7 @@
     font-style         : normal;
     font-variant       : normal;
     font-weight        : normal;
-    font-size          : 1.9em;
+    font-size          : 1.0em;
     line-height        : normal;
     font-size-adjust   : none;
     font-stretch       : normal;
@@ -47,5 +47,17 @@
 	opacity            : 0.8;
 }
 .music_video_message{
-	
+	position           : absolute;
+	display            : block;
+	z-index            : 3;
+	top                : 0px;
+	left               : 90px;
+}
+.music_video_subject{
+	font-size          : 1.5em;
+	line-height        : 1.5em;
+}
+.music_video_body{
+	font-size          : 1.0em;
+	line-height        : 1.2em;
 }
