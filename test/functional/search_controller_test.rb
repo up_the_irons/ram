@@ -45,9 +45,11 @@ class SearchControllerTest < Test::Unit::TestCase
     assert_equal 1, a.size
 
     assert cats = assigns['cats']
-    assert_equal 1, cats.size
-
-    assert_equal 'Sega Genesis', cats[0].name
+    assert_equal 3, cats.size
+    res = cats.map { |o| o.name }
+    assert res.include?("Sega Genesis")
+    assert res.include?("Cheats")
+    assert res.include?("Games")
 
     assert groups = assigns['groups']
     assert_equal 0, groups.size

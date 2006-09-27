@@ -132,8 +132,8 @@ class User < ActiveRecord::Base
   # Returns categories this user belongs to, refined by 'query'
   def categories_search(query)
     Collection.find(:all, :select => 'DISTINCT collections.*', :joins => 'INNER JOIN linkings ON collections.id = linkings.category_id',
-                          :conditions => ["(linkings.group_id IN (#{groups.map { |o| o.id }.join(',')})) AND (( (collections.`type` = 'Category' ) ) AND ((collections.name like ?) OR \
-                                           (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = collections.id AND taggings.taggable_type = 'Category' AND tags.name LIKE ?) IS NOT NULL))", "%#{query}%", "%#{query}%"])
+                          :conditions => ["(linkings.group_id IN (#{groups.map { |o| o.id }.join(',')})) AND (( (collections.`type` = 'Category' ) ) AND ((collections.name like ?) OR (collections.description like ?) OR \
+                                           (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = collections.id AND taggings.taggable_type = 'Category' AND tags.name LIKE ?) IS NOT NULL))", "%#{query}%", "%#{query}%", "%#{query}%"])
   end
 
   def groups_search(query)

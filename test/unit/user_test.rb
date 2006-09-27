@@ -193,10 +193,12 @@ class UserTest < Test::Unit::TestCase
 
   def test_categories_search
     u = users(:quentin)
-    cats = u.categories_search('nintendo')
 
-    assert_equal 1, cats.size
-    assert_equal collections(:collection_10).name, cats[0].name
+    cats = u.categories_search('nintendo')
+    assert_equal 2, cats.size
+    res = cats.map { |o| o.name }
+    assert res.include?(collections(:collection_10).name)
+    assert res.include?(collections(:collection_30).name)
 
     cats = u.categories_search('purple')
     assert_equal 2, cats.size
@@ -204,13 +206,16 @@ class UserTest < Test::Unit::TestCase
     assert res.include?(collections(:collection_9).name)
     assert res.include?(collections(:collection_7).name)
 
-    u = users(:user_4)
-    cats = u.categories_search('')
+    cats = u.categories_search('quarter')
+    assert_equal 1, cats.size
+    assert_equal collections(:collection_8).name, cats[0].name
 
+    u = users(:user_4)
+
+    cats = u.categories_search('')
     assert_equal 3, cats.size
 
     cats = u.categories_search('game')
-
     assert_equal 2, cats.size
     res = cats.map { |o| o.name }
     assert res.include?('Video Game Database')
