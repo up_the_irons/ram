@@ -127,8 +127,8 @@ GrailSkin.prototype.show = function(subject,body){
 	if(!subject){subject = ""}
 	this.current_message.subject = subject
 	this.current_message.body = body
-	this.subject.innerHTML = subject
-	this.body.innerHTML    =  body
+	this.subject.innerHTML = unescape(subject)
+	this.body.innerHTML    = unescape(body)
 	this.index = 0;
 	this.onMotionFinished();
 }

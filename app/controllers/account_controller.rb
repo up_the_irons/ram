@@ -110,7 +110,7 @@ class AccountController < ProtectedController
   protected 
   def after_login
     current_user.last_login_at = Time.now
-    flash[:notice] = "Welcome #{current_user.login}!"
+    flash[:grail] = "Welcome #{current_user.login}!"
     current_user.save
     session[:folio] = []
     session[:view]={:expand_menu=>true}

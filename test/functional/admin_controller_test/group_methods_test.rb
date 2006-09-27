@@ -32,7 +32,7 @@ module IncludedTests::GroupMethodsTest
 
      # User.is_admin? changed from looking at "role" field to seeing if the user is in group named "Administrators", so 
      # if we change the name of this group, we get screwed; therefore, we filter out "Administrators" from this find()
-     g = users(:quentin).groups.find(:first, :conditions => "name != 'Administrators'")
+     g = users(:quentin).groups.find(:first, :conditions => "name != '#{ADMIN_GROUP}'")
      new_name = 'Atari Monkeys'
      new_tags = ["atari", "2600"]
      assert_not_nil g
@@ -73,7 +73,7 @@ module IncludedTests::GroupMethodsTest
     def test_disband_group
       login_as :quentin
       users(:quentin).groups.each do |g|
-        unless g.name == "Administrators"
+        unless g.name == ADMIN_GROUP
           post :disband_group, :id=>g.id 
           assert_redirect :groups
           assert_equal "You disbanded the group.", assigns(:flash)[:notice]

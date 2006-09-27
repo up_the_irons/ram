@@ -28,7 +28,7 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_cannot_destroy_a_permanent_group
-    g = Group.find_by_name('Administrators') #permanent group
+    g = Group.find_by_name(ADMIN_GROUP) #permanent group
     assert_no_difference Group, :count do
       assert_raise(RuntimeError) {g.destroy}
     end

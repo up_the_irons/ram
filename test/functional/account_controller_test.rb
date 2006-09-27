@@ -46,6 +46,7 @@ class AccountControllerTest < Test::Unit::TestCase
     end
   end
   
+  
   def test_should_save_last_login_time
     u  = User.find_by_login('quentin')
     ll = u.last_login_at

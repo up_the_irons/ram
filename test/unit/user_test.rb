@@ -66,7 +66,7 @@ class UserTest < Test::Unit::TestCase
   def test_adding_a_user_to_the_admin_group_makes_them_an_admin
     u = User.find(2)
     assert_equal false, u.is_admin?
-    u.groups << Group.find_by_name('Administrators')
+    u.groups << Group.find_by_name(ADMIN_GROUP)
     u.reload
     assert_equal true, u.is_admin?
   end
@@ -75,6 +75,22 @@ class UserTest < Test::Unit::TestCase
     assert_difference User, :count do
       assert create_user.valid?
     end
+  end
+  
+  def test_can_edit_method
+    admin = users(:quentin)
+    user  = users(:user_4) 
+    user.assets << an_asset({:user_id=>user.id})
+    #admins can edit anything
+    assert admin.can_edit?(user.assets[0])
+    assert admin.can_edit?(user.groups[0])
+    assert admin.can_edit?(user.categories[0])
+    
+    #users can edit only the items they create not the items they belong to.
+    assert_equal false, user.can_edit?(user.groups[0])
+    assert_equal false, user.can_edit?(user.categories[0])
+    assert_equal false, user.can_edit?(admin.assets[0])
+    assert user.can_edit?(user.assets[0])
   end
 
   def test_should_require_login
@@ -225,13 +241,13 @@ class UserTest < Test::Unit::TestCase
 
     u = users(:quentin)
     groups = u.groups_search('a')
-    p.call(['Atari', 'Administrators'], groups)
+    p.call(['Atari', ADMIN_GROUP], groups)
 
     groups = u.groups_search('secret')
-    p.call('Administrators', groups)
+    p.call(ADMIN_GROUP, groups)
 
     groups = u.groups_search('purple')
-    p.call(['Administrators', 'Atari'], groups)
+    p.call([ADMIN_GROUP, 'Atari'], groups)
   end
 
 end

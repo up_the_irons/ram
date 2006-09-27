@@ -56,7 +56,8 @@ class AssetController < ProtectedController
       #so we must convert the string into an array.
       @groups_from_params  = params[:user][:group_ids][0].split(',').map do |g| 
         group = @user.groups.find(g)
-        create_linkage_for(@asset, group) if group
+        #create_linkage_for(@asset, group) if group
+        @asset.groups << group
       end
     end
     render :text=>"\n", :layout=>false
@@ -132,7 +133,7 @@ class AssetController < ProtectedController
         
       wants.js do
         render :update do |page|
-          page.call "grail.notify",{:type=>"grail.skin",:subject=>'Congratulations',:body=>"#{@asset.filename} was deleted."}
+          page.call "grail.notify",{:type=>"music_video",:subject=>'Success',:body=>"#{@asset.filename} was deleted."}
           page.remove params[:update]
         end
       end

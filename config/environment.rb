@@ -45,7 +45,6 @@ Rails::Initializer.run do |config|
   # user_observer is throwing a test failure (I don't really know why the group
   # one can be loaded in the controller but the user one must be loaded here)
   config.active_record.observers = :user_observer
-
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
   
@@ -71,6 +70,7 @@ require 'RMagick'
 UPLOAD_SIZE_LIMIT = 50000*1024
 RAM_SALT = 'foodz'
 APP_NAME = 'RAM'
+ADMIN_GROUP = 'Administrators'
 #codename generated from the dictionary
 REVISION_NUMBER = YAML.load(`svn info`)['Revision'] 
 APP_CODENAME  = IO.readlines("/usr/share/dict/words")[REVISION_NUMBER]

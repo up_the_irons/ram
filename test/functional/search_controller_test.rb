@@ -57,7 +57,7 @@ class SearchControllerTest < Test::Unit::TestCase
     assert groups = assigns['groups']
     assert_equal 2, groups.size
     res = groups.map { |o| o.name }
-    assert res.include?("Administrators")
+    assert res.include?(ADMIN_GROUP)
     assert res.include?("Atari")
   end
   

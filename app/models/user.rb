@@ -178,7 +178,12 @@ class User < ActiveRecord::Base
   def is_admin?
     #todo as the application grows this should be broken out into its own model probably somehthing like a role model
     #role == 1
-    (self.groups.find_by_name('Administrators'))? true : false 
+    (self.groups.find_by_name(ADMIN_GROUP))? true : false 
+  end
+  #expects the obj to respond to user_id
+  def can_edit?(obj)
+    return true if obj.user_id == self.user_id || self.is_admin?
+    false
   end
 
   def after_create

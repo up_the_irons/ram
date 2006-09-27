@@ -12,6 +12,7 @@
 		<%= render :partial=>'shared/page/header'%>
 	</div>
 	<div>
+	  <%= grail_notify("System Message", flash[:grail])  if flash.keys.include?(:grail) %>
 	  <%= display_flash_message %>
 	</div>
   <div id="applicationHeader" style="height:40px;">

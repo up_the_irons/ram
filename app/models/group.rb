@@ -129,6 +129,14 @@ class Group < Collection
   def non_members(reload = false)
     User.find(:all) - users(reload)
   end
+  
+  def after_create
+    #FIXME this should go in an observer but I am having trouble getting it to work.
+    #breakpoint
+    @users = users
+    g = Group.find_by_name(ADMIN_GROUP).users.each{|m| @users << m}
+    #self.users(true)
+  end
 
   class <<self
     def find_by_id_or_name(id)
