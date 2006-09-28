@@ -53,7 +53,6 @@ body{
 #topNav{
 	display           : block;
 	width             : 100%;
-	padding-top       : 10px;
 	height            : 40px;
 	color             : #FFF;
 	margin            : auto;
@@ -61,6 +60,7 @@ body{
 	text-align        : right;
 	background-image  : url(/images/nav_background.jpg);
 	background-repeat : repeat-x;
+	margin-bottom     : 10px;
 }
 
 #topNav h1{
@@ -69,7 +69,6 @@ body{
 	display           : inline;
 	float             : left;
 	padding-left      : 10px;
-	font-family       : "Century Gothic",arial,sans-serif;
 	text-align        : left;
 	font-style        : normal;
 	font-variant      : normal;
@@ -81,22 +80,23 @@ body{
 
 #topNav ul{
 	display           : inline;
-	font-family       : Verdana, Arial, Helvetica, sans-serif;
 	height            : 2em;
 	position          : relative;
-	padding-right     : 10px;
-	top               : 5px;
+	top               : 10px;
 }
 	
 #topNav ul a:link, #topNav ul a:visited{
-	text-decoration   : underline;
-	color             : #FFFFFF;
+	color             : #efefef;
+	font-size         : 1.1em;
 }
 	
 #topNav li{
+	border-left       : 1px solid #333;
+	height            : 20px;
 	margin            : 0;
-	padding-left      : 5px;
-	padding-right     : 5px;
+	padding           : 0;
+	top               : 5px;
+	padding           : 10px;
 	display           : inline;
 }
 	
@@ -232,7 +232,6 @@ li.selected{
 	clear            : both;
 	padding          : 5px 20px 20px 10px;
 	background-color : #FFF;
-	font-family      : "Century Gothic",arial,sans-serif;
 	text-align       : left;
 	font-style       : normal;
 	font-variant     : normal;
@@ -242,7 +241,6 @@ li.selected{
 	font-stretch     : normal;
 }
 #pageContent h1{
-	font-family        : "Century Gothic",arial,sans-serif;
 	text-align         : left;
 	font-style         : normal;
 	font-variant       : normal;
@@ -281,6 +279,11 @@ li.selected{
 }
 .pageInstructions{
 	background-color  : #F0F0E5;
+}
+.extraInfo{
+	background-color  : #F0F0E5;
+	padding-left      : 20px ;
+	background        : url("/images/icons/star.png") no-repeat left top;
 }
 
 .pageViewOptions{

@@ -1,11 +1,14 @@
 img{ border:none;}
 body{ 
-	background-color  :#999999;
-	color             : #333; 
 	margin            : 0;
 	padding           : 0;
 	background-image  : url('/images/application_background.jpg');
 	background-repeat : repeat-x;
+	background-color  : #ffffff;
+	font-family       : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
+	font-size         : 12px;
+	line-height       : 19px;
+	color             : #000;
 }
 form, ul, li{
 	padding           : 0;
@@ -82,9 +85,15 @@ a:hover{
 	color            : #282E1A;
 }
 
-.web_form{
+.web_form, .web_form_stacked{
 	display          : inline;
 	list-style       : none;
+}
+.web_form_stacked{
+	display: block;
+	padding: 10px;
+	background-color : #efefef;
+	border:  1px solid #cfcfcf;
 }
 
 .web_form li{
@@ -100,13 +109,28 @@ a:hover{
 	float            : left;
 	font-size        : 110%;
 }
+.web_form_stacked label{
+	display          : block;
+	width            : 100%;
+	text-align       : left;
+	font-weight      : bold;
+	/*border-top       : 4px solid #aaa;*/
+	padding          : 2px;
+	margin-top       : 10px;
+}
 
-.web_form input, .web_form select, .web_form textarea {
+.web_form input, .web_form_stacked input,
+.web_form select,.web_form_stacked select,
+.web_form textarea, .web_form_stacked textarea{
 	border           : 1px solid #dcdcdc;
 	font-size        : 120%;
 	background-color : #efefee;
 }
-
+.web_form_stacked input,
+.web_form_stacked select,
+.web_form_stacked textarea{
+	background-color: #fff;
+}
 .web_form dt{
 	font-size       : 110%;
 	font-weight     : bolder;
@@ -126,12 +150,12 @@ a:hover{
 }
 
 .has_many_sort_helper{
-	border-top       : 1px solid #dfdfdf;
+
 }
 .has_many_sort_helper th{
 	margin-bottom    : 0.5em;
-	font-size        : 1.1em;
-	text-align       : center ;
+	font-size        : 1.0em;
+	font-weight      : normal;
 }
 .has_many_sort_helper input{
 	padding          : 1px 10px 1px 10px;

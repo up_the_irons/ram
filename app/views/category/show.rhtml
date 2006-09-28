@@ -42,9 +42,9 @@
 
 <%= render :partial=>'article/list' if params[:display] == 'articles' -%>
 <br class="clear_both"/>
-<%= render :partial=>'asset/list' if params[:display].nil? || params[:display] == 'assets' -%>
-
-<div id="new_asset_form"></div>
+<div id="new_asset_form">
+  <%= render :partial=>'asset/list' if params[:display].nil? || params[:display] == 'assets' -%>
+</div>
 
 <% content_for('page_meta') do -%>
 <dl>

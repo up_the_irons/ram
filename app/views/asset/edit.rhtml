@@ -10,14 +10,7 @@
 
 
 <%= error_messages_for 'asset' -%>
+<% @asset.category_id = params[:category_id] if @asset.new_record? && !params[:category_id].nil? %>
+<%= render :partial=>'asset/form' %>
 
-<%= start_form_tag :action=>'edit' , :id=>@asset %>
-<ul class="web_form">
-  <% @asset.category_id = params[:category_id] if @asset.new_record? && !params[:category_id].nil? %>
-  <%= render :partial=>'asset/form' %>
-  <li>
-    <label for="submit">Save Changes: </label>
-    <%= submit_tag "Submit" %>
-  </li>
-</ul>
-<%= end_form_tag %>
+

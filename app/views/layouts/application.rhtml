@@ -8,7 +8,7 @@
   <div id="throbber" style="width:100%;position:absolute;z-index:1;opacity:0.8;display:none;background-color:#fff;border:1px inset #000;color:#000;font-size:110%;">
     <p style="padding:10px;" id="message"><%= image_tag 'ajax-loader.gif' %>&nbsp;&nbsp;Loading...</p>
   </div>
-  <div id="topNav" style="margin-bottom:10px;">
+  <div id="topNav">
 		<%= render :partial=>'shared/page/header'%>
 	</div>
 	<div>
@@ -90,10 +90,5 @@
     <%= yield :page_meta %>
     <%= render :partial=>'shared/page/footer'%>
 	</div>    
-	
-		
-	
-	<% #used to display a spinner on ajax events. %>
-	<div id='spinner' style='display:none; padding: 5px; background-color: white; line-height: 200px; text-align:center; width: 100px; height: 100px'><%= image_tag 'ajax-loader.gif' %></div>
 </body>
 </html>
