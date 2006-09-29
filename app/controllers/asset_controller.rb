@@ -1,5 +1,5 @@
 class AssetController < ProtectedController
-
+  cache_sweeper :change_sweeper
   @@asset_404 = "The asset could not be found."    
   def show
     #TODO: scope this call

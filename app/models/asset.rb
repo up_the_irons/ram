@@ -1,4 +1,4 @@
-# Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
+# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
 #
 #  id                  :integer(11)   not null
 #  content_type        :string(100)   
@@ -43,6 +43,9 @@ class Asset < ActiveRecord::Base
     end
     
    end
+   
+   has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+         'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Asset" ORDER BY c.created_at' 	
    
    belongs_to :category
    belongs_to :user

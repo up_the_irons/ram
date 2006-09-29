@@ -1,3 +1,19 @@
+# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
+#
+#  id                  :integer(11)   not null
+#  login               :string(40)    
+#  email               :string(100)   
+#  crypted_password    :string(40)    
+#  salt                :string(40)    
+#  activation_code     :string(40)    
+#  activated_at        :datetime      
+#  state               :integer(11)   default(0)
+#  created_at          :datetime      
+#  updated_at          :datetime      
+#  role                :integer(11)   default(0)
+#  last_login_at       :datetime      
+#
+
 # Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
 #
 #  id                  :integer(11)   not null
@@ -39,8 +55,12 @@ class User < ActiveRecord::Base
     end
   end
   
-  @@current = 0
-  cattr_accessor :current
+  has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+        'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "User" ORDER BY c.created_at'
+  
+  
+  #@@current = 0
+  #cattr_accessor :current
   
   has_many :my_groups, :class_name => 'Collection', :foreign_key => 'user_id'
   STATUS = ['Pending','Suspended','Active'].freeze

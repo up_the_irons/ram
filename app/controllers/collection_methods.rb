@@ -12,6 +12,14 @@ module CollectionMethods
     yield and return if block_given?
   end
   
+  #TODO
+  def changes
+    table = controller_name.pluralize unless table
+    model= Object.const_get(table.classify)
+    instance_variable_set("@#{table.singularize}", send("find_in_users_#{table}", params[:id]))
+    render :partial=>'shared/changes',:locals=>{:model=>instance_variable_get("@#{table.singularize}")},:layout=>'application'
+  end
+  
   def destroy_collection(table=nil,opts={:on_success=>nil,:on_failure=>nil})
     table = controller_name.pluralize unless table
     model = Object.const_get(table.classify)

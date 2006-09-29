@@ -107,6 +107,19 @@ class Test::Unit::TestCase
     end
   end
   
+  def assert_changed(object, method = nil)
+    initial_value = object.send(method)
+    yield
+    assert initial_value != object.send(method), "#{object}##{method} should not be equal"
+  end
+
+  def assert_unchanged(object, method, &block)
+    initial_value = object.send(method)
+    yield
+    object.reload
+    assert_equal initial_value, object.send(method), "#{object}##{method} should be equal"
+  end
+  
   def uploaded_file(path, content_type="application/octet-stream", filename=nil)
     filename ||= File.basename(path)
     t = Tempfile.new(filename)

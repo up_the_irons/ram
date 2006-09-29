@@ -9,7 +9,7 @@ require 'admin_controller'
 class AdminController; def rescue_action(e) raise e end; end
 
 class AdminControllerTest < Test::Unit::TestCase
-  fixtures :collections, :attachments, :db_files, :users, :linkings, :memberships
+  fixtures :collections, :attachments, :db_files, :users, :linkings, :memberships,:changes
   include IncludedTests::UserMethodsTest
   include IncludedTests::GroupMethodsTest
   include IncludedTests::CategoryMethodsTest
@@ -33,6 +33,20 @@ class AdminControllerTest < Test::Unit::TestCase
   def test_shall_allow_admin_access
     get :index
     assert_redirected_to :action=>'dashboard'
+  end
+  
+  def test_track_model_changes
+    login_as :quentin
+    @group    = a_group
+    @category = a_category
+    @user     = create_user
+    @article  = an_article
+    @asset    = an_asset
+    [Group,Category,Asset,User,Article].each do |model|
+      obj = instance_variable_get("@#{model.to_s.downcase}")
+      assert_equal 1, obj.changes.size
+      assert_equal obj.changes[0].record_id.to_i, obj.id, "Expecting record for #{model}"
+    end    
   end
     
 end

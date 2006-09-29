@@ -1,4 +1,4 @@
-# Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
+# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
 #
 #  id                  :integer(11)   not null
 #  name                :string(255)   
@@ -25,6 +25,7 @@ class Collection < ActiveRecord::Base
   def dont_delete_permanent_collections
     raise "You cannot delete this." if self.permanent
   end
+  
 
   def state
     self.class.states[self.state_id]

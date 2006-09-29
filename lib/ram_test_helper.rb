@@ -17,6 +17,11 @@ module RamTestHelper
     Group.create(o)
   end
   
+  def a_category(opts={})
+    o ={:user_id=>User.find(:first).id,:name=>"Category #{Time.now.to_s}",:description=>"This category contains assets about #{Time.now.to_s}",:public=>true}.merge(opts)
+    Category.create(o)
+  end
+  
   def a_comment(opts={})
     o = {:user_id=>User.find(:first).id,:title=>"Game Time is #{Time.now.to_s}",:body=>"My favorite time to play game is #{Time.now.to_s}"}.merge(opts)
     Comment.create(o)

@@ -1,4 +1,6 @@
 class ArticleController < ProtectedController
+  cache_sweeper :change_sweeper
+    
   verify :method => :post, :only => [ :shred ],
           :redirect_to => { :action => :index }
 

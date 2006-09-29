@@ -30,6 +30,7 @@ module IncludedTests::CategoryMethodsTest
       assert assigns(:category).name = new_name
       assert (new_tags - assigns(:category).tags.map { |o| o.name }).empty?
     end
+    
   end
   
   def test_remove_group_from_category
@@ -88,12 +89,15 @@ module IncludedTests::CategoryMethodsTest
   def test_update_category
     new_name = 'Atari Promotions'
     new_tags = ["atari", "2600"]
+    cat = Category.find(@existing_category_id)
+    changes = cat.changes.size
     post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first), :tags => new_tags.join(', ')}
     assert_response :success
     category_after_update = Category.find(@existing_category_id)
     assert_equal new_name, category_after_update.name
     assert (new_tags - category_after_update.tags.map { |o| o.name }).empty?
 
+    assert  cat.changes.size+1, assigns(:category).changes.size
     # Now make sure the old tags get overwritten with new ones
     new_tags = ['beach', 'bird','dog']
     post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first), :tags => new_tags.join(', ')}
@@ -101,7 +105,10 @@ module IncludedTests::CategoryMethodsTest
     category_after_update = Category.find(@existing_category_id)
     assert_equal new_name, category_after_update.name
     assert (new_tags - category_after_update.tags.map { |o| o.name }).empty?, "New tags (#{new_tags.join(',')}) expected, but were: #{category_after_update.tags.join(',')}"
-
+    
+    #assert that the change_sweeper found these changes.
+    assert  cat.changes.size+2, assigns(:category).changes.size
+    assert  assigns(:category).changes[assigns(:category).changes.size-1].event = "update"
   end
   
   def test_prevent_bad_updates_to_categories

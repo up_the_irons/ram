@@ -1,22 +1,18 @@
 class AdminController < ProtectedController; end
 
 require_dependency 'collection_methods'
-require_dependency 'admin_controller/group_methods'
 require_dependency 'admin_controller/user_methods'
-require_dependency 'admin_controller/category_methods'
 
 class AdminController
-  include GroupMethods
   include UserMethods
-  include CategoryMethods
   include Sortable
   
   observer :group_observer
-
+  volatile = [:destroy_group, :create_group, :update_group, :destroy_category, :create_category, :update_category ]
+  cache_sweeper :change_sweeper
   before_filter :admin_access_required
   
-  verify :method => :post, :only => [ :destroy_group, :create_group, :update_group, :destroy_category, :create_category, :update_category ],
-         :redirect_to => { :action => :dashboard }
+  verify :method => :post, :only =>volatile, :redirect_to => { :action => :dashboard }
 
   sortable :dashboard
        

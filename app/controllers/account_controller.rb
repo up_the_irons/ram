@@ -1,5 +1,6 @@
 class AccountController < ProtectedController
   observer :user_observer
+  cache_sweeper :change_sweeper
   def index
     redirect_to :action=>'my_profile' if logged_in? and return
   end

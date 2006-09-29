@@ -1,4 +1,4 @@
-# Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
+# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
 #
 #  id                  :integer(11)   not null
 #  name                :string(255)   
@@ -24,6 +24,9 @@ class Category < Collection
 			@owner.children << category
 		end
 	end
+	has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+        'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Category" ORDER BY c.created_at'
+  
   has_many :memberships, :foreign_key=>:collection_id
   has_many :users, :through => :memberships, :conditions => "memberships.collection_type = 'Category'" do
 	  def <<(user)
@@ -38,10 +41,7 @@ class Category < Collection
   end
   
   has_many :linkings
-  #has_many :access_contexts  
-  #has_many :assets, :through => :access_contexts
   
-  #has_many :groups, :through => :access_contexts, :foreign_key=>:group_id do
   has_many :groups, :through =>:linkings, :select => "DISTINCT collections.*", :foreign_key=>:group_id do
   	def <<(group)
 		return if @owner.groups.include?group

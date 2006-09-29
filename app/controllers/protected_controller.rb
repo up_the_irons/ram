@@ -1,10 +1,10 @@
 class ProtectedController < ApplicationController
-  before_filter :set_current_user
+  #before_filter :set_current_user
   before_filter :login_required, :except => [ :login, :signup, :create_profile, :password_recovery, :login_as, :feed, :create_en_masse ]
   
-  def set_current_user
-    User.current = session[:user]
-  end
+  #def set_current_user
+  #  User.current = session[:user]
+  #end
   
   #helper methods for scope relative searches
   def find_in_users_groups(id)

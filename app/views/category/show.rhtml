@@ -15,8 +15,9 @@
     @article_count = "(#{@articles.size})" unless @articles.nil?
     @asset_count = "(#{@assets.size})"   unless @assets.nil?
     -%>
+    <li <%= "class='selected'" if params[:display] == 'changes' %> ><%= link_to "Change Log",{:action=>'changes',:id=>@category.id,:display=>'changes'} %></li>
     <li <%= "class='selected'" if params[:display] == 'articles' %> ><%= link_to "Articles #{@article_count}",{:action=>'show',:id=>@category.id,:display=>'articles'} %></li>
-    <li <%= "class='selected'" if params[:display] != 'articles'   %> ><%= link_to "Assets #{@asset_count}"  ,{:action=>'show',:id=>@category.id,:display=>'assets'}   %></li>
+    <li <%= "class='selected'" if params[:display] == 'assets'   %> ><%= link_to "Assets #{@asset_count}"  ,{:action=>'show',:id=>@category.id,:display=>'assets'}   %></li>
   </ul>
     
 <% end %>

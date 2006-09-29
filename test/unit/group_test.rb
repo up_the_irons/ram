@@ -19,6 +19,7 @@ class GroupTest < Test::Unit::TestCase
 		unit_create @model,@new_obj 
   end
   
+  
   def test_group_shall_accept_new_members
   	g= Group.find(:first)
 	  s = g.users.size
@@ -38,6 +39,15 @@ class GroupTest < Test::Unit::TestCase
     g.reload
     assert_difference Group, :count, -1 do
       g.destroy
+    end
+  end
+  
+  def test_cannot_rename_a_permanent_group
+    g = Group.find_by_name(ADMIN_GROUP) #permanent group
+    assert_unchanged g, :name do
+      g.update_attributes({:name=>"#{Time.now.to_s}"})
+      assert !g.valid?
+      assert g.errors.on("name"), "A perminant Group's name cannot be changed."
     end
   end
   

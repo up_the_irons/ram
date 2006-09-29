@@ -1,0 +1,50 @@
+<%
+# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
+#
+#  id                  :integer(11)   not null
+#  record_id           :integer(11)   
+#  record_type         :string(255)   
+#  event               :string(255)   
+#  user_id             :integer(11)   
+#  created_at          :datetime      
+#
+klass = model.class
+-%>
+<% content_for('application_header') do -%>
+  <% if klass = Category %>
+  <h1><%=h model.name %> 
+      <%= link_to image_tag('/images/icons/feed.png',{:title=>"Subscribe to #{model.name}'s feed."}),{:controller=>'category',:action=>'feed',:id=>model.id} %>
+  </h1>
+  <ul id="pageHeader" style="clear:both;">
+    <%
+    @article_count = "(#{@articles.size})" unless @articles.nil?
+    @asset_count = "(#{@assets.size})"   unless @assets.nil?
+    -%>
+    <li <%= "class='selected'" if params[:display] == 'changes' %> ><%= link_to "Change Log",{:action=>'changes',:id=>@category.id,:display=>'changes'} %></li>
+    <li <%= "class='selected'" if params[:display] == 'articles' %> ><%= link_to "Articles #{@article_count}",{:action=>'show',:id=>@category.id,:display=>'articles'} %></li>
+    <li <%= "class='selected'" if params[:display] == 'assets'   %> ><%= link_to "Assets #{@asset_count}"  ,{:action=>'show',:id=>@category.id,:display=>'assets'}   %></li>
+  </ul>    
+  <%end -%>
+<% end -%>
+
+<table  class="dataGrid">
+  <tr>
+    <th>Record</th>
+    <th>Type</th>
+    <th>Event</th>
+    <th>User</th>
+    <th>Date</th>
+<% model.changes.each do |c| -%>
+<%row_class =  cycle("even", "odd") %>
+  <tr class="<%= row_class %>">
+    <td><%= klass.find(c.record_id).name %></td>
+    <td><%= c.record_type %></td>
+    <td><%= c.event %></td>
+    <td><%= User.find(c.user_id).login %></td>
+    <td><%= c.created_at %></td>
+  </tr>
+<% end -%>
+<% if model.changes.empty? -%>
+  <tr><td colspan="5">This <%= klass.to_s %> has never changed.</td></tr>
+<% end -%>
+</table>

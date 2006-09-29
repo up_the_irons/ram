@@ -1,4 +1,5 @@
 class CategoryController < ProtectedController
+  cache_sweeper :change_sweeper
   layout "application", :except => [:feed]
 
   def index

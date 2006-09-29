@@ -1,4 +1,4 @@
-# Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
+# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
 #
 #  id                  :integer(11)   not null
 #  parent_id           :integer(11)   
@@ -38,6 +38,10 @@ class Article < ActiveRecord::Base
     end
     
   end
+  
+  has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+        'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Article" ORDER BY c.created_at'
+  
   #FIXME
   #attr_protected :user_id
   
@@ -51,6 +55,10 @@ class Article < ActiveRecord::Base
   
   def author
     user_id
+  end
+  
+  def name
+    title
   end
   
   def comment_count

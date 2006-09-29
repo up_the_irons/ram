@@ -1,6 +1,5 @@
 class GroupController < ProtectedController
-  observer :group_observer
-  
+  cache_sweeper :change_sweeper
   def index
     list
   end
