@@ -8,7 +8,7 @@
 
 <% content_for('application_header') do -%>
   <h1><%=h @category.name %> 
-      <%= link_to image_tag('/images/icons/feed.png',{:title=>"Subscribe to #{@category.name}'s feed."}),{:controller=>'category',:action=>'feed',:id=>@category.id} %>
+      <%= link_to image_tag('/images/icons/feed.png',{:title=>"Subscribe to #{@category.name}'s feed."}),{:controller=>'feed',:action=>'category',:id=>@category.id} %>
   </h1>
   <ul id="pageHeader" style="clear:both;">
     <%
@@ -54,4 +54,4 @@
 </dl>
 <% end -%>
 
-<%= auto_discovery_link_tag(:rss, {:controller => 'category', :action => 'feed',:id=>@category.id}) %>
+<%= auto_discovery_link_tag(:rss, {:controller => 'feed', :action => 'category',:id=>@category.id}) %>

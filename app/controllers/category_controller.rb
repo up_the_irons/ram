@@ -17,8 +17,4 @@ class CategoryController < ProtectedController
     end    
   end
   
-  def feed
-    category_contents(params)
-  end
-  
 end

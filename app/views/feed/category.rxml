@@ -1,5 +1,3 @@
-#@feed.build_xml("rss", 2.0, xml)
-
 xml.instruct! :xml, :version=>"1.0" 
 xml.rss(:version=>"2.0") do
   xml.channel do
@@ -13,8 +11,8 @@ xml.rss(:version=>"2.0") do
           xml.description(article.body)      
           xml.author(User.find(article.user_id).login) unless article.user_id.nil?               
           xml.pubDate(article.created_at.strftime("%a, %d %b %Y %H:%M:%S %z")) unless article.created_at.nil?
-          xml.link(url_for(:controller=>'article',:action=>'read',:id=>article.id))
-          xml.guid(url_for(:controller=>'article',:action=>'read',:id=>article.id))
+          xml.link("http://#{request.host_with_port}" << url_for(:controller=>'article',:action=>'read',:id=>article.id))
+          xml.guid("http://#{request.host_with_port}" << url_for(:controller=>'article',:action=>'read',:id=>article.id))
         end
       end
       
@@ -24,8 +22,8 @@ xml.rss(:version=>"2.0") do
           xml.description(asset.description)      
           xml.author(User.find(asset.user_id).login) unless asset.user_id.nil?               
           xml.pubDate(asset.created_on.strftime("%a, %d %b %Y %H:%M:%S %z")) unless asset.created_on.nil?
-          xml.link(url_for(:controller=>'asset',:action=>'show',:id=>asset.id))
-          xml.guid(url_for(:controller=>'asset',:action=>'show',:id=>asset.id))
+          xml.link("http://#{request.host_with_port}"<< url_for(:controller=>'asset',:action=>'show',:id=>asset.id))
+          xml.guid("http://#{request.host_with_port}"<< url_for(:controller=>'asset',:action=>'show',:id=>asset.id))
         end
       end
   end

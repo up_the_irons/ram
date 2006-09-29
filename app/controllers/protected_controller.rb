@@ -1,6 +1,6 @@
 class ProtectedController < ApplicationController
   #before_filter :set_current_user
-  before_filter :login_required, :except => [ :login, :signup, :create_profile, :password_recovery, :login_as, :feed, :create_en_masse ]
+  before_filter :login_required, :except => [ :category, :login, :signup, :create_profile, :password_recovery, :login_as, :feed, :create_en_masse ]
   
   #def set_current_user
   #  User.current = session[:user]
@@ -20,7 +20,7 @@ class ProtectedController < ApplicationController
   protected
   def category_contents(params)
     @category = find_in_users_categories(params[:id])
-    raise unless @category
+    raise ActiveRecord::RecordNotFound unless @category
     @groups   = @category.groups & current_user.groups
     
     @assets = accessible_items(@category, 'assets', @groups)
