@@ -26,7 +26,7 @@
 
 #class Asset < Attachment
 class Asset < ActiveRecord::Base  
-  acts_as_attachment :thumbnails => { :large=>'485>',:normal => '291>', :small => '95' }
+  acts_as_attachment :thumbnails => { :large=>'485>',:medium => '291>', :small => '95' }
   validates_as_attachment
   acts_as_taggable
   set_table_name "attachments"

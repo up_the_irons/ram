@@ -1,0 +1,6 @@
+<% for asset in @assets -%>
+<div style="float:left;border:1px solid #cfcfcf;padding:2px;margin:2px;">
+  <%= link_to(image_tag(url_for(:controller=>'asset',:action=>'show_inline',:id=>asset.thumbnail_size('small'))), :controller=>'asset',:action=>'show',:id=>asset.id ) %>
+  <p><%= link_to( truncate(asset.filename,12), :controller=>'asset',:action=>'show',:id=>asset.id) %></p>
+</div>
+<% end -%>

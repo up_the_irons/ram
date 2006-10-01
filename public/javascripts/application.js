@@ -21,7 +21,16 @@ Content ={
 	//TODO: This is where the toggling of display options should be implemented.
 	cache: [],
 	display_as: function(str){
-		alert('display content as: '+str);
+		switch(str){
+			case 'thumbnails' : 
+				$('details').hide();
+				$('thumbnails').show();
+			break;
+			case 'details' : 
+				$('details').show();
+				$('thumbnails').hide();
+			break;
+		}		
 	},
 	in_cache: function(element){
 		if(Content.cache.include(element)){

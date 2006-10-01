@@ -1,0 +1,56 @@
+
+<table class="dataGrid">
+	<tr>
+		<th>Name <span class="miceType">(click file to view)</span></th>
+		<th>Size</th>
+		<th>Type</th>
+		<th>Date Modified</th>
+		<th>Groups</th>
+		<th>Actions</th>
+	</tr>
+	
+<% for asset in @assets -%>
+  <%row_class =  cycle("even", "odd") %>
+	<tr id="<%="asset_#{asset.id}"%>" onmouseover="this.className='highlighted'" onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>">
+		<td><%= link_to asset.name, :controller=>'asset', :action=>'show', :id=>asset.id %></td>
+		<td><%= number_to_human_size asset.size %></td>
+		<td><%= asset.content_type %></td>
+		<td><%= asset.updated_on %></td>
+		<td><%= asset.groups.find(:all).map{|g| link_to(g.name, :action=>'show',:controller=>'group',:id=>g.id)}.join(', ') %></td>
+		
+		<% unless params[:controller] == 'folio' -%>
+		<td>
+		<%= link_to_remote(image_tag('/images/icons/pencil.png'),
+							   :url=>{
+									 	:controller=>'asset',
+									 	:action=>'edit',
+									    :id=>"#{asset.id}",
+									    :category_id=>asset.category.id,
+									    :item_row=>"asset_#{asset.id}",
+										:update=>"new_asset_form"
+									 }
+								) 
+		%>
+		<%= link_to_remote(image_tag('/images/icons/cross.png'),
+						   :url=>{
+								 	:controller=>'asset',
+								 	:action=>'destroy',
+								    :id=>asset.id,
+									:category_id=>asset.category.id,
+									:update=>"asset_#{asset.id}"
+								 },
+							:confirm=>"Are you sure you want to delete #{ h asset.name}?"
+							) 
+			%>
+			<%= link_to image_tag('/images/icons/basket_put.png',{:title=>'Add to Folio to Download'}), {:controller=>'folio', :action=>'add', :category_id=>asset.category.id,:asset_id=>asset.id},:post=>true %> 
+		</td>
+		<% else -%>
+		<td>
+			<%= link_to image_tag('/images/icons/bin.png'),
+		                  {:controller=>'folio', :action=>'remove', :id=>asset.id},
+		                  {:confirm=> "Are you sure you want to remove #{ h asset.name}?", :post=>true} %>
+		</td>
+		<% end -%>
+	</tr>
+<% end unless @assets.nil? %>
+</table>
