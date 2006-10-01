@@ -3,6 +3,6 @@ opts ||={}
 param ={:size=>"30"}.merge(opts)
 -%>
 <li>
-  <label><%= image_tag '/images/icons/tag_blue.png' %>Tags <span style="font-weight:normal">&mdash; enter one of more keywords, separated with a comma.</span></label>
+  <label>Tags</label>
   <%= text_field model, :tags, param %>
 </li>

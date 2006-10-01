@@ -1,15 +1,8 @@
-<li>
-  <div class="adminOptions">
-  <dl>
-    <dt>Admin Only Options</dt>
-    <% 
-    status_options = [] 
-    User::STATUS.map{|s|status_options << [s, User::STATUS.index(s)]}
-    -%>
-    <dd><label>Status: </label><%= select :user, :state,  status_options %></dd>
-    <dd><label>Group Members: </label>
-    <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@user,:selected=>@user.groups,:available=>current_user.groups - @user.groups}%>
-    </dd>
-  </dl>
-  </div>
-<li>
+  <% 
+  status_options = [] 
+  User::STATUS.map{|s|status_options << [s, User::STATUS.index(s)]}
+  -%>
+  <li><label>Status: </label><%= select :user, :state,  status_options %></li>
+  <li><label>Group Members: </label>
+  <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@user,:selected=>@user.groups,:available=>current_user.groups - @user.groups}%>
+  </li>

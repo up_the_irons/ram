@@ -12,7 +12,6 @@ module CollectionMethods
     yield and return if block_given?
   end
   
-  #TODO
   def changes
     table = controller_name.pluralize unless table
     model= Object.const_get(table.classify)

@@ -1,11 +1,8 @@
 <li><label for="group_name">Name</label>
-<%= text_field 'group', 'name'  %></li>
+<%= text_field 'group', 'name',{:class=>"big_input", :style=>"width:100%;"}%></li>
 
 <li><label for="group_description">Description</label>
-<%= text_area 'group', 'description'  %></li>
-
-<li><label for="group_public">Public</label>
-<select id="group_public" name="group[public]"><option value="false">False</option><option value="true">True</option></select></li>
+<%= text_area 'group', 'description', {:style=>"width:100%;"}  %></li>
 
 <li>
 <%= render :partial => 'shared/form_elements/tags', :locals => { :model => :group } %>

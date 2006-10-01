@@ -11,21 +11,6 @@
 #  counter_cache       :boolean(1)    default(true)
 #  permanent           :boolean(1)    
 #
-
-# Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
-#
-#  id                  :integer(11)   not null
-#  name                :string(255)   
-#  description         :text          
-#  public              :boolean(1)    default(true)
-#  user_id             :integer(11)   
-#  type                :string(255)   
-#  state_id            :integer(11)   
-#  parent_id           :integer(11)   
-#  counter_cache       :boolean(1)    default(true)
-#  permanent           :boolean(1)    
-#
-
 class Group < Collection
   acts_as_taggable
   include TagMethods

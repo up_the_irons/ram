@@ -29,16 +29,16 @@
   (<%= link_to 'View Article', :controller=>'article', :action=>'read', :id=>@article.id %>)</p>
 <% end -%>
 
-<%= start_form_tag :action=>'write' , :id=>@article %>
-<ul class="web_form">
+<%= start_form_tag :action=>'write', :id=>@article %>
+<ul class="web_form_stacked">
   <% @article.category_id = params[:category_id] if @article.new_record? && !params[:category_id].nil? %>
   <%= render :partial=>'article/form' %>
   <%= render :partial=>'article/admin_options' %>
   <li>
-    <label for="submit">Save Changes: </label>
-    <%= submit_tag "Save As Draft"  unless @article.published?  %>
-    <%= submit_tag "Save And Publish" unless @article.published? %>
-    <%= submit_tag "Submit" if @article.published? %>
+    <label for="submit">Save Changes</label>
+    <%= submit_tag "Save As Draft",{:style=>'padding:5px;'}  unless @article.published?  %>
+    <%= submit_tag "Save And Publish",{:style=>'padding:5px;'} unless @article.published? %>
+    <%= submit_tag "Submit",{:style=>'padding:5px;'} if @article.published? %>
   </li>
 </ul>
 <%= end_form_tag %>

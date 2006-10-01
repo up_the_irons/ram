@@ -1,20 +1,29 @@
 <% content_for('application_header') do -%>
 <h1>
-<% if @category.new_record? -%>
-  Create A New Category
-<% else -%>
-  Edit <%= @category.name %>
-<% end -%>
+  <% if @category.new_record? -%>
+    Create A New Category
+  <% else -%>
+    Edit <%= @category.name %>
+  <% end -%>
 </h1>
 <% end -%>
+
+<% admin_only_content do -%>
+<dl class="adminOptions">
+  <dt>Admin Only Options<dt>
+    <dd><%= link_to "#{image_tag('/images/icons/cross.png')} Delete Category", {:controller=>'admin', :action=>'destroy_category',:id=>@category},{:confirm=>"Are you sure you want to remove #{@category.name} and all its assets?",:post=>true} %></dd>
+</dl>
+<% end -%>
+
+
 <%= error_messages_for 'category' -%>
 <%= start_form_tag :action=>'edit_category' , :id=>@category %>
-<ul class="web_form">
+<ul class="web_form_stacked">
   <%= render :partial=>'category/form' %>
   <%= render :partial=>'category/admin_options' %>
   <li>
     <label for="submit">Save Changes: </label>
-    <%= submit_tag "submit" %>
+    <%= submit_tag "submit",{:style=>'padding:5px;'} %>
   </li>
 
 </ul>

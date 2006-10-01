@@ -1,21 +1,31 @@
 <% content_for('application_header') do -%>
 <h1>
-<% if @group.new_record? -%>
-  Create A New Group
-<% else -%>
-  Edit <%= @group.name %>
-<% end -%>
-<% end -%>
+  <% if @group.new_record? -%>
+    Create A New Group
+  <% else -%>
+    Edit <%= @group.name %>
+  <% end -%>
 </h1>
+<% end -%>
+
+
+<% admin_only_content do -%>
+<dl class="adminOptions">
+  <dt>Admin Only Options<dt>
+    <dd><%= link_to("#{image_tag('/images/icons/cross.png')} Disband Group", {:controller=>'admin', :action=>'disband_group',:id=>@group},{:confirm=>"Are you sure you want to disband all members from #{@group.name}?",:post=>true}) unless @group.permanent? %></dd>
+</dl>
+<% end -%>
+
+
 <%= error_messages_for 'group' %>
 <%= start_form_tag :controller=>'admin',:action=>'edit_group',:id=>@group.id %>
-<ul class="web_form">
+<ul class="web_form_stacked">
 <%= render :partial=>'group/form' %>
 
 <%= render :partial=>'group/admin_options'%>
 <li>
   <label for="submit">Save Changes: </label>
-  <%= submit_tag "submit" %>
+  <%= submit_tag "submit",{:style=>'padding:5px;'} %>
 </li>
 </ul>
 </form>

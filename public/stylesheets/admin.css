@@ -108,7 +108,7 @@ a.editOptions
 	display           : block;
 	border            : 1px solid #D5D6B2;
 	padding           : 5px;
-	margin            : 5px;
+	margin-bottom     : 5px;
 	background-color  : #F7F8D8;	
 }
 .adminOptions dt{

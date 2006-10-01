@@ -1,12 +1,10 @@
-<div class="adminOptions">
-  <p>Admin Only Options</p>
-  <dl>
-    <dt>Group Members</dt>
-    <dd>
-    <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@group,:selected=>@group.members,:available=>@group.non_members,:name_alias=>:login} %>
-    </dd>
-    <dt>Categories</dt>
-    <dd>*list of categories*</dd>
-  </dl>
-</div>
+<li>
+  <label>Group Members</label>
+  <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@group,:selected=>@group.members,:available=>@group.non_members,:name_alias=>:login} %>
+</li>
+<li>
+  <label>Categories</label>
+  *list of categories*
+</li>
+
 

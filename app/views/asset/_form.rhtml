@@ -5,22 +5,22 @@ form_tag({:controller=>'asset', :action =>'edit', :id=>@asset.id}, {:multipart =
 <ul class="web_form_stacked">
   <% unless @category.nil? -%>
 	<li>
-	  <label>Category <span style="font-weight:normal"> &mdash;  where your asset will appear</span></label>
+	  <label>Category</label>
 	  <%= link_to @category.name, :controller=>'category',:action=>'show',:id=>@category.id %>
 	  <%= hidden_field :asset, :category_id, {:value=>@category.id} %>
 	</li>
 	<% end -%>
 	<li id="image_field">
-	  <label>File <span style="font-weight:normal"> &mdash; browse your computer</span></label>
+	  <label>File</label>
     <%= (@asset.new_record?)? file_field(:asset, :uploaded_data) : display_as(@asset) -%>
 	</li>
 	<li>
-	  <label>Groups <span style="font-weight:normal">  &mdash;  who can see your asset</span></label>
+	  <label>Groups</label>
 	  <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@asset,:selected=>@asset.groups,:available=>@current_user.groups - @asset.groups} unless @asset.new_record?%>
 	  <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@asset,:selected=>@current_user.groups,:available=>[]} if @asset.new_record?%>
   </li>
   <li>
-    <label>Description <span style="font-weight:normal">  &mdash; extra info to help it appear in web searches</span></label>
+    <label>Description</label>
     <%= text_area :asset, :description,{:style=>"width:100%;height:50px"} %>
   </li>
   <li>
@@ -28,7 +28,7 @@ form_tag({:controller=>'asset', :action =>'edit', :id=>@asset.id}, {:multipart =
   </li>
 	<li>
 	  <label>Start the Upload</label>
-	  <%= submit_tag "Submit" %>
+	  <%= submit_tag "Submit", {:style=>'padding:5px;'}%>
 	</li>
 </ul>
 <%= end_form_tag %>

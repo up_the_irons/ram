@@ -24,11 +24,11 @@
 
 
 <% admin_only_content do -%>
-<div class="adminOptions">
-  <dl>Admin Only Options<dl>
+<dl class="adminOptions">
+  <dt>Admin Only Options<dt>
     <dd><%= link_to "#{image_tag('/images/icons/pencil.png')} Edit Category", :controller=>'admin', :action=>'edit_category',:id=>@category %></dd>
     <dd><%= link_to "#{image_tag('/images/icons/cross.png')} Delete Category", {:controller=>'admin', :action=>'destroy_category',:id=>@category},{:confirm=>"Are you sure you want to remove #{@category.name} and all its assets?",:post=>true} %></dd>
-</div>
+</dl>
 <% end -%>
 
 

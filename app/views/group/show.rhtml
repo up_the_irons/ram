@@ -1,9 +1,9 @@
 <% admin_only_content do -%>
-<div class="adminOptions">
-  <dl>Admin Only Options<dl>
+<dl class="adminOptions">
+  <dt>Admin Only Options<dt>
     <dd><%= link_to "#{image_tag('/images/icons/pencil.png')} Edit Group", :controller=>'admin', :action=>'edit_group',:id=>@group %></dd>
     <dd><%= link_to("#{image_tag('/images/icons/cross.png')} Disband Group", {:controller=>'admin', :action=>'disband_group',:id=>@group},{:confirm=>"Are you sure you want to disband all members from #{@group.name}?",:post=>true}) unless @group.permanent? %></dd>
-</div>
+</dl>
 <% end -%>
 
 <% content_for('application_header') do -%>
@@ -31,8 +31,3 @@
   	    -%>
   	    <% end unless @group.categories.nil?%>
   </dl>
-  <% unless @group.public? -%>
-    <p class="pageInstructions">
-      This group is <em>private</em>, which means only administrators can see this group and not even the group members.
-    </p>
-  <% end -%>
