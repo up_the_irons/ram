@@ -16,6 +16,7 @@ class AttachmentTest < Test::Unit::TestCase
       #assert_equal 1784, attachment.size
       assert_equal 50,   attachment.width
       assert_equal 64,   attachment.height
+      assert_equal '50x64', attachment.image_size
     end
   end
 
@@ -413,13 +414,32 @@ class AttachmentTest < Test::Unit::TestCase
   def test_should_use_thumbnail_subclass(klass = ImageWithThumbsClassFileAttachment)
     assert_difference ImageThumbnail, :count do
       attachment = upload_file :class => klass, :filename => '/files/rails.png'
-      assert_kind_of ImageThumbnail, attachment.thumbnails.first
-      assert_equal attachment.id,    attachment.thumbnails.first.parent.id
-      assert_kind_of FileAttachment, attachment.thumbnails.first.parent
+      assert_kind_of ImageThumbnail,  attachment.thumbnails.first
+      assert_equal attachment.id,     attachment.thumbnails.first.parent.id
+      assert_kind_of FileAttachment,  attachment.thumbnails.first.parent
       assert_equal 'rails_thumb.png', attachment.thumbnails.first.filename
+      assert_equal attachment.thumbnails.first.full_filename, attachment.full_filename(attachment.thumbnails.first.thumbnail),
+        "#full_filename does not use thumbnail class' path."
     end
   end
-  
+
+  def test_should_verify_image_content_types
+    ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png'].each do |content_type|
+      assert Attachment.image?(content_type)
+    end
+    ['text/plain', 'application/x-xls', 'application/xml'].each do |content_type|
+      assert !Attachment.image?(content_type)
+    end
+  end
+
+  def test_should_call_after_attachment_saved(klass = Attachment)
+    klass.saves = 0
+    assert_created klass do
+      upload_file :class => klass, :filename => '/files/rails.png'
+    end
+    assert_equal 1, klass.saves
+  end
+
   # test that simple subclasses still work
   {
     :test_should_resize_image                             => ImageAttachment,
@@ -433,7 +453,8 @@ class AttachmentTest < Test::Unit::TestCase
     :test_should_resize_image                             => ImageFileAttachment,
     :test_reassign_attribute_data                         => FileAttachment,
     :test_no_reassign_attribute_data_on_nil               => FileAttachment,
-    :test_should_use_thumbnail_subclass                   => ImageWithThumbsClassFileAttachment
+    :test_should_use_thumbnail_subclass                   => ImageWithThumbsClassFileAttachment,
+    :test_should_call_after_attachment_saved              => Attachment
  }.each do |test_method, klass|
     define_method("#{test_method}_on_subclass") { send test_method, Class.new(klass) }
   end

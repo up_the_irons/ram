@@ -60,9 +60,10 @@ class AssetControllerTest < Test::Unit::TestCase
   def test_create
     file = "#{RAILS_ROOT}/test/fixtures/images/rails.png"
     temp_file = uploaded_jpeg(file)
-    assert_difference Asset, :count do
+    assert_difference Asset, :count, 4 do # there is 1 new asset and 3 new thumbnails
       post :edit, :asset=>{:description=>"I made this asset on #{Time.now.to_s}", :category_id=>@user.categories[0], :user_id=>@user.id, :uploaded_data=>temp_file}
       assert assigns(:asset)
+      assert_equal 3, assigns(:asset).thumbnails.size
     end
     assert_redirected_to :action=>'edit',:id=>assigns(:asset).id
   end

@@ -1,8 +1,8 @@
 <%= error_messages_for 'user' %>
-<p class="important_page_message">Already A Member? <%= link_to('Click Here to Login', :action=>'login') %></p>
 <% form_for :user, @user do |user| -%>
-<ul class="web_form">
+<ul class="login_form">
+  <li><p class="important_page_message">Already A Member? <%= link_to('Login Here', :action=>'login') %></p></li>
 <%= render :partial=>'user_data_form',:locals=>{:user=>user}%>
-<li><label for="submit_button">&nbsp;</label><%= submit_tag 'Register' %></li>
+<li><label for="submit_button">&nbsp;</label><%= submit_tag 'Register' ,{:style=>"width:6em;height:2.0em"}%></li>
 </ul>
 <% end -%>

@@ -26,9 +26,11 @@
 
 #class Asset < Attachment
 class Asset < ActiveRecord::Base  
-  acts_as_attachment
+  acts_as_attachment :thumbnails => { :large=>'485>',:normal => '291>', :small => '95' }
+  validates_as_attachment
   acts_as_taggable
   set_table_name "attachments"
+  
   
   has_many :linkings, :as =>:linkable,:dependent => :destroy
   has_many :groups, :through=> :linkings do
@@ -41,76 +43,93 @@ class Asset < ActiveRecord::Base
   	    )
   	  l.errors.each_full { |msg| puts msg } unless l.save 
     end
-    
    end
+   
    
    has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
          'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Asset" ORDER BY c.created_at' 	
-   
    belongs_to :category
    belongs_to :user
 
    #FIXME
    #attr_protected :user_id
-   
    #TODO Add support for acts_as_versioned.
    
-   def name
+   
+  def name
      filename
   end
+  
+  
+  def thumbnail_size(size)
+    return false unless image?
+    file = filename.split(/\..*$/) << "_#{size}"
+    thumb = thumbnails.find(:first, :conditions => ["filename LIKE ?", "%#{file}%"])
+    #todo create this thumbnail if it is missing
+    thumb
+  end
+  
 
-   def tags= (str)
+  def tags= (str)
      arr = str.split(",").uniq
      self.tag_with arr.map{|a| a}.join(",") unless arr.empty?
-   end
+  end
 
-    # Read from the model's attributes if it's available.
-    def data
-      read_attribute(:data) || write_attribute(:data, (db_file_id ? db_file.data : nil))
+
+  # Read from the model's attributes if it's available.
+  def data
+    read_attribute(:data) || write_attribute(:data, (db_file_id ? db_file.data : nil))
+  end
+
+
+  # set the model's data attribute and attachment_data
+  def data=(value)
+    self.attachment_data = write_attribute(:data, value)
+  end
+
+  def full_path
+    (path && filename) ? File.join(path, filename) : (filename || path)
+  end
+    
+  
+  #TODO refactor this so that the classes which are linked though groups can share the same module instead of duplicating code.
+  def remove_all_groups
+    self.groups.each do| m | 
+      remove_group(m)
+    end
+  end
+
+  
+  def remove_group(group)
+    linking =Linking.find_by_linkable_id_and_linkable_type_and_group_id(self.id,'Asset', group.id)
+    linking.destroy if linking.valid?
+  end
+    
+  
+  class << self
+    def search(query, groups)
+      groups = [groups].flatten
+      find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = attachments.id AND taggings.taggable_type = 'Asset' AND tags.name LIKE ?) IS NOT NULL)", "%#{query}%", "%#{query}%", "%#{query}%"], :group => "attachments.id")
     end
 
-    # set the model's data attribute and attachment_data
-    def data=(value)
-      self.attachment_data = write_attribute(:data, value)
+    
+    def find_with_data(quantity, options = {})
+      find quantity, options.merge(:select => 'attachments.*, db_files.data', :joins => 'LEFT OUTER JOIN db_files ON attachments.db_file_id = db_files.id')
     end
 
-    def full_path
-      (path && filename) ? File.join(path, filename) : (filename || path)
+
+    def find_by_full_path(full_path)
+      pieces   = full_path.split '/'
+      filename = pieces.pop
+      path     = pieces.join '/'
+      find_with_data :first, :conditions => ['path = ? and filename = ?', path, filename]
     end
     
-    #TODO refactor this so that the classes which are linked though groups can share the same module instead of duplicating code.
-    def remove_all_groups
-      self.groups.each do| m | 
-        remove_group(m)
-      end
-    end
-
-    def remove_group(group)
-      linking =Linking.find_by_linkable_id_and_linkable_type_and_group_id(self.id,'Asset', group.id)
-      linking.destroy if linking.valid?
-    end
     
-   class << self    
-     def search(query, groups)
-       groups = [groups].flatten
-
-       find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = attachments.id AND taggings.taggable_type = 'Asset' AND tags.name LIKE ?) IS NOT NULL)", "%#{query}%", "%#{query}%", "%#{query}%"], :group => "attachments.id")
-     end
-
-     def find_with_data(quantity, options = {})
-       find quantity, options.merge(:select => 'attachments.*, db_files.data', :joins => 'LEFT OUTER JOIN db_files ON attachments.db_file_id = db_files.id')
-     end
-
-     def find_by_full_path(full_path)
-       pieces   = full_path.split '/'
-       filename = pieces.pop
-       path     = pieces.join '/'
-       find_with_data :first, :conditions => ['path = ? and filename = ?', path, filename]
-     end
-      def mime_type (ext)
-    		re = /(\.)/
-    		md = re.match(ext)
-    		type = case md.post_match.downcase
+    def mime_type (ext)
+      re = /(\.)/
+    	md = re.match(ext)
+    	type = case md.post_match.downcase
     				when "hqx"  : "application/mac-binhex40"
     				when "doc"  : "application/msword"
     				when "exe"  : "application/octet-stream"
@@ -165,18 +184,19 @@ class Asset < ActiveRecord::Base
     				when "qt"   : "video/quicktime"
     				when "avi"  : "video/x-msvideo"
     				else "application/octet-stream"
-    			end
-    	end
+    		end
+    end
     	
-    	#Adobe Flash 8 uses a nonstandard syntax for their multipart form posts
-    	#Acts_as_attachment expects the standard format, which this method simulates through an open struct
-    	def translate_flash_post(filedata)
-    	  translated = Struct.new(:content_type,:original_filename,:read)
-        t = translated.new( "#{Asset.mime_type(filedata.original_filename)}",
+    	
+    #Adobe Flash 8 uses a nonstandard syntax for their multipart form posts
+    #Acts_as_attachment expects the standard format, which this method simulates through an open struct
+    def translate_flash_post(filedata)
+    	translated = Struct.new(:content_type,:original_filename,:read)
+      t = translated.new( "#{Asset.mime_type(filedata.original_filename)}",
                             "#{filedata.original_filename.gsub(/[^a-zA-Z0-9.]/, '_')}",
                             filedata.read
                           )
-      end
-   end
+    end
+  end
 end
 

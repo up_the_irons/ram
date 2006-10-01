@@ -45,7 +45,6 @@ a:hover{
 }
 .page_message, .important_page_message, #page_flash{
 	font-weight       : bolder;
-	width             : 100%;
 	text-align        : center;
 	display           : block;
 	clear             : both;
@@ -53,6 +52,13 @@ a:hover{
 
 .important_page_message, #page_flash{
 	font-size         : 120%;
+}
+
+#page_flash{
+	display          : block;
+	margin           : 0 50px 0 50px;
+	/*background-color : #FFFF99;*/
+	/*color            : #282E1A;*/
 }
 
 .flash_notice, .flash_warning, .flash_error{
@@ -65,7 +71,7 @@ a:hover{
 	clear            : both;
 	font-size        : 120%;
 	padding          : 10px;
-	text-align       :center;
+	text-align       : center;
 }
 
 .flash_notice a,.flash_notice a:link, .flash_notice a:visited,.flash_notice a:hover,.flash_notice a:active{
@@ -74,15 +80,9 @@ a:hover{
 }
 
 .flash_error{
-	background-color:#cc0000;
 	border           : 2px solid #aa0000;
-	color           :#fff;
-}
-
-#page_flash{
-	display          : block;
-	background-color : #FFFF99;
-	color            : #282E1A;
+	color            : #ffffff;
+	background-color : #cc0000;
 }
 
 .web_form, .web_form_stacked{
@@ -139,6 +139,32 @@ a:hover{
 
 .web_form dd{
 	padding          : 2px 0 2px 0
+}
+.login_form{
+	margin: auto;
+	display: block;
+	background-color : #efefef;
+	border:  1px solid #cfcfcf;
+	padding          : 10px;
+	font-size        : 1.1em;
+	width            : 320px;
+}
+.login_form input{
+	font-size        : 1.1em;
+	background-color : #ffffff;
+	padding          : 0 5px 0 5px;
+	width            : 90%;
+	border           : 1px solid #cfcfcf;
+	height           : 1.5em;
+	margin           : 0.1em;
+}
+.login_form label{
+	display          : block;
+	width            : 100%;
+	text-align       : left;
+	font-weight      : bold;
+	padding          : 2px;
+	margin-top       : 10px;
 }
 
 .label{

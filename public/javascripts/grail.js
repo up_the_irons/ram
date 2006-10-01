@@ -145,7 +145,7 @@ GrailSkin.prototype.music_video = function(){
 	var skin = {
 		style:{
 			height          : height,
-			width           : BrowserMetrics.windowDimensions()[0]-20,
+			width           : BrowserMetrics.windowDimensions()[0]-30,
 			top             : BrowserMetrics.windowDimensions()[1]
 			},
 		transitions : [

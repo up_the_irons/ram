@@ -5,16 +5,15 @@
   <%= render :partial=>'layouts/global_includes' %>
 </head>
 <body>
-  <div id="throbber" style="width:100%;position:absolute;z-index:1;opacity:0.8;display:none;background-color:#fff;border:1px inset #000;color:#000;font-size:110%;">
-    <p style="padding:10px;" id="message"><%= image_tag 'ajax-loader.gif' %>&nbsp;&nbsp;Loading...</p>
+  <div id="throbber" style="display:none">
+  <div id="skrim" style="width:100%;height:100%;position:absolute;z-index:2;opacity:0.7;background-color:#fff;border:1px inset #000;color:#000;font-size:110%;">
+  </div>
+   <div id="message" class="throbber_message"><%= image_tag 'ajax-loader.gif' %>&nbsp;&nbsp;Loading...</div>
   </div>
   <div id="topNav">
 		<%= render :partial=>'shared/page/header'%>
 	</div>
-	<div>
-	  <%= grail_notify("System Message", flash[:grail])  if flash.keys.include?(:grail) %>
 	  <%= display_flash_message %>
-	</div>
   <div id="applicationHeader" style="height:40px;">
     <% if current_user %>
     <div id="search_form" style="position:absolute;right:10px;">
@@ -91,5 +90,6 @@
     <%= yield :page_meta %>
     <%= render :partial=>'shared/page/footer'%>
 	</div>    
+	<%= grail_notify("System Message", flash[:grail])  if flash.keys.include?(:grail) %>
 </body>
 </html>

@@ -271,13 +271,27 @@ li.selected{
 	margin-bottom     : 5px;
 	margin-top        : 20px;
 }
-.pageActionOptions, .pageInstructions{
+.pageActionOptions, .pageInstructions, .throbber_message{
 	clear             : both;
 	display           : block;
 	border            : 1px solid #D5D6B2;
 	padding           : 5px;
 	margin-bottom     : 5px;
 	background-color  : #F7F8D8;
+}
+.throbber_message{
+	background-color: #fff;
+	border:1px solid #efefef;
+	border-right:2px solid #cfcfcf;
+	border-bottom:2px solid #cfcfcf;
+	margin: auto;
+	width: 500px;
+	position:fixed;
+	left:30%;
+	top:30%;
+	padding:10px;
+	z-index:3;
+	font-size:2.0em;
 }
 .pageInstructions{
 	background-color  : #F0F0E5;

@@ -8,7 +8,9 @@ class CategoryController < ProtectedController
   
   def show
     #nest this in a boolean because show_collecction will return false if a resuce occurred
-    category_contents(params) if show_collection('categories')
+    if show_collection('categories')
+      category_contents(params)
+    end
   end
   
   def list

@@ -1,9 +1,8 @@
-<p class="important_page_message">Not Yet A Member <%= link_to('Sign Up Here', :action=>'signup') %></p>
 <%= error_messages_for 'user' %>
 
 <%= start_form_tag %>
-<ul class="web_form">
-
+<ul class="login_form">
+<li><p class="important_page_message">Not Yet A Member <%= link_to('Sign Up Here', :action=>'signup') %></p></li>
 <li><label for="login">Login</label>
 <%= text_field_tag 'login' %></li>
 
@@ -11,14 +10,15 @@
 <%= password_field_tag 'password' %></li>
 
 <li><label for="submit">&nbsp;</label>
-<%= submit_tag 'Log in' %></li>
+<%= submit_tag 'Log in' ,{:style=>"width:6em;height:2.0em"}%></li>
 </ul>
 <%= end_form_tag %>
 
 <%=
 #added for testing before launch (obviously)
 %>
-<ul class="web_form">
+<ul class="login_form">
+  <li>Or for testing purposes log in as a pre-existing user</li>
 	<li><label for="login_as">login as:</label>
 		<select id='login_as' onchange='new Ajax.Request("/account/login_as?user_id="+$(this).value);' >	
 		<option>Select A User Account</option>

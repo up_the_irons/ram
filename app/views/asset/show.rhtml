@@ -10,7 +10,8 @@
 		<h1><%= h @asset.name %>
 		<% if @asset.name != @asset.content_type -%> <span class="miceType">(<%=h @asset.content_type%> )</span> <% end -%>
 		</h1>
-		<img class="show_asset" src="<%= url_for(:action => "show_inline", :id=> @asset) %>" />
+		<p><%= link_to("View Larger Size", :action => "show_inline", :id=>@asset.id)%></p>
+		<img class="show_asset" src="<%= url_for(:action => "show_inline", :id=>@asset.thumbnail_size("large")) %>" />
 		<p>
 		<%= @asset.description %></p>
 		<ul class="tags">

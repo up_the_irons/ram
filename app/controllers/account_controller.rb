@@ -4,11 +4,13 @@ class AccountController < ProtectedController
   def index
     redirect_to :action=>'my_profile' if logged_in? and return
   end
+
   
   def directory
     #TODO scope this directory to the group list
 		 @user_pages, @users = paginate :users, :per_page => 10
 	end
+
 
   def login
     redirect_to :controller=>'inbox' and return if current_user
@@ -29,6 +31,7 @@ class AccountController < ProtectedController
     end
   end
 
+
   def signup
     @user = User.new(params[:user])
     return unless request.post?
@@ -37,6 +40,7 @@ class AccountController < ProtectedController
       flash[:notice] = "Thanks for signing up!"
     end
   end
+  
   
   def profile
     #TODO scope this request so that people don't see profiles that they should not.
@@ -50,12 +54,14 @@ class AccountController < ProtectedController
     	:layout=>'application' unless @user.nil?
   end
   
+  
   def my_profile
     @user = User.find(current_user.id)
     render :partial=>'account/profile',
   	  :locals=>{:user=> @user},
   		:layout=>'application' unless @user.nil?
   end
+  
   
   def edit
     @user    = current_user
@@ -75,12 +81,14 @@ class AccountController < ProtectedController
     end
   end
   
+  
   def logout
     self.current_user = nil
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(:controller => '/account', :action => 'login')
     session[:nil]
   end
+  
   
   def login_as
     self.current_user = User.find(params[:user_id])
@@ -93,7 +101,7 @@ class AccountController < ProtectedController
     else
       render :update do |page|
         page.call "grail.notify",{:type=>"music_video",:subject=>'Could not log you in',:body=>"#{current_user.account_status}."}
-        #page.replace_html 'page_flash', current_user.account_status
+        page.replace_html 'page_flash', current_user.account_status
       end
     self.current_user = nil
     end
