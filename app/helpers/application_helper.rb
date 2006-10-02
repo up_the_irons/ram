@@ -17,14 +17,18 @@ module ApplicationHelper
     out << "</script>"
   end
   
-  def display_as asset
+  def display_as(asset, opts={:size=>"medium"})
     case asset.content_type
       when 'image/jpeg','image/jpg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png'
-        return "#{image_tag (url_for :controller=>'asset', :action=>'show_inline', :id=>@asset.thumbnail_size('medium')) }"
+        unless asset.thumbnail_size(opts[:size]).nil?
+          return "#{image_tag(url_for(:controller=>'asset', :action=>'show_inline', :id=>asset.thumbnail_size(opts[:size]))) }"
+        else
+          return "#{image_tag(url_for(:controller=>'asset', :action=>'show_inline', :id=>asset.id)) }"
+        end
       when 'application/pdf'
-        return "#{image_tag('/images/icons/page_white_acrobat.png')} #{link_to( asset.name, :controller=>'asset', :action=>'show',:id=>@asset.id)}"
+        return "#{image_tag('/images/icons/page_white_acrobat.png')} #{link_to( asset.name, :controller=>'asset', :action=>'show',:id=>asset.id)}"
       else
-        return "#{link_to asset.name, :controller=>'asset', :action=>'show',:id=>@asset.id}"
+        return "#{link_to(image_tag('/images/icons/page_white.png'), :controller=>'asset', :action=>'show',:id=>asset.id)}"
     end
   end
   

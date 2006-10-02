@@ -2,7 +2,7 @@ img{ border:none;}
 body{ 
 	margin            : 0;
 	padding           : 0;
-	background-image  : url('/images/application_background.jpg');
+	/*background-image  : url('/images/application_background.jpg');*/
 	background-repeat : repeat-x;
 	background-color  : #ffffff;
 	font-family       : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
@@ -141,10 +141,11 @@ a:hover{
 	padding          : 2px 0 2px 0
 }
 .login_form{
-	margin: auto;
-	display: block;
+	margin           : auto;
+	display          : block;
 	background-color : #efefef;
-	border:  1px solid #cfcfcf;
+	border-right     :  1px solid #cfcfcf;
+	border-bottom    :  1px solid #cfcfcf;	
 	padding          : 10px;
 	width            : 320px;
 }
@@ -153,15 +154,17 @@ a:hover{
 	background-color : #ffffff;
 	padding          : 0 5px 0 5px;
 	width            : 90%;
-	border           : 1px solid #cfcfcf;
+	border           : none;
+	border-left      : 1px solid #cfcfcf;
+	border-top       : 1px solid #cfcfcf;
 	height           : 1.5em;
 	margin           : 0.1em;
 }
 .login_form label{
 	display          : block;
+	font-weight      : normal;
 	width            : 100%;
 	text-align       : left;
-	font-weight      : bold;
 	padding          : 2px;
 	margin-top       : 10px;
 }

@@ -1,4 +1,3 @@
-
 <div class="post" id="article_<%= article.id %>">
 	<dl class="header">
 	  <dt class="title"><%= article.title %>"<span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} Edit", {:controller=>'article',:action=>'write', :id=>article.id},{:class=>"editOptions"}) if current_user.id == article.user_id %></span></dt>

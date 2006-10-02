@@ -1,5 +1,4 @@
-#inboxMenu
-{
+#inboxMenu{
 	margin           : 10px 0 0 0;
 	display          : block;
 	float            : left;
@@ -10,48 +9,40 @@
 	height           : 100%;
 }
 
-#inboxMenu li
-{
+#inboxMenu li{
 	list-style       : none;
 }
 
-#inboxMenu li.menuLabel, #inboxMenu li.menuLabel_selected
-{
+#inboxMenu li.menuLabel, #inboxMenu li.menuLabel_selected{
 	font-size        : 1.2em;
 	font-weight      : lighter;
 	padding          : 5px 0 5px 0;
 	border-bottom    : solid 1px #D5D6B2;
 }
 
-#inboxMenu li.menuLabel_selected
-{
+#inboxMenu li.menuLabel_selected{
 	background-color : #F5F7B8;
 }
-#inboxMenu li.menuData ul
-{
+#inboxMenu li.menuData ul{
 	padding          : 0;
 	margin           : 0;
 }
 
-#inboxMenu li.menuData ul li
-{
+#inboxMenu li.menuData ul li{
 	padding          : 2px 0 2px 5px;
 	border-bottom    : solid 1px #D5D6B2;
 	font-size:0.8em;
 }
 
-#inboxMenu li.menuDataItem_even
-{
+#inboxMenu li.menuDataItem_even{
 	background-color : #FAFBE7;
 }
 
-#inboxMenu li.menuDataItem_odd
-{
+#inboxMenu li.menuDataItem_odd{
 	background-color : #E7E8D5;
 }
 
-#inboxMenu a.newItems
-{
+#inboxMenu a.newItems{
 	font-size        : 0.6em;
 	font-weight      : normal;
 	text-decoration  : underline;
@@ -65,14 +56,10 @@
 
 .post{
 	font-family      : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
-	display          : block;
-	float            : left;
-	width            : 580px;
 	background-color : #FAFAFA;
 	border           : solid 1px #E9E8E8;
 	padding          : 10px;
 	color            : #111;
-	margin           : 5px;
 }
 .post .header{
 	padding-bottom   : 1em;
@@ -94,23 +81,19 @@
 	margin           : 10px 0 10px 0;
 }
 
-.post ul.postHeader li, .post ul.tags li, .post ul.tags label
-{
+.post ul.postHeader li, .post ul.tags li, .post ul.tags label{
 	display          : inline;
 	color            : #C0C0C0;
 	border-right     : solid 1px #C2C2C2;
 	padding          : 5px;
 }
-.post ul.tags
-{
+.post ul.tags{
 	margin           : 10px 0 10px 0;
 }
-.post ul.tags li
-{
+.post ul.tags li{
 	border           : none;
 }
-.post ul.tags label
-{
+.post ul.tags label{
 	font-size        : 1em;
 }
 .comment{
@@ -123,44 +106,43 @@
 	font-size        : 1.2em;
 	margin-bottom    : 10px;
 }
-.dataGrid
-{
+.dataGrid{
 	margin           : 5px;
 }
 
-.dataGrid tr.odd
-{
+.dataGrid tr.odd{
 	background-color : #FDFDFB;
 }
 
-.dataGrid tr.even
-{
+.dataGrid tr.even{
 	background-color : #F8F8F4;
 }
-.dataGrid tr.selected
-{
+.dataGrid tr.selected{
 	background-color : #F9F7C4;
 }
 
-.dataGrid tr.highlighted
-{
+.dataGrid tr.highlighted{
 	background-color : #FDF766;
 }
 
-.dataGrid th
-{
-	font-size        : 1.1em;
-	font-weight      : lighter;
-	border-bottom    : solid 4px #BCBCCB;
-	text-align       : left;
-	padding          : 5px;
+.dataGrid th{
+	font-size         : 1.1em;
+	font-weight       : lighter;
+	border-bottom     : solid 4px #BCBCCB;
+	border-left       : 1px solid #333;
+	text-align        : left;
+	padding           : 5px;
+	background-image  : url(/images/nav_background.jpg);
+	background-repeat : repeat-x;
+	color             : #fff;
 }
-.dataGrid td
-{
+.dataGrid th a{
+	color: #fff;
+}
+.dataGrid td{
 	padding          : 0 5px 0 5px;
 }
-.dataGrid td li
-{
+.dataGrid td li{
 	list-style       : none;
 	display          : inline;
 }
