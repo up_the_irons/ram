@@ -6,7 +6,7 @@ Grail.prototype = {
 		this.skin = null;
 		this.register_events();
 		//uncomment to test grail
-		//this.notify({type:this.skin, subject:'Alert', body:'Something awesome just happened.'});
+		//this.notify({skin:this.skin, type:'confirm', subject:'Alert', body:'Something awesome just happened.'});
 	}
 }
 //Register Grail to listen for AJAX Callback events
@@ -34,13 +34,13 @@ Grail.prototype.on_remote_failure = function(callback){
 Grail.prototype.notify = function(msg){
 	//this.skin.show(msg.subject, msg.body)
 	//msg.type = "music_video"
-	if(msg.type != null){
-		this.skin = new GrailSkin(msg.type)
+	if(msg.skin){
+		this.skin = new GrailSkin(msg.skin)
 	}else{
 		this.skin = new GrailSkin()
 	}
 	//this.skin = new GrailSkin()
-	this.skin.show(msg.subject,msg.body)
+	this.skin.show({subject:msg.subject, body:msg.body,type:msg.type})
 }
 
 Grail.prototype.hide = function(){
@@ -59,12 +59,15 @@ GrailMessage.prototype = {
 	}
 }
 
+
 var GrailSkin = Class.create();
 GrailSkin.prototype = {
 	initialize: function(){
 		this.to_s        = "GrailSkin"
 		this.selected    = 'music_video'
+		this.type        = {}
 		this.transitions = []
+		this.id          = new Date().getTime();
 		this.container   = null
 		this.opts        = {style:{},transitions:{}}
 		this.index       = 0
@@ -77,7 +80,6 @@ GrailSkin.prototype = {
 			this[items[i][0]].className = this.selected+"_"+items[i][0]
 			this[items[i][0]].id = "grail_"+items[i][0]
 		}
-		
 		this.container.appendChild(this.background);
 		this.container.appendChild(this.icon);
 		this.container.appendChild(this.message);
@@ -88,12 +90,13 @@ GrailSkin.prototype = {
 	}
 }
 
+
 GrailSkin.prototype.render = function(){
 	skin = {};
 	switch(this.selected){
 		case 'music_video' : 
-		this.opts = this.music_video();
-		break;
+			this.opts = this.music_video();
+			break;
 		default:
 			alert('style not found');
 			this.opts = this.music_video();
@@ -111,27 +114,37 @@ GrailSkin.prototype.render = function(){
 	}	
 }
 
+
 GrailSkin.prototype.onMotionFinished = function(){
 	//callBack by Tween class
 	if(this.index >= this.transitions.length){
 		this.index = 0;
 		Element.remove($(this.container))
 	}else{
-		this.start_transition(this.transitions[this.index]);
-		this.index++;
+		this.advance_frame();
 	}
 }
 
-GrailSkin.prototype.show = function(subject,body){
-	//TODO instead of setting subject and body they should be put into a queue for delivery
-	if(!subject){subject = ""}
-	this.current_message.subject = subject
-	this.current_message.body = body
-	this.subject.innerHTML = unescape(subject)
-	this.body.innerHTML    = unescape(body)
-	this.index = 0;
-	this.onMotionFinished();
+
+GrailSkin.prototype.advance_frame = function(){
+	this.start_transition(this.type.transitions[this.index]);
+	this.index++;
 }
+
+
+GrailSkin.prototype.show = function(msg){
+	//TODO instead of setting subject and body they should be put into a queue for delivery
+	if(!msg.subject){msg.subject = ""}
+	if(!msg.type){msg.type = 'alert'}
+	this.type = this.opts.types[msg.type]
+	this.current_message.subject = msg.subject
+	this.current_message.body = msg.body
+	this.subject.innerHTML = unescape(msg.subject)
+	this.body.innerHTML    = unescape(msg.body)
+	this.index = 0;
+	this.advance_frame();
+}
+
 
 GrailSkin.prototype.start_transition = function(o){
 	var pos = Position.cumulativeOffset(this.container);
@@ -140,21 +153,26 @@ GrailSkin.prototype.start_transition = function(o){
 	t1.start();
 }
 
+
 GrailSkin.prototype.music_video = function(){
-	var height = 100;
-	var skin = {
-		style:{
-			height          : height,
-			width           : BrowserMetrics.windowDimensions()[0]-30,
-			top             : BrowserMetrics.windowDimensions()[1]
-			},
-		transitions : [
-						{property:'top',tween:Tween.easeIn,start:0,end:(height*-1),duration:0.5},
-						{property:'top',tween:Tween.easeIn,start:0,end:0,duration:2},
-						{property:'top',tween:Tween.easeIn,start:0,end:height,duration:0.5}
-					]
+	this.height = 100;
+	this.skin = {
+	 style:{
+	   height : this.height,
+	   width : BrowserMetrics.windowDimensions()[0]-30,
+	   top   : BrowserMetrics.windowDimensions()[1]
+	 },
+	types:{
+	   'alert'  : {transitions:this.transitions},
+	   'confirm': {transitions:this.transitions}
+		},
+	transitions : [
+					{property:'top',tween:Tween.easeIn,start:0,end:(this.height*-1),duration:0.5},
+					{property:'top',tween:Tween.easeIn,start:0,end:0,duration:2},
+					{property:'top',tween:Tween.easeIn,start:0,end:this.height,duration:0.5}
+				]
 	}
-	return skin;
+	return this.skin;
 }
 
 /*

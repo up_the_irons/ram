@@ -9,13 +9,17 @@ module ApplicationHelper
     "<div id='page_flash' class='flash_%s'>%s</div>" % [flash_type.to_s, flash[flash_type]] if flash_type 
   end
   
-  def grail_notify(subject, body)
+  
+  def grail_notify(opts={})
+    props = {:skin=>nil,:subject=>nil, :body=>nil,:type=>nil}.merge(opts)
     out =  "<script type='text/javascript'>\n"
     out << "/* <![CDATA[ */\n"
-    out << "Loader.addOnLoad(function(){grail.notify({subject:\"#{CGI.escapeHTML subject}\",body:\"#{CGI.escapeHTML body}\"})})\r"
+    out << "Loader.addOnLoad(function(){grail.notify({type:\"#{CGI.escapeHTML props[:type]}\", subject:\"#{CGI.escapeHTML props[:subject]}\",skin:\"#{CGI.escapeHTML props[:skin]}\", body:\"#{CGI.escapeHTML props[:body]}\"})})\r"
+    #out << "Loader.addOnLoad(function(){grail.notify({subject:\"#{CGI.escapeHTML props[:subject]}\",skin:\"#{CGI.escapeHTML props[:skin]}\", body:\"#{CGI.escapeHTML props[:body]}\"})})\r"
     out << "/* ]]> */"
     out << "</script>"
   end
+  
   
   def display_as(asset, opts={:size=>"medium"})
     case asset.content_type
@@ -32,6 +36,7 @@ module ApplicationHelper
     end
   end
   
+  
   #used to create a category tree for use with the tree.js and tree.css files. This method is called recursivly
   def parse_tree(branches)
     code = ""
@@ -46,9 +51,11 @@ module ApplicationHelper
     code
   end
   
+  
   def admin_only_content
     yield if current_user.is_admin?
   end
+
   
   def link_to_if_editable(name,options={},html_options=nil,*parameters_for_method_reference)
     if current_user.is_admin?
@@ -56,9 +63,11 @@ module ApplicationHelper
     end
   end
 
+
   def sort_arrow(sort)
     !sort.nil? ? sort == 'asc' ? '&uarr;' : '&darr;' : ''
   end
+
 
   def sort_header(opts = {})
     title = opts[:title]

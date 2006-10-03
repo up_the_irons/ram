@@ -107,7 +107,7 @@
 	margin-bottom    : 10px;
 }
 .dataGrid{
-	margin           : 5px;
+	margin           : 5px 0 5px 0;
 }
 
 .dataGrid tr.odd{
@@ -140,7 +140,7 @@
 	color: #fff;
 }
 .dataGrid td{
-	padding          : 0 5px 0 5px;
+	padding          : 5px 5px 5px 5px;
 }
 .dataGrid td li{
 	list-style       : none;

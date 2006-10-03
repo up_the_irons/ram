@@ -38,15 +38,37 @@ class AdminControllerTest < Test::Unit::TestCase
   def test_track_model_changes
     login_as :quentin
     @group    = a_group
-    @category = a_category
+    @category = a_category({:parent_id=>@existing_category_id})
     @user     = create_user
-    @article  = an_article
-    @asset    = an_asset
+    @article  = an_article({:category_id=>@existing_category_id})
+    @asset    = an_asset({:category_id=>@existing_category_id})
     [Group,Category,Asset,User,Article].each do |model|
       obj = instance_variable_get("@#{model.to_s.downcase}")
       assert_equal 1, obj.changes.size
       assert_equal obj.changes[0].record_id.to_i, obj.id, "Expecting record for #{model}"
     end    
+  end
+  
+  def test_category_change_log_tracks_children_changes
+    login_as :quentin
+    user = users(:quentin)
+    category = user.categories[0]
+    assert_difference category.changes, :count, 2 do
+      @a = an_asset({:user_id=>user.id,:category_id=>category.id})
+      @art = an_article({:user_id=>user.id,:category_id=>category.id})
+      assert @a.valid?
+    end
+    
+    assert_equal(category.changes[0].event, "Added #{@a.name}")
+    assert_equal(category.changes[1].event, "Added #{@art.name}")
+    assert_difference category.changes, :count, 2 do
+      @a.destroy
+      @art.destroy
+    end
+    
+    category.changes(true)
+    assert_equal(category.changes[2].event, "Removed #{@a.name}")
+    assert_equal(category.changes[3].event, "Removed #{@art.name}")
   end
     
 end

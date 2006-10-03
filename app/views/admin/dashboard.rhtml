@@ -2,13 +2,7 @@
 <h1>Administrator's Dashboard</h1>
 <% end -%>
 <!-- /Page Options //-->
-<div class="pageActionOptions" style="width:480px;">
-	<dl class="inline_list">
-		<dt>From here you can manage:</dt>
-		<dd style="display:inline"><%= link_to 'Users', :controller=>'admin', :action=>'users' %></dd>
-		<dd style="display:inline"><%= link_to 'Groups', :controller=>'admin', :action=>'groups' %></dd>
-		<dd style="display:inline"><%= link_to 'Categories', :controller=>'admin', :action=>'categories' %></dd>
-	</dl>
+<div class="pageActionOptions">
 	<% 
 	  #TODO Add System tools here:
 	 

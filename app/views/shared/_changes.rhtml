@@ -37,10 +37,10 @@ klass = model.class
 <% model.changes.each do |c| -%>
 <%row_class =  cycle("even", "odd") %>
   <tr class="<%= row_class %>">
-    <td><%= klass.find(c.record_id).name %></td>
+    <td><%= klass.find(c.record_id).name.capitalize %></td>
     <td><%= c.record_type %></td>
-    <td><%= c.event %></td>
-    <td><%= User.find(c.user_id).login %></td>
+    <td><%= c.event.capitalize %></td>
+    <td><%= User.find(c.user_id).login.capitalize unless c.user_id.nil? %></td>
     <td><%= c.created_at %></td>
   </tr>
 <% end -%>

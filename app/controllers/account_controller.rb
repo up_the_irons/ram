@@ -18,7 +18,6 @@ class AccountController < ProtectedController
     self.current_user = User.authenticate(params[:login], params[:password])
     if current_user
       if current_user.account_active?
-        flash[:notice] = "Logged in Successfully"
         after_login
         redirect_back_or_default(:controller => '/inbox', :action => 'index')
         
@@ -84,7 +83,7 @@ class AccountController < ProtectedController
   
   def logout
     self.current_user = nil
-    flash[:notice] = "You have been logged out."
+    flash[:grail] = "You have been logged out."
     redirect_back_or_default(:controller => '/account', :action => 'login')
     session[:nil]
   end
@@ -95,12 +94,11 @@ class AccountController < ProtectedController
     if current_user.account_active?
       after_login
       render :update do |page|
-        
         page.redirect_to :controller=>'inbox'
       end
     else
       render :update do |page|
-        page.call "grail.notify",{:type=>"music_video",:subject=>'Could not log you in',:body=>"#{current_user.account_status}."}
+        page.call "grail.notify",{:type=>"confirm",:subject=>'Could not log you in',:body=>"#{current_user.account_status}."}
         page.replace_html 'page_flash', current_user.account_status
       end
     self.current_user = nil
@@ -118,8 +116,8 @@ class AccountController < ProtectedController
   
   protected 
   def after_login
+    flash[:grail]  = "Welcome #{current_user.login}!"
     current_user.last_login_at = Time.now
-    flash[:grail] = "Welcome #{current_user.login}!"
     current_user.save
     session[:folio] = []
     session[:view]={:expand_menu=>true}

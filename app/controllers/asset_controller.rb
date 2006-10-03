@@ -50,6 +50,7 @@ class AssetController < ProtectedController
                             })
         
         @asset.uploaded_data = Asset.translate_flash_post @params[:Filedata]
+        session[:user] = @user
         @asset.save
       end
       #the js in the view returns the items a comma delimited string and NOT an array like you would expect.
@@ -133,7 +134,7 @@ class AssetController < ProtectedController
         
       wants.js do
         render :update do |page|
-          page.call "grail.notify",{:type=>"music_video",:subject=>'Success',:body=>"#{@asset.filename} was deleted."}
+          page.call "grail.notify",{:skin=>"music_video",:subject=>'Success',:body=>"#{@asset.filename} was deleted."}
           page.remove params[:update]
         end
       end

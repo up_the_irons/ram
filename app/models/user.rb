@@ -14,21 +14,6 @@
 #  last_login_at       :datetime      
 #
 
-# Schema as of Sun Sep 24 21:27:08 PDT 2006 (schema version 16)
-#
-#  id                  :integer(11)   not null
-#  login               :string(40)    
-#  email               :string(100)   
-#  crypted_password    :string(40)    
-#  salt                :string(40)    
-#  activation_code     :string(40)    
-#  activated_at        :datetime      
-#  state               :integer(11)   default(0)
-#  created_at          :datetime      
-#  updated_at          :datetime      
-#  role                :integer(11)   default(0)
-#  last_login_at       :datetime      
-#
 
 require 'digest/sha1'
 class User < ActiveRecord::Base
@@ -95,6 +80,10 @@ class User < ActiveRecord::Base
     else
       super
     end
+  end
+  
+  def name
+    login
   end
   
   def categories
