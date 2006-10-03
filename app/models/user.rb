@@ -139,8 +139,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def assets_search(query)
-    Asset.search(query, groups.map { |o| o.id })
+  def assets_search(query, order = nil)
+    Asset.search(query, groups.map { |o| o.id }, order)
   end
   
   def accessible_articles
@@ -150,15 +150,16 @@ class User < ActiveRecord::Base
   end
 
   # Returns categories this user belongs to, refined by 'query'
-  def categories_search(query)
+  def categories_search(query, order = nil)
     Collection.find(:all, :select => 'DISTINCT collections.*', :joins => 'INNER JOIN linkings ON collections.id = linkings.category_id',
                           :conditions => ["(linkings.group_id IN (#{groups.map { |o| o.id }.join(',')})) AND (( (collections.`type` = 'Category' ) ) AND ((collections.name like ?) OR (collections.description like ?) OR \
-                                           (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = collections.id AND taggings.taggable_type = 'Category' AND tags.name LIKE ?) IS NOT NULL))", "%#{query}%", "%#{query}%", "%#{query}%"])
+                                           (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = collections.id AND taggings.taggable_type = 'Category' AND tags.name LIKE ?) IS NOT NULL))", "%#{query}%", "%#{query}%", "%#{query}%"],
+                          :order => order)
   end
 
-  def groups_search(query)
+  def groups_search(query, order = nil)
     groups.find(:all, :conditions => ["name like ? OR description like ? OR \
-                                      (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = collections.id AND taggings.taggable_type = 'Group' AND tags.name LIKE ?) IS NOT NULL", "%#{query}%", "%#{query}%", "%#{query}%"])
+                                      (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = collections.id AND taggings.taggable_type = 'Group' AND tags.name LIKE ?) IS NOT NULL", "%#{query}%", "%#{query}%", "%#{query}%"], :order => order)
   end
   
   def encrypt_login

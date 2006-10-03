@@ -2,6 +2,7 @@ require_dependency 'collection_methods'
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include CollectionMethods
+  include Sortable
   
   def paginate_collection(collection, options = {})
     default_options = {:per_page => 10, :page => 1}

@@ -40,14 +40,14 @@ class Asset < ActiveRecord::Base
           :linkable_id => @owner.id,
           :linkable_type => "Asset",
           :group_id => group.id
-  	    )
-  	  l.errors.each_full { |msg| puts msg } unless l.save 
+        )
+      l.errors.each_full { |msg| puts msg } unless l.save 
     end
    end
    
    
    has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
-         'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Asset" ORDER BY c.created_at' 	
+         'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Asset" ORDER BY c.created_at'   
    belongs_to :category
    belongs_to :user
 
@@ -98,25 +98,22 @@ class Asset < ActiveRecord::Base
       remove_group(m)
     end
   end
-
   
   def remove_group(group)
     linking =Linking.find_by_linkable_id_and_linkable_type_and_group_id(self.id,'Asset', group.id)
     linking.destroy if linking.valid?
   end
     
-  
-  class << self
-    def search(query, groups)
+  class << self    
+    def search(query, groups, order = nil)
       groups = [groups].flatten
-      find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = attachments.id AND taggings.taggable_type = 'Asset' AND tags.name LIKE ?) IS NOT NULL)", "%#{query}%", "%#{query}%", "%#{query}%"], :group => "attachments.id")
+
+      find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = attachments.id AND taggings.taggable_type = 'Asset' AND tags.name LIKE ?) IS NOT NULL)", "%#{query}%", "%#{query}%", "%#{query}%"], :group => "attachments.id", :order => order)
     end
 
-    
     def find_with_data(quantity, options = {})
       find quantity, options.merge(:select => 'attachments.*, db_files.data', :joins => 'LEFT OUTER JOIN db_files ON attachments.db_file_id = db_files.id')
     end
-
 
     def find_by_full_path(full_path)
       pieces   = full_path.split '/'
@@ -124,74 +121,73 @@ class Asset < ActiveRecord::Base
       path     = pieces.join '/'
       find_with_data :first, :conditions => ['path = ? and filename = ?', path, filename]
     end
-    
-    
+
     def mime_type (ext)
       re = /(\.)/
-    	md = re.match(ext)
-    	type = case md.post_match.downcase
-    				when "hqx"  : "application/mac-binhex40"
-    				when "doc"  : "application/msword"
-    				when "exe"  : "application/octet-stream"
-    				when "pdf"  : "application/pdf"
-    				when "prf"  : "application/pics-rules"
-    				when "ai"   : "application/postscript"
-    				when "eps"  : "application/postscript"
-    				when "ps"   : "application/postscript"
-    				when "rtf"  : "application/rtf"
-    				when "xla"  : "application/vnd.ms-excel"
-    				when "xlc"  : "application/vnd.ms-excel"
-    				when "xlm"  : "application/vnd.ms-excel"
-    				when "xls"  : "application/vnd.ms-excel"
-    				when "xlt"  : "application/vnd.ms-excel"
-    				when "xlw"  : "application/vnd.ms-excel"
-    				when "pot"  : "application/vnd.ms-powerpoint"
-    				when "pps"  : "application/vnd.ms-powerpoint"
-    				when "ppt"  : "application/vnd.ms-powerpoint"
-    				when "dcr"  : "application/x-director"
-    				when "dir"  : "application/x-director"
-    				when "dxr"  : "application/x-director"
-    				when "dvi"  : "application/x-dvi"
-    				when "gtar" : "application/x-gtar"
-    				when "gz"   : "application/x-gzip"
-    				when "js"   : "application/x-javascript"
-    				when "zip"  : "application/zip"
-    				when "au"   : "audio/basic"
-    				when "snd"  : "audio/basic"
-    				when "mid"  : "audio/mid"
-    				when "rmi"  : "audio/mid"
-    				when "mp3"  : "audio/mpeg"
-    				when "m3u"  : "audio/x-mpegurl"
-    				when "wav"  : "audio/x-wav"
-    				when "bmp"  : "image/bmp"
-    				when "gif"  : "image/gif"
-    				when "jpe"  : "image/jpeg"
-    				when "jpeg" : "image/jpeg"
-    				when "jpg"  : "image/jpeg"
-    				when "jfif" : "image/pipeg"
-    				when "tif"  : "image/tiff"
-    				when "tiff" : "image/tiff"
-    				when "htm"  : "text/html"
-    				when "html" : "text/html"
-    				when "txt"  : "text/plain"
-    				when "mp2"  : "video/mpeg"
-    				when "mpa"  : "video/mpeg"
-    				when "mpe"  : "video/mpeg"
-    				when "mpeg" : "video/mpeg"
-    				when "mpg"  : "video/mpeg"
-    				when "mpv2" : "video/mpeg"
-    				when "mov"  : "video/quicktime"
-    				when "qt"   : "video/quicktime"
-    				when "avi"  : "video/x-msvideo"
-    				else "application/octet-stream"
-    		end
+      md = re.match(ext)
+      type = case md.post_match.downcase
+          when "hqx"  : "application/mac-binhex40"
+          when "doc"  : "application/msword"
+          when "exe"  : "application/octet-stream"
+          when "pdf"  : "application/pdf"
+          when "prf"  : "application/pics-rules"
+          when "ai"   : "application/postscript"
+          when "eps"  : "application/postscript"
+          when "ps"   : "application/postscript"
+          when "rtf"  : "application/rtf"
+          when "xla"  : "application/vnd.ms-excel"
+          when "xlc"  : "application/vnd.ms-excel"
+          when "xlm"  : "application/vnd.ms-excel"
+          when "xls"  : "application/vnd.ms-excel"
+          when "xlt"  : "application/vnd.ms-excel"
+          when "xlw"  : "application/vnd.ms-excel"
+          when "pot"  : "application/vnd.ms-powerpoint"
+          when "pps"  : "application/vnd.ms-powerpoint"
+          when "ppt"  : "application/vnd.ms-powerpoint"
+          when "dcr"  : "application/x-director"
+          when "dir"  : "application/x-director"
+          when "dxr"  : "application/x-director"
+          when "dvi"  : "application/x-dvi"
+          when "gtar" : "application/x-gtar"
+          when "gz"   : "application/x-gzip"
+          when "js"   : "application/x-javascript"
+          when "zip"  : "application/zip"
+          when "au"   : "audio/basic"
+          when "snd"  : "audio/basic"
+          when "mid"  : "audio/mid"
+          when "rmi"  : "audio/mid"
+          when "mp3"  : "audio/mpeg"
+          when "m3u"  : "audio/x-mpegurl"
+          when "wav"  : "audio/x-wav"
+          when "bmp"  : "image/bmp"
+          when "gif"  : "image/gif"
+          when "jpe"  : "image/jpeg"
+          when "jpeg" : "image/jpeg"
+          when "jpg"  : "image/jpeg"
+          when "jfif" : "image/pipeg"
+          when "tif"  : "image/tiff"
+          when "tiff" : "image/tiff"
+          when "htm"  : "text/html"
+          when "html" : "text/html"
+          when "txt"  : "text/plain"
+          when "mp2"  : "video/mpeg"
+          when "mpa"  : "video/mpeg"
+          when "mpe"  : "video/mpeg"
+          when "mpeg" : "video/mpeg"
+          when "mpg"  : "video/mpeg"
+          when "mpv2" : "video/mpeg"
+          when "mov"  : "video/quicktime"
+          when "qt"   : "video/quicktime"
+          when "avi"  : "video/x-msvideo"
+          else "application/octet-stream"
+      end
     end
-    	
-    	
+      
+      
     #Adobe Flash 8 uses a nonstandard syntax for their multipart form posts
     #Acts_as_attachment expects the standard format, which this method simulates through an open struct
     def translate_flash_post(filedata)
-    	translated = Struct.new(:content_type,:original_filename,:read)
+      translated = Struct.new(:content_type,:original_filename,:read)
       t = translated.new( "#{Asset.mime_type(filedata.original_filename)}",
                             "#{filedata.original_filename.gsub(/[^a-zA-Z0-9.]/, '_')}",
                             filedata.read

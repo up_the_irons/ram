@@ -2,16 +2,19 @@ require 'rubygems'
 require 'zip/zipfilesystem'
 
 class FolioController < ProtectedController
+  include Sortable
 
   verify :method => :post, :only => [ :add, :remove, :remove_all ],
          :redirect_to => { :action => :index }
+
+  sortable :list
+
   def index
     redirect_to :action=>'list'
   end
   
-  
   def list
-      @assets = []
+    @assets = []
     if session[:folio].empty?
       flash[:notice] = "Your folio is empty." 
     else
@@ -24,6 +27,26 @@ class FolioController < ProtectedController
           flash[:notice] = "Could not find asset using the id of #{a}"
         end
       end
+    end
+
+    # When we lack SQL being able to sort for us, we do it w/ Ruby!
+    if @order
+      column, direction = @order.split(' ')
+      @assets.sort! do |a,b|
+        case direction
+        when 'asc'  then a[column] <=> b[column]
+        when 'desc' then b[column] <=> a[column]
+        end
+      end
+    end
+
+    respond_to do |wants|
+      wants.js do
+        render :update do |page|
+          page.replace_html :asset_list, :partial => 'asset/list'
+        end
+      end
+      wants.html
     end
   end
   

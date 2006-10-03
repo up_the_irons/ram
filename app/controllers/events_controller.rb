@@ -1,8 +1,7 @@
 class EventsController < ProtectedController
-  include Sortable
-
   before_filter :admins_only
   before_filter :find_single_event, :only => [:delete, :show]
+
   sortable      :list, :delete
 
   def list

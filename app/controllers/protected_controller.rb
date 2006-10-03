@@ -18,18 +18,19 @@ class ProtectedController < ApplicationController
   end
   
   protected
-  def category_contents(params)
+
+  def category_contents(params, order = nil)
     @category = find_in_users_categories(params[:id])
     raise ActiveRecord::RecordNotFound unless @category
     @groups   = @category.groups & current_user.groups
-    
-    @assets = accessible_items(@category, 'assets', @groups)
+
+    @assets = accessible_items(@category, 'assets', @groups, order)
     @articles = accessible_items(@category, 'articles', @groups)
   end 
 
-  def accessible_items(category,items,groups)
+  def accessible_items(category, items, groups, order = nil)
     good_items = []
-    all_items = category.send(items)
+    all_items = category.send(items).find(:all, :order => order)
     all_items.each do |i|
       good_items << i unless(i.groups & groups).empty?
     end
