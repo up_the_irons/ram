@@ -33,9 +33,23 @@ class FolioController < ProtectedController
     if @order
       column, direction = @order.split(' ')
       @assets.sort! do |a,b|
-        case direction
-        when 'asc'  then a[column] <=> b[column]
-        when 'desc' then b[column] <=> a[column]
+
+        # If both args are not nil, we can just use <=> and be done with it
+        if a[column] && b[column]
+          case direction
+          when 'asc'  then a[column] <=> b[column]
+          when 'desc' then b[column] <=> a[column]
+          end
+
+        # Otherwise, we have to decide what is less than / greater than nil manually  
+        else
+          if !a[column] and !b[column]
+            0
+          elsif a[column]
+            direction == 'asc' ? 1 : -1
+          elsif b[column]
+            direction == 'asc' ? -1 : 1
+          end
         end
       end
     end
