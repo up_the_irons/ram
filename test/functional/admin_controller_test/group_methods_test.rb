@@ -51,21 +51,26 @@ module IncludedTests::GroupMethodsTest
      assert (new_tags - group_after_update.tags.map { |o| o.name }).empty?, "New tags (#{new_tags.join(',')}) expected, but were: #{group_after_update.tags.join(',')}"
    end
    
-   def test_group_add_member_from_multiselect
+   def test_group_add_member_and_categories_from_multiselect
      login_as :quentin
      c = collections(:collection_3)
      @request.env["HTTP_REFERER"] = "show_group/1"
      add_some_members_to_group(c, 3)
      assert_equal c.users(true).size, 3
      
-     #remove all but one user
-     post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id]}
+     new_categories = (users(:quentin).categories - c.categories).map{|cat| cat.id}
+     assert new_categories.size > 0
+     #remove all but one user, and remove all the categories
+     post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id],:category_ids=>[]}
      assert_response :success
-     assert_equal c.users(true).size, 1
+     assert_equal 1, c.users(true).size
+     assert_equal 0, c.categories(true).size
      
      users = User.find(:all) - c.members
-     post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id, users[0].id]}
+     #add new members and new categories
+     post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id, users[0].id],:category_ids=>new_categories}
      assert_equal c.users(true).size, 2
+     assert_equal new_categories.size, c.categories(true).size
      assert c.users.find(users[0].id)
      assert_response :success
    end

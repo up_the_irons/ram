@@ -3,8 +3,18 @@
   <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@group,:selected=>@group.members,:available=>@group.non_members,:name_alias=>:login} %>
 </li>
 <li>
-  <label>Categories</label>
-  *list of categories*
+  <label>Category Access</label>
+  <ul class="selectableTree">
+    <%= parse_selectable_tree(session[:category_tree][:root][:children]) %>
+  </ul>
 </li>
-
-
+<% unless @group.categories.empty? -%>
+<script language="javascript" type="text/javascript">
+  /* <![CDATA[ */
+  <% @group.categories.each do |g| -%>
+    document.getElementById('category_<%= g.id %>').checked = true;
+    $('<%="tick_#{g.id}"%>').show()
+  <% end -%>
+  /* ]]> */ 
+</script>
+<% end -%>

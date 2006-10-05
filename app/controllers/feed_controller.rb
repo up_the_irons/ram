@@ -19,7 +19,8 @@ class FeedController < ProtectedController
   # Snipped from http://rails.techno-weenie.net/tip/2005/12/14/authentication_for_rss_feeds
   # Thank you technoweenie
   
-  def basic_auth_required(realm='Web Password', error_message="Could't authenticate you")
+  def basic_auth_required(realm='Web Password', error_message="Could not authenticate you")
+    return true if self.current_user
     username, passwd = get_auth_data
     # check if authorized
     # try to get user

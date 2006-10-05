@@ -9,7 +9,7 @@ require 'admin_controller'
 class AdminController; def rescue_action(e) raise e end; end
 
 class AdminControllerTest < Test::Unit::TestCase
-  fixtures :collections, :attachments, :db_files, :users, :linkings, :memberships,:changes
+  fixtures :collections, :attachments, :db_files, :users, :linkings, :memberships,:changes, :profiles, :people
   include IncludedTests::UserMethodsTest
   include IncludedTests::GroupMethodsTest
   include IncludedTests::CategoryMethodsTest

@@ -51,6 +51,23 @@ module ApplicationHelper
     code
   end
   
+  def parse_selectable_tree(branches)
+     code = ""
+     branches.each do |b|
+       #used to toggle on and off the checkbox graphic
+       onclick_method = %{if(!$('category_#{b[:id]}').checked){$('tick_#{b[:id]}').show()}else{$('tick_#{b[:id]}').hide();}}
+       
+       link = %{<input type='checkbox' style="display:none;" name="group[category_ids][]" value="#{b[:id]}" id="category_#{b[:id]}" />} 
+       link << image_tag('icons/tick.png',{:style=>"display:none",:id=>"tick_#{b[:id]}"})
+       link << link_to(truncate(b[:name],25),"#checkbox_#{b[:id]}",{:onclick=>onclick_method})
+       if b[:children].size > 0
+         code << "<li id=\"selectable_branch_#{b[:id]}\">#{link}\n\r" 
+         code << "<ul>#{parse_selectable_tree(b[:children])}</ul></li>\n\r"
+       end
+       code << "<li id=\"selectable_branch_#{b[:id]}\">#{link}</li>\n\r" if b[:children].size == 0
+     end
+     code
+  end
   
   def admin_only_content
     yield if current_user.is_admin?

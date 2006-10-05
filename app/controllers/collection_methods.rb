@@ -3,53 +3,70 @@
 
 module CollectionMethods
   
-  def list_collection(table=nil,opts={:on_success=>nil,:on_failure=>nil})
-    table = controller_name.pluralize unless table
-    model= Object.const_get(table.classify)
-    pages, models = paginate_collection current_user.send(table.to_sym), :page => params[:page]
-    instance_variable_set("@#{table.singularize}_pages", pages)
-    instance_variable_set("@#{table}", models)
+  def list_collection(opts={})
+    obj = default_obj
+    opts[:table] = controller_name.pluralize unless opts[:table]
+    obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
+    
+    #table = controller_name.pluralize unless table
+    #model= Object.const_get(table.classify)
+    pages, models = paginate_collection current_user.send(obj[:table].to_sym), :page => params[:page]
+    instance_variable_set("@#{obj[:table].singularize}_pages", pages)
+    instance_variable_set("@#{obj[:table]}", models)
     yield and return if block_given?
   end
   
-  def changes
-    table = controller_name.pluralize unless table
-    model= Object.const_get(table.classify)
-    instance_variable_set("@#{table.singularize}", send("find_in_users_#{table}", params[:id]))
-    render :partial=>'shared/changes',:locals=>{:model=>instance_variable_get("@#{table.singularize}")},:layout=>'application'
+  def changes(opts={})
+    obj = default_obj
+    opts[:table] = controller_name.pluralize unless opts[:table]
+    obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
+    
+    #table = controller_name.pluralize unless table
+    #model= Object.const_get(table.classify)
+    instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id]))
+    render :partial=>'shared/changes',:locals=>{:model=>instance_variable_get("@#{obj[:table].singularize}")},:layout=>'application'
   end
   
-  def destroy_collection(table=nil,opts={:on_success=>nil,:on_failure=>nil})
-    table = controller_name.pluralize unless table
-    model = Object.const_get(table.classify)
-    instance_variable_set("@#{table.singularize}", send("find_in_users_#{table}", params[:id]))
+  def destroy_collection(opts={})
+    obj = default_obj
+    opts[:table] = controller_name.pluralize unless opts[:table]
+    obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
+    
+    #table = controller_name.pluralize unless table
+    #model = Object.const_get(table.classify)
+    instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id]))
 
     yield and return if block_given?
     redirect_to :controller=>'inbox' and return unless request.post?
-    instance_variable_get("@#{table.singularize}").destroy
+    instance_variable_get("@#{obj[:table].singularize}").destroy
     
     begin  
-      flash[:notice] = opts[:on_success] || "You Deleted the #{model}"
+      flash[:notice] = opts[:on_success] || "You Deleted the #{obj[:model]}"
     rescue
-      flash[:notice] = opts[:on_failure] || "Could not Delete #{model}"
+      flash[:notice] = opts[:on_failure] || "Could not Delete #{obj[:model]}"
     end
-    redirect_to :action=>table
+    redirect_to :action=>obj[:table]
   end
 
   
-  def show_collection(table=nil,opts={:on_success=>nil,:on_failure=>nil})
-    table = controller_name.pluralize unless table
-    model = Object.const_get(table.classify)
+  def show_collection(opts={})
+    obj = default_obj
+    opts[:table] = controller_name.pluralize unless opts[:table]
+    obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
+
+    #table = controller_name.pluralize unless table
+    #model = Object.const_get(table.classify)
+    
     #find the object in the user's model for example current_user.categories etc.
-    instance_variable_set("@#{table.singularize}", send("find_in_users_#{table}", params[:id]))
-    raise ActiveRecord::RecordNotFound unless instance_variable_get("@#{table.singularize}")
+    instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id]))
+    raise ActiveRecord::RecordNotFound unless instance_variable_get("@#{obj[:table].singularize}")
     yield and return if block_given?
 
     respond_to do |wants|
       wants.html do
         #not all collections will have contents
-        send("#{table.singularize}_contents",params) if respond_to?("#{table.singularize}_contents")
-        render "#{table.singularize}/show"
+        send("#{obj[:table].singularize}_contents",params) if respond_to?("#{obj[:table].singularize}_contents")
+        render "#{obj[:table].singularize}/show"
       end
       wants.js do 
         render :update do |page|
@@ -58,44 +75,32 @@ module CollectionMethods
       end
     end
   rescue 
-    flash[:notice] = "Could not find #{table.singularize}."  
+    flash[:notice] = "Could not find #{obj[:table].singularize}."  
     redirect_to( :controller=>'inbox') and return false
   end
   
-  def edit_collection(table=nil, many_elements=nil, opts={:on_success=>nil,:on_failure=>nil})
-    table = controller_name.pluralize unless table
-    model = Object.const_get(table.classify)
+  
+  def edit_collection(opts={})
+    obj = default_obj
+    opts[:table] = controller_name.pluralize unless opts[:table]
+    obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
+    #table = controller_name.pluralize unless table
+    #model = Object.const_get(table.classify)
     #find the object in the user's model for example current_user.categories etc.
-    instance_variable_set("@#{table.singularize}", model.send(:new))
-    instance_variable_set("@#{table.singularize}", send("find_in_users_#{table}", params[:id])) if params[:id]
+    instance_variable_set("@#{obj[:table].singularize}", obj[:model].send(:new))
+    instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id])) if params[:id]
     
     yield and return if block_given?  #thar be dragons past this point
 
-    model_instance = instance_variable_get("@#{table.singularize}")
-    model_sym = table.singularize.to_sym
-    many_element = many_elements.singularize
+    model_instance = instance_variable_get("@#{obj[:table].singularize}")
+    model_sym = obj[:table].singularize.to_sym
+    many_associations_results = ""
+    #many_element = obj[:many_associations].singularize
 
     if request.post? && model_instance
       params[model_sym][:user_id] = current_user.id if model_instance.new_record?
       
-      #find the groups to add and remove from the category
-      
-      @potential_elements = []
-      unless params[model_sym]["#{many_element}_ids".to_sym].nil?
-        @potential_elements = params[model_sym]["#{many_element}_ids".to_sym] 
-        params[model_sym].delete("#{many_element}_ids")
-      end
-        
-      #nest these calls inside a proc because adding elements to a new record without an ID will produce invalid joins
-      add_elements = Proc.new do
-        @added, @removed  = update_has_many_collection( model_instance, many_elements, @potential_elements )
-      end
-        
-      unless model_instance.new_record?
-        add_elements.call
-        add_elements = nil #delete the proc
-      end  
-      
+      #save the record
       if model_instance.new_record?
         model_instance.attributes = params[model_sym]
         model_instance.save
@@ -103,23 +108,53 @@ module CollectionMethods
         # Tags must be assigned after the object is saved b/c they rely on the ID of the record
         model_instance.tags = params[model_sym][:tags] if params[model_sym][:tags]
       end
+      obj[:many_associations].each do| many_association |
+        potential_elements = []
+        added   = []
+        removed = []
+      
+        many_association_sym = "#{many_association.singularize}_ids".to_sym
+        unless params[model_sym][many_association_sym].nil?
+          potential_elements = params[model_sym][many_association_sym] 
+          params[model_sym].delete(many_association_sym)
+        end
 
-      if model_instance.update_attributes(params[model_sym])
-        add_elements.call unless add_elements.nil?
+        #nest these calls inside a proc because adding elements to a new record without an ID will produce invalid joins
+        #add_elements = Proc.new do
+        added, removed  = update_has_many_collection( model_instance, many_association, potential_elements )
+        many_associations_results << "<br/>Added (#{added.size}) #{many_association} and removed (#{removed.size})" if defined?(added) && defined?(removed)
+        #end
         
-        flash[:notice] = "\"#{model_instance.name}\" was saved."
-        flash[:notice] << "<br/>Added (#{@added.size}) groups and removed (#{@removed.size})" if defined?(@added) && defined?(@removed)
-        redirect_to :action=>"edit_#{table.singularize}", :id=>model_instance.id unless params[:id]  
+        #unless model_instance.new_record?
+        #  add_elements.call
+        #  add_elements = nil #delete the proc
+        #end  
+      
       end
+      
+      #save a pre-existing record.
+      if !model_instance.new_record? && model_instance.update_attributes(params[model_sym])
+          #add_elements.call unless add_elements.nil?
+          
+      end
+      
+      #display results
+      if model_instance.valid?
+        flash[:notice] = "\"#{model_instance.name}\" was saved."
+        flash[:notice] << many_associations_results
+        redirect_to :action=>"edit_#{obj[:table].singularize}", :id=>model_instance.id unless params[:id]
+      end
+      
     end
     raise unless model_instance
   rescue
-    redirect_to :controller=>'admin', :action=>table
-    flash[:notice] = "Could not find #{table.singularize}."
+    redirect_to :controller=>'admin', :action=>obj[:table]
+    flash[:notice] = "Could not find #{obj[:table].singularize}."
   end
   
-  #helper method for has_many collection editing
+  protected
   
+  #helper method for has_many collection editing
   def update_has_many_collection(model, many_collection, ids_to_keep_or_add = [])
     many_klass = Object.const_get(many_collection.singularize.classify)
     elements_to_add    = []
@@ -150,6 +185,11 @@ module CollectionMethods
     model.reload
     
     [ elements_to_add, elements_to_remove]
+  end
+  
+   
+  def default_obj
+    {:table=>nil, :on_success=>nil, :on_failure=>nil}
   end
   
 end

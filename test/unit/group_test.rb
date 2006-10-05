@@ -67,6 +67,20 @@ class GroupTest < Test::Unit::TestCase
 	  assert_equal s, Group.find(g.id).categories.size
   end
   
+  def test_remove_a_category
+    g = Group.find(:first)
+    assert g.categories.size > 0
+    assert_difference g.categories, :count, -1 do
+      g.remove_category(g.categories[0])
+    end
+  end
+  
+  def test_remove_all_categories
+    g = Group.find(:first)
+    assert g.categories.size > 0
+    g.remove_all_categories
+    assert_equal 0, g.categories(true).size
+  end
 
   def test_remove_all_members
     g = Group.find(:first)

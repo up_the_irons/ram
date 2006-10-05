@@ -11,17 +11,26 @@
 function autoInit_trees() {
 	var candidates = document.getElementsByTagName('ul');
 	for(var i=0;i<candidates.length;i++) {
+		
+		//normal trees
 		if(candidates[i].className && candidates[i].className.indexOf('tree') != -1) {
-			initTree(candidates[i]);
+			initTree(candidates[i], treeToggle, 'closed', 'spanClosed');
 			candidates[i].className = candidates[i].className.replace(/ ?unformatted ?/, ' ');
 		}
+		
+		//selectable trees
+		if(candidates[i].className && candidates[i].className.indexOf('selectableTree') != -1) {
+			initTree(candidates[i], treeSelectionToggle, 'unselected', 'spanUnselected');
+			candidates[i].className = candidates[i].className.replace(/ ?unformatted ?/, ' ');
+		}
+		
 	}
 }
  
 /*
  * Initialise a tree node, converting all its LIs appropriately
  */
-function initTree(el) {
+function initTree(el, onclick_method, klass, spanKlass) {
 	var i,j;
 	var spanA, spanB, spanC;
 	var startingPoint, stoppingPoint, childUL;
@@ -37,10 +46,10 @@ function initTree(el) {
 			spanC = document.createElement('span');
 			spanA.appendChild(spanB);
 			spanB.appendChild(spanC);
-			spanA.className = 'a ' + li.className.replace('closed','spanClosed');
+			spanA.className = 'a ' + li.className.replace(klass, spanKlass);
 			spanA.onMouseOver = function() {}
 			spanB.className = 'b';
-			spanB.onclick = treeToggle;
+			spanC.onclick   = onclick_method;
 			spanC.className = 'c';
 			
 			
@@ -72,9 +81,9 @@ function initTree(el) {
 			
 			// Process the children
 			if(childUL != null) {
-				if(initTree(childUL)) {
-					addClass(li, 'children', 'closed');
-					addClass(spanA, 'children', 'spanClosed');
+				if(initTree(childUL, onclick_method, klass, spanKlass)) {
+					addClass(li, 'children', klass);
+					addClass(spanA, 'children', spanKlass);
 				}
 			}
 		}
@@ -83,8 +92,8 @@ function initTree(el) {
 	if(li) {
 		// li and spanA will still be set to the last item
 
-		addClass(li, 'last', 'closed');
-		addClass(spanA, 'last', 'spanClosed');
+		addClass(li, 'last', klass);
+		addClass(spanA, 'last', spanKlass);
 		return true;
 	} else {
 		return false;
@@ -104,7 +113,7 @@ function treeToggle(el, force) {
 	
 	// Get UL within the LI
 	var childSet = findChildWithTag(el, 'ul');
-	var topSpan = findChildWithTag(el, 'span');
+	var topSpan  = findChildWithTag(el, 'span');
 
 	if( force != null ){
 		
@@ -128,6 +137,39 @@ function treeToggle(el, force) {
 	}
 }
 
+function treeSelectionToggle(el, force) {
+	el = this;
+	while(el != null && (!el.tagName || el.tagName.toLowerCase() != "li")) el = el.parentNode;
+		// Get UL within the LI
+    var childSet = findChildWithTag(el, 'ul');
+    var topSpan = findChildWithTag(el, 'span');
+    if( force != null ){
+    	if( force == "select"){
+    		treeSelect( topSpan, el )
+    	}
+    	else if( force == "unselect" ){
+    		treeUnSelect( topSpan, el )
+    	}
+    
+	}else if( childSet != null) {
+    	// Is selected, unselect it
+    	if(el.className.match(/(^| )selected($| )/)) {		
+    		treeUnselect( topSpan, el )
+    		// Is unselected, select it
+    	} else {			
+    		treeSelect( topSpan, el )
+    	}
+	
+    }else{
+		if(el.className.match(/(^| )selected($| )/)) {		
+    		treeUnselect( topSpan, el )
+    		// Is unselected, select it
+    	} else {			
+    		treeSelect( topSpan, el )
+    	}
+	}
+}
+
 
 function treeOpen( a, b ){
 	removeClass(a,'spanClosed');
@@ -140,12 +182,55 @@ function treeClose( a, b ){
 	addClass(b,'closed');
 }
 
+
+function treeUnselect( a, b ){
+	toggleCheckbox(b);
+	removeClass(a,'spanSelected');
+	removeClass(b,'selected');
+}
+	
+	
+function treeSelect( a, b ){
+	toggleCheckbox(b)
+	addClass(a,'spanSelected');
+	addClass(b,'selected');
+}
+
+
+function toggleCheckbox(tag,parents_new_value){
+	var checkbox  = null
+	this.new_value = null
+	if(tag.tagName != null && tag.tagName.toLowerCase() == 'input'){
+		checkbox = tag
+		if(checkbox.checked != parents_new_value){
+			if(checkbox.checked){
+				this.new_value= false;
+			}else{
+				this.new_value= true;
+			}
+			checkbox.checked = this.new_value
+			return this.new_value
+		}
+	}else{
+		for(var i = 0; i < tag.childNodes.length; i++){
+			//TODO. this is sort of a kludge to keep the search from going into nested lists
+			toggle_results = toggleCheckbox(tag.childNodes[i], this.new_value)
+			if( toggle_results != null){
+				this.new_value = toggle_results
+				return toggle_results
+			}
+		}
+	}
+}
+
 /*
  * Find the a child of el of type tag
  */
 function findChildWithTag(el, tag) {
 	for(var i=0;i<el.childNodes.length;i++) {
-		if(el.childNodes[i].tagName != null && el.childNodes[i].tagName.toLowerCase() == tag) return el.childNodes[i];
+		if(el.childNodes[i].tagName != null && el.childNodes[i].tagName.toLowerCase() == tag){
+			return el.childNodes[i];
+		}
 	}
 	return null;
 }

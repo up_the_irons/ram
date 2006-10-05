@@ -10,7 +10,7 @@ class CategoryController < ProtectedController
   
   def show
     if request.xhr?
-      show_collection('categories') do
+      show_collection({:table=>'categories'}) do
         category_contents(params, @order) 
         render :update do |page|
           page.replace_html :asset_list, :partial => 'asset/list'
@@ -19,7 +19,7 @@ class CategoryController < ProtectedController
     else
       #nest this in a boolean because show_collecction will return false if a resuce occurred
       # @order comes from the "sortable :show" directive above, automagically
-      category_contents(params, @order) if show_collection('categories')
+      category_contents(params, @order) if show_collection({:table=>'categories'})
     end
      
     @sort_header_url = {}

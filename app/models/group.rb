@@ -113,6 +113,19 @@ class Group < Collection
     remove_all_members
   end
   
+  #this will also remove all assets and articles, since access ot these models is dependent on the category as well.
+  def remove_all_categories
+    self.linkings.each do| link | 
+      #borked.
+      link.destroy
+    end
+  end
+  
+  def remove_category(category)
+    linking =Linking.find_by_group_id_and_category_id(self.id, category.id)
+    linking.destroy if linking.valid?
+  end
+  
   # enemeies.remove_member
   def remove_member(member)
     membership = Membership.find_by_user_id_and_collection_id(member.id, self.id)
