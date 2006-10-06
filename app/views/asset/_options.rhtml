@@ -20,4 +20,4 @@
 					:confirm=>"Are you sure you want to delete #{ h asset.name}?"
 					) 
 	%>
-	<%= link_to image_tag('/images/icons/basket_put.png',{:title=>'Add to Folio to Download'}), {:controller=>'folio', :action=>'add', :category_id=>asset.category.id,:asset_id=>asset.id},:post=>true %> 
+  <%= link_to image_tag('/images/icons/basket_put.png',{:title=>'Add to Folio to Download'}), {:controller=>'folio', :action=>'add', :category_id=>asset.category.id,:asset_id=>asset.id, :sort => nil, :sort_dir => nil},:post=>true %> 

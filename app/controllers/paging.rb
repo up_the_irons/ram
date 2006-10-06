@@ -57,7 +57,6 @@ module Paging
   include GBase
 
   module ClassMethods
-
     # Add this directive to your controller and pass it the action(s) you want to be able to have the capability to
     # save the "Rows / Page" link that a user may click.
     def paging_with_db(*ids)
@@ -97,12 +96,12 @@ module Paging
 
   def save_num_per_page 
     if params[:new_num_per_page]
-      p = Paging.find_by_controller_and_action(controller_name, action_name)
+      p = PagingTable.find_by_controller_and_action(controller_name, action_name)
 
       if p
         p.update_attributes(:num_per_page => params[:num_per_page])
       else
-        p = Paging.new(:controller => controller_name, :action => action_name, :num_per_page => params[:num_per_page])
+        p = PagingTable.new(:controller => controller_name, :action => action_name, :num_per_page => params[:num_per_page])
         p.save
       end
     end
@@ -110,7 +109,7 @@ module Paging
 
   def get_num_per_page
     if params[:num_per_page].nil?
-      p = Paging.find_by_controller_and_action(controller_name, action_name)
+      p = PagingTable.find_by_controller_and_action(controller_name, action_name)
       
       params[:num_per_page] = p.num_per_page.to_s if p
     end

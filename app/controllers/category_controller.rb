@@ -2,7 +2,8 @@ class CategoryController < ProtectedController
   cache_sweeper :change_sweeper
   layout "application", :except => [:feed]
 
-  sortable :show
+  sortable       :show
+  paging_with_db :show
 
   def index
     list
