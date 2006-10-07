@@ -13,8 +13,8 @@ class AdminController
 
   sortable :dashboard
   
-  sortable       :show
-  paging_with_db :show
+  #sortable       :show
+  #paging_with_db :show
   
        
   def index

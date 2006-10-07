@@ -25,7 +25,7 @@ class ProtectedController < ApplicationController
     @groups   = @category.groups & current_user.groups
 
     @assets = accessible_items(@category, 'assets', @groups, order)
-    @assets_pages, @assets = paginate_collection(@assets, :per_page => params[:num_per_page], :page => params[:page])
+    @asset_pages, @assets = paginate_collection(@assets, :per_page => params[:num_per_page], :page => params[:page])
 
     @articles = accessible_items(@category, 'articles', @groups)
     @article_pages, @articles = paginate_collection(@articles, :per_page => params[:num_per_page], :page => params[:page])
