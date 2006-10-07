@@ -12,6 +12,10 @@ class AdminController
   verify :method => :post, :only =>volatile, :redirect_to => { :action => :dashboard }
 
   sortable :dashboard
+  
+  sortable       :show
+  paging_with_db :show
+  
        
   def index
     redirect_to :action=>'dashboard'
@@ -115,4 +119,5 @@ class AdminController
       redirect_to :controller=>'inbox' 
     end
   end
+  
 end

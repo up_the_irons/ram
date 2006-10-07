@@ -125,6 +125,18 @@
 	background-color : #FDF766;
 }
 
+.pagination{
+	background-color: #efefef;
+	padding: 10px;
+}
+.pagination a{
+	text-decoration: underline;
+}
+
+.pagination .selected{
+	color: #f00;
+}
+
 .dataGrid th{
 	font-size         : 1.1em;
 	font-weight       : lighter;

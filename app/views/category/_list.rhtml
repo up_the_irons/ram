@@ -2,27 +2,32 @@
 <h1>Listing Categories</h1>
 <% end -%>
 <%=  @page_actions ||="" %>
-
-<dl class="listings">  
-<% for category in @categories %>
-  <dt><%= link_to(h(category.name),:controller=>'category', :action=>'show', :id=>category) %>
+<div id='category_list'>
+  <% if @category_pages -%>
+    <% @paging_url_options = { :model => 'category' } -%>
+    <%= render :partial => 'shared/paging', :locals => { :name => 'categories', :pages => @category_pages } %>
+  <% end -%>
   
-  <% admin_only_content do -%>
-    <span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} edit", {:action=>'edit_category', :id=>category.id},{:class=>"editOptions"} ) -%></span>
-  <% end -%>  
+  <dl class="listings">  
+  <% for category in @categories %>
+    <dt><%= link_to(h(category.name),:controller=>'category', :action=>'show', :id=>category) %>
+    
+    <% admin_only_content do -%>
+      <span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} edit", {:action=>'edit_category', :id=>category.id},{:class=>"editOptions"} ) -%></span>
+    <% end -%>  
+    
+    </dt>
+    <dd><%= h category.description %></dd>
+    
+    
+    <dd><ul class="inline_list">
+        <% category.contents.each do |c| -%>
+        <li><%= pluralize c.size, c[0].class.to_s unless c.empty? %></li>
+        <% end -%>
+        </ul></dd>
   
-  </dt>
-  <dd><%= h category.description %></dd>
-  
-  
-  <dd><ul class="inline_list">
-      <% category.contents.each do |c| -%>
-      <li><%= pluralize c.size, c[0].class.to_s unless c.empty? %></li>
-      <% end -%>
-      </ul></dd>
-
-<% end -%>
-</dl>
-
+  <% end -%>
+  </dl>
+</div>
 <%= link_to 'Previous page', { :page => @category_pages.current.previous } if @category_pages.current.previous %>
 <%= link_to 'Next page', { :page => @category_pages.current.next } if @category_pages.current.next %> 

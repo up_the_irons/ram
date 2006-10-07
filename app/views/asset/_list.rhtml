@@ -1,14 +1,13 @@
 <div id='asset_list'>
-<%= render :partial =>'layouts/page_view_options', :locals=>{:view_options=>['thumbnails','details'] }%>
-<div id="details">
-  <table><tr><td>
-  <% if @assets_pages -%>
-  <%= render :partial => 'shared/paging', :locals => { :name => 'Assets', :pages => @assets_pages } %>
+  <%= render :partial =>'layouts/page_view_options', :locals=>{:view_options=>['thumbnails','details'] }%>
+  <% if @asset_pages -%>
+    <% @paging_url_options = { :model => 'asset' } -%>
+    <%= render :partial => 'shared/paging', :locals => { :name => 'Assets', :pages => @asset_pages } %>
   <% end -%>
-  <%= render :partial => 'asset/details' %>
-  </td></tr></table>
-</div>
-<div id="thumbnails" style="display:none;">
-<%= render :partial=>'asset/thumbnails' %>
-</div>
+  <div id="details">
+    <%= render :partial => 'asset/details' %>
+  </div>
+  <div id="thumbnails" style="display:none;">
+      <%= render :partial=>'asset/thumbnails' %>
+  </div>
 </div>

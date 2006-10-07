@@ -1,6 +1,5 @@
 class CategoryController < ProtectedController
   cache_sweeper :change_sweeper
-  layout "application", :except => [:feed]
 
   sortable       :show
   paging_with_db :show
@@ -13,8 +12,9 @@ class CategoryController < ProtectedController
     if request.xhr?
       show_collection({:table=>'categories'}) do
         category_contents(params, @order) 
+        params[:model] = "asset" if params[:model].nil?
         render :update do |page|
-          page.replace_html :asset_list, :partial => 'asset/list'
+          page.replace_html "#{params[:model]}_list".to_sym, :partial => "#{params[:model]}/list"
         end
       end
     else

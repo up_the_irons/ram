@@ -1,4 +1,4 @@
-<p class="pageInstructions"><span class="extraInfo">Have a lot of files to upload? You should try the awesome "<%= link_to "<em>Bulk Uploader</em>", :controller=>'asset',:action=>'bulk_upload',:id=>@category.id %>"</span></p>
+<p class="pageInstructions"><span class="extraInfo">Have a lot of files to upload? You should try the awesome <a href="/asset/bulk_upload/<%= @category.id %>"><em>Bulk Uploader</em></a></span></p>
 <%= 
 form_tag({:controller=>'asset', :action =>'edit', :id=>@asset.id}, {:multipart => true}) %>
 <input type="hidden" id="update" name="update" value="asset_form" />

@@ -1,3 +1,9 @@
+<div id='article_list'>
+<% if @article_pages -%>
+  <% @paging_url_options = { :model => 'article' } -%>
+  <%= render :partial => 'shared/paging', :locals => { :name => 'Articles', :pages => @article_pages } %>
+<% end -%>
 <% @articles.each do |a| -%>
   <%= render :partial=>'article/article' ,:locals=>{:article=>a}%>
 <% end unless @articles.nil? -%>
+</div>

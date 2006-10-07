@@ -3,21 +3,20 @@
    per_page_param = :num_per_page if per_page_param.nil? 
    per_page_array = [10,20,40,80] if per_page_array.nil?   
 -%>
-
-<div style='float: left'>
-<%= "#{name} #{pages.current.first_item} - #{pages.current.last_item} of #{pages.item_count}" + (pages.page_count > 1 ? ', pages ' : '') %>
-<%= pagination_links_each(pages, :name => page_param) do |page_num|
-     link_to_remote(page_num.to_s, :url => { per_page_param => params[per_page_param], page_param => page_num }.merge(@paging_url_options || {}))
+<div class="pagination">
+  <div style='float: left'>
+    <%= "Page #{pages.current.number}, displaying #{name} #{pages.current.first_item} - #{pages.current.last_item} of #{pages.item_count}" + (pages.page_count > 1 ? ', pages ' : '') %>
+    <%= pagination_links_each(pages, :name => page_param, :link_to_current_page=>true) do |page_num|
+      link_to_remote(page_num.to_s, :url => { per_page_param => params[per_page_param], page_param => page_num }.merge(@paging_url_options || {}))
     end %>
-</div>
+  </div>
+  
+  <div style='float: right'>
+  Rows / Page: 
+  <% per_page_array.each do |n| -%>
+  <%= n.to_s == params[per_page_param] ? %{<span class="selected">#{n}</span>} : link_to_remote(n.to_s, :url => { page_param => pages.current, per_page_param => n, :new_num_per_page => true }.merge(@paging_url_options || {})) %>
+  <% end -%>
+  </div>
 
-<div style='float: right'>
-Rows / Page: 
-
-<% per_page_array.each do |n| -%>
-<%= n.to_s == params[per_page_param] ? n : link_to_remote(n.to_s, :url => { page_param => pages.current, per_page_param => n, :new_num_per_page => true }.merge(@paging_url_options || {})) %>
-<% end -%>
-</div>
-
-<div style="clear: both">
+  <br style="clear: both" />
 </div>

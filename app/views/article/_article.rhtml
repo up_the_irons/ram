@@ -3,6 +3,10 @@
 	  <dt class="title"><%= article.title %>"<span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} Edit", {:controller=>'article',:action=>'write', :id=>article.id},{:class=>"editOptions"}) if current_user.id == article.user_id %></span></dt>
 	  <dd class="author">Author: <%= User.find(article.author).login  %></dd>
 	  <dd class="published_on">Published On: <%=article.published_at %></dd>
+	  <% unless article.category_id.nil? -%>
+	  <dd class="published_in">Published in Category: <%= link_to Category.find(article.category_id).name, :controller=>'category',:action=>'show',:id=>article.category_id %>
+    </dd>
+    <% end -%>
 	  <% if article.allow_comments? -%>
 	  <dd class="comments">Comments: <%= article.comment_count %></dd>
 	  <% end -%>

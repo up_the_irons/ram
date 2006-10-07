@@ -9,6 +9,6 @@
 
 
 <% content_for('application_header') do -%>
-  <h1><%=h @article.title %> </h1>
+  <h1><%=h @article.title %></h1>
 <% end %>
 <%= render :partial=>'article', :locals=>{:article=>@article} %>
