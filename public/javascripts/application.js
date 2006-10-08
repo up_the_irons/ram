@@ -55,6 +55,14 @@ View = {
 		return false;
 	}
 }
+View.CheckAll = function(list,name,toggle){
+	
+	toggle_val = toggle.checked
+	for(var i = 0; i < list.length;i++){
+		list[i].checked = toggle_val
+	}
+	
+}
 View.HasManySortHelper ={
 	sort_items : true,
 	hidden_selected_items_to_submit : null,

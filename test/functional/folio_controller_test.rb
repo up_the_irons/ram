@@ -38,10 +38,10 @@ class FolioControllerTest < Test::Unit::TestCase
     login_as :quentin
      assert_difference @request.session[:folio], :size do
         @group, @asset = group_and_asset(current_user)
-        post :add, :group_id=>@group.id, :asset_id=>@asset.id
+        post :add, :group_id=>@group.id, :assets=>[@asset.id]
      end
      assert_equal @request.session[:folio][0], @asset.id
-     assert_equal assigns(:flash)[:notice], "#{@asset.name} was added to your folio"
+     assert_equal assigns(:flash)[:notice], "Added (1) New Assets.<br/>"
      assert_response :redirect
   end
   
@@ -49,13 +49,13 @@ class FolioControllerTest < Test::Unit::TestCase
     login_as :quentin
     @group, @asset = group_and_asset(current_user)
     assert_difference @request.session[:folio], :size do
-      post :add, :group_id=>@group.id, :asset_id=>@asset.id
+      post :add, :group_id=>@group.id, :assets=>[@asset.id]
     end
     
     assert_no_difference @request.session[:folio], :size do
-      post :add, :group_id=>@group.id, :asset_id=>@asset.id
+      post :add, :group_id=>@group.id, :assets=>[@asset.id]
     end
-    assert_equal assigns(:flash)[:notice], "#{@asset.name} is already in your folio"
+    assert_equal assigns(:flash)[:notice], "(1) Assets could not be added because they already exist.<br/>"
   end
   
   def test_shall_prevent_ads_on_get
@@ -74,7 +74,6 @@ class FolioControllerTest < Test::Unit::TestCase
       #restricted_asset = get_restricted_assets(current_user)[0].id
       post :add, :group_id=>current_user.groups[0].id, :asset_id=>7
     end
-    assert_equal assigns(:flash)[:notice], "The requested asset could not be located on the server."
     assert_response :redirect
   end
   

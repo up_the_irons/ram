@@ -44,7 +44,13 @@
 <%= render :partial=>'article/list' if params[:display] == 'articles' -%>
 <br class="clear_both"/>
 <div id="new_asset_form">
+  <%= form_tag :controller=>'folio',:action=>'add' %>
   <%= render :partial=>'asset/list' if params[:display].nil? || params[:display] == 'assets' -%>
+  <div>
+    <%= image_tag('/images/icons/basket_put.png',{:title=>'Add to Folio to Download'})%>
+    <%= submit_tag "Add To Folio" %> 
+  </div>
+  </form>
 </div>
 
 <% content_for('page_meta') do -%>

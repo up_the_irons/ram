@@ -66,19 +66,23 @@ class FolioController < ProtectedController
   
   def add
 
-    @asset = find_asset_for_group_member(params[:group_id].to_i,params[:asset_id].to_i) if params[:group_id]
-    @asset = find_asset_in_category_for_group_member(params[:category_id].to_i,params[:asset_id].to_i) if params[:category_id]
-    unless @asset.nil?
-      unless session[:folio].include? @asset.id
-        flash[:notice] = "#{@asset.name} was added to your folio"
-        session[:folio] << @asset.id
-      else
-         flash[:notice] = "#{@asset.name} is already in your folio"
-      end 
-    else
-      flash[:notice] = "The requested asset could not be located on the server."
-    end
-     
+    #@asset = find_asset_for_group_member(params[:group_id].to_i,params[:asset_id].to_i) if params[:group_id]
+    #@asset = find_asset_in_category_for_group_member(params[:category_id].to_i,params[:asset_id].to_i) if params[:category_id]
+    new_assets = []
+    existing_assets = []
+    
+    params[:assets].each do | a |
+      asset = Asset.find(a)
+      unless asset.nil?
+        n, e = add_to_folio(asset) if current_user.assets.include?(asset)
+        new_assets << n unless n.nil?
+        existing_assets << e unless e.nil?
+      end
+    end unless params[:assets].nil?
+    flash[:notice] =""
+    flash[:notice] << "Added (#{new_assets.size}) New Assets.<br/>" unless new_assets.empty?
+    flash[:notice] << "(#{existing_assets.size}) Assets could not be added because they already exist.<br/>" unless existing_assets.empty?
+    
     respond_to do |wants|
       wants.html do
         index
@@ -89,8 +93,32 @@ class FolioController < ProtectedController
         end
       end
     end
+    
   end
   
+  
+  def add_to_folio(asset)
+    results = [nil,nil]
+    unless session[:folio].include? asset.id
+      results[0] = asset.name
+      session[:folio] << asset.id
+    else
+      results[1] = asset.name
+    end
+    results
+  end
+   # unless @asset.nil?
+   #   unless session[:folio].include? @asset.id
+   #     session[:folio] << @asset.id
+   #   else
+   #      flash[:notice] = "#{@asset.name} is already in your folio"
+   #   end 
+   # else
+   #   flash[:notice] = "The requested asset could not be located on the server."
+   # end
+   #  
+  
+    
   def remove
     unless params[:id].nil?
       unless session[:folio].delete(params[:id].to_i).nil?
