@@ -54,14 +54,13 @@ class FolioController < ProtectedController
       end
     end
 
-    respond_to do |wants|
-      wants.js do
-        render :update do |page|
-          page.replace_html :asset_list, :partial => 'asset/list'
-        end
-      end
-      wants.html
-    end
+    #respond_to do |wants|
+      #wants.js do
+      #  render :update do |page|
+      #    #page.replace_html :asset_list, :partial => 'asset/list'
+      #  end
+      #end
+    #end
   end
   
   def add
@@ -89,6 +88,7 @@ class FolioController < ProtectedController
       end
       wants.js do 
         render :update do |page|
+          page.redirect_to :controller=>'folio',:action=>'list'
         #todo ajax removal
         end
       end
