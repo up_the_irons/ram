@@ -7,7 +7,7 @@
   <dt>Admin Only Options<dt>
   <dd><%= link_to "#{image_tag('/images/icons/pencil.png')} Edit Asset", :controller=>'asset', :action=>'edit',:id=>@asset %></dd>
   <dd><%= link_to "#{image_tag('/images/icons/cross.png')} Delete Asset", {:controller=>'asset', :action=>'destroy',:id=>@asset},{:confirm=>"Are you sure you want to remove #{@asset.filename}?",:post=>true} %></dd>
-	<dd><%= link_to "#{image_tag('/images/icons/basket_put.png',{:title=>'Add to Folio to Download'})} Add To Folio", {:controller=>'folio', :action=>'add', :category_id=>@asset.category.id,:asset_id=>@asset.id},:post=>true %></dd>
+	<dd><%= link_to "#{image_tag('/images/icons/basket_put.png',{:title=>'Add to Folio to Download'})} Add To Folio", {:controller=>'folio', :action=>'add', :category_id=>@asset.category.id,:assets=>[@asset.id]},:post=>true %></dd>
 </dl>
 <% end -%>
 

@@ -2,7 +2,7 @@ img{ border:none;}
 body{ 
 	margin            : 0;
 	padding           : 0;
-	/*background-image  : url('/images/application_background.jpg');*/
+	background-image  : url('/images/background.jpg');
 	background-repeat : repeat-x;
 	background-color  : #ffffff;
 	font-family       : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
@@ -62,15 +62,21 @@ a:hover{
 }
 
 .flash_notice, .flash_warning, .flash_error{
-	border           : 2px solid #ffff00;
-	padding          : 7px;
-	padding-bottom   : 12px;
-	margin-bottom    : 20px;
-	background-color : #ffff66;
+	border           : 1px solid #c0c5ac;
+	/*
+	position         : absolute;
+	top              : 44px;
+	padding          : 10px;
+	right            : -50px;
+	z-index          : 2;
+	
+	width            : 100%;
+	*/
+	padding: 10px;
+	font-size: 12px;
+	background-color : #fbfce5;
     display          : block;
 	clear            : both;
-	font-size        : 120%;
-	padding          : 10px;
 	text-align       : center;
 }
 

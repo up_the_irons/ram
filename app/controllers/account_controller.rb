@@ -114,6 +114,10 @@ class AccountController < ProtectedController
     render :nothing =>true
   end
   
+  def display_as
+    session[:asset_display] = params[:id] unless params[:id].nil?
+  end
+  
   protected 
   def after_login
     flash[:grail]  = "Welcome #{current_user.login}!"

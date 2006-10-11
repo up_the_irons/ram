@@ -14,13 +14,13 @@
 	</tr>
 <% for asset in @assets -%>
   <%row_class =  cycle("even", "odd") %>
-	<tr id="<%="asset_#{asset.id}"%>" onmouseover="this.className='highlighted'" onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>">
-	  <td><input type="checkbox" name="assets[]" value="<%= asset.id %>" /></td>
+	<tr id="<%="asset_#{asset.id}"%>" class="<%= row_class %>">
+	  <td><input type="checkbox" name="assets[]" value="<%= asset.id %>" onclick="View.SelectRow(this,'asset_<%= asset.id%>','<%= row_class %>','highlighted')"/></td>
 		<td><%= link_to asset.name, :controller=>'asset', :action=>'show', :id=>asset.id %></td>
 		<td><%= number_to_human_size asset.size %></td>
 		<td><%= asset.content_type %></td>
-		<td><%= asset.updated_on %></td>
-		<td><%= asset.groups.find(:all).map{|g| link_to(g.name, :action=>'show',:controller=>'group',:id=>g.id)}.join(', ') %></td>
+		<td><%= asset.updated_on.strftime("%Y-%m-%d") unless asset.updated_on.nil?%></td>
+		<td><%= asset.groups.find(:all).map{|g| g.name}.join(', ') %></td>
 		
 		<% unless params[:controller] == 'folio' -%>
 		<td>

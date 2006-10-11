@@ -7,6 +7,12 @@ body{
 		font             : 0.8125em Verdana, sans-serif;
 		color            : #333;
 		background       : #FFF;
+	
+		background-image  : url(/images/background.jpg);
+		background-repeat : repeat-x;
+		/*background-color : #a09fa0;*/
+	
+		background-color: #d3d9e2;
 	}
 /*fixed using the holly hack */
 /*Child Combinator Override Method*/
@@ -37,10 +43,6 @@ a:link, a:visited{
 	padding:3px;
 	font-size: 0.8em;
 	text-decoration:none
-}	
-
-body{
-	background-color : #333257;
 }
 
 #applicationWrapper{
@@ -103,15 +105,13 @@ body{
 }
 	
 #applicationHeader{
-	/*background-image  : url(/images/header-background.gif);*/
-	background-repeat : repeat-x;
 	padding           : 0 0 0 10px;
 	margin            : 0;
-	background-color  : #333257;
+	/* background-color  : #333257; */
 }
 	
 #applicationHeader h1{
-	color             : #FFFFFF;
+	color             : #333;
 	font-size         : 2em;
 	font-weight       : lighter;
 	margin            : 0 0 10px 0;
@@ -120,7 +120,7 @@ body{
 .searchField, .searchSubmit{
 	padding           : 2px;
 	color             : #ffffff;
-	background-color  : #5A5878;
+	background-color  : #a09fa0;
 	border            : solid 1px #2C2951;
 }
 
@@ -165,7 +165,7 @@ body{
 }
 	
 #pageHeader{
-	background-color  : #333257;
+	/*background-color  : #333257;*/
 	line-height       : normal;
 	border            : 1px solid transparent;
 }
@@ -211,7 +211,7 @@ body{
 
 
 li.selected{
-	background-color: #eeeeff;
+	/*background-color: #eeeeff;*/
 	padding: 2px;
 	display: inline;
 }
@@ -333,7 +333,6 @@ li.selected{
 
 #applicationFooter{
 	display           : block;
-	background-color  : #ffffff;
 	border-top        : 1px solid #BCBCCB;
 	padding           : 10px 5px 10px 5px;
 	font-size         : .8em;

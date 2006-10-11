@@ -79,7 +79,7 @@
 			
 			<% end -%>
 				
-			<td id="page" valign="top" style="border-left:1px solid #efefef;padding-left:10px;">
+			<td id="page" valign="top" style="border-left:1px solid #efefef;padding-left:10px;padding-top:10px;">
 				<%= yield :page_view_options %>
 				<%= yield :layout %>
 			</td>
@@ -90,7 +90,6 @@
     <%= yield :page_meta %>
     <%= render :partial=>'shared/page/footer'%>
 	</div>
-	<%= flash[:grail]%>
 	<%= grail_notify({:subject=>"System Message", :body=>flash[:grail]})  if flash.keys.include?(:grail) %>
 </body>
 </html>

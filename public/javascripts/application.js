@@ -30,7 +30,8 @@ Content ={
 				$('details').show();
 				$('thumbnails').hide();
 			break;
-		}		
+		}
+		new Ajax.Request('/account/display_as/'+str);
 	},
 	in_cache: function(element){
 		if(Content.cache.include(element)){
@@ -53,6 +54,14 @@ View = {
 		$(id_1).toggle();
 		$(id_2).toggle();
 		return false;
+	}
+}
+View.SelectRow = function(checkbox, parent_row,unselected_class,selected_class){
+	if(checkbox.checked){
+		$(parent_row).className= selected_class;
+		$(parent_row).onmouseout='';	
+	}else{
+		$(parent_row).className= unselected_class;
 	}
 }
 View.CheckAll = function(list,name,toggle){

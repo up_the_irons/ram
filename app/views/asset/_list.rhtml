@@ -4,10 +4,19 @@
     <% @paging_url_options = { :model => 'asset' } -%>
     <%= render :partial => 'shared/paging', :locals => { :name => 'Assets', :pages => @asset_pages } %>
   <% end -%>
-  <div id="details">
+  
+  <% details_display = "display:none"
+  thumbnails_display = "display:none" -%>
+  <% unless session[:asset_display].nil?
+    details_display = "display:block;" if session[:asset_display] == 'details'
+    thumbnails_display = "display:block;" if session[:asset_display] == 'thumbnails'
+  end -%>
+  
+  <div id="details" style="<%= details_display %>">
     <%= render :partial => 'asset/details' %>
   </div>
-  <div id="thumbnails" style="display:none;">
+  <div id="thumbnails" style="<%= thumbnails_display %>">
       <%= render :partial=>'asset/thumbnails' %>
   </div>
+
 </div>

@@ -29,7 +29,7 @@ ul.tree ul, ul.selectableTree ul{
 
 
 ul.tree li.closed ul{
-	display: none;
+	/*display: none;*/
 }
 
 
