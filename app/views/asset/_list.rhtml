@@ -10,6 +10,8 @@
   <% unless session[:asset_display].nil?
     details_display = "display:block;" if session[:asset_display] == 'details'
     thumbnails_display = "display:block;" if session[:asset_display] == 'thumbnails'
+  else
+    details_display = "display:block;"
   end -%>
   
   <div id="details" style="<%= details_display %>">
