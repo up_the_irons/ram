@@ -72,6 +72,19 @@ module ApplicationHelper
   def admin_only_content
     yield if current_user.is_admin?
   end
+  
+  def display_as_round_box(&block)
+    out =""
+    out << %{
+    <div class="roundBox">
+    	<div class="topRightCorner"><div class="topLeftCorner"></div></div>
+    		<div class="content">}
+      out << capture(&block) if block_given?
+    out <<	%{  		</div>
+      	<div class="bottomRightCorner"><div class="bottomLeftCorner"></div></div>				
+      </div>}
+    out
+  end
 
   
   def link_to_if_editable(name,options={},html_options=nil,*parameters_for_method_reference)

@@ -5,9 +5,9 @@
   <%= "<li>#{link_to(@category.name,:controller=>'category',:action=>'show',:id=>@category.id)} </li>" unless @category.nil?%>
   <%= "<li>Bulk Uploader </li>"%>
 <% end -%>
-
+<% content_for('application_header') do -%>
 <h1>Bulk Uploader</h1>
-
+<% end -%>
 
 <div id="group_select">
 	<div class="pageInstructions" style="width:550px;">
@@ -35,6 +35,7 @@
 	</div>
 
 	<div id="uploader">
+	  <h2 class="pageInstructions">You need Adobe Flash installed to use the bulk file uploader.</h2>
 	</div>	
 </div>
 <script type="text/javascript">

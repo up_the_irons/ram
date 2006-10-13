@@ -74,13 +74,13 @@ ul.tree span.b, ul.selectableTree span.b{
 
 
 ul.tree span.a.children span.b{
-	background: url(/images/icons/bullet_toggle_minus.png) 0 50% no-repeat;
+	/* background: url(/images/icons/bullet_toggle_minus.png) 0 50% no-repeat; */
 	cursor: pointer;
 }
 
 
 ul.tree li.closed span.a.children span.b{
-	background: url(/images/icons/bullet_toggle_plus.png) 0 50% no-repeat;
+	/* background: url(/images/icons/bullet_toggle_plus.png) 0 50% no-repeat; */
 	cursor: pointer;
 }
 
@@ -125,7 +125,7 @@ ul.tree a, ul.selectableTree a{
 
 ul.tree span.a.children a, ul.selectableTree span.a.children a {
 	background: no-repeat;
-	background-image: url(/images/icons/folder_page_white.png);
+	background-image: url(/images/icons/folder.png);
 }
 
 

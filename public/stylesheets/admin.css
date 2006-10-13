@@ -8,6 +8,7 @@ a.editOptions
 	width               : 480px;
 	display             : block;
 	margin              : 5px;
+	margin-bottom       : 20px;
 }
 .roundBox .topRightCorner, .roundBox .topLeftCorner, .roundBox .bottomLeftCorner, .roundBox .bottomRightCorner
 {

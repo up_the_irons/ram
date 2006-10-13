@@ -8,24 +8,28 @@
     <%= render :partial => 'shared/paging', :locals => { :name => 'categories', :pages => @category_pages } %>
   <% end -%>
   
-  <dl class="listings">  
-  <% for category in @categories %>
-    <dt><%= link_to(h(category.name),:controller=>'category', :action=>'show', :id=>category) %>
+  <dl>  
+  <% for category in @categories -%>
     
-    <% admin_only_content do -%>
-      <span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} edit", {:action=>'edit_category', :id=>category.id},{:class=>"editOptions"} ) -%></span>
-    <% end -%>  
-    
-    </dt>
-    <dd><%= h category.description %></dd>
-    
-    
-    <dd><ul class="inline_list">
-        <% category.contents.each do |c| -%>
-        <li><%= pluralize c.size, c[0].class.to_s unless c.empty? %></li>
-        <% end -%>
-        </ul></dd>
-  
+    <% 
+    #build the rounded box
+    c = display_as_round_box do -%>
+      <dt><%= link_to(h(category.name),:controller=>'category', :action=>'show', :id=>category) %>
+        <% admin_only_content do -%>
+          <span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} edit", {:action=>'edit_category', :id=>category.id},{:class=>"editOptions"} ) -%></span>
+        <% end -%>  
+      </dt>
+      <dd><%= h category.description %></dd>
+      <dd><ul class="inline_list">
+          <% category.contents.each do |c| -%>
+            <li><%= pluralize c.size, c[0].class.to_s unless c.empty? %></li>
+          <% end -%>
+          </ul>
+      </dd>
+    <% end 
+    #now render the rounded box to the view
+    -%>
+    <%= c %>
   <% end -%>
   </dl>
 </div>

@@ -1,11 +1,5 @@
 <ul>
 <% if current_user.is_admin? -%>
-  <li><%= link_to('Users', :controller=>'admin',:action=>'users') %></li>
-  <li><%= link_to('Categories', :controller=>'admin',:action=>'categories') %></li>
-	<li><%= link_to('Groups', :controller=>'admin',:action=>'groups')%></li>
 	<li><%= link_to('Administration Dashboard',:controller=>'admin')%></li>
-<% else -%>
-	<li><%= link_to('Categories', :controller=>'category') %></li>
-	<li><%= link_to('Groups', :controller=>'group')%></li>
 <% end -%>
 </ul>

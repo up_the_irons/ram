@@ -141,10 +141,10 @@
 	font-size         : 1.1em;
 	font-weight       : lighter;
 	/*border-bottom     : solid 4px #BCBCCB;*/
-	border-left       : 1px solid #333;
+	border-left       : 1px solid #40445e;
 	text-align        : left;
 	padding           : 5px;
-	background-image  : url(/images/nav_background.jpg);
+	background-image  : url(/images/datagrid_background.jpg);
 	background-repeat : repeat-x;
 	color             : #fff;
 }

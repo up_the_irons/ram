@@ -6,8 +6,9 @@
 <%=  @page_actions ||="" %>
 
 
-<dl class="listings">  
+<dl>  
 <% for group in @groups %>
+  <% c = display_as_round_box do -%>
   <dt><%= link_to(h(group.name),:controller=>'group', :action=>'show', :id=>group.id) %>
   
   <% admin_only_content do -%>
@@ -16,7 +17,9 @@
   
   </dt>
   <dd style="display:inline;"><%= h group.description %>
-  <% end -%>
+  <%end -%>
+  <%= c %>
+<% end -%>
 </dl>
 
 <%= link_to 'Previous page', { :page =>@group_pages.current.previous } if @group_pages.current.previous %>
