@@ -126,17 +126,24 @@
 }
 
 .pagination{
-	background-color: #efefef;
-	padding: 10px;
+	background-color  : #efefef;
+	padding           : 10px;
 }
 .pagination a{
-	text-decoration: underline;
+	text-decoration   : underline;
 }
 
 .pagination .selected{
-	color: #f00;
+	color             : #f00;
 }
-
+.button{
+	margin            : 0.2em;
+	background-color  : #efefef;
+	color             : #000;
+	padding           : 0.5em 0.8em 0.5em 0.8em;
+	border-right      : 1px solid #ccc;
+	border-bottom      : 1px solid #ccc;
+}
 .dataGrid th{
 	font-size         : 1.1em;
 	font-weight       : lighter;
@@ -152,10 +159,10 @@
 	background-color  : #BCBCCB;
 }
 .dataGrid th a{
-	color: #fff;
+	color             : #fff;
 }
 .dataGrid td{
-	padding          : 5px 5px 5px 5px;
+	padding           : 5px 5px 5px 5px;
 }
 .dataGrid td li{
 	list-style       : none;

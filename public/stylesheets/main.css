@@ -103,14 +103,24 @@ a:link, a:visited{
 
 .searchField, .searchSubmit{
 	padding           : 2px;
-	color             : #ffffff;
-	background-color  : #a09fa0;
-	border            : solid 1px #2C2951;
+	color             : #fff;
+	background-color  : #000;
+	border            : none;
+	font-weight       : bold;
+	text-align        : left;
+	font-style        : normal;
+	font-variant      : normal;
+	font-weight       : normal;
+	line-height       : normal;
+	font-size-adjust  : none;
+	font-stretch      : normal;
 }
 
 .searchField{
 	color             :#333;
 	background-color  :#ffffff;
+	font-size         : 1.5em;
+	width             : 150px;
 }
 
 #breadcrumb{

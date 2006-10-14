@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'zip/zipfilesystem'
 
-class FolioController < ProtectedController
+class BriefcaseController < ProtectedController
   include Sortable
 
   verify :method => :post, :only => [ :add, :remove, :remove_all ],
@@ -15,15 +15,15 @@ class FolioController < ProtectedController
   
   def list
     @assets = []
-    if session[:folio].empty?
-      flash[:notice] = "Your folio is empty." 
+    if session[:briefcase].empty?
+      flash[:notice] = "Your briefcase is empty." 
     else
-      session[:folio].map do |a| 
+      session[:briefcase].map do |a| 
         begin
           asset = Asset.find(a)
           @assets << asset if asset
         rescue
-          session[:folio].delete(a)
+          session[:briefcase].delete(a)
           flash[:notice] = "Could not find asset using the id of #{a}"
         end
       end
@@ -73,7 +73,7 @@ class FolioController < ProtectedController
     params[:assets].each do | a |
       asset = Asset.find(a)
       unless asset.nil?
-        n, e = add_to_folio(asset) if current_user.assets.include?(asset)
+        n, e = add_to_briefcase(asset) if current_user.assets.include?(asset)
         new_assets << n unless n.nil?
         existing_assets << e unless e.nil?
       end
@@ -88,7 +88,7 @@ class FolioController < ProtectedController
       end
       wants.js do 
         render :update do |page|
-          page.redirect_to :controller=>'folio',:action=>'list'
+          page.redirect_to :controller=>'briefcase',:action=>'list'
         #todo ajax removal
         end
       end
@@ -97,21 +97,21 @@ class FolioController < ProtectedController
   end
   
   
-  def add_to_folio(asset)
+  def add_to_briefcase(asset)
     results = [nil,nil]
-    unless session[:folio].include? asset.id
+    unless session[:briefcase].include? asset.id
       results[0] = asset.name
-      session[:folio] << asset.id
+      session[:briefcase] << asset.id
     else
       results[1] = asset.name
     end
     results
   end
    # unless @asset.nil?
-   #   unless session[:folio].include? @asset.id
-   #     session[:folio] << @asset.id
+   #   unless session[:briefcase].include? @asset.id
+   #     session[:briefcase] << @asset.id
    #   else
-   #      flash[:notice] = "#{@asset.name} is already in your folio"
+   #      flash[:notice] = "#{@asset.name} is already in your briefcase"
    #   end 
    # else
    #   flash[:notice] = "The requested asset could not be located on the server."
@@ -121,39 +121,39 @@ class FolioController < ProtectedController
     
   def remove
     unless params[:id].nil?
-      unless session[:folio].delete(params[:id].to_i).nil?
-        flash[:notice] = "You removed the file from your folio."
+      unless session[:briefcase].delete(params[:id].to_i).nil?
+        flash[:notice] = "You removed the file from your briefcase."
       else
-        flash[:notice] = "File was not removed from folio."
+        flash[:notice] = "File was not removed from briefcase."
       end  
     end
     redirect_to :action=>'list'
   end
   
   def remove_all
-    session[:folio].clear
-    flash[:notice] = "You emptied your folio"
+    session[:briefcase].clear
+    flash[:notice] = "You emptied your briefcase"
     redirect_to :action=>'list'
   end
   
   #TODO: Create some sweeper event, which will remove zip files after a certain amount of time.
   def zip
-      @zip_file = "#{RAILS_ROOT}/downloads/#{current_user.login}_folio_#{(Time.now).to_i}.zip"
+      @zip_file = "#{RAILS_ROOT}/downloads/#{current_user.login}_briefcase_#{(Time.now).to_i}.zip"
     if create_zip(@zip_file)
       send_file @zip_file
     else
-      render :text=>'error creating zip of folio'
+      render :text=>'error creating zip of briefcase'
     end
   end
   
   protected
   def create_zip(path)
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
-      zip.dir.mkdir('folio') #acts as the root folder
-      session[:folio].map do | a |
+      zip.dir.mkdir('briefcase') #acts as the root folder
+      session[:briefcase].map do | a |
         asset = Asset.find a
         unless asset.nil?
-          path = "folio/#{create_category_tree(asset.category_id)}"
+          path = "briefcase/#{create_category_tree(asset.category_id)}"
           zip.dir.mkdir(path) unless zip.entries.find{|x| x.name =~ /#{path}/}
           zip.file.open("#{path}#{asset.filename}", 'w'){|file| file << asset.data }
         end

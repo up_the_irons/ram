@@ -130,7 +130,7 @@ class AccountController < ProtectedController
     flash[:grail]  = "Welcome #{current_user.login}!"
     current_user.last_login_at = Time.now
     current_user.save
-    session[:folio] = []
+    session[:briefcase] = []
     session[:view]={:expand_menu=>true}
     
     session[:category_tree] = current_user.categories_as_tree

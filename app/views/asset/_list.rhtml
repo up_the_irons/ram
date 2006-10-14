@@ -15,11 +15,11 @@
   end -%>
   
   <div id="details" style="<%= details_display %>">
-    <%= form_tag :controller=>'folio',:action=>'add' %>
+    <%= form_tag :controller=>'briefcase',:action=>'add' %>
     <%= render :partial => 'asset/details' %>
     <div style="display:block;clear:both;margin-top:10px;">
-      <%= image_tag('/images/icons/basket_put.png',{:title=>'Add to Folio to Download'})%>
-      <%= submit_tag "Add To Folio" %> 
+      <%= image_tag('/images/icons/briefcase.png',{:title=>'Add to Briefcase to Download'})%>
+      <%= submit_tag "Add To Briefcase", {:class=>'button'} %> 
     </div>
     </form>
   </div>

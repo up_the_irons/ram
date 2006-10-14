@@ -12,7 +12,7 @@
   <dt><%= link_to(h(group.name),:controller=>'group', :action=>'show', :id=>group.id) %>
   
   <% admin_only_content do -%>
-    <span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} edit", {:action=>'edit_group', :id=>group.id},{:class=>"editOptions"} ) -%></span>
+<%= link_to("#{image_tag('/images/icons/pencil.png')} Edit", {:action=>'edit_group', :id=>group.id},{:class=>"editOptions"} ) -%>
   <% end -%>  
   
   </dt>

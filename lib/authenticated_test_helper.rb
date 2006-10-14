@@ -2,7 +2,7 @@ module AuthenticatedTestHelper
   # Sets the current user in the session from the user fixtures.
   def login_as(user)
     @request.session[:user] = users(user).id
-    @request.session[:folio] = []
+    @request.session[:briefcase] = []
     @request.session[:view] = {:expand_menu=>true}
     @request.session[:category_tree] ={:root=>{:parent=>nil,:children=>[],:name=>"",:id=>nil}}
   end

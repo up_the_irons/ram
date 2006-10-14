@@ -60,9 +60,9 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   
-  def test_should_have_an_empty_folio_at_login
+  def test_should_have_an_empty_briefcase_at_login
     post :login, :login => 'quentin', :password => 'qazwsx'
-    assert_equal assigns(:session)[:folio], []
+    assert_equal assigns(:session)[:briefcase], []
   end
 
 

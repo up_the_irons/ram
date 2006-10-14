@@ -1,4 +1,10 @@
 <% content_for('application_header') do -%>
 <h1><%= current_user.full_name.titleize unless current_user.respond_to?('full_name') %>'s Inbox</h1>
 <% end -%>
+
+<% 
+#build the rounded box
+c = display_as_round_box do -%>
 Inbox Content (will contain stuff like "your recent files", "messages", "recent changes to things you monitor")
+<% end -%>
+<%= c %>

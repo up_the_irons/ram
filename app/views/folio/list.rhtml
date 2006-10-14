@@ -1,8 +1,0 @@
-<h1>Folio Items</h1>
-<h2>Your folio contains <%= pluralize(session[:folio].size, 'asset') %></h2>
-<%= render :partial=>'asset/list' -%>
-<% if session[:folio].size > 0 %>
-<br class="clear_both" />
-<p><%= link_to'Empty Folio', {:controller=>'folio', :action=>'remove_all'},{:post=>true} %></p>
-<p><%= link_to'Download Archive of folio as a .zip file', :action=>'zip' %></p>
-<% end -%>

@@ -16,7 +16,7 @@
     c = display_as_round_box do -%>
       <dt><%= link_to(h(category.name),:controller=>'category', :action=>'show', :id=>category) %>
         <% admin_only_content do -%>
-          <span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} edit", {:action=>'edit_category', :id=>category.id},{:class=>"editOptions"} ) -%></span>
+          <%= link_to("#{image_tag('/images/icons/pencil.png')} Edit", {:controller=>'admin',:action=>'edit_category', :id=>category.id},{:class=>"editOptions"} ) -%>
         <% end -%>  
       </dt>
       <dd><%= h category.description %></dd>
@@ -33,5 +33,5 @@
   <% end -%>
   </dl>
 </div>
-<%= link_to 'Previous page', { :page => @category_pages.current.previous } if @category_pages.current.previous %>
-<%= link_to 'Next page', { :page => @category_pages.current.next } if @category_pages.current.next %> 
+<%= link_to 'Previous page', { :page => @category_pages.current.previous},{:class=>"button"} if @category_pages.current.previous %>
+<%= link_to 'Next page', { :page => @category_pages.current.next},{:class=>"button"} if @category_pages.current.next %> 
