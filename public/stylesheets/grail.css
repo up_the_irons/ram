@@ -31,7 +31,7 @@
 }
 .music_video_icon{
 	display            : block;
-	border             : 1px solid #cfcfcf;
+	/*border             : 1px solid #cfcfcf;*/
 	background-color   : #fff;
 	background         : transparent;
 	margin             : 10px;

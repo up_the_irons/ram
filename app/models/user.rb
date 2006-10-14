@@ -133,6 +133,10 @@ class User < ActiveRecord::Base
     Asset.search(query, groups.map { |o| o.id }, order)
   end
   
+  def articles_search(query,order= nil)
+    Article.search(query, groups.map { |o| o.id }, order)
+  end
+  
   def accessible_articles
     articles = groups.map{|g| g.articles}
     articles = articles.flatten.uniq || []

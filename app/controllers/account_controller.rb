@@ -72,10 +72,8 @@ class AccountController < ProtectedController
     @user    = current_user
     @person  = @user.person 
     @profile = @user.profile
-
+    @avatar  = @user.avatar ||= Avatar.new
     if request.post? && @user
-      @avatar  = @user.avatar ||= Avatar.new
-      
       #used to prevent users from forging the request to reset attributes we want to protect.
       safe_hash = {:email=>''}
       safe_hash[:email] = params[:user][:email] if params[:user] && params[:user][:email]

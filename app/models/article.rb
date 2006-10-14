@@ -113,6 +113,15 @@ class Article < ActiveRecord::Base
     linking =Linking.find_by_linkable_id_and_linkable_type_and_group_id(self.id,'Article', group.id)
     linking.destroy if linking.valid?
   end
+
+
+  class << self      
+    def search(query, groups, order = nil)
+      groups = [groups].flatten
+      find(:all, :select => "articles.*", :joins => "INNER JOIN linkings ON articles.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Article') AND (articles.title LIKE ? OR articles.body LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = articles.id AND taggings.taggable_type = 'Article' AND tags.name LIKE ?) IS NOT NULL)", "%#{query}%", "%#{query}%", "%#{query}%"], :group => "articles.id", :order => order)
+    end
+  end
+
   
   protected
     def create_permalink

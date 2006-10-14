@@ -8,11 +8,11 @@ class SearchController < ProtectedController
     assets
     categories
     groups
-
+    articles
     # Reset these module params (note: the modules should take care of this automatically at some point)
     params[:sort] = params[:sort_dir] = params[:page] = nil
 
-    flash[:notice] = "Your search returned no results." if @assets.empty? and @cats.empty? and @groups.empty? and @cats.empty?
+    flash[:notice] = "Your search returned no results." if @assets.empty? and @articles.empty? and @cats.empty? and @groups.empty? and @cats.empty?
   rescue
     redirect_to :controller => 'inbox'
     flash[:notice] = "You need to belong to at least one group for search to work."
@@ -24,6 +24,12 @@ class SearchController < ProtectedController
     @sort_header_url    = { :action => 'assets' }
     @paging_url_options = { :action => 'assets' } 
 
+    conditional_render
+  end
+  
+  
+  def articles
+    @articles = current_user.articles_search(params[:id], @order)
     conditional_render
   end
 
@@ -53,7 +59,7 @@ class SearchController < ProtectedController
       render :update do |page|
         page.replace_html :asset_list, :partial => 'asset/list'
       end
-    when /(categories|groups)/
+    when /(categories|groups|articles)/
       render :update do |page|
         page.replace_html(($1.singularize + "_list"), :partial => "#{$1.singularize}/details")
       end
