@@ -74,12 +74,16 @@ class AdminController
     @user_pages, @users = paginate :users, :per_page => 10
     render 'admin/users'
   end
+  
+  
   def edit_user
     @user    = User.find(params[:id])
     @person  = @user.person
     @profile = @user.profile
     if request.post? && @user
-      if params[:user][:group_ids]
+      @avatar  = @user.avatar
+      @avatar = create_avatar(@user.id,params[:avatar][:uploaded_data]) unless params[:avatar].nil?
+      if params[:user] && params[:user][:group_ids]
         groups = []
         params[:user][:group_ids].map{ | g | groups << Group.find(g)}
         params[:user].delete('group_ids')

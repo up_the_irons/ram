@@ -1,0 +1,4 @@
+<li id="avatar_field">
+  <label>Avatar Icon (large images will be cropped to 50x50)</label>
+  <%= (@avatar.nil? || @avatar.new_record?)? file_field(:avatar, :uploaded_data) : image_tag(url_for(:controller=>'account', :action=>'avatar', :id=>@avatar.id)) -%>
+</li>

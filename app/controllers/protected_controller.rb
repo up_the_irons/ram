@@ -17,6 +17,14 @@ class ProtectedController < ApplicationController
     return c if current_user.categories.include? c
   end
   
+  def create_avatar(user_id,data)
+    avatar = Avatar.create({
+                        :user_id=>user_id,
+                        :uploaded_data=>data
+                        })
+    avatar
+  end
+  
   protected
 
   def category_contents(params, order = nil)

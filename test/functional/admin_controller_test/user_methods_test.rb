@@ -32,6 +32,19 @@ module IncludedTests::UserMethodsTest
      #assert_equal assigns(:current_user).groups, Group.find(:all)
    end
    
+   def test_create_avatar
+     login_as :quentin #non admin
+     file = "#{RAILS_ROOT}/test/fixtures/images/rails.png"
+     temp_file = uploaded_jpeg(file)
+     assert_difference Avatar, :count, 1 do # there is 1 new asset and 3 new thumbnails
+       post :edit_user, :id=>users(:user_4).id, :avatar=>{:uploaded_data=>temp_file}
+       assert assigns(:avatar)
+       assert_equal assigns(:avatar).user_id, users(:user_4).id
+     end
+     assert_response :success
+   end
+   
+   
    def test_shall_find_users_by_login_or_by_id
       login_as :quentin
       get :show_user, :id=>'nolan_bushnell'

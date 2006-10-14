@@ -4,12 +4,14 @@
 <%= error_messages_for 'user'         %>
 <%= error_messages_for 'person'       %>
 <%= error_messages_for 'profile'      %>
+<%= error_messages_for 'avatar'       %>
 
-<%= start_form_tag :action => "edit" ,:id=>@user.id -%>
+<%= start_form_tag({:action => "edit" ,:id=>@user.id}, {:multipart=>true})-%>
 
 <ul class="web_form_stacked">
 <%= render :partial=>'account/user_data_form'     %>
 <%= render :partial=>'account/admin_options' if current_user.is_admin? && params[:controller] =='admin'%>
+<%= render :partial=>'account/avatar_form'%>
 <%= render :partial=>'account/personal_data_form' %>
 <%= render :partial=>'account/profile_data_form'  %>
 <%= submit_tag "Save Profile" ,{:style=>"padding:5px;"}%>

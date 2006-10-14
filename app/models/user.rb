@@ -19,6 +19,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
 	has_one  :person
 	has_one  :profile
+	has_one  :avatar
 	has_many :memberships
 	has_many :articles
 	has_many :assets

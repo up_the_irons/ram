@@ -3,7 +3,7 @@
 		<div class="content">
 			
 			<div class="profileImage">
-			  *profile image*
+			  <%= image_tag(url_for(:controller=>'account', :action=>'avatar', :id=>user.avatar.id)) unless user.avatar.nil? %>
 			</div>
 			<div class="profileData">
 				<h1>

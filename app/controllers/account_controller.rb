@@ -61,16 +61,25 @@ class AccountController < ProtectedController
   		:layout=>'application' unless @user.nil?
   end
   
+  def avatar
+    #TODO :Scope this call.
+    @avatar = Avatar.find(params[:id])
+    send_data @avatar.data, :filename => @avatar.filename, :type => @avatar.content_type, :disposition => 'inline'
+  end
+  
   
   def edit
     @user    = current_user
     @person  = @user.person 
     @profile = @user.profile
+
     if request.post? && @user
+      @avatar  = @user.avatar ||= Avatar.new
       
       #used to prevent users from forging the request to reset attributes we want to protect.
       safe_hash = {:email=>''}
       safe_hash[:email] = params[:user][:email] if params[:user] && params[:user][:email]
+      @avatar = create_avatar(@user.id,params[:avatar][:uploaded_data]) unless params[:avatar].nil?
       
       if @user.update_attributes(safe_hash) && @user.person.update_attributes(params[:person]) &&  @user.profile.update_attributes(params[:profile])
         flash[:notice] = "Your changes have been saved."
