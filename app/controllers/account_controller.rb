@@ -5,12 +5,6 @@ class AccountController < ProtectedController
     redirect_to :action=>'my_profile' if logged_in? and return
   end
 
-  
-  def directory
-    #TODO scope this directory to the group list
-		 @user_pages, @users = paginate :users, :per_page => 10
-	end
-
 
   def login
     redirect_to :controller=>'inbox' and return if current_user

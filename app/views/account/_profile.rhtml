@@ -14,7 +14,7 @@
 					'No Full Name Provided'
 					end  %>
 					<span class="mice_type">(<%= user.login %>)
-					<%= link_to_if_editable "#{image_tag('/images/icons/pencil.png')} Edit Profile", {:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"} %>
+					<%= link_to("#{image_tag('/images/icons/pencil.png')} Edit Profile", {:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"}) if user.id == current_user.id || current_user.is_admin? %>
 					</span> 
 				</h1>
 				<h2>*Job Title*</h2>
