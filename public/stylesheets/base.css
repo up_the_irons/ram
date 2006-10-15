@@ -47,6 +47,24 @@ a:hover{
 	padding           : 5px 10px 5px 10px;
 	border            : 1px solid #000000;
 }
+.about{
+	z-index:2;
+	top:-80px;
+	left:80px;
+	position:relative;
+	width: 500px;
+}
+
+.about h1{
+	width: 500px;
+}
+.about dt{
+	margin-top: 10px;
+	font-weight: bold;
+}
+.about dd{
+	padding: 2px;
+}
 .page_message, .important_page_message, #page_flash{
 	font-weight       : bolder;
 	text-align        : center;
