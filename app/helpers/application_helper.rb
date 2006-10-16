@@ -67,7 +67,7 @@ module ApplicationHelper
        end
         onclick_method = "#{opts[:unselect_method]}(#{b[:id]});"
        
-       link = %{<input type='checkbox' style="display:inline;" name="#{name}" value="#{b[:id]}" id="branch_checkbox_#{b[:id]}" />} 
+       link = %{<input type='checkbox' style="display:none;" name="#{name}" value="#{b[:id]}" id="branch_checkbox_#{b[:id]}" />} 
        link << image_tag('icons/tick.png',{:style=>"display:none",:id=>"tick_#{b[:id]}"})
        link << link_to(truncate(b[:name],25),"#checkbox_#{b[:id]}",{:onclick=>onclick_method})
        if b[:children].size > 0
