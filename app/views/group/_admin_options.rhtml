@@ -1,3 +1,6 @@
+<%
+  unselect_method = "group#{@group.id}UnselectAll"
+-%>
 <li>
   <label>Group Members</label>
   <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@group,:selected=>@group.members,:available=>@group.non_members,:name_alias=>:login} %>
@@ -5,16 +8,34 @@
 <li>
   <label>Category Access</label>
   <ul class="selectableTree">
-    <%= parse_selectable_tree(session[:category_tree][:root][:children]) %>
+    <%= parse_selectable_tree(session[:category_tree][:root][:children],{:model=>'group',:many_object=>'category_ids',:unselect_method=>unselect_method}) %>
   </ul>
 </li>
 <% unless @group.categories.empty? -%>
 <script language="javascript" type="text/javascript">
   /* <![CDATA[ */
+  <% checks = [] -%>
   <% @group.categories.each do |g| -%>
-    document.getElementById('category_<%= g.id %>').checked = true;
+  document.getElementById('branch_checkbox_<%= g.id %>').checked = true;
     $('<%="tick_#{g.id}"%>').show()
   <% end -%>
+  <% current_user.groups.each do |group|
+      checks << group.categories.map{|c|c.id}
+    end 
+    checks.flatten!.uniq!
+  -%>
+function <%=unselect_method%>(id){
+  var checkboxes = [<%= checks.map{|g| "$('branch_checkbox_#{g}')"}.join(", ") -%>]
+  var ticks = [<%= checks.map{|g| "$('tick_#{g}')"}.join(", ") -%>]
+  	
+  if(!$('branch_checkbox_'+id).checked){
+    $('tick_'+id).show()
+  }else{
+    $('tick_'+id).hide();
+  }
+  	
+}
+  
   /* ]]> */ 
 </script>
 <% end -%>

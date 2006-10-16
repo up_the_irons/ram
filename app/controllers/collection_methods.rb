@@ -8,35 +8,31 @@ module CollectionMethods
     opts[:table] = controller_name.pluralize unless opts[:table]
     obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
     
-    #table = controller_name.pluralize unless table
-    #model= Object.const_get(table.classify)
     pages, models = paginate_collection current_user.send(obj[:table].to_sym), :page => params[:page]
     instance_variable_set("@#{obj[:table].singularize}_pages", pages)
     instance_variable_set("@#{obj[:table]}", models)
     yield and return if block_given?
   end
   
+  
   def changes(opts={})
     obj = default_obj
     opts[:table] = controller_name.pluralize unless opts[:table]
     obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
-    
-    #table = controller_name.pluralize unless table
-    #model= Object.const_get(table.classify)
     instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id]))
+    
     render :partial=>'shared/changes',:locals=>{:model=>instance_variable_get("@#{obj[:table].singularize}")},:layout=>'application'
   end
+  
   
   def destroy_collection(opts={})
     obj = default_obj
     opts[:table] = controller_name.pluralize unless opts[:table]
     obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
-    
-    #table = controller_name.pluralize unless table
-    #model = Object.const_get(table.classify)
     instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id]))
-
+    
     yield and return if block_given?
+    
     redirect_to :controller=>'inbox' and return unless request.post?
     instance_variable_get("@#{obj[:table].singularize}").destroy
     
@@ -53,9 +49,6 @@ module CollectionMethods
     obj = default_obj
     opts[:table] = controller_name.pluralize unless opts[:table]
     obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
-
-    #table = controller_name.pluralize unless table
-    #model = Object.const_get(table.classify)
     
     #find the object in the user's model for example current_user.categories etc.
     instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id]))
@@ -84,8 +77,7 @@ module CollectionMethods
     obj = default_obj
     opts[:table] = controller_name.pluralize unless opts[:table]
     obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
-    #table = controller_name.pluralize unless table
-    #model = Object.const_get(table.classify)
+    
     #find the object in the user's model for example current_user.categories etc.
     instance_variable_set("@#{obj[:table].singularize}", obj[:model].send(:new))
     instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id])) if params[:id]
@@ -95,19 +87,22 @@ module CollectionMethods
     model_instance = instance_variable_get("@#{obj[:table].singularize}")
     model_sym = obj[:table].singularize.to_sym
     many_associations_results = ""
-    #many_element = obj[:many_associations].singularize
 
     if request.post? && model_instance
       params[model_sym][:user_id] = current_user.id if model_instance.new_record?
       
-      #save the record
-      if model_instance.new_record?
-        model_instance.attributes = params[model_sym]
-        model_instance.save
-
-        # Tags must be assigned after the object is saved b/c they rely on the ID of the record
-        model_instance.tags = params[model_sym][:tags] if params[model_sym][:tags]
+      #save the record and strip out the has_many associations so that the record saves correctly.
+      #TODO find a way to make this more succient. 
+      attributes = params[model_sym].dup
+      obj[:many_associations].each do | m | 
+        attributes.delete("#{m.singularize}_ids".to_sym)
       end
+      model_instance.attributes = attributes
+      model_instance.save
+        
+      # Tags must be assigned after the object is saved b/c they rely on the ID of the record
+      model_instance.tags = params[model_sym][:tags] if params[model_sym][:tags]
+      
       obj[:many_associations].each do| many_association |
         potential_elements = []
         added   = []
@@ -120,22 +115,8 @@ module CollectionMethods
         end
 
         #nest these calls inside a proc because adding elements to a new record without an ID will produce invalid joins
-        #add_elements = Proc.new do
         added, removed  = update_has_many_collection( model_instance, many_association, potential_elements )
-        many_associations_results << "<br/>Added (#{added.size}) #{many_association} and removed (#{removed.size})" if defined?(added) && defined?(removed)
-        #end
-        
-        #unless model_instance.new_record?
-        #  add_elements.call
-        #  add_elements = nil #delete the proc
-        #end  
-      
-      end
-      
-      #save a pre-existing record.
-      if !model_instance.new_record? && model_instance.update_attributes(params[model_sym])
-          #add_elements.call unless add_elements.nil?
-          
+        many_associations_results << "<br/>Added (#{added.size}) #{many_association} and removed (#{removed.size})" if defined?(added) && defined?(removed)  
       end
       
       #display results

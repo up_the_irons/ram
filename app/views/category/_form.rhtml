@@ -5,8 +5,6 @@
 <li><label for="category_description">Description</label>
 <%= text_area 'category', 'description',{:rows=>5,:style=>"width:100%"}  -%></li>
 
-<% categories = Category.find_all_by_public(true).map{|c|[c.name,c.id]} -%>
-<li><label>Parent Category</label><%= select :category,:parent_id, categories,{:include_blank=>true} unless categories == [] -%></li>
 <li>
 <%= render :partial => 'shared/form_elements/tags', :locals => { :model => :category } %>
 </li>

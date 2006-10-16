@@ -51,23 +51,34 @@ module ApplicationHelper
     code
   end
   
-  def parse_selectable_tree(branches)
+  # single_select if true then only one branch can be selected
+  # unselect_method javascript method to call, which handles unselecting all the other boxes
+  # model The model, which this tree effects
+  # many_object, the object which, the branches of the tree represent
+  # model_attribte, if single_select is true then the branches represent this attribute and the variety of values it can be set to.
+  def parse_selectable_tree(branches,opts={:single_select=>false,:unselect_method=>'unselect',:model=>nil,:many_object=>nil,:model_attribute=>nil})
      code = ""
      branches.each do |b|
        #used to toggle on and off the checkbox graphic
-       onclick_method = %{if(!$('category_#{b[:id]}').checked){$('tick_#{b[:id]}').show()}else{$('tick_#{b[:id]}').hide();}}
+       if opts[:single_select]
+         name = "#{opts[:model]}[#{opts[:model_attribute]}]"
+       else
+         name = "#{opts[:model]}[#{opts[:many_object]}][]"
+       end
+        onclick_method = "#{opts[:unselect_method]}(#{b[:id]});}"
        
-       link = %{<input type='checkbox' style="display:none;" name="group[category_ids][]" value="#{b[:id]}" id="category_#{b[:id]}" />} 
+       link = %{<input type='checkbox' style="display:none;" name="#{name}" value="#{b[:id]}" id="branch_checkbox_#{b[:id]}" />} 
        link << image_tag('icons/tick.png',{:style=>"display:none",:id=>"tick_#{b[:id]}"})
        link << link_to(truncate(b[:name],25),"#checkbox_#{b[:id]}",{:onclick=>onclick_method})
        if b[:children].size > 0
          code << "<li id=\"selectable_branch_#{b[:id]}\">#{link}\n\r" 
-         code << "<ul>#{parse_selectable_tree(b[:children])}</ul></li>\n\r"
+         code << "<ul>#{parse_selectable_tree(b[:children],opts)}</ul></li>\n\r"
        end
        code << "<li id=\"selectable_branch_#{b[:id]}\">#{link}</li>\n\r" if b[:children].size == 0
      end
      code
   end
+  
   
   def admin_only_content
     yield if current_user.is_admin?

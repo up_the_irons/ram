@@ -100,7 +100,7 @@ function initTree(el, onclick_method, klass, spanKlass) {
 	}
 		
 }
- 
+
 
 /*
  * +/- toggle the tree, where el is the <span class="b"> node

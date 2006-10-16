@@ -1,4 +1,58 @@
+<%
+  unselect_method = "category#{@category.id}UnselectAll"
+-%>
+
 <li>
   <label>Group Access</label>
   <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@category,:selected=>@category.groups,:available=>current_user.groups - @category.groups} %>
 </li>
+<li>
+  <label>Parent Category (select one)</label>
+  <ul id="selectable_tree" class="selectableTree">
+    <%= parse_selectable_tree(session[:category_tree][:root][:children],{:single_select=>true, :unselect_method=>unselect_method, :model=>'category', :model_attribute=>'parent_id'}) %>
+  </ul>
+</li>
+<% unless current_user.categories.empty? -%>
+<script language="javascript" type="text/javascript">
+  /* <![CDATA[ */
+  <% checks = [] -%>
+  <% current_user.categories.each do |c| -%>
+    <% if @category.parent_id == c.id; -%>
+    document.getElementById('branch_checkbox_<%= c.id %>').checked = true
+    $('<%="tick_#{c.id}"%>').show()
+      <%
+      #TODO prevent user from selecting self as the checkbox... so it should disable the node or something
+      -%>
+    <% end -%>
+    <% checks << "#{c.id}" -%>
+  <% end -%>
+  /*
+  	For trees which at most only one branch can be selected at a time. Call this method to unselect them
+  */
+  function <%=unselect_method%>(id){
+    var checkboxes = [<%= checks.map{|c| "$('branch_checkbox_#{c}')"}.join(", ") -%>]
+  	var ticks = [<%= checks.map{|c| "$('tick_#{c}')"}.join(", ") -%>]
+  	
+    if(<%= @category.id %> == id){
+      alert("A category cannot be it's own parent.");
+      checkboxes[id].checked = false;
+      return;
+    }
+  	
+  	for(var itm = 0; itm < checkboxes.length; itm++){
+  		checkboxes[itm].checked = false;
+      ticks[itm].hide();
+  	}
+  	
+  	if(!$('branch_checkbox_'+id).checked){
+      $('tick_'+id).show()
+    }else{
+      $('tick_#{b[:id]}').hide();
+    }
+  	
+  }
+  
+  /* ]]> */ 
+</script>
+<% end -%>
+
