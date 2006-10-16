@@ -16,8 +16,8 @@
   /* <![CDATA[ */
   <% checks = [] -%>
   <% @group.categories.each do |g| -%>
-  document.getElementById('branch_checkbox_<%= g.id %>').checked = true;
-    $('<%="tick_#{g.id}"%>').show()
+  $('branch_checkbox_<%= g.id %>').checked = true;
+    $('<%="tick_#{g.id}"%>').show();
   <% end -%>
   <% current_user.groups.each do |group|
       checks << group.categories.map{|c|c.id}
