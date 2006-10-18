@@ -54,6 +54,7 @@ class AccountController < ProtectedController
   	  :locals=>{:user=> @user},
   		:layout=>'application' unless @user.nil?
   end
+
   
   def avatar
     #TODO :Scope this call.
@@ -105,6 +106,7 @@ class AccountController < ProtectedController
     self.current_user = nil
     end
   end
+
   
   def toggle_menu
     if session[:view][:expand_menu]
@@ -114,10 +116,12 @@ class AccountController < ProtectedController
     end
     render :nothing =>true
   end
+
   
   def display_as
     session[:asset_display] = params[:id] unless params[:id].nil?
   end
+
   
   protected 
   def after_login
