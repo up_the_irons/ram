@@ -1,5 +1,7 @@
 class CategoryController < ProtectedController
-  cache_sweeper :change_sweeper
+  include EnlightenObservers
+
+  observer :change_observer
 
   sortable       :show
   paging_with_db :show

@@ -3,10 +3,10 @@ require_dependency 'collection_methods'
 
 class AdminController
   include Sortable
+  include EnlightenObservers
   
-  observer :group_observer
+  observer :group_observer, :change_observer
   volatile = [:destroy_group, :create_group, :update_group, :destroy_category, :create_category, :update_category ]
-  cache_sweeper :change_sweeper
   before_filter :admin_access_required
   
   verify :method => :post, :only =>volatile, :redirect_to => { :action => :dashboard }

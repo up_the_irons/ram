@@ -1,6 +1,10 @@
 class AssetController < ProtectedController
-  cache_sweeper :change_sweeper
+  include EnlightenObservers
+
+  observer :change_observer
+
   @@asset_404 = "The asset could not be found."    
+
   def show
     #TODO: scope this call
     @asset = Asset.find(params[:id])

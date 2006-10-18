@@ -1,10 +1,11 @@
 class AccountController < ProtectedController
-  observer :user_observer
-  cache_sweeper :change_sweeper
+  include EnlightenObservers
+
+  observer :user_observer, :change_observer
+
   def index
     redirect_to :action=>'my_profile' if logged_in? and return
   end
-
 
   def login
     redirect_to :controller=>'inbox' and return if current_user
@@ -24,7 +25,6 @@ class AccountController < ProtectedController
     end
   end
 
-
   def signup
     @user = User.new(params[:user])
     return unless request.post?
@@ -33,7 +33,6 @@ class AccountController < ProtectedController
       flash[:notice] = "Thanks for signing up!"
     end
   end
-  
   
   def profile
     #TODO scope this request so that people don't see profiles that they should not.
@@ -46,7 +45,6 @@ class AccountController < ProtectedController
     	:locals=>{:user=> @user},
     	:layout=>'application' unless @user.nil?
   end
-  
   
   def my_profile
     @user = User.find(current_user.id)
@@ -61,7 +59,6 @@ class AccountController < ProtectedController
     @avatar = Avatar.find(params[:id])
     send_data @avatar.data, :filename => @avatar.filename, :type => @avatar.content_type, :disposition => 'inline'
   end
-  
   
   def edit
     @user    = current_user
@@ -82,14 +79,12 @@ class AccountController < ProtectedController
     end
   end
   
-  
   def logout
     self.current_user = nil
     flash[:grail] = "You have been logged out."
     redirect_back_or_default(:controller => '/account', :action => 'login')
     session[:nil]
   end
-  
   
   def login_as
     self.current_user = User.find(params[:user_id])
