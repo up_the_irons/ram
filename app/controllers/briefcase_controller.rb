@@ -53,47 +53,25 @@ class BriefcaseController < ProtectedController
         end
       end
     end
-
-    #respond_to do |wants|
-      #wants.js do
-      #  render :update do |page|
-      #    #page.replace_html :asset_list, :partial => 'asset/list'
-      #  end
-      #end
-    #end
   end
   
   def add
-
-    #@asset = find_asset_for_group_member(params[:group_id].to_i,params[:asset_id].to_i) if params[:group_id]
-    #@asset = find_asset_in_category_for_group_member(params[:category_id].to_i,params[:asset_id].to_i) if params[:category_id]
     new_assets = []
     existing_assets = []
-    
-    params[:assets].each do | a |
+    assets = params[:assets].uniq
+    assets.each do | a |
       asset = Asset.find(a)
       unless asset.nil?
         n, e = add_to_briefcase(asset) if current_user.assets.include?(asset)
         new_assets << n unless n.nil?
         existing_assets << e unless e.nil?
       end
-    end unless params[:assets].nil?
+    end unless assets.nil?
     flash[:notice] =""
     flash[:notice] << "Added (#{new_assets.size}) New Assets.<br/>" unless new_assets.empty?
     flash[:notice] << "(#{existing_assets.size}) Assets could not be added because they already exist.<br/>" unless existing_assets.empty?
     
-    respond_to do |wants|
-      wants.html do
-        index
-      end
-      wants.js do 
-        render :update do |page|
-          page.redirect_to :controller=>'briefcase',:action=>'list'
-        #todo ajax removal
-        end
-      end
-    end
-    
+    render_list
   end
   
   
@@ -107,28 +85,29 @@ class BriefcaseController < ProtectedController
     end
     results
   end
-   # unless @asset.nil?
-   #   unless session[:briefcase].include? @asset.id
-   #     session[:briefcase] << @asset.id
-   #   else
-   #      flash[:notice] = "#{@asset.name} is already in your briefcase"
-   #   end 
-   # else
-   #   flash[:notice] = "The requested asset could not be located on the server."
-   # end
-   #  
   
-    
+  
   def remove
-    unless params[:id].nil?
-      unless session[:briefcase].delete(params[:id].to_i).nil?
-        flash[:notice] = "You removed the file from your briefcase."
-      else
-        flash[:notice] = "File was not removed from briefcase."
-      end  
-    end
-    redirect_to :action=>'list'
+    removed_assets = []
+    assets =  params[:assets].uniq
+    assets.each do |a|
+      removed_assets << a unless session[:briefcase].delete(a.to_i).nil?
+    end   
+    flash[:notice] =""
+    flash[:notice] << "Removed (#{removed_assets.size}) Assets.<br/>" unless removed_assets.empty? 
+    
+    render_list
   end
+  #def remove
+  #  unless params[:id].nil?
+  #    unless session[:briefcase].delete(params[:id].to_i).nil?
+  #      flash[:notice] = "You removed the file from your briefcase."
+  #    else
+  #      flash[:notice] = "File was not removed from briefcase."
+  #    end  
+  #  end
+  #  redirect_to :action=>'list'
+  #end
   
   def remove_all
     session[:briefcase].clear
@@ -147,6 +126,20 @@ class BriefcaseController < ProtectedController
   end
   
   protected
+  def render_list
+    respond_to do |wants|
+      wants.html do
+        redirect_to :action=>'list'
+      end
+      wants.js do 
+        render :update do |page|
+          page.redirect_to :controller=>'briefcase',:action=>'list'
+        #todo ajax removal
+        end
+      end
+    end
+  end
+  
   def create_zip(path)
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
       zip.dir.mkdir('briefcase') #acts as the root folder

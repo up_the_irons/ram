@@ -2,9 +2,14 @@
   <h1>Briefcase Items</h1>
 <% end -%>
 <h2>Your briefcase contains <%= pluralize(session[:briefcase].size, 'items') %></h2>
+ <%= form_tag :controller=>'briefcase',:action=>'remove' %>
 <%= render :partial=>'asset/details' -%>
 <% if session[:briefcase].size > 0 %>
-<br class="clear_both" />
-<span class="button"><%= link_to "#{image_tag('/images/icons/bin.png')} Empty Briefcase", {:controller=>'briefcase', :action=>'remove_all'},{:post=>true} %></span>
+
+<div style="display:block;clear:both;margin-top:10px;">
+<%= image_tag('/images/icons/briefcase.png',{:title=>'Remove From Briefcase'})%>
+<%= submit_tag "Remove From Briefcase", {:class=>'button'} %> 
 <span class="button"><%= link_to" #{image_tag('/images/icons/page_white_zip.png')} Download Archive of briefcase as a .zip file", :action=>'zip' %></span>
+</div>
+</form>
 <% end -%>

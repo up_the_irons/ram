@@ -62,7 +62,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
     login_as :quentin
     @group, @asset = group_and_asset(current_user)
     assert_no_difference @request.session[:briefcase], :size do
-      get :add, :group_id=>@group.id, :asset_id=>@asset.id
+      get :add, :assets=>[@asset.id]
     end
     assert_redirected_to :action=>:index
   end
@@ -72,7 +72,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
     assert_no_difference @request.session[:briefcase], :size do
       #FIXME: get_restricted_assets does not work.
       #restricted_asset = get_restricted_assets(current_user)[0].id
-      post :add, :group_id=>current_user.groups[0].id, :asset_id=>7
+      post :add, :assets=>[7]
     end
     assert_response :redirect
   end
@@ -89,9 +89,9 @@ class BriefcaseControllerTest < Test::Unit::TestCase
     
     before = @request.session[:briefcase].size
     assert_equal 1, @request.session[:briefcase].size
-    post :remove, :id=>@request.session[:briefcase][0]
+    post :remove, :assets=>[@request.session[:briefcase][0]]
     assert_equal before-1, @request.session[:briefcase].size
-    assert_equal assigns(:flash)[:notice], "You removed the file from your briefcase."
+    assert_equal "Removed (1) Assets.<br/>", assigns(:flash)[:notice]
     assert_response :redirect
   end
     

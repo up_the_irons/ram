@@ -115,6 +115,7 @@ class AccountController < ProtectedController
   
   def display_as
     session[:asset_display] = params[:id] unless params[:id].nil?
+    render :nothing =>true
   end
 
   
