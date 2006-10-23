@@ -24,4 +24,14 @@ class InboxControllerTest < Test::Unit::TestCase
       get :index
       assert_redirected_to :controller=>'account',:action=>'login'
   end
+  
+  def test_shall_display_subscriber_feeds
+  end
+  
+  def test_shall_add_feed
+  end
+  
+  def test_shall_remove_feed
+  end
+  
 end

@@ -27,6 +27,11 @@ module RamTestHelper
     Comment.create(o)
   end
   
+  def a_feed(opts={})
+    o = {:name=>"Feed: #{Time.now.to_s}",:url=>"http://www.google.com"}.merge(opts)
+    Feed.create(o)
+  end
+  
   def create_user(opts = {})
     o = { :login => 'quire', :email => 'quire@example.com', :password => 'qazwsx', :password_confirmation => 'qazwsx' }.merge(opts)
     User.create(o)

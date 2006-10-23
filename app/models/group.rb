@@ -1,4 +1,4 @@
-# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
+# Schema as of Sun Oct 22 21:28:20 PDT 2006 (schema version 19)
 #
 #  id                  :integer(11)   not null
 #  name                :string(255)   
@@ -11,6 +11,7 @@
 #  counter_cache       :boolean(1)    default(true)
 #  permanent           :boolean(1)    
 #
+
 class Group < Collection
   acts_as_taggable
   include TagMethods

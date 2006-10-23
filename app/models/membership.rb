@@ -1,4 +1,4 @@
-# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
+# Schema as of Sun Oct 22 21:28:20 PDT 2006 (schema version 19)
 #
 #  id                  :integer(11)   not null
 #  user_id             :integer(11)   
@@ -7,17 +7,6 @@
 #  state_id            :integer(11)   default(0)
 #  created_at          :datetime      
 #
-
-# Schema as of Sat Jun 24 11:18:29 PDT 2006 (schema version 6)
-#
-#  id                  :integer(11)   not null
-#  user_id             :integer(11)   
-#  collection_id       :integer(11)   
-#  collection_type     :string(255)   
-#  state_id            :integer(11)   default(0)
-#  created_at          :datetime      
-#
-
 
 class Membership < ActiveRecord::Base
   belongs_to :user,  :foreign_key => 'user_id'

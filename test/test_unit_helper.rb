@@ -37,7 +37,7 @@ class Test::Unit::TestCase
     attributes.each do |attribute|
       record_to_update[attribute] = original_record [attribute]
     end
-    assert !record_to_update.save, "the application updated the group even though it contained duplicate information on unique fields"
+    assert !record_to_update.save, "the application updated the record even though it contained duplicate information on unique fields"
     attributes.each do |attribute|
       assert record_to_update.errors.on( attribute), "the application should have contained an error on field '#{attribute}'"
     end

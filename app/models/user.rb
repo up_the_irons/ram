@@ -1,4 +1,4 @@
-# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
+# Schema as of Sun Oct 22 21:28:20 PDT 2006 (schema version 19)
 #
 #  id                  :integer(11)   not null
 #  login               :string(40)    
@@ -17,6 +17,7 @@
 
 require 'digest/sha1'
 class User < ActiveRecord::Base
+	
 	has_one  :person
 	has_one  :profile
 	has_one  :avatar
@@ -25,6 +26,18 @@ class User < ActiveRecord::Base
 	has_many :assets
   has_many :event_subscriptions
 	#has_many :taggings
+	
+	#FIXME: User model will not load any mixin associations
+	#acts_as_subscribable :subscribe_to=>['Feed']
+	#has_many :subscriptions, :foreign_key=>'subscriber_id', :conditions=>"subscriptions.subscriber_type = 'User'"
+	
+	#TODO: Abstract this inside the acts_as_subscribable plug-in.... however to do this we need to find out why the user model will not load 
+	#mixin associations
+	has_many :feeds, :finder_sql=>'SELECT DISTINCT * ' +
+        'FROM feeds f, subscriptions s ' +
+        'WHERE s.subscribed_to_type = \'Feed\' AND s.subscriber_id = #{id} '
+	
+	
 	
   #has_many :collections, :through => :memberships
 	has_many :groups, :through=>:memberships,
@@ -44,9 +57,6 @@ class User < ActiveRecord::Base
   has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
         'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "User" ORDER BY c.created_at'
   
-  
-  #@@current = 0
-  #cattr_accessor :current
   
   has_many :my_groups, :class_name => 'Collection', :foreign_key => 'user_id'
   STATUS = ['Pending','Suspended','Active'].freeze

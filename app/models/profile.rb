@@ -1,4 +1,4 @@
-# Schema as of Thu Sep 28 14:11:12 PDT 2006 (schema version 17)
+# Schema as of Sun Oct 22 21:28:20 PDT 2006 (schema version 19)
 #
 #  id                  :integer(11)   not null
 #  user_id             :integer(11)   
@@ -14,6 +14,7 @@
 #  telephone           :string(255)   
 #  fax                 :string(255)   
 #
+
 class Profile < ActiveRecord::Base
 	belongs_to :user
 end
