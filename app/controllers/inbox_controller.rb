@@ -1,5 +1,5 @@
 class InboxController < ProtectedController
-  include FeedReader
+  #include FeedReader
   def index
     inbox
   end
