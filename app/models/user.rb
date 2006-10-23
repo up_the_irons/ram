@@ -97,15 +97,15 @@ class User < ActiveRecord::Base
     login
   end
   
-  def categories
-    groups.map { |g| g.categories }.flatten.uniq
+  def categories(reload = false)
+    groups(reload).map { |g| g.categories(reload) }.flatten.uniq
   end
   
-  def categories_as_tree
+  def categories_as_tree(reload = false)
     make_branch = Proc.new do
       {:parent=>nil,:children=>[],:name=>"",:id=>nil}
     end
-    category_ids = self.categories.map{|c|c.id}
+    category_ids = self.categories(reload).map{|c|c.id}
     tree = {:root=>make_branch.call}
     self.categories.each do |t|
       sym = "b_#{t.id}".to_sym
@@ -121,7 +121,6 @@ class User < ActiveRecord::Base
       end
       tree[sym][:parent] = parent 
       tree[parent][:children] << tree[sym]
-      #breakpoint
     end
     tree
   end

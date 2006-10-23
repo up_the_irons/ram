@@ -13,44 +13,49 @@
 #
 
 class Category < Collection
-	acts_as_tree 
+  acts_as_tree 
   acts_as_taggable
 
   include TagMethods
 
   has_many :children, :class_name=>'Collection',:foreign_key=>'parent_id' do
-		def << (category)
-			return if @owner.children.include?category
-			@owner.children << category
-		end
-	end
-	has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+    def << (category)
+      return if @owner.children.include?category
+      @owner.children << category
+    end
+  end
+  has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
         'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Category" ORDER BY c.created_at'
   
   has_many :memberships, :foreign_key=>:collection_id
-  has_many :users, :through => :memberships, :conditions => "memberships.collection_type = 'Category'" do
-	  def <<(user)
-	    return if @owner.users.include?user
-	    m = Membership.create(
-        :user_id => user.id,
-        :collection_id => @owner.id,
-        :collection_type => 'Category' #@owner.class.class_name	    
-	    )
-	    m.save!
-    end
-  end
+
+  # This definition of an associated user is WRONG!  We associate Users to Category using Groups, not
+  # Memberships. No test even tests this association, I can run an entire rake w/o an error if i comment
+  # this out, so bye bye it goes into the comment world.
+  #has_many :users, :through => :memberships, :conditions => "memberships.collection_type = 'Category'" do
+  #  def <<(user)
+  #    return if @owner.users.include?user
+  #    m = Membership.create(
+  #      :user_id => user.id,
+  #      :collection_id => @owner.id,
+  #      :collection_type => 'Category' #@owner.class.class_name      
+  #    )
+  #    m.save!
+  #  end
+  #end
   
   has_many :linkings
   
   has_many :groups, :through =>:linkings, :select => "DISTINCT collections.*", :foreign_key=>:group_id do
-  	def <<(group)
-		return if @owner.groups.include?group
-	    #a = AccessContext.create(
-	     a = Linking.create(
-        :group_id => group.id,
-        :category_id => @owner.id
-	    )
-	    a.save!
+    def <<(group)
+      return if @owner.groups.include?group
+
+      # after_save() callback is triggered and entire event is atomic (put in a transaction)
+      @owner.transaction do
+        a = Linking.create(:group_id => group.id, :category_id => @owner.id)
+        a.save!
+        @owner.instance_eval { callback(:after_save) }
+      end
     end  
   end
   
@@ -81,6 +86,7 @@ class Category < Collection
   def remove_group(group)
     linking =Linking.find_by_category_id_and_group_id(self.id, group.id)
     linking.destroy if linking.valid?
+    callback(:after_save)
   end
   
   class <<self

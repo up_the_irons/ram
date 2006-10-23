@@ -103,7 +103,7 @@ module CollectionMethods
       # Tags must be assigned after the object is saved b/c they rely on the ID of the record
       model_instance.tags = params[model_sym][:tags] if params[model_sym][:tags]
       
-      obj[:many_associations].each do| many_association |
+      obj[:many_associations].each do |many_association|
         potential_elements = []
         added   = []
         removed = []
@@ -135,7 +135,7 @@ module CollectionMethods
   
   protected
   
-  #helper method for has_many collection editing
+  # Helper method for has_many collection editing
   def update_has_many_collection(model, many_collection, ids_to_keep_or_add = [])
     many_klass = Object.const_get(many_collection.singularize.classify)
     elements_to_add    = []
@@ -149,23 +149,23 @@ module CollectionMethods
       return [elements_to_add,existing_elements]
     end
       
-    #todo is there a way to make this call all at once possibly using :conditions=>   
+    # TODO: Is there a way to make this call all at once possibly using :conditions=>  ? 
     elements_to_keep_or_add  = ids_to_keep_or_add.map do |u| 
       element = many_klass.find(u)
       element if element
     end
     
-    #find the elements to add and remove
+    # Find the elements to add and remove
     elements_to_add  = elements_to_keep_or_add - existing_elements
     elements_to_remove = existing_elements - elements_to_keep_or_add
       
-    #do the adding and deleting of elements
+    # Do the adding and deleting of elements
     elements_to_add.each{|m| model.send(many_collection.to_sym) << m}
     elements_to_remove.each{|m| model.send "remove_#{many_collection.singularize}".to_sym ,m }
       
     model.reload
     
-    [ elements_to_add, elements_to_remove]
+    [elements_to_add, elements_to_remove]
   end
   
    

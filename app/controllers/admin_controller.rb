@@ -5,7 +5,8 @@ class AdminController
   include Sortable
   include EnlightenObservers
   
-  observer :group_observer, :change_observer
+  observer :group_observer, :change_observer, :category_observer
+
   volatile = [:destroy_group, :create_group, :update_group, :destroy_category, :create_category, :update_category ]
   before_filter :admin_access_required
   

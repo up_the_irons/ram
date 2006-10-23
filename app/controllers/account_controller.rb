@@ -53,7 +53,6 @@ class AccountController < ProtectedController
   		:layout=>'application' unless @user.nil?
   end
 
-  
   def avatar
     #TODO :Scope this call.
     @avatar = Avatar.find(params[:id])
@@ -101,7 +100,6 @@ class AccountController < ProtectedController
     self.current_user = nil
     end
   end
-
   
   def toggle_menu
     if session[:view][:expand_menu]
@@ -112,14 +110,13 @@ class AccountController < ProtectedController
     render :nothing =>true
   end
 
-  
   def display_as
     session[:asset_display] = params[:id] unless params[:id].nil?
     render :nothing =>true
   end
 
-  
   protected 
+
   def after_login
     flash[:grail]  = "Welcome #{current_user.login}!"
     current_user.last_login_at = Time.now
