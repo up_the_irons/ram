@@ -17,7 +17,7 @@ Example Usage - Total Subscription
 In this example the feed model returns a reference to the entire instance.
 
 class user
-  has_many :feeds, though=>:subscriptions
+  acts_as_subscribable :subscribe_to=>["Feed"]
 end
 
 class Feeds
@@ -31,7 +31,7 @@ Example Usage - Partial Subscription
 In this example, the feed model only returns one variable to the subscribers
 
 class user
-  has_many :feed_urls, :through=>:subscriptions
+  acts_as_subscribable :subscribe_to=>[:Feed]
 end
 
 class Feeds
