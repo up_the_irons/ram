@@ -51,6 +51,7 @@ class User < ActiveRecord::Base
         :collection_id => group.id,
         :collection_type => 'Group'	    
       )
+      GroupObserver.after_add(group, @owner)
     end
   end
   
@@ -105,9 +106,9 @@ class User < ActiveRecord::Base
     make_branch = Proc.new do
       {:parent=>nil,:children=>[],:name=>"",:id=>nil}
     end
-    category_ids = self.categories(reload).map{|c|c.id}
+    category_ids = categories(reload).map{|c|c.id}
     tree = {:root=>make_branch.call}
-    self.categories.each do |t|
+    categories.each do |t|
       sym = "b_#{t.id}".to_sym
       tree[sym] = make_branch.call if tree[sym].nil?
       tree[sym][:id] = t.id
@@ -126,14 +127,14 @@ class User < ActiveRecord::Base
   end
   
   def groups=(new_groups)
-    old_groups = self.groups - new_groups #remove all groups which don't appear in the new_groups list
-    new_groups = new_groups - self.groups #remove the groups the user already belongs to.
+    old_groups = groups - new_groups #remove all groups which don't appear in the new_groups list
+    new_groups = new_groups - groups #remove the groups the user already belongs to.
     new_groups.each do | g |
       self.groups << g
     end
     #delete all the old memberships, which are no longer needed.
     old_groups.each do |g |
-      membership = Membership.find_by_collection_id_and_user_id(g.id,self.id)
+      membership = Membership.find_by_collection_id_and_user_id(g.id,id)
       Membership.destroy(membership.id)
     end
   end
@@ -202,11 +203,11 @@ class User < ActiveRecord::Base
   def is_admin?
     #todo as the application grows this should be broken out into its own model probably somehthing like a role model
     #role == 1
-    (self.groups.find_by_name(ADMIN_GROUP))? true : false 
+    (groups.find_by_name(ADMIN_GROUP))? true : false 
   end
   #expects the obj to respond to user_id
   def can_edit?(obj)
-    return true if obj.user_id == self.user_id || self.is_admin?
+    return true if obj.user_id == user_id || is_admin?
     false
   end
 

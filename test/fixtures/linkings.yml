@@ -344,3 +344,12 @@ linking_30:
   user_id: 
   linkable_type: 'Article'
   linkable_id: 1
+linking_31: 
+  created_on: 2006-06-11 11:04:12 -07:00
+  updated_on: 2006-06-11 11:04:12 -07:00
+  id: 31
+  group_id: 40
+  category_id: 41
+  user_id: 
+  linkable_type: 
+  linkable_id: 

@@ -18,3 +18,7 @@ user_5:
   id: 3
   user_id: 5
   event_trigger_id: 1
+quentin_3:
+  id: 4
+  user_id: 1
+  event_trigger_id: 4

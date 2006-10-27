@@ -14,3 +14,6 @@ user_deleted:
 user_suspended:
   id: 3
   code: UserSuspended
+group_modification:
+  id: 4
+  code: GroupModification

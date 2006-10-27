@@ -328,3 +328,23 @@ collection_27:
   user_id: 1
   state_id: 
   parent_id: 25
+collection_40:
+  name: Not For Admins
+  public: true
+  counter_cache: true
+  type: Group
+  id: 40
+  description: A Group for Non-Admins
+  user_id: 2
+  state_id: 1
+  parent_id:
+collection_41:
+  name: Non-Admin Category
+  public: true
+  counter_cache: true
+  type: Category
+  id: 41
+  description: No Admins Allowed
+  user_id: 2
+  state_id: 1
+  parent_id:

@@ -36,6 +36,9 @@ module CollectionMethods
     redirect_to :controller=>'inbox' and return unless request.post?
     instance_variable_get("@#{obj[:table].singularize}").destroy
     
+    # Refresh category tree if any group has modified collection memberships
+    session[:category_tree] = current_user.categories_as_tree(true) if opts[:table] == 'groups'
+
     begin  
       flash[:notice] = opts[:on_success] || "You Deleted the #{obj[:model]}"
     rescue
@@ -116,6 +119,12 @@ module CollectionMethods
 
         #nest these calls inside a proc because adding elements to a new record without an ID will produce invalid joins
         added, removed  = update_has_many_collection( model_instance, many_association, potential_elements )
+
+        # Refresh category tree if any group has modified collection memberships
+        if model_instance.class == Group && (added.size > 0 || removed.size > 0) 
+          session[:category_tree] = current_user.categories_as_tree(true)
+        end
+
         many_associations_results << "<br/>Added (#{added.size}) #{many_association} and removed (#{removed.size})" if defined?(added) && defined?(removed)  
       end
       
