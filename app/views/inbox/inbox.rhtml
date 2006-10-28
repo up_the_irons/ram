@@ -1,10 +1,31 @@
 <% content_for('application_header') do -%>
 <h1><%= current_user.full_name.titleize unless current_user.respond_to?('full_name') %>'s Inbox</h1>
 <% end -%>
+<!--
+	Commented out for now
+<div class="pageActionOptions">
+	From here you can:
+	<dl>
+		<dd><%#= link_to_remote( "#{image_tag('/images/icons/add.png')} Add A New Feed.", 
+											 :url => { :controller=>'inbox', :action => "edit_feed", :update=>'new_feed_form' } ) %></dd>
+	</dl>											
+</div>
+//-->
+<div id="new_feed_form">
+</div>
 
-<% 
-#build the rounded box
-c = display_as_round_box do -%>
-Inbox Content (will contain stuff like "your recent files", "messages", "recent changes to things you monitor")
-<% end -%>
-<%= c %>
+<table class="message_list" cellpadding="0" cellspacing="0">
+	<tr class="heading">
+		<th><!--icon //--></th>
+      	<th>Type</th>
+      	<th>Title</th>
+      	<th>Date Received</th>
+		<th>Actions</th>
+    </tr>
+	<% @messages.each do |message| -%>
+	    <% row_class =  cycle("even", "odd") -%>
+		<%= render :partial=>'events/detail_row', :locals=>{:controller=>'events', :message=>message, :row_class=>row_class} %>
+	<% end -%>
+</table>
+
+

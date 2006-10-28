@@ -71,7 +71,7 @@ class EventsControllerTest < Test::Unit::TestCase
     id = events(:quentin_msg_1_unread).id
     xhr :get, :show, :id => id
 
-    assert_rjs :toggle, "event_body_container_#{id}"
+    assert_rjs :toggle, "message_body_container_#{id}"
     #todo find a way to include this assertian again
     #assert_rjs :replace_html, "event_body_#{id}", events(:quentin_msg_1_unread).msg_body
   end

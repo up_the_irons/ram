@@ -1,4 +1,4 @@
-# Schema as of Sun Oct 22 21:28:20 PDT 2006 (schema version 19)
+# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
 #
 #  id                  :integer(11)   not null
 #  name                :string(255)   
@@ -10,6 +10,8 @@
 #  parent_id           :integer(11)   
 #  counter_cache       :boolean(1)    default(true)
 #  permanent           :boolean(1)    
+#  created_at          :datetime      
+#  updated_at          :datetime      
 #
 
 class Collection < ActiveRecord::Base

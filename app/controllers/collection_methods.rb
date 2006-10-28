@@ -53,14 +53,14 @@ module CollectionMethods
     opts[:table] = controller_name.pluralize unless opts[:table]
     obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
     
-    #find the object in the user's model for example current_user.categories etc.
+    # Find the object in the user's model for example current_user.categories etc.
     instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id]))
     raise ActiveRecord::RecordNotFound unless instance_variable_get("@#{obj[:table].singularize}")
     yield and return if block_given?
 
     respond_to do |wants|
       wants.html do
-        #not all collections will have contents
+        # Not all collections will have contents
         send("#{obj[:table].singularize}_contents",params) if respond_to?("#{obj[:table].singularize}_contents")
         render "#{obj[:table].singularize}/show"
       end
@@ -81,7 +81,7 @@ module CollectionMethods
     opts[:table] = controller_name.pluralize unless opts[:table]
     obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
     
-    #find the object in the user's model for example current_user.categories etc.
+    # Find the object in the user's model for example current_user.categories etc.
     instance_variable_set("@#{obj[:table].singularize}", obj[:model].send(:new))
     instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id])) if params[:id]
     
@@ -94,7 +94,7 @@ module CollectionMethods
     if request.post? && model_instance
       params[model_sym][:user_id] = current_user.id if model_instance.new_record?
       
-      #save the record and strip out the has_many associations so that the record saves correctly.
+      # Save the record and strip out the has_many associations so that the record saves correctly.
       #TODO find a way to make this more succient. 
       attributes = params[model_sym].dup
       obj[:many_associations].each do | m | 
@@ -128,7 +128,7 @@ module CollectionMethods
         many_associations_results << "<br/>Added (#{added.size}) #{many_association} and removed (#{removed.size})" if defined?(added) && defined?(removed)  
       end
       
-      #display results
+      # Display results
       if model_instance.valid?
         flash[:notice] = "\"#{model_instance.name}\" was saved."
         flash[:notice] << many_associations_results

@@ -1,0 +1,276 @@
+blockquote {
+clear:both;
+  color:#222;
+  font-style:italic;
+  border-left: 1px dotted #333;
+  margin:0.5em 0 0.5em 0;
+  padding:0 2.0em 1.0em 2.0em;
+}
+
+blockquote p { padding-bottom:0; }
+
+
+#message_panel, #message_listings{
+	height: 200px;
+	overflow: auto;
+}
+
+#inboxMenu{
+	margin           : 10px 0 0 0;
+	display          : block;
+	float            : left;
+	background-color : #F7F8D8;
+	padding          : 5px;
+	border           : solid 1px #D5D6B2;
+	width            : 220px;
+	height           : 100%;
+}
+
+#inboxMenu li{
+	list-style       : none;
+}
+
+#inboxMenu li.menuLabel, #inboxMenu li.menuLabel_selected{
+	font-size        : 1.2em;
+	font-weight      : lighter;
+	padding          : 5px 0 5px 0;
+	border-bottom    : solid 1px #D5D6B2;
+}
+
+#inboxMenu li.menuLabel_selected{
+	background-color : #F5F7B8;
+}
+#inboxMenu li.menuData ul{
+	padding          : 0;
+	margin           : 0;
+}
+
+#inboxMenu li.menuData ul li{
+	padding          : 2px 0 2px 5px;
+	border-bottom    : solid 1px #D5D6B2;
+	font-size:0.8em;
+}
+
+#inboxMenu li.menuDataItem_even{
+	background-color : #FAFBE7;
+}
+
+#inboxMenu li.menuDataItem_odd{
+	background-color : #E7E8D5;
+}
+
+#inboxMenu a.newItems{
+	font-size        : 0.6em;
+	font-weight      : normal;
+	text-decoration  : underline;
+	color            : #EC6428;
+	
+}
+
+#inboxMenu li.menuData{
+	padding          : 5px 0 5px 5px;
+}
+
+#section_links a{
+	border:none;
+}
+
+#section_links dt{
+	font-weight:bolder;
+	display:inline;
+	font-size:1.4em;
+	padding:0 0.9em 0 0 ;
+}
+
+#section_links dd{
+	display:inline;
+	padding:0 0.5em 0 0.5em ;
+}
+
+.compose_message input, .compose_message textarea, .compose_message file{
+	font-size: 1.5em;
+	border: 0.2em solid #efefef;
+	margin: 0 0 0.5em 0;
+}
+
+.compose_message dt{
+	font-size: 1.5em;
+	margin-top: 1.0em;
+	margin-bottom: 0.2em;
+}
+
+.compose_message p{
+	font-size: 1.2em;
+	border: none;
+}
+
+.compose_message textarea{
+	width: 25em;
+	height: 10em;
+}
+
+.compose_message .submit{
+	margin-top: 0.5em;
+	padding: 0.5em 0 0 0;
+	border-top: 0.2em solid #efefef;
+}
+
+
+.dates{
+	list-style:none;
+}
+
+.dates li{
+	padding:0.2em;
+  	margin-bottom:0.5em;
+}
+
+.date{
+	font-weight:bold;
+}
+.dates a{
+    border:none;
+    text-decoration:underline;
+}
+
+.clear_both{
+	display:block;
+	clear:both;
+}
+
+.important{
+	background-color:#2a7ce4;
+}
+
+.page, .message{
+  	margin:1.0em 0 4.0em 0;
+  	padding-bottom: 3.0em;
+}
+
+.message{
+  	border-bottom:0.5em groove #ccc; 
+  	font: normal 12px/1.5em "Lucida Grande", Lucida, Helvetica, sans-serif;
+  	color: #000;
+}
+
+.message p{
+	margin: 0 0 0.5em 0;
+}
+
+.message h1{
+	font: normal 2.0em "Century Gothic", Lucida, Helvetica, sans-serif;
+	font-size:2.8em;
+	line-height:1.2em
+}
+
+.message h1 a, .message h1 a:link, .message h1 a:visited, .message h1 a:hover, .message h1 a:active{
+	text-decoration:none;
+	border:none;
+}
+
+.message h1 a:hover, .message h1 a:active{
+	color:#2a7ce4;
+}
+
+.message .meta{
+	font-weight:bold;
+	padding:0.9em 0.5em 0.5em 0.5em;
+}
+
+.message img{
+	float:left;
+	border-top:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #555;
+	border-bottom:1px solid #555;
+	padding:0.5em;
+	padding-bottom:1.0em;
+	margin:1.0em;
+}
+
+.message p.image_callout{
+	margin:1.0em 0 1.0em 0;
+	padding-top:0;
+	background-repeat:no-repeat;
+	background-position:top left;
+}
+
+.message .meta li{
+	list-style:none;
+	padding: 0 0.5em 0 0;
+}
+
+.message .meta .dateline{
+	font-weight:normal;
+}
+
+.message .body, .page .body{
+	margin: 1.5em 0 0 0;
+}
+
+.message_list{
+	margin: 0.5em;
+	width: 100%;
+}
+
+.message_list .heading{
+	text-align: left;
+	background-image  : url(/images/datagrid_background.jpg);
+	color: #fff;
+}
+
+.message_list .heading th{
+	border-left       : 1px solid #40445e;
+	padding: 0.5em;
+	padding-left: 0.8em;
+}
+.message_list td{
+	padding: 0.1em;
+	padding-left: 0.5em;
+}
+
+.message_list .actions{
+	list-style: none;
+}
+
+.message_list .actions li{
+	display: inline;
+}
+
+/*
+	Buttons and do-dads
+*/
+
+.big_button{
+	border: 0.1em solid #efefef;
+	background-color: #fff;
+	font-size: 1.5em;
+	padding: 0.5em;
+	margin: 0.5em;
+	color: #000;
+}
+
+
+/*
+	classes for row formatting
+*/
+.even{
+	background-color: #c5dfff;
+}
+
+.odd{
+	background-color: #fff;
+}
+
+.read{
+	background-color: #efefef;
+}
+
+.highlighted{
+	background-color: #2a7ce4;
+	color: #fff;
+	cursor: pointer;
+}
+.hightlighted a{
+	color: #fff;
+}

@@ -1,5 +1,5 @@
 <% for asset in @assets -%>
-<div style="float:left;border:1px solid #cfcfcf;padding:2px;margin:2px;">
+<div id="asset_<%= asset.id %>_thumbnail" style="float:left;border:1px solid #cfcfcf;padding:2px;margin:2px;">
   <%= link_to(display_as( asset, {:size=>'small'}), :controller=>'asset',:action=>'show',:id=>asset.id ) %>
   <p>
 	<input type="checkbox" name="assets[]" value="<%= asset.id %>" />

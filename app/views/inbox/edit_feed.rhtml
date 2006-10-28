@@ -1,0 +1,11 @@
+<% content_for('application_header') do -%>
+<h1>
+<% if @feed.new_record? -%>
+  Subscribe To A New Feed
+<% else -%>
+  Edit "<%= @feed.title %>"
+<% end -%>
+</h1>
+<% end -%>
+
+<%= render :partial=>'feed_form' %>

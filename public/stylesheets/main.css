@@ -28,6 +28,18 @@ a:link, a:visited{
 	font-size: 0.8em;
 	text-decoration:none
 }
+.category_subscribe{
+	border-top: 0.1em solid #999;
+	margin: 1.1em 0 0 0;
+}
+.category_subscribe a{
+	margin: 0.5em 0 0 0;
+	padding-bottom: 0.5em;
+	padding-left: 2.2em;
+	display: block;
+	background-image  : url(/images/icons/feed_add.png);
+	background-repeat : no-repeat;
+}
 
 #applicationWrapper{
 	width            : 900px;
@@ -121,41 +133,6 @@ a:link, a:visited{
 	background-color  :#ffffff;
 	font-size         : 1.5em;
 	width             : 150px;
-}
-
-#breadcrumb{
-	margin            : 10px 10px 10px 0;     
-	background-color  : #E8F8D8;
-	border            : 1px solid #000000;
-	padding           : 5px;
-	color             : #000000;
-	font-size         : .7em;
-}
-
-#breadcrumb a{
-	text-decoration   : none;
-	border-bottom     : 1px solid #000; 
-}	
-
-#breadcrumb ul a:link, #breadcrumb ul a:visited{
-	color             : #000;
-}
-
-#breadcrumb ul a:hover {
-	color             : #000;
-	background-color  : #B3DA8B;
-}
-
-#breadcrumb li{
-	display           : inline;
-}
-	
-#breadcrumb ul li:before{
-	content           : " \00BB \0020 ";
-}
-	
-#breadcrumb ul li.first:before{
-	content           : " ";
 }
 	
 #pageHeader{

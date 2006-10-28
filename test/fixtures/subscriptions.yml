@@ -1,0 +1,7 @@
+---
+quentins_feed_1:
+  id: 1
+  subscribed_to_type: 'Feed'
+  subscribed_to_id: 1
+  subscriber_id: 1
+  subscriber_type: 'User'

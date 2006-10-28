@@ -56,21 +56,24 @@ class BriefcaseController < ProtectedController
   end
   
   def add
-    new_assets = []
-    existing_assets = []
-    assets = params[:assets].uniq
-    assets.each do | a |
-      asset = Asset.find(a)
-      unless asset.nil?
-        n, e = add_to_briefcase(asset) if current_user.assets.include?(asset)
-        new_assets << n unless n.nil?
-        existing_assets << e unless e.nil?
+    unless params[:assets].nil?
+      new_assets = []
+      existing_assets = []
+      assets = params[:assets].uniq
+      assets.each do | a |
+        asset = Asset.find(a)
+        unless asset.nil?
+          n, e = add_to_briefcase(asset) if current_user.assets.include?(asset)
+          new_assets << n unless n.nil?
+          existing_assets << e unless e.nil?
+        end
       end
-    end unless assets.nil?
-    flash[:notice] =""
-    flash[:notice] << "Added (#{new_assets.size}) New Assets.<br/>" unless new_assets.empty?
-    flash[:notice] << "(#{existing_assets.size}) Assets could not be added because they already exist.<br/>" unless existing_assets.empty?
-    
+      flash[:notice] = ""
+      flash[:notice] << "Added (#{new_assets.size}) New Assets.<br/>" unless new_assets.empty?
+      flash[:notice] << "(#{existing_assets.size}) Assets could not be added because they already exist.<br/>" unless existing_assets.empty?
+    else
+      flash[:notice] = "You must select at least one file."
+    end
     render_list
   end
   
@@ -88,26 +91,19 @@ class BriefcaseController < ProtectedController
   
   
   def remove
-    removed_assets = []
-    assets =  params[:assets].uniq
-    assets.each do |a|
-      removed_assets << a unless session[:briefcase].delete(a.to_i).nil?
-    end   
-    flash[:notice] =""
-    flash[:notice] << "Removed (#{removed_assets.size}) Assets.<br/>" unless removed_assets.empty? 
-    
+    unless params[:assets].nil?
+      removed_assets = []
+      assets =  params[:assets].uniq
+      assets.each do |a|
+        removed_assets << a unless session[:briefcase].delete(a.to_i).nil?
+      end   
+      flash[:notice] =""
+      flash[:notice] << "Removed (#{removed_assets.size}) Assets.<br/>" unless removed_assets.empty? 
+    else
+      flash[:notice] = "You must select at least one file."
+    end
     render_list
   end
-  #def remove
-  #  unless params[:id].nil?
-  #    unless session[:briefcase].delete(params[:id].to_i).nil?
-  #      flash[:notice] = "You removed the file from your briefcase."
-  #    else
-  #      flash[:notice] = "File was not removed from briefcase."
-  #    end  
-  #  end
-  #  redirect_to :action=>'list'
-  #end
   
   def remove_all
     session[:briefcase].clear
