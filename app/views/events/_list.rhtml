@@ -1,7 +1,7 @@
 <div id='events_table' class="clear_both">
 <% if @events.size > 0 %>
-	<table class="dataGrid" cellpadding="0" cellspacing="0">
-		<tr>
+	<table class="message_list" cellpadding="0" cellspacing="0">
+		<tr class="heading">
 			<th></th>
 			<th>Type</th>
 			<th><%= sort_header(:title => 'Subject',       :name => 'subject',    :url => { :controller => 'events', :action => 'list' }) %></th>
@@ -9,22 +9,8 @@
 			<th>Actions</th>
 		</tr>
 	<% @events.each do |e| -%>
-  		<%row_class =  cycle("even", "odd") %>
-  		<tr id='event_<%= e.id %>'onmouseover="this.className='highlighted'" onmouseout="this.className='<%= row_class %>'" class="<%= row_class %>">
-			
-		<% ["#{image_tag('/images/icons/email.png')}","System Message", "#{e.subject}","#{e.created_at}"].each do|txt| -%> 
-			<td>
-        <a href="#" onclick="(Content.in_cache($('event_body_container_<%= e.id %>')))?$('event_body_container_<%= e.id %>').toggle() : <%= remote_function(:url => { :controller => 'events', :action => 'show', :id => e.id }) %>; return false;"><%= txt %></a>
-			</td>
-		<%end -%>
-			
-    		<td>
-				<%= link_to_remote image_tag('/images/icons/cross.png'), :url => { :controller => 'events', :action => 'delete', :id => e.id }, :confirm => "Are you sure you want to delete this event?" %>
-			</td>
-		</tr>
-  		<tr id='event_body_container_<%= e.id %>' class="message" style='display: none'>
-    		<td colspan='5' id='event_body_<%= e.id %>'></td>
-  		</tr>
+  		<% row_class =  cycle("even", "odd") %>
+  		<%= render :partial=>'events/detail_row', :locals=>{:message=>e, :row_class=>row_class}%>
 	<% end -%>
 	</table>
 <% else -%>

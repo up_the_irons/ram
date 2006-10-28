@@ -1,4 +1,4 @@
-# Schema as of Sun Oct 22 21:28:20 PDT 2006 (schema version 19)
+# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
 #
 #  id                  :integer(11)   not null
 #  login               :string(40)    
@@ -13,8 +13,6 @@
 #  role                :integer(11)   default(0)
 #  last_login_at       :datetime      
 #
-
-
 require 'digest/sha1'
 class User < ActiveRecord::Base
 	
@@ -25,21 +23,41 @@ class User < ActiveRecord::Base
 	has_many :articles
 	has_many :assets
   has_many :event_subscriptions
-	#has_many :taggings
 	
-	#FIXME: User model will not load any mixin associations
-	#acts_as_subscribable :subscribe_to=>['Feed']
-	#has_many :subscriptions, :foreign_key=>'subscriber_id', :conditions=>"subscriptions.subscriber_type = 'User'"
-	
-	#TODO: Abstract this inside the acts_as_subscribable plug-in.... however to do this we need to find out why the user model will not load 
-	#mixin associations
-	has_many :feeds, :finder_sql=>'SELECT DISTINCT * ' +
+	# TODO: Abstract this inside the acts_as_subscribable plug-in.... however to do this we need to find out why the user model will not load 
+	# the mixin associations. It may be because of the user_observer. 
+	# The ideal format is: acts_as_subscribable :subscribe_to=>['Feed']
+	has_many :feeds, :finder_sql=>'SELECT DISTINCT f.* ' +
         'FROM feeds f, subscriptions s ' +
-        'WHERE s.subscribed_to_type = \'Feed\' AND s.subscriber_id = #{id} '
+        'WHERE s.subscribed_to_type = \'Feed\' AND s.subscriber_id = #{id} AND s.subscriber_type = \'User\' AND f.id = s.subscribed_to_id' do
+    
+    # @user.feeds << Feed.find(:first)
+    def <<(feed)
+      return if @owner.feeds.include?(feed)
+      Subscription.create(
+        :subscribed_to_type=> 'Feed',
+        :subscribed_to_id=>feed.id,
+        :subscriber_type=>'User',
+        :subscriber_id=>@owner.id
+      )
+      
+      # Reload the user's feeds to ensure the correct count
+      @owner.feeds(true)
+    end
+    
+    # @user.feeds.unsubscribe @user.feeds[0]
+    def unsubscribe(feed)
+      return unless @owner.feeds.include?(feed)
+      s = Subscription.find_by_subscriber_id_and_subscriber_type_and_subscribed_to_type_and_subscribed_to_id(@owner.id,'User', 'Feed', feed.id)
+      return unless s
+      s.destroy # Destroy the subscription.
+      
+      # Reload the user's feeds to ensure the correct count
+      @owner.feeds(true)
+    end
+  end
 	
 	
-	
-  #has_many :collections, :through => :memberships
 	has_many :groups, :through=>:memberships,
 	                  :conditions => "memberships.collection_type = 'Group'",:include=>:categories do
 
@@ -51,7 +69,6 @@ class User < ActiveRecord::Base
         :collection_id => group.id,
         :collection_type => 'Group'	    
       )
-      GroupObserver.after_add(group, @owner)
     end
   end
   
@@ -106,9 +123,9 @@ class User < ActiveRecord::Base
     make_branch = Proc.new do
       {:parent=>nil,:children=>[],:name=>"",:id=>nil}
     end
-    category_ids = categories(reload).map{|c|c.id}
+    category_ids = self.categories(reload).map{|c|c.id}
     tree = {:root=>make_branch.call}
-    categories.each do |t|
+    self.categories.each do |t|
       sym = "b_#{t.id}".to_sym
       tree[sym] = make_branch.call if tree[sym].nil?
       tree[sym][:id] = t.id
@@ -127,14 +144,15 @@ class User < ActiveRecord::Base
   end
   
   def groups=(new_groups)
-    old_groups = groups - new_groups #remove all groups which don't appear in the new_groups list
-    new_groups = new_groups - groups #remove the groups the user already belongs to.
+    old_groups = self.groups - new_groups # Remove all groups which don't appear in the new_groups list.
+    new_groups = new_groups - self.groups # Remove the groups the user already belongs to.
     new_groups.each do | g |
       self.groups << g
     end
-    #delete all the old memberships, which are no longer needed.
+    
+    # Delete all the old memberships, which are no longer needed.
     old_groups.each do |g |
-      membership = Membership.find_by_collection_id_and_user_id(g.id,id)
+      membership = Membership.find_by_collection_id_and_user_id(g.id,self.id)
       Membership.destroy(membership.id)
     end
   end
@@ -183,7 +201,8 @@ class User < ActiveRecord::Base
     self[:state] > 1
   end
   
-  #used to force state because the profile object also uses "state" but in a geographic context and we don't want it to get set through the method missing.
+  # Used to force state because the profile object also uses "state" but
+  # in a geographic context and we don't want it to get set through the method missing.
   def state
     self[:state]
   end
@@ -203,11 +222,11 @@ class User < ActiveRecord::Base
   def is_admin?
     #todo as the application grows this should be broken out into its own model probably somehthing like a role model
     #role == 1
-    (groups.find_by_name(ADMIN_GROUP))? true : false 
+    (self.groups.find_by_name(ADMIN_GROUP))? true : false 
   end
   #expects the obj to respond to user_id
   def can_edit?(obj)
-    return true if obj.user_id == user_id || is_admin?
+    return true if obj.user_id == self.user_id || self.is_admin?
     false
   end
 

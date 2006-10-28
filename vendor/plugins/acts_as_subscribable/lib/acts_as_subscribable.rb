@@ -8,20 +8,22 @@ module ActiveRecord
       module ClassMethods
         def acts_as_subscribable(options = {:subscribe_to=>[]})
           
-          #the mixee is subscribed to other models
+          # The mixee is subscribed to other models
           is_a_subscriber unless options[:subscribe_to].empty?
           
-          #the mixee has other classes subscribing to it
+          # The mixee has other classes subscribing to it
           is_subscribed_to if  options[:subscribe_to].empty?
           
           include ActiveRecord::Acts::Subscribable::InstanceMethods
           extend ActiveRecord::Acts::Subscribable::SingletonMethods          
         end
         
+        # For example a User is_a_subscriber to Feeds
         def is_a_subscriber
           has_many :subscriptions, :foreign_key=>'subscriber_id', :conditions=>'subscriptions.subscriber_type = ' +"'#{self.class_name}'"
         end
         
+        # For example a Feed is subscribed_to by A User.
         def is_subscribed_to
           
           # Why I am mixing single and double quotes in the finder_sql statement you ask?
@@ -36,17 +38,29 @@ module ActiveRecord
                 'FROM subscriptions ' +
                 'WHERE subscriptions.subscribed_to_id = #{self.id} AND subscriptions.subscribed_to_type =' + "'#{self.class_name}'" do
             
-            #override the  << method so that it doesn't fuk up the association proxy.
+            # Override the  << method so that it doesn't fuk up the association proxy.
             def <<(subscriber)
-              return if @owner.subscribers.include?subscriber
+              return unless @owner.subscribers.map{|s| return false if s.subscriber_id == subscriber.id && s.subscriber_type == subscriber.class.class_name}
               s = Subscription.create(
                :subscriber_id      => subscriber.id,
                :subscriber_type    => subscriber.class.class_name,
                :subscribed_to_id   => @owner.id,
                :subscribed_to_type => @owner.class.class_name	    
                )
-               s.save!
+               #s.save!
             @owner.subscribers(true) 
+           end
+           
+           # @feed.subscribers.unsubscribe << @feed.subscribers[0]
+           def unsubscribe(remove_me)
+             @owner.subscribers.map{|subscription| subscription.destroy if subscription.subscriber_id == remove_me.id}
+             @owner.subscribers(true)
+           end
+
+           # @feed.unsubscribe_all
+           def unsubscribe_all
+             @owner.subscribers.each{|subscription| subscription.destroy}
+             @owner.subscribers(true)
            end
           
           end
@@ -58,16 +72,7 @@ module ActiveRecord
       end
       
       module InstanceMethods
-        def unsubscribe(remove_me)
-          subscribers.map{|subscription| subscription.destroy if subscription.subscriber_id == remove_me.id}
-          self.subscribers(true)
-        end
-        
-        def unsubscribe_all
-          subscribers.each{|subscription| subscription.destroy}
-          self.subscribers(true)
-        end
-        
+
       end
       
     end

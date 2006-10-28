@@ -28,6 +28,8 @@ class ProfileTest < Test::Unit::TestCase
 			:address_line1 => ' 1600 Pennsylvania Avenue NW',
 			:address_line2 => 'bunker #4',
 			:city => 'Washington',
+			:job_title=>'Manager',
+			:company=>"Uncle Sam's Military Surplus",
 			:state=> 'DC',
 			:postal_code =>'20500',
 			:telephone=>'202-456-1111',
@@ -44,8 +46,8 @@ class ProfileTest < Test::Unit::TestCase
   end
   
   def test_update_profile
-	@id = @model.find(:first).id
-	unit_update @model, @id, @new_obj
+	  @id = @model.find(:first).id
+	  unit_update @model, @id, @new_obj
   end
   
 end

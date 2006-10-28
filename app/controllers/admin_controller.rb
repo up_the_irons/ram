@@ -16,42 +16,51 @@ class AdminController
   
   #sortable       :show
   #paging_with_db :show
+  
        
   def index
     redirect_to :action=>'dashboard'
   end
   
+  
   def categories
     list_collection({:table=>'categories'})
   end
+  
   
   def groups
     list_collection({:table=>'groups'})
   end
   
+  
   def show_category
     show_collection({:table=>'categories'})
   end
+  
   
   def show_group
     show_collection({:table=>'groups'})
   end
   
+  
   def edit_group
     edit_collection({:table=>'groups', :many_associations=>['users','categories']})
   end
+  
   
   def edit_category
     edit_collection({:table=>'categories', :many_associations=>['groups']})
   end
   
-  # A group is not destroyed, it's disbanded!
+  
+  #A group is not destroyed its disbanded!
   def disband_group
     destroy_collection({:table=>'groups', :on_success=>'You disbanded the group.'})
   rescue
     flash[:notice] = "Could not find group."
     redirect_to :action=>'groups'
   end
+  
   
   def destroy_category
     destroy_collection({:table=>'categories'})
@@ -60,12 +69,13 @@ class AdminController
     redirect_to :action=>'categories'
   end
   
-  # The user methods do not use the collection_methods module
+  #the user methods do not use the collection_methods module
   
   def users
     @user_pages, @users = paginate :users, :per_page => 10
     render 'admin/users'
   end
+  
   
   def edit_user
     @user    = User.find(params[:id])
@@ -102,16 +112,17 @@ class AdminController
       :layout=>'application' unless @user.nil?
   end
     
+    
   def dashboard
     @events = Event.find_all_by_recipient_id(current_user.id, :order => @order)
   end
 
   protected
-
   def admin_access_required
     unless current_user.is_admin?
       flash[:notice] = "Access Denied"
       redirect_to :controller=>'inbox' 
     end
   end
+  
 end

@@ -36,7 +36,7 @@ module IncludedTests::GroupMethodsTest
      new_name = 'Atari Monkeys'
      new_tags = ["atari", "2600"]
      assert_not_nil g
-     post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', '), :user_ids => [users(:quentin).id] }
+     post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', ') }
      assert_response :success
      group_after_update = Group.find(g.id)
      assert_equal new_name, group_after_update.name
@@ -44,7 +44,7 @@ module IncludedTests::GroupMethodsTest
 
      # Now make sure the old tags get overwritten with new ones
      new_tags = ['beach', 'bird','dog']
-     post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', '), :user_ids => [users(:quentin).id] }
+     post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', ') }
      assert_response :success
      group_after_update = Group.find(g.id)
      assert_equal new_name, group_after_update.name
@@ -55,28 +55,22 @@ module IncludedTests::GroupMethodsTest
      login_as :quentin
      c = collections(:collection_3)
      @request.env["HTTP_REFERER"] = "show_group/1"
-     event_count_before = Event.count
      add_some_members_to_group(c, 3)
      assert_equal c.users(true).size, 3
-     assert_equal event_count_before + 3, Event.count
      
      new_categories = (users(:quentin).categories - c.categories).map{|cat| cat.id}
      assert new_categories.size > 0
      #remove all but one user, and remove all the categories
-     event_count_before = Event.count
      post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id],:category_ids=>[]}
      assert_response :success
      assert_equal 1, c.users(true).size
      assert_equal 0, c.categories(true).size
-     assert_equal event_count_before + 2, Event.count
      
      users = User.find(:all) - c.members
      #add new members and new categories
-     event_count_before = Event.count
      post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id, users[0].id],:category_ids=>new_categories}
      assert_equal c.users(true).size, 2
      assert_equal new_categories.size, c.categories(true).size
-     assert_equal event_count_before + 1, Event.count
      assert c.users.find(users[0].id)
      assert_response :success
    end
@@ -85,59 +79,15 @@ module IncludedTests::GroupMethodsTest
       login_as :quentin
       users(:quentin).groups.each do |g|
         unless g.name == ADMIN_GROUP
-          # 1 Event is sent to admin "quentin" and 1 for each user belonging to this group
-          assert_difference Event, :count, (1 + g.users.count) do
-            post :disband_group, :id=>g.id 
-            assert_redirect :groups
-            assert_equal "You disbanded the group.", assigns(:flash)[:notice]
-          end
+          post :disband_group, :id=>g.id 
+          assert_redirect :groups
+          assert_equal "You disbanded the group.", assigns(:flash)[:notice]
         
           get :show_group, :id=>g.id
           assert_redirect :groups
           assert_equal assigns(:flash)[:notice], "Could not find group."
         end
       end
-    end
-
-    def test_add_and_disband_group_updates_category_tree
-      quentin = users(:quentin)
-
-      # Remove quentin from admin group to make this test meaningful (else, he has access to all categories simply by being an administrator)
-      Group.find_by_name(ADMIN_GROUP).remove_member(quentin)
-      quentin.categories_as_tree(true) # Reload
-
-      login_as :quentin
-      c = collections(:collection_40)
-
-      get :index
-      assert @controller.session[:category_tree].to_s !~ /#{collections(:collection_41).name}/
-
-      # Fake out the filters in AdminController
-      @controller.instance_eval do
-        class <<current_user
-          def is_admin?; true; end
-        end
-      end
-      class <<@controller # Cheat authentication for this test
-        def find_in_users_groups(id)
-          Group.find(id)
-        end
-      end
-
-      post :edit_group, :id => c.id, :group => { :user_ids => [quentin.id], :category_ids => [collections(:collection_41).id] }
-
-      # Cheap way of making sure category tree gets updated
-      assert @controller.session[:category_tree].to_s =~ /#{collections(:collection_41).name}/
-
-      post :edit_group, :id => c.id, :group => { :user_ids => [], :category_ids => [collections(:collection_41).id] }
-      assert @controller.session[:category_tree].to_s !~ /#{collections(:collection_41).name}/
-
-      # Now add him again to collection_41 and let's destroy this group
-      post :edit_group, :id => c.id, :group => { :user_ids => [quentin.id], :category_ids => [collections(:collection_41).id] }
-      assert @controller.session[:category_tree].to_s =~ /#{collections(:collection_41).name}/
-
-      post :disband_group, :id=>c.id 
-      assert @controller.session[:category_tree].to_s !~ /#{collections(:collection_41).name}/
     end
     
     def test_rescue_on_invalid_disband
@@ -164,22 +114,18 @@ module IncludedTests::GroupMethodsTest
     def test_create_group
       login_as :quentin
       assert_no_difference Group, :count do
-        post :edit_group, :group => { :name => '', :user_id => users(:quentin).id }
+        post :edit_group, :group => { :name => '',:user_id=>users(:quentin).id }
         assert assigns(:group).new_record?
         assert_equal 1, assigns(:group).errors.count
       end
 
       assert_difference Group, :count  do
-        # 1 Event is sent for Group creation and 1 is sent to notify quentin he has been added to the new group
-        assert_difference Event, :count, 2 do
-          new_tags = ["atari", "2600"]
-          post :edit_group, :group => { :name =>'Guest Group', :user_id=>users(:quentin).id, :user_ids=>[users(:quentin).id], :tags => new_tags.join(', ')}
-          assert_redirected_to :action => 'edit_group'
-          assert_equal 0, assigns(:group).errors.count
-          assert assigns(:group)
-          assert (new_tags - assigns(:group).tags.map { |o| o.name }).empty?
-        end
-
+        new_tags = ["atari", "2600"]
+        post :edit_group, :group => { :name =>'Guest Group',:user_id=>users(:quentin).id, :tags => new_tags.join(', ')}
+        assert_redirected_to :action => 'edit_group'
+        assert_equal 0, assigns(:group).errors.count
+        assert assigns(:group)
+        assert (new_tags - assigns(:group).tags.map { |o| o.name }).empty?
       end
     end
     
