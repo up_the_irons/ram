@@ -31,7 +31,6 @@ class ArticleControllerTest < Test::Unit::TestCase
   
   def test_read
     a = @current_user.articles[0]
-    #breakpoint
     [a.id, a.title].each do |id|
       get :read, :id=>id
       assert_response :success
@@ -56,6 +55,21 @@ class ArticleControllerTest < Test::Unit::TestCase
     #ensure all params match
     assert_equal assigns(:flash)[:notice], "\"#{assigns(:article).title}\" was saved.<br/>Added (#{assigns(:added).size}) groups and removed (#{assigns(:removed).size})"
     params.each_pair{|k,v| assert_equal assigns(:article)[k], v, ":#{k} should equal <#{assigns(:article)[k]}> but was <#{v}>"}
+  end
+  
+  def test_tags_can_be_added_or_removed
+    a = @current_user.articles.find(:first)
+    assert a.tags.empty?
+    # Add tags
+    post :write, :id=>a.id, :article=>{:tags=>"foo,bar,baz,\"ruby on rails\""}
+    assert_response :success
+    assert_equal 4, assigns(:article).tags.size
+    
+    # Now remove all tags
+    a = @current_user.articles.find(:first)
+    post :write, :id=>a.id, :article=>{}
+    assert_response :success
+    assert_equal 0, assigns(:article).tags.size
   end
   
   def test_write_new_article
@@ -99,9 +113,9 @@ class ArticleControllerTest < Test::Unit::TestCase
     assert_equal assigns(:article).groups.size, orig_size
   end
   
-  #This should probably be an integration test.
+  # This should probably be an integration test.
   def test_users_shall_not_see_article_unless_they_have_access_though_groups
-    #login and get an article of this user
+    # Login and get an article of this user
     login_as :user_4
 
     user = users(:user_4)
@@ -109,40 +123,40 @@ class ArticleControllerTest < Test::Unit::TestCase
     a = an_article(:user_id=>user.id, :category_id=>user.categories[0].id, :published_at=>Time.now.to_s)
     assert(a.valid?)
     
-    #remove all the groups of this article
+    # Remove all the groups of this article
     a.remove_all_groups
     assert_equal a.groups(true).size, 0
     
-    #find the groups that have access to the category where this article resides
+    # Find the groups that have access to the category where this article resides
     category = Category.find(a.category_id)
     category.groups << Group.find_by_name('Mavens and Mavericks')
     assert 3, category.groups(true).size
     category_groups = category.groups
     
-    #assign the members of the first group in the category access to the article
+    # Assign the members of the first group in the category access to the article
     a.groups << category_groups[0]
     assert_equal a.groups(true).size, 1
     
-    #get all active and remaing users, who don't already belong to one of these groups and are not admins. Then add them to the category's second group
+    # Get all active and remaing users, who don't already belong to one of these groups and are not admins. Then add them to the category's second group
     remaining_users = User.find(:all).map{|u| u unless u.is_admin? || !u.account_active? }.compact
     remaining_users = remaining_users - (category_groups[0].users + category_groups[1].users).flatten.uniq!
     assert_difference category.groups[2].users, :size do
       category.groups[2].users << remaining_users[0]
     end
     
-    #ensure that current_user can read their article
+    # Ensure that current_user can read their article
     get :read, :id=>a.id
     assert_equal assigns(:article).title, a.title
     assert_response :success    
     
-    #logout as the current user and login as a new one.
+    # Logout as the current user and login as a new one.
     @controller = AccountController.new
     post :logout
     post :login, :login=> remaining_users[0].login, :password => 'qazwsx'
     
     @controller = ArticleController.new
     assert_equal assigns(:current_user).login, remaining_users[0].login
-    #now try to view the article as the user who has access to the category but not access to the group which controls the article
+    # Now try to view the article as the user who has access to the category but not access to the group which controls the article
     get :read, :id=>a.id
     assert_redirected_to :controller=>'inbox'
     assert assigns(:flash)[:notice] = "Could not find article."
@@ -151,12 +165,12 @@ class ArticleControllerTest < Test::Unit::TestCase
   def test_prevent_edit_on_get
     a = @current_user.articles.find(:first)
     params =  article_params
-    #ensure no params match
+    # Ensure no params match
     params.each_pair{|k,v| assert a[k] != v, ":#{k} should not be equal <#{a[k]}> but was <#{v}>"}
     params.merge({:category_id=>a.category_id,:user_id=>a.user_id})
     get :write, :id=>a.id, :article=>params
     assert assigns(:article)
-    #ensure no params match
+    # Ensure no params match
     params.each_pair{|k,v| assert assigns(:article)[k] != v, ":#{k} should not be equal <#{assigns(:article)[k]}> but was <#{v}>"}
   end
   
@@ -188,14 +202,14 @@ class ArticleControllerTest < Test::Unit::TestCase
   def test_non_published_articles_are_not_viewable_except_to_author_or_admin
     login_as :user_4
     a = an_article({:user_id=>users(:user_4).id})
-    a.groups << users(:user_4).groups[0] #ensure that there is atleast one group in common
+    a.groups << users(:user_4).groups[0] # Ensure that there is atleast one group in common
     get :read, :id=>a.id
     assert_response :success
     assert_equal assigns(:article).title, a.title
     
-    #now switch the user and assert that the article cannot be seen.
+    # Now switch the user and assert that the article cannot be seen.
     b = an_article({:user_id=>@another_user.id})
-    b.groups << users(:user_4).groups[0] #ensure that there is atleast one group in common
+    b.groups << users(:user_4).groups[0] # Ensure that there is atleast one group in common
     assert b.valid?
     get :read, :id=>b.id
     assert_redirected_to :controller=>'inbox'

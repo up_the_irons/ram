@@ -37,24 +37,23 @@ class ArticleController < ProtectedController
     else
       @category = Category.find(@article.category_id)
     end
-    if request.post?
-      
-      @potential_groups = []
-      #don't allow the user_id to be passed in as a param.
-      params[:article].delete('user_id') unless params[:article][:user_id].nil? 
-      @article.user_id = current_user.id if @article.new_record?
-      unless params[:article][:group_ids].nil?
-        @potential_groups = params[:article][:group_ids] 
-        params[:article].delete('group_ids')
-      end
-        
-      @article.published_at = Time.now.to_s if params[:commit] == "Save And Publish"
-      if @article.update_attributes(params[:article])
-        @added, @removed  = update_has_many_collection( @article, 'groups', @potential_groups )
-        flash[:notice] = "\"#{@article.title}\" was saved."
-        flash[:notice] << "<br/>Added (#{@added.size}) groups and removed (#{@removed.size})" if defined?(@added) && defined?(@removed)
-        redirect_to :action=>'write', :id=>@article.id unless params[:id]  
-      end
+    return unless request.post?
+    @article.tags = "" # Clear tags, so new tags in params can be injected
+    @potential_groups = []
+    #don't allow the user_id to be passed in as a param.
+    params[:article].delete('user_id') unless params[:article][:user_id].nil?
+    @article.user_id = current_user.id if @article.new_record?
+    unless params[:article][:group_ids].nil?
+      @potential_groups = params[:article][:group_ids] 
+      params[:article].delete('group_ids')
+    end
+    
+    @article.published_at = Time.now.to_s if params[:commit] == "Save And Publish"
+    if @article.update_attributes(params[:article])
+      @added, @removed  = update_has_many_collection( @article, 'groups', @potential_groups )
+      flash[:notice] = "\"#{@article.title}\" was saved."
+      flash[:notice] << "<br/>Added (#{@added.size}) groups and removed (#{@removed.size})" if defined?(@added) && defined?(@removed)
+      redirect_to :action=>'write', :id=>@article.id unless params[:id]  
     end
   end
   

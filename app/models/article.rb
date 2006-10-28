@@ -67,7 +67,7 @@ class Article < ActiveRecord::Base
   
   def tags= (str)
     arr = str.split(",").uniq
-    self.tag_with arr.map{|a| a}.join(",") unless arr.empty?
+    self.tag_with arr.map{|a| a}.join(",")
   end
   
   #snipped from mephisto's post model (http://www.mephistoblog.com/)
