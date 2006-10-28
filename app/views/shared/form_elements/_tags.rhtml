@@ -1,8 +1,8 @@
-<% model = model.to_s
+<% 
 opts ||={} 
 param ={:size=>"30"}.merge(opts)
 -%>
 <li>
   <label>Tags</label>
-  <%= text_field model, :tags, param %>
+  <%= text_field_tag "#{model}[tags]", instance_variable_get("@#{model}").tags.map { |o| o.name }.join(', ') %>
 </li>

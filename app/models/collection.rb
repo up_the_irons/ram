@@ -34,8 +34,12 @@ class Collection < ActiveRecord::Base
   BOOLEAN = [true, false] 
 
   def tags=(str)
-    arr = str.split(",").uniq
-    self.tag_with arr.map { |a| a }.join(",") unless arr.empty?
+    if str == ''
+      Tagging.destroy_all("taggable_id = #{id} AND taggable_type = '#{self.class.name}'")
+    else
+      arr = str.split(",").uniq
+      self.tag_with arr.map { |a| a }.join(",") unless arr.empty?
+    end
   end
 
 end

@@ -34,6 +34,10 @@ module IncludedTests::CategoryMethodsTest
 
       # Cheap way of making sure category tree gets updated
       assert @controller.session[:category_tree].to_s =~ /knock-offs/
+
+      # Make sure tags display correctly (comma delimited)
+      get :edit_category, :id => assigns(:category).id
+      assert_tag :tag => 'input', :attributes => { :value => 'atari, 2600' }
     end
   end
   
@@ -127,6 +131,9 @@ module IncludedTests::CategoryMethodsTest
     # Make sure category tree updates
     assert @controller.session[:category_tree].to_s =~ /#{new_name}/
 
+    # Make sure tags display correctly (comma delimited)
+    assert_tag :tag => 'input', :attributes => { :value => 'atari, 2600' }
+
     assert  cat.changes.size+1, assigns(:category).changes.size
 
     # Now make sure the old tags get overwritten with new ones
@@ -140,6 +147,23 @@ module IncludedTests::CategoryMethodsTest
     # Assert that the change_sweeper found these changes.
     assert  cat.changes.size+2, assigns(:category).changes.size
     assert  assigns(:category).changes[assigns(:category).changes.size-1].event = "update"
+
+    # Make sure tags display correctly (comma delimited)
+    assert_tag :tag => 'input', :attributes => { :value => 'beach, bird, dog' }
+  end
+
+  def test_update_category_with_blank_tags
+    new_tags = ['beach', 'bird','dog']
+    post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first), :tags => new_tags.join(', ')}
+    assert_response :success
+    
+    # Make sure tags display correctly (comma delimited)
+    assert_tag :tag => 'input', :attributes => { :value => 'beach, bird, dog' }
+
+    # Now let's delete the tags
+    post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first), :tags => '' }
+    assert_response :success
+    assert_tag :tag => 'input', :attributes => { :value => '' }
   end
   
   def test_prevent_bad_updates_to_categories
