@@ -20,7 +20,7 @@ class CategoryController < ProtectedController
         end
       end
     else
-      # Nest this in a boolean because show_collecction will return false if a resuce occurred
+      #nest this in a boolean because show_collecction will return false if a resuce occurred
       # @order comes from the "sortable :show" directive above, automagically
       category_contents(params, @order) if show_collection({:table=>'categories'})
     end

@@ -1,4 +1,4 @@
-# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
+# Schema as of Sun Oct 22 21:28:20 PDT 2006 (schema version 19)
 #
 #  id                  :integer(11)   not null
 #  content_type        :string(255)   

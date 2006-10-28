@@ -1,41 +1,40 @@
-<% 
-# Build the rounded box
-round_box = display_as_round_box do -%>
-
-<div class="profileImage">
-	<%= image_tag(url_for(:controller=>'account', :action=>'avatar', :id=>user.avatar.id)) unless user.avatar.nil? %>
+<div class="roundBox">
+	<div class="topRightCorner"><div class="topLeftCorner"></div></div>
+		<div class="content">
+			
+			<div class="profileImage">
+			  <%= image_tag(url_for(:controller=>'account', :action=>'avatar', :id=>user.avatar.id)) unless user.avatar.nil? %>
+			</div>
+			<div class="profileData">
+				<h1>
+					<%= 
+					unless !defined?(user.full_name) || user.full_name.nil?
+					  user.full_name
+					else
+					'No Full Name Provided'
+					end  %>
+					<span class="mice_type">(<%= user.login %>)
+					<%= link_to("#{image_tag('/images/icons/pencil.png')} Edit Profile", {:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"}) if user.id == current_user.id || current_user.is_admin? %>
+					</span> 
+				</h1>
+				<h2>*Job Title*</h2>
+				<h3>*Company*</h3>
+				<h3>Phone Number: <%= user.telephone %></h3>
+				<h3>Email Address: <%= user.email %></h3>
+				<ul>
+					<li class="label">Groups:</li>
+					<%= user.groups.map{|g| "<li>#{ link_to g.name, :controller=>'group',:action=>'show',:id=>g.id}" }.join(", </li>") %>
+				</ul>
+				<ul>
+					<li class="label">Categories:</li>
+					<%= user.categories.map{|c| "<li>#{link_to c.name, :controller=>'category', :action=>'show',:id=>c.id}" }.join(", </li>") %>
+				</ul>
+			</div>
+			<div class="row"></div>
+			<ul class="roles">
+				<li class="label">Roles:</li>
+				<%= "Admin" if user.is_admin? %>
+			</ul>
+		</div>
+	<div class="bottomRightCorner"><div class="bottomLeftCorner"></div></div>				
 </div>
-<div class="profileData">
-	<h1>
-	<%= 
-		unless !defined?(user.full_name) || user.full_name.nil?
-			user.full_name
-		else
-			'unknown'
-		end  -%>
-		<span class="mice_type">(<%= user.login %>)
-		<%= link_to("#{image_tag('/images/icons/pencil.png')} Edit Profile", {:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"}) if user.id == current_user.id || current_user.is_admin? %>
-		</span> 
-	</h1>
-	<h2><%= user.job_title %></h2>
-	<h3>Company: <%= user.company %></h3>
-	<h3>Phone Number: <%= user.telephone %></h3>
-	<h3>Email Address: <%= user.email %></h3>
-	<ul>
-		<li class="label">Groups:</li>
-		<%= user.groups.map{|g| "<li>#{ link_to g.name, :controller=>'group',:action=>'show',:id=>g.id}" }.join(", </li>") %>
-	</ul>
-	<ul>
-		<li class="label">Categories:</li>
-		<%= user.categories.map{|c| "<li>#{link_to c.name, :controller=>'category', :action=>'show',:id=>c.id}" }.join(", </li>") %>
-	</ul>
-</div>
-<div class="row"></div>
-<ul class="roles">
-	<li class="label">Roles:</li>
-	<%= "Admin" if user.is_admin? %>
-</ul>
-
-<% end -%>
-
-<%= round_box %>

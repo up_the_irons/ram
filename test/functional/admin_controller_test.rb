@@ -67,7 +67,6 @@ class AdminControllerTest < Test::Unit::TestCase
     end
     
     category.changes(true)
-
     assert_equal(category.changes[2].event, "Removed #{@a.name}")
     assert_equal(category.changes[3].event, "Removed #{@art.name}")
   end

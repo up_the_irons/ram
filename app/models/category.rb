@@ -1,4 +1,4 @@
-# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
+# Schema as of Sun Oct 22 21:28:20 PDT 2006 (schema version 19)
 #
 #  id                  :integer(11)   not null
 #  name                :string(255)   
@@ -10,8 +10,6 @@
 #  parent_id           :integer(11)   
 #  counter_cache       :boolean(1)    default(true)
 #  permanent           :boolean(1)    
-#  created_at          :datetime      
-#  updated_at          :datetime      
 #
 
 class Category < Collection
@@ -30,6 +28,21 @@ class Category < Collection
         'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Category" ORDER BY c.created_at'
   
   has_many :memberships, :foreign_key=>:collection_id
+
+  # This definition of an associated user is WRONG!  We associate Users to Category using Groups, not
+  # Memberships. No test even tests this association, I can run an entire rake w/o an error if i comment
+  # this out, so bye bye it goes into the comment world.
+  #has_many :users, :through => :memberships, :conditions => "memberships.collection_type = 'Category'" do
+  #  def <<(user)
+  #    return if @owner.users.include?user
+  #    m = Membership.create(
+  #      :user_id => user.id,
+  #      :collection_id => @owner.id,
+  #      :collection_type => 'Category' #@owner.class.class_name      
+  #    )
+  #    m.save!
+  #  end
+  #end
   
   has_many :linkings
   
@@ -54,6 +67,15 @@ class Category < Collection
   end
   
   
+  def bread_crumbs
+    crumbs = Array.new
+    for i in self.ancestors
+      crumbs.insert(0, i)
+    end
+    crumbs
+  end 
+  
+  
   def remove_all_groups
     self.groups.each do| m | 
       remove_group(m)
@@ -76,8 +98,8 @@ class Category < Collection
   validates_presence_of   :user_id, :name
   validates_uniqueness_of :name, :scope=>:parent_id
   
-  # Todo after create automatically add this category to the administrators group.
-  # Todo after create automatically add this category to the user group list if none is supplied || allow users to see categories where they are the owner.. even if they don't belong to a group containing that category.
+  #todo after create automatically add this category to the administrators group.
+  #todo after create automatically add this category to the user group list if none is supplied || allow users to see categories where they are the owner.. even if they don't belong to a group containing that category.
   def validate
     errors.add_to_base "The category cannot specify itself as the parent" if parent_id == id and !new_record?
   end

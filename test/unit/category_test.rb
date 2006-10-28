@@ -42,14 +42,12 @@ def setup
   end
 	
   def test_update_category
-	  @id = @model.find(:first).id
-	  @new_values = {
-		  :name=> 'Contact',
-		  :description=>'Feel free to send us chocolates'
-	  }
-	  assert_changed @model.find(@id), :updated_at do
-	    unit_update @model, @id, @new_values
-    end
+	@id = @model.find(:first).id
+	@new_values = {
+		:name=> 'Contact',
+		:description=>'Feel free to send us chocolates'
+	}
+	unit_update @model, @id, @new_values
   end
   
   def test_category_shall_act_as_tree

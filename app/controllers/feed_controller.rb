@@ -1,5 +1,3 @@
-# Special note, the feed controller and the feed model are not related in this application.
-
 class FeedController < ProtectedController
   before_filter :basic_auth_required
   layout "application", :except => [:category]

@@ -1,3 +1,59 @@
+#inboxMenu{
+	margin           : 10px 0 0 0;
+	display          : block;
+	float            : left;
+	background-color : #F7F8D8;
+	padding          : 5px;
+	border           : solid 1px #D5D6B2;
+	width            : 220px;
+	height           : 100%;
+}
+
+#inboxMenu li{
+	list-style       : none;
+}
+
+#inboxMenu li.menuLabel, #inboxMenu li.menuLabel_selected{
+	font-size        : 1.2em;
+	font-weight      : lighter;
+	padding          : 5px 0 5px 0;
+	border-bottom    : solid 1px #D5D6B2;
+}
+
+#inboxMenu li.menuLabel_selected{
+	background-color : #F5F7B8;
+}
+#inboxMenu li.menuData ul{
+	padding          : 0;
+	margin           : 0;
+}
+
+#inboxMenu li.menuData ul li{
+	padding          : 2px 0 2px 5px;
+	border-bottom    : solid 1px #D5D6B2;
+	font-size:0.8em;
+}
+
+#inboxMenu li.menuDataItem_even{
+	background-color : #FAFBE7;
+}
+
+#inboxMenu li.menuDataItem_odd{
+	background-color : #E7E8D5;
+}
+
+#inboxMenu a.newItems{
+	font-size        : 0.6em;
+	font-weight      : normal;
+	text-decoration  : underline;
+	color            : #EC6428;
+	
+}
+
+#inboxMenu li.menuData{
+	padding          : 5px 0 5px 5px;
+}
+
 .post{
 	font-family      : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
 	background-color : #FAFAFA;
@@ -51,7 +107,6 @@
 	margin-bottom    : 10px;
 }
 .dataGrid{
-	width: 100%;
 	margin           : 5px 0 5px 0;
 }
 
@@ -92,6 +147,7 @@
 .dataGrid th{
 	font-size         : 1.1em;
 	font-weight       : lighter;
+	/*border-bottom     : solid 4px #BCBCCB;*/
 	border-left       : 1px solid #40445e;
 	text-align        : left;
 	padding           : 5px;

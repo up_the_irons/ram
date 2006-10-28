@@ -29,12 +29,12 @@ class EventsController < ProtectedController
     @event[:author] = User.find(@event.sender_id).full_name if @event.sender_id
     @event[:typeof] = "event"
     render :update do |page|
-      page.toggle       "message_body_container_#{params[:id]}"
-      page.replace_html "message_body_#{params[:id]}", :partial => 'shared/post', :locals => { :post => @event }
+      page.toggle       "event_body_container_#{params[:id]}"
+      page.replace_html "event_body_#{params[:id]}", :partial => 'layouts/post', :locals => { :post => @event }
 
       # Replace the onclick handler that got us here with a simple element toggler. We already have the msg
       # body loaded, so we don't need to call this action again.
-      page << "$(Content.cache.push($('message_body_container_#{params[:id]}')))"
+      page << "$(Content.cache.push($('event_body_container_#{params[:id]}')))"
     end if @event
   end
 

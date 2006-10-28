@@ -1,5 +1,5 @@
 <div id='asset_list'>
-  <%= render :partial =>'shared/page_view_options', :locals=>{:view_options=>['thumbnails','details'] }%>
+  <%= render :partial =>'layouts/page_view_options', :locals=>{:view_options=>['thumbnails','details'] }%>
   <% if @asset_pages -%>
     <% @paging_url_options = { :model => 'asset' } -%>
     <%= render :partial => 'shared/paging', :locals => { :name => 'Assets', :pages => @asset_pages } %>

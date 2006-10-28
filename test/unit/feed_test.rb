@@ -1,112 +1,66 @@
 require File.dirname(__FILE__) + '/../test_helper'
 class FeedTest < Test::Unit::TestCase
-  fixtures :feeds, :users, :subscriptions, :changes, :assets, :articles
+  fixtures :feeds, :users
 
   def setup
-    @model_attributes={:name=>Time.now.to_s, :url=>'http://developer.apple.com/rss/adcheadlines.rss',:is_local=>false, :local_path=>'/feed/category/8'}
+    @model_attributes={:name=>Time.now.to_s, :url=>'http://www.foo.com'}
   end
+  
   
   def test_create
-    # Feed with remote path
-    assert_difference Feed,:count do
-      f = a_feed(@model_attributes)
-      @model_attributes.each_pair do |k,v|
-        assert_equal f[k], v
-      end
-    end
-    
-    # Feed with local path
-    assert_difference Feed,:count do
-      @model_attributes.merge!({:name=>"Foo!",:url=>'http://www.google.com',:is_local=>true, :local_path=>'feed/category/5'})
-      c = a_feed(@model_attributes)
-      @model_attributes.each_pair do |k,v|
-        assert_equal c[k], v
-        assert c.is_local?
-      end
-    end
-    
-  end
-  
-  def test_local_feed
-    cat = users(:quentin).categories[0]
-    change = a_change({"record_type"=>cat.class.class_name, "event"=>"UPDATE", "user_id"=>users(:quentin).id, "record_id"=>cat.id, "created_at"=>Time.now.to_s})
-    assert_equal(cat.changes[0].id, change.id) # Change one thing about the category so that there is atleast one feed item.
-    feed = a_feed @model_attributes.merge({:is_local=>true,:local_path=>"/feed/category/#{cat.id}"})
-    result = RSS::Parser.parse(feed.data, false)
-
-    assert_equal feed.name, result.channel.title
-    assert_equal cat.description, result.channel.description
-    # ensure the change is now an item of the feed.
-    assert_equal change.name, result.channel.items[0].title
-    assert_equal change.description, result.channel.items[0].description
-  end
-  
-  def test_uniqueness_of_attributes
     f = a_feed(@model_attributes)
-    f2 = Feed.create({:name=>f.name, :url=>f.url,:local_path=>false})
-    
-    assert f2.errors.on(:name)
-    f2.update_attribute :name, "unique name #{Time.now.to_s}"
-    f2.save    
-    assert f2.valid?
+    @model_attributes.each_pair do |k,v|
+      assert_equal f[k], v
+    end
   end
   
   def test_add_and_remove_subscriber
-    quentin = User.find(1)
+    f = Feed.create(@model_attributes)
+    assert_equal 0, f.subscribers.size
     
-    assert_equal 1, User.find(quentin.id).feeds.size
-    assert_equal 1, Subscription.find(:all).size
-    assert_unchanged quentin.feeds, :size do
-      assert_no_difference Subscription, :count do
-        @feed = Feed.create(@model_attributes)
-      end
-    end
-    assert_equal 0, @feed.subscribers.size
-    
-    # Add 
-    users = User.find(:all)
-    assert_difference Subscription, :count, users.size do
-      assert_difference @feed.subscribers, :size, users.size do
-        users.each do |user|
-          @feed.subscribers << user
-        end
-      end
-    end
-    assert_equal 2, User.find(quentin.id).feeds.size
+    quentin = users(:quentin)
+    assert_equal 0, User.find(quentin.id).feeds.size
 
-    # Remove
-    assert_difference @feed.subscribers, :size, -1 do
-      @feed.subscribers.unsubscribe users(:quentin)
+    #add 
+    users = User.find(:all)
+    assert_difference f.subscribers, :size, users.size do
+      users.each do|user|
+        f.subscribers << user
+      end
     end
-    
     assert_equal 1, User.find(quentin.id).feeds.size
+
+    #remove
+    assert_difference f.subscribers, :size, -1 do
+      f.unsubscribe users(:quentin)
+    end
+    assert_equal 0, User.find(quentin.id).feeds.size
     
-    # Remove the rest
-    @feed.subscribers.unsubscribe_all
+    #remove the rest
+    f.unsubscribe_all
     
   end
   
   
   def test_validations
-     # All these fields are required for a feed without them filled out will produce errors
-     required_fields = [:name]
+     #all these fields are required for a feed without them filled out will produce errors
+     required_fields = [:name,:url]
      f = Feed.create
      assert_no_difference Feed, :count do
        assert !f.valid?
-       assert_equal 1, f.errors.size
+       assert_equal 3, f.errors.size
        required_fields.each{|k| assert !f.errors.on(k).empty? }
      end
      
-     # Now validate the format of the url
-      assert_no_difference Feed, :count do
-       f.name ="foo"
-       f.is_local = false
-       f.url = "dsfsdfsdfsdfdsf" #bad url
-       assert !f.save
-       assert_equal 1, f.errors.size
-      end
+     #now validate the format of the url
+     assert_no_difference Feed, :count do
+      f.name ="foo"
+      f.url = "dsfsdfsdfsdfdsf" #bad url
+      assert !f.save
+      assert_equal 1, f.errors.size
+     end
      
-    # Now fix everything so it saves
+     #now fix everything so it saves
      assert_difference Feed, :count do
        f.url = @model_attributes[:url]
        assert f.save
@@ -120,7 +74,7 @@ class FeedTest < Test::Unit::TestCase
     @model_attributes.each_pair do|k,v|
       assert_equal f[k], v
     end
-    new_attributes = {:name=>"fooo", :url=>"http://images.apple.com/downloads/macosx/home/recent.rss",}
+    new_attributes = {"name"=>"fooo", "url"=>"http://www.yahoo.com"}
     f.update_attributes(new_attributes)
     
     new_attributes.each_pair do|k,v|

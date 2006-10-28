@@ -29,23 +29,16 @@ module FeedReader
   
   protected
   def read_feeds
-    @feed_urls.each do |url| 
-      next if url.nil? || url.empty? #skip over empty urls
-      @feeds.push(RSS::Parser.parse(open(url).read,false)) 
-    end
-    @feeds = @feeds.compact
+    @feed_urls.each{|url| @feeds.push(RSS::Parser.parse(open(url).read,false)) }
   end
   
   public
   def refresh
     @feeds.clear
-    read_feeds
   end
   
   def channel_counts
-    @channels = []
     @feeds.each_with_index do |feed, index|
-      @channels << {:title=>feed.channel.title,:articles=>feed.items}
       channel = "===Channel(#{index.to_s}): #{feed.channel.title}==="
       articles = "Articles: #{feed.items.size.to_s}"
       puts channel + ", " + articles

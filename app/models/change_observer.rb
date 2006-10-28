@@ -20,16 +20,10 @@ class ChangeObserver < ActiveRecord::Observer
   def log_for_child(record, event, user= nil)
     case record.class.to_s
       when 'Asset','Article':
-        return if record.category_id.nil?
-        category = Category.find(record.category_id)  
-        log( category , event) unless record.category_id.nil?
-      
+        log( Category.find(record.category_id) , event) unless record.category_id.nil?
       when 'Category':
-        return if record.parent_id.nil?
-        category = Category.find(record.parent_id)  
-        log(category, event) unless record.parent_id.nil?
+        log(Category.find(record.parent_id), event) unless record.parent_id.nil?
     end
-
   end
   
   def log(record, event, user= nil)

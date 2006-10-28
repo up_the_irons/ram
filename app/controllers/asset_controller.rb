@@ -140,7 +140,6 @@ class AssetController < ProtectedController
         render :update do |page|
           page.call "grail.notify",{:skin=>"music_video",:subject=>'Success',:body=>"#{@asset.filename} was deleted."}
           page.remove params[:update]
-          page.remove params[:update]+"_thumbnail" # Remove the thumbnail too
         end
       end
     end

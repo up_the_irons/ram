@@ -12,12 +12,6 @@ module RamTestHelper
     Article.create(o)
   end
   
-  def a_change(opts={})
-    user = User.find(:first)
-    o = {:record_type=>'Category', "event"=>'UPDATE', "user_id"=>user.id, "record_id"=>user.categories[0].id, "created_at"=>Time.now.to_s}
-    Change.create(o)
-  end
-  
   def a_group(opts={})
     o ={:user_id=>User.find(:first).id,:name=>"A Group for game fans born on: #{Time.now.to_s}",:description=>"We were all born on: #{Time.now.to_s}",:public=>true}.merge(opts)
     Group.create(o)
@@ -34,7 +28,7 @@ module RamTestHelper
   end
   
   def a_feed(opts={})
-    o = {:name=>"Feed: #{Time.now.to_s}",:url=>"http://www.google.com", :is_local=>false, :local_path=>''}.merge(opts)
+    o = {:name=>"Feed: #{Time.now.to_s}",:url=>"http://www.google.com"}.merge(opts)
     Feed.create(o)
   end
   

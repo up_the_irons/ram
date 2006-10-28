@@ -33,11 +33,19 @@ a:hover{
 	display           : block;
 	clear             : both;
 }
-.inline_list{
+.inline_list, .bread_crumbs{
 	list-style        : none;
 }
-.inline_list li{
+.inline_list li, .bread_crumbs li{
 	display           : inline;
+}
+.bread_crumbs{
+	display           : block;
+	background-color  : #333;
+	margin            : auto;
+	height            : 15px;
+	padding           : 5px 10px 5px 10px;
+	border            : 1px solid #000000;
 }
 .about{
 	z-index:2;

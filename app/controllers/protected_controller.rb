@@ -1,6 +1,6 @@
 class ProtectedController < ApplicationController
   #before_filter :set_current_user
-  before_filter :login_required, :except => [ :category, :login, :signup, :create_profile, :password_recovery, :login_as, :create_en_masse]
+  before_filter :login_required, :except => [ :category, :login, :signup, :create_profile, :password_recovery, :login_as, :create_en_masse ]
   
   #def set_current_user
   #  User.current = session[:user]

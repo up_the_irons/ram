@@ -73,7 +73,7 @@ class AssetTest < Test::Unit::TestCase
     end
   end
   
-  # Taken from the attachment_test.rb file that ships with acts_as_attachment
+  #Taken from the attachment_test.rb file that ships with acts_as_attachment
   protected
     def upload_file(options = {})
       att = (options[:class] || Attachment).create :uploaded_data => fixture_file_upload(options[:filename], options[:content_type] || 'image/png')
