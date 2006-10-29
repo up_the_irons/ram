@@ -33,11 +33,13 @@
     var checkboxes = [<%= checks.map{|c| "$('branch_checkbox_#{c}')"}.join(", ") -%>]
   	var ticks = [<%= checks.map{|c| "$('tick_#{c}')"}.join(", ") -%>]
   	
+  	<% unless @category.new_record? -%>
     if(<%= @category.id %> == id){
       alert("A category cannot be it's own parent.");
       checkboxes[id].checked = false;
       return;
     }
+  	<% end -%>
   	
   	for(var itm = 0; itm < checkboxes.length; itm++){
   		checkboxes[itm].checked = false;

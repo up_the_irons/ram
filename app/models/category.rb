@@ -80,6 +80,7 @@ class Category < Collection
   # Todo after create automatically add this category to the user group list if none is supplied || allow users to see categories where they are the owner.. even if they don't belong to a group containing that category.
   def validate
     errors.add_to_base "The category cannot specify itself as the parent" if parent_id == id and !new_record?
+    errors.add_to_base "The category must belong to at least one group" if groups.empty? and !new_record?
   end
 
 end

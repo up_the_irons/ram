@@ -85,61 +85,68 @@ module CollectionMethods
     instance_variable_set("@#{obj[:table].singularize}", obj[:model].send(:new))
     instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id])) if params[:id]
     
-    yield and return if block_given?  #thar be dragons past this point
-
     model_instance = instance_variable_get("@#{obj[:table].singularize}")
+    raise and return unless model_instance # The view will produce an error without instance variable
+    yield and return if block_given?  # Thar be dragons past this point!
+    
     model_sym = obj[:table].singularize.to_sym
     many_associations_results = ""
 
-    if request.post? && model_instance
-      params[model_sym][:user_id] = current_user.id if model_instance.new_record?
+    return unless request.post? && model_instance
+    
+    params[model_sym][:user_id] = current_user.id if model_instance.new_record?
       
-      # Save the record and strip out the has_many associations so that the record saves correctly.
-      #TODO find a way to make this more succient. 
-      attributes = params[model_sym].dup
-      obj[:many_associations].each do | m | 
-        attributes.delete("#{m.singularize}_ids".to_sym)
+    # Save the record and strip out the has_many associations so that the record saves correctly.
+    # TODO find a way to make this more succient. 
+    attributes = params[model_sym].dup
+    obj[:many_associations].each do | m | 
+      attributes.delete("#{m.singularize}_ids".to_sym)
+      attributes.delete("tags") if params[model_sym][:tags]
+    end
+    model_instance.attributes = attributes
+    model_instance.save
+
+    # Tags must be assigned after the object is saved b/c they rely on the ID of the record
+    model_instance.tags = params[model_sym][:tags] if params[model_sym][:tags]
+      
+    obj[:many_associations].each do |many_association|
+      potential_elements = []
+      added   = []
+      removed = []
+      
+      many_association_sym = "#{many_association.singularize}_ids".to_sym
+      unless params[model_sym][many_association_sym].nil?
+        potential_elements = params[model_sym][many_association_sym] 
+        params[model_sym].delete(many_association_sym)
       end
-      model_instance.attributes = attributes
-      model_instance.save
-        
-      # Tags must be assigned after the object is saved b/c they rely on the ID of the record
-      model_instance.tags = params[model_sym][:tags] if params[model_sym][:tags]
-      
-      obj[:many_associations].each do |many_association|
-        potential_elements = []
-        added   = []
-        removed = []
-      
-        many_association_sym = "#{many_association.singularize}_ids".to_sym
-        unless params[model_sym][many_association_sym].nil?
-          potential_elements = params[model_sym][many_association_sym] 
-          params[model_sym].delete(many_association_sym)
-        end
 
-        #nest these calls inside a proc because adding elements to a new record without an ID will produce invalid joins
-        added, removed  = update_has_many_collection( model_instance, many_association, potential_elements )
+      # Nest these calls inside a proc because adding elements to a new record without an ID will produce invalid joins
+      added, removed  = update_has_many_collection( model_instance, many_association, potential_elements )
 
-        # Refresh category tree if any group has modified collection memberships
-        if model_instance.class == Group && (added.size > 0 || removed.size > 0) 
-          session[:category_tree] = current_user.categories_as_tree(true)
-        end
-
-        many_associations_results << "<br/>Added (#{added.size}) #{many_association} and removed (#{removed.size})" if defined?(added) && defined?(removed)  
+      # Refresh category tree if any group has modified collection memberships
+      if model_instance.class == Group && (added.size > 0 || removed.size > 0) 
+        session[:category_tree] = current_user.categories_as_tree(true)
       end
-      
+
+      many_associations_results << "<br/>Added (#{added.size}) #{many_association} and removed (#{removed.size})" if defined?(added) && defined?(removed)  
+
       # Display results
       if model_instance.valid?
         flash[:notice] = "\"#{model_instance.name}\" was saved."
         flash[:notice] << many_associations_results
         redirect_to :action=>"edit_#{obj[:table].singularize}", :id=>model_instance.id unless params[:id]
+      else
+        flash[:notice] = "The #{model_instance.class.class_name} could not be saved."
       end
-      
     end
-    raise unless model_instance
+
   rescue
-    redirect_to :controller=>'admin', :action=>obj[:table]
-    flash[:notice] = "Could not find #{obj[:table].singularize}."
+    unless RAILS_ENV == 'development' 
+      redirect_to :controller=>'admin', :action=>obj[:table]
+      flash[:notice] = "Could not find #{obj[:table].singularize}."
+    else
+      raise
+    end
   end
   
   protected
