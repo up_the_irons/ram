@@ -13,18 +13,6 @@ class EventsControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  def test_admins_only
-    login_as :user_5
-
-    get :list
-    assert_redirected_to :controller => 'account', :action => 'index'
-  end
-
-  def test_admins_only_without_prior_login
-    get :list
-    assert_redirected_to ''
-  end
-
   def test_list
     u = users(:quentin)
 

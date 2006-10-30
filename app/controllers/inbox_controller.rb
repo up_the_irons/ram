@@ -74,7 +74,7 @@ class InboxController < ProtectedController
   
   def subscribe_feed
     if request.post?
-      @feed = Feed.find_or_create_by_local_path_and_name_and_is_local(params[:local_path], params[:name],true)
+      @feed = Feed.find_or_create_by_local_path_and_name_and_is_local(params[:local_path], params[:name], true)
       if @feed.valid?
         @feed.subscribers << current_user
         flash[:notice] = "You are now subscribed to #{@feed.name}"

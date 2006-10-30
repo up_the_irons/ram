@@ -22,4 +22,4 @@ Feed_2:
   name: 'Coin-Op Games'
   url: 'http://localhost'
   is_local: true
-  local_path: 'feed/category/8'
+  local_path: '/feed/category/8'

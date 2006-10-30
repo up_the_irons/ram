@@ -4,7 +4,7 @@ class AccountController < ProtectedController
   observer :user_observer, :change_observer
 
   def index
-    redirect_to :action=>'my_profile' if logged_in? and return
+    redirect_to :action=>'my_profile' unless logged_in?.nil? and return
   end
 
   def login
