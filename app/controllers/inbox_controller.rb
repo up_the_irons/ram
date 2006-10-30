@@ -85,6 +85,30 @@ class InboxController < ProtectedController
     redirect_to :action=>'inbox'
   end
   
+  def read_feed
+    redirect_to(:controller=>'inbox', :action=>'inbox') and return false unless params[:id]
+    begin
+      @feed = Feed.find(params[:id])
+      @data = RSS::Parser.parse(@feed.data,false) if @feed.is_local
+    rescue
+      flash[:error] = "Could not find feed."
+      redirect_to(:controller=>'inbox', :action=>'inbox') and return false unless @feed
+    end
+    @messages = []
+    @data.channel.items.each do |i|
+      # Format the feed items like messages so that they can be displayed in the inbox.
+      @messages << OpenStruct.new(
+          :body=>i.description,
+          :subject=> i.title,
+          :id=>@data.id,
+          :created_at=>i.pubDate
+      )
+    end
+    @messages
+    render 'inbox/inbox'
+  end
+  
+  
   
   def unsubscribe_feed
     begin
@@ -92,7 +116,10 @@ class InboxController < ProtectedController
     rescue
       flash[:error] = "Could not find Feed"
     end
-    feed.subscribers.unsubscribe current_user if feed and request.post?
+    if feed and request.post?
+      feed.subscribers.unsubscribe(current_user)
+      flash[:notice] = "Your request to unsubscribe was successful."
+    end
     redirect_to :action=>'inbox'
   end
   

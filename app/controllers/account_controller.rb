@@ -64,18 +64,19 @@ class AccountController < ProtectedController
     @person  = @user.person 
     @profile = @user.profile
     @avatar  = @user.avatar ||= Avatar.new
-    if request.post? && @user
-      #used to prevent users from forging the request to reset attributes we want to protect.
-      safe_hash = {:email=>''}
-      safe_hash[:email] = params[:user][:email] if params[:user] && params[:user][:email]
-      @avatar = create_avatar(@user.id,params[:avatar][:uploaded_data]) unless params[:avatar].nil?
+    render :action=>"edit" and return false unless request.post? && @user
+
+    # Used to prevent users from forging the request to reset attributes we want to protect.
+    safe_hash = {:email=>''}
+    safe_hash[:email] = params[:user][:email] if params[:user] && params[:user][:email]
+    @avatar = create_avatar(@user.id,params[:avatar][:uploaded_data]) unless params[:avatar].nil?
       
-      if @user.update_attributes(safe_hash) && @user.person.update_attributes(params[:person]) &&  @user.profile.update_attributes(params[:profile])
-        flash[:notice] = "Your changes have been saved."
-      else
-        flash[:notice] = "There was an error saving your information."
-      end 
-    end
+    if @user.update_attributes(safe_hash) && @user.person.update_attributes(params[:person]) &&  @user.profile.update_attributes(params[:profile])
+      flash[:notice] = "Your changes have been saved."
+    else
+      flash[:notice] = "There was an error saving your information."
+    end 
+
   end
   
   def logout

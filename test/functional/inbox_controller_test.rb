@@ -91,6 +91,23 @@ class InboxControllerTest < Test::Unit::TestCase
     end
   end
   
+  def test_shall_read_feed
+    login_as :quentin
+    u = users(:quentin)
+    f = u.feeds[0]
+    get :read_feed, :id=>f.id
+    assert assigns(:messages)
+    assert_response :success
+    assert assigns(:flash).empty?    
+  end
+  
+  def test_shall_redirect_on_bad_feed
+    login_as :quentin
+    get :read_feed, :id=>'-212121' # Bad Feed id.
+    assert_response :redirect
+    assert !assigns(:flash)[:error].empty?
+  end
+  
   def test_shall_unsubscribe_feed
     login_as :quentin
     u = users(:quentin)
