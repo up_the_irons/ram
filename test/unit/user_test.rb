@@ -174,7 +174,7 @@ class UserTest < Test::Unit::TestCase
     assert es.include?(e1)
     assert es.include?(e2)
 
-    assert_equal 3, es.size
+    assert_equal 4, es.size
   end
 
   def test_assets_search

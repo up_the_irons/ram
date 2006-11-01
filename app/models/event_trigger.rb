@@ -5,6 +5,9 @@
 #
 
 class EventTrigger < ActiveRecord::Base
+  @@default_codes = %w(UserSignup UserDeleted UserSuspended GroupModification)
+  cattr_reader :default_codes
+
   class <<self
     def subscribers_of(event)
       event = event.to_s.camelize

@@ -22,4 +22,12 @@ class EventSubscriptionTest < Test::Unit::TestCase
 
     assert_equal t, t2
   end
+
+  def test_existance_of_default_subscriptions_for_admin_user
+    admin = User.find(1) # Assumes User with ID of 1 is the admin user
+
+    EventTrigger.default_codes.each do |code|
+      assert EventSubscription.find_by_user_id_and_event_trigger_id(admin.id, EventTrigger.find_by_code(code).id)
+    end
+  end
 end

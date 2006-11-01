@@ -10,4 +10,12 @@ class EventTriggerTest < Test::Unit::TestCase
     assert users.include?(users(:quentin))
     assert users.include?(users(:user_5))
   end
+
+  def test_existance_of_default_triggers
+    @default_codes = %w(UserSignup UserDeleted UserSuspended GroupModification)
+
+    @default_codes.each do |code|
+      assert EventTrigger.find_by_code(code)
+    end
+  end
 end
