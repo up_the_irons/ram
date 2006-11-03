@@ -131,4 +131,14 @@ class InboxControllerTest < Test::Unit::TestCase
     end
   end
   
+  def test_shall_read_feed_item
+    login_as :quentin
+    u = users(:quentin)
+    assert u.feeds.size > 0
+    post :read_feed
+    # get a local feed.
+    # breakpoint
+    assert true
+  end
+  
 end

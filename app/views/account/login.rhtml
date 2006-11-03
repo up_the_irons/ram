@@ -10,10 +10,9 @@
 <%= password_field_tag 'password' %></li>
 
 <li><label for="submit">&nbsp;</label>
-<%= submit_tag 'Log in' ,{:class=>'submit'}%></li>
+<%= submit_tag 'Log in' ,{:class=>'submit'}%> <%= link_to "Forgot your password?", :controller=>'account', :action=>'forgot_password' %></li>
 </ul>
 <%= end_form_tag %>
-
 <%=
 #added for testing before launch (obviously)
 %>

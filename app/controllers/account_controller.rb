@@ -1,6 +1,5 @@
 class AccountController < ProtectedController
   include EnlightenObservers
-
   observer :user_observer, :change_observer
 
   def index
@@ -32,6 +31,26 @@ class AccountController < ProtectedController
       redirect_back_or_default(:controller => '/account', :action => 'index')
       flash[:notice] = "Thanks for signing up!"
     end
+  end
+  
+  def forgot_password
+    return unless request.post?
+    unless params[:email] && params[:login]
+      flash[:notice] =  "Both login and email are required to reset your account."
+      redirect_to :action=> 'login' and return false
+    end
+    
+    if user = User.find_by_email_and_login(params[:email],params[:login])
+      @new_password = random_password
+      user.password = user.password_confirmation =  @new_password
+      user.save_without_validation
+      UserNotifier.deliver_reset_password(user, @new_password)
+
+      flash[:notice] = "Your details have been sent to #{params[:email]}"
+    else
+      flash[:notice] =  "We could not find an account with that login or username."
+    end
+    redirect_to :action=> 'login'
   end
   
   def profile
@@ -117,6 +136,11 @@ class AccountController < ProtectedController
   end
 
   protected 
+
+  def random_password( len = 20 )
+      chars = (("a".."z").to_a + ("1".."9").to_a )- %w(i o 0 1 l 0)
+      newpass = Array.new(len, '').collect{chars[rand(chars.size)]}.join
+  end
 
   def after_login
     flash[:grail]  = "Welcome #{current_user.login}!"

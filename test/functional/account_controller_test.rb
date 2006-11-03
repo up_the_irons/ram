@@ -73,6 +73,38 @@ class AccountControllerTest < Test::Unit::TestCase
       assert_response :success
     end
   end
+  
+  #this should not require a user to be logged in.
+  def test_should_recover_password
+    user = users(:quentin)
+    # cannot change on get    
+    assert_unchanged user,:password do
+      get :forgot_password, :params=>{:login=>user.login,:email=>user.email}
+      assert_response :success
+    end
+    
+    # Require the username and email.
+    assert_unchanged user,:password do
+      post :forgot_password, :login=>user.login
+      assert_response :redirect
+      assert_equal "Both login and email are required to reset your account.", assigns(:flash)[:notice]
+      
+      post :forgot_password, :email=>user.email
+      assert_response :redirect
+      assert_equal "Both login and email are required to reset your account.", assigns(:flash)[:notice]
+    end
+        
+    assert_changed user,:crypted_password do
+      post :forgot_password, :login=>user.login,:email=>user.email
+      assert_response :redirect
+      assert assigns(:new_password)
+      assert_equal "Your details have been sent to #{user.email}", assigns(:flash)[:notice]
+    end    
+    
+    # ensure you can now login
+    post :login, :login => 'quentin', :password => assigns(:new_password)
+    assert_equal user.login, assigns(:current_user).login
+  end
 
 
   def test_should_require_password_on_signup

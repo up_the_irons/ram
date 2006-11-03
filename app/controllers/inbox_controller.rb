@@ -10,17 +10,19 @@ class InboxController < ProtectedController
     @messages = []
     current_user.feeds.map{|f| @feeds << RSS::Parser.parse(f.data,false) if f.is_local}
     @feeds.each do |feed|
-      feed.channel.items.each do |i|
+      feed.channel.items.each_with_index do |i,index|
         # Format the feed items like messages so that they can be displayed in the inbox.
+        # I need need to include the link to the feed and the item of the feed as the id, because the feed item gets a "new" id each time it is loaded unfortunately.
+        id = "#{feed.channel.link}/#{index}".gsub(/\//, '__')
         @messages << OpenStruct.new(
                     :body=>i.description,
                     :subject=> i.title,
-                    :id=>feed.id,
-                    :created_at=>i.pubDate
+                    :created_at=>i.pubDate,
+                    :params=>{:message_type=>'Feed',:controller=>'inbox',:action=>'read_feed',:id=>id}
                     )
       end
     end
-    @messages << Event.find_all_by_recipient_id(current_user.id, :order => @order).flatten
+    @messages << (Event.find_all_by_recipient_id(current_user.id, :order => @order).flatten).each{|m| m[:params] = {:message_type=>"Event", :controller=>"events"}}
     @messages = @messages.flatten
     render 'inbox/inbox'
   end
@@ -108,6 +110,9 @@ class InboxController < ProtectedController
     render 'inbox/inbox'
   end
   
+  def read_feed_item
+    
+  end
   
   
   def unsubscribe_feed

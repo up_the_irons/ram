@@ -22,9 +22,11 @@
       	<th>Date Received</th>
 		<th>Actions</th>
     </tr>
-	<% @messages.each do |message| -%>
-	    <% row_class =  cycle("even", "odd") -%>
-		<%= render :partial=>'events/detail_row', :locals=>{:controller=>'events', :message=>message, :row_class=>row_class} %>
+	<% @messages.each do |message| 
+	  locals = {:message=>message, :row_class=>cycle("even", "odd")}
+	  locals = locals.merge(message.params) unless message.params.nil?
+	-%>
+		<%= render :partial=>'events/detail_row', :locals=>locals %>
 	<% end -%>
 </table>
 

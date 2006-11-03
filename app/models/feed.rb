@@ -30,14 +30,13 @@ class Feed < ActiveRecord::Base
     id = path_parts.pop
     klass = path_parts.pop.classify.constantize
     @model = klass.find(id)
-    
     rss = RSS::Rss.new("2.0")
     chan = RSS::Rss::Channel.new
     chan.title = name
     chan.description = @model.description
     chan.link = local_path
     rss.channel = chan
-    
+    # breakpoint
     contents = []    
     contents << @model.changes if @model.respond_to?('changes')
     contents = contents.flatten

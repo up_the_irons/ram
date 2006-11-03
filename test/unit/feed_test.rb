@@ -33,7 +33,7 @@ class FeedTest < Test::Unit::TestCase
     assert_equal(cat.changes[0].id, change.id) # Change one thing about the category so that there is atleast one feed item.
     feed = a_feed @model_attributes.merge({:is_local=>true,:local_path=>"/feed/category/#{cat.id}"})
     result = RSS::Parser.parse(feed.data, false)
-
+    
     assert_equal feed.name, result.channel.title
     assert_equal cat.description, result.channel.description
     # ensure the change is now an item of the feed.
