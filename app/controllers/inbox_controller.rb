@@ -8,17 +8,19 @@ class InboxController < ProtectedController
   def inbox
     @feeds =[]
     @messages = []
-    current_user.feeds.map{|f| @feeds << RSS::Parser.parse(f.data,false) if f.is_local}
-    @feeds.each do |feed|
-      feed.channel.items.each_with_index do |i,index|
+    # We need to store the feed's id in the hash because the RSS instance's id will map to an internal memory location not an active record object.
+    current_user.feeds.map{|f| @feeds << {:feed=>RSS::Parser.parse(f.data,false),:id=>f.id} if f.is_local}
+    @feeds.each do |feed_hash|
+      feed_hash[:feed].channel.items.each_with_index do |i,index|
         # Format the feed items like messages so that they can be displayed in the inbox.
         # I need need to include the link to the feed and the item of the feed as the id, because the feed item gets a "new" id each time it is loaded unfortunately.
-        id = "#{feed.channel.link}/#{index}".gsub(/\//, '__')
+        # id = "#{feed.channel.link}/#{index}".gsub(/\//, '__')
+        id = "#{feed_hash[:id]}__#{index}"
         @messages << OpenStruct.new(
                     :body=>i.description,
                     :subject=> i.title,
                     :created_at=>i.pubDate,
-                    :params=>{:message_type=>'Feed',:controller=>'inbox',:action=>'read_feed',:id=>id}
+                    :params=>{:message_type=>'Feed',:controller=>'inbox',:action=>'read_feed_item',:id=>id}
                     )
       end
     end
@@ -110,8 +112,35 @@ class InboxController < ProtectedController
     render 'inbox/inbox'
   end
   
+  # The feed items take a special formating syntax because the RSS class does not contain an id like the decendents of active record.
+  # to ensure we load the correct feed the inbox method passes the id in this format "#{feed id}_#{ index for item}".
   def read_feed_item
+    return false unless params[:id]
+    arr = params[:id].split("__")
     
+    current_user.feeds.map{|f| @feed = f if f.id == arr[0].to_i }
+    @rss = RSS::Parser.parse(@feed.data,false) if @feed.is_local
+    id = arr[1].to_i
+    @item = @rss.items[id]
+
+    # convert the format of the RSS item into a "post", which the template wants.
+    OpenStruct.class_eval { undef :id }
+    @post = OpenStruct.new(
+      :id=>id,
+      :author=>"System Message",
+      :typeof=>'Feed',
+      :body=>@item.description,
+      :created_at=>@item.pubDate.strftime("%m/%d/%Y")
+    ) if @item
+
+    render :update do |page|
+      page.toggle       "message_body_container_#{params[:id]}"
+      page.replace_html "message_body_#{params[:id]}", :partial => 'shared/post', :locals=>{:post=>@post}
+
+      # Replace the onclick handler that got us here with a simple element toggler. We already have the msg
+      # body loaded, so we don't need to call this action again.
+      page << "$(Content.cache.push($('message_body_container_#{params[:id]}')))"
+    end if @post
   end
   
   

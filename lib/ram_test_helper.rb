@@ -14,7 +14,7 @@ module RamTestHelper
   
   def a_change(opts={})
     user = User.find(:first)
-    o = {:record_type=>'Category', "event"=>'UPDATE', "user_id"=>user.id, "record_id"=>user.categories[0].id, "created_at"=>Time.now.to_s}
+    o = {:record_type=>'Category', :event=>'UPDATE', :user_id=>user.id, :record_id=>user.categories[0].id, :created_at=>Time.now.to_s}
     Change.create(o)
   end
   

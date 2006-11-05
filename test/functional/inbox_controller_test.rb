@@ -5,7 +5,7 @@ require 'inbox_controller'
 class InboxController; def rescue_action(e) raise e end; end
 
 class InboxControllerTest < Test::Unit::TestCase
-  fixtures :users, :profiles, :people, :collections, :feeds, :subscriptions, :memberships, :linkings
+  fixtures :users, :profiles, :people, :collections, :feeds, :subscriptions, :memberships, :linkings, :changes
   def setup
     @controller = InboxController.new
     @request    = ActionController::TestRequest.new
@@ -135,10 +135,17 @@ class InboxControllerTest < Test::Unit::TestCase
     login_as :quentin
     u = users(:quentin)
     assert u.feeds.size > 0
-    post :read_feed
-    # get a local feed.
-    # breakpoint
-    assert true
+    a_change(:user_id=>u.id, :record_id=>8, :created_at=>Time.now.to_s) # Record 8 coresponds to the feed in index 0 of the user's feeds.
+    index = 0
+    id = "#{u.feeds[0].id}__#{index}"
+    post :read_feed_item, :id=>id
+    assert assigns(:feed)
+    assert assigns(:feed).is_local?
+    assert assigns(:rss)
+    assert assigns(:item)
+    assert assigns(:post)
+    assert_equal assigns(:item).description, assigns(:post).body #ensure the feed item has been converted to the post format, needed by the view.
+
   end
   
 end
