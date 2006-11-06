@@ -2,7 +2,7 @@ class SearchController < ProtectedController
   include Sortable
 
   sortable :all, :assets, :categories, :groups
-  paging_with_db :assets, :categories, :groups
+  paging   :assets, :categories, :groups
 
   def all
     assets

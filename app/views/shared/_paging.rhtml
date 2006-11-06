@@ -6,13 +6,14 @@
 <div class="pagination">
   <div style='float: left'>
     <%= "Page #{pages.current.number}, displaying #{name} #{pages.current.first_item} - #{pages.current.last_item} of #{pages.item_count}" + (pages.page_count > 1 ? ', pages ' : '') %>
-    <%= pagination_links_each(pages, :name => page_param, :link_to_current_page=>true) do |page_num|
-      link_to_remote(page_num.to_s, :url => { per_page_param => params[per_page_param], page_param => page_num }.merge(@paging_url_options || {}))
+    <%= pagination_links_each(pages, :name => page_param, :link_to_current_page => false) do |page_num|
+      link_to_remote(page_num.to_s, :url => { per_page_param => params[per_page_param], page_param => page_num, :new_page_num => true }.merge(@paging_url_options || {}))
     end %>
   </div>
   
   <div style='float: right'>
   Rows / Page: 
+  <% params[per_page_param] = '10' unless params[per_page_param] -%>
   <% per_page_array.each do |n| -%>
   <%= n.to_s == params[per_page_param] ? %{<span class="selected">#{n}</span>} : link_to_remote(n.to_s, :url => { page_param => pages.current, per_page_param => n, :new_num_per_page => true }.merge(@paging_url_options || {})) %>
   <% end -%>

@@ -56,4 +56,12 @@ class CategoryControllerTest < Test::Unit::TestCase
       assert assigns(:category)
     end
   end
+
+  def test_show_pagination_format
+    get :show, :id => collections(:collection_9).id
+
+    assert @response.body =~ /Page 1.* 1 - 2 of 2/
+    assert @response.body =~ /Rows \/ Page:.*<span class="selected">10<\/span>/m
+  end
+
 end

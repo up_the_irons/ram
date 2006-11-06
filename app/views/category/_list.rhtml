@@ -1,7 +1,7 @@
 <% content_for('application_header') do -%>
 <h1>Listing Categories</h1>
 <% end -%>
-<%=  @page_actions ||="" %>
+<%= @page_actions ||= "" %>
 <div id='category_list'>
   <% if @category_pages -%>
     <% @paging_url_options = { :model => 'category' } -%>
@@ -32,6 +32,7 @@
     <%= c %>
   <% end -%>
   </dl>
+  <%= link_to 'Previous page', { :page => @category_pages.current.previous},{:class=>"button"} if @category_pages.current.previous %>
+  <%= link_to 'Next page', { :page => @category_pages.current.next},{:class=>"button"} if @category_pages.current.next %> 
 </div>
-<%= link_to 'Previous page', { :page => @category_pages.current.previous},{:class=>"button"} if @category_pages.current.previous %>
-<%= link_to 'Next page', { :page => @category_pages.current.next},{:class=>"button"} if @category_pages.current.next %> 
+

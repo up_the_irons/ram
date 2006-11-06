@@ -1,19 +1,9 @@
 #--
 # $Id: paging.rb 26 2006-07-12 05:07:25Z garry $
-#
-# Copyright (c) 2006 Garry C. Dolley
-# All Rights Reserved.
-#
-# Modification and/or redistribution without prior written consent of Garry C.
-# Dolley is strictly prohibited.
-#
-# Created: 04/08/2006
-#
 #++
 
 # This module may be mixed-in any ActionController::Base class to give it the ability to paginate through a list of
-# records at a higher level than normal controllers. Using the optional "paging_with_db" directive, the controller will
-# have the ability to save the user's preference of "Rows / Page" between visits and on different computers.
+# records at a higher level than normal controllers. 
 #
 # Use the ActionController::Paginate#paginate method as usual (see Rails scaffold code for an example) and include the
 # following partial in your view:
@@ -34,24 +24,11 @@
 # * :per_page_param: request parameter key that stores the current "Rows / Page" value. Defaults to 'num_per_page'
 # * :per_page_array: defaults to [10,20,40,80]. Change this to have different "Rows / Page" links
 #
-# Use the ClassMethods#paging_with_db directive in your controller to auto-save the user's preference when they change 
-# the "Rows / Page" value. See the documentation for that method and also note the required database table below.
+# Use the ClassMethods#paging directive in your controller to save the user's preference when they change the
+# "Rows / Page" value (stored in session). See the documentation for that method.
 #
 # == Required module(s)
 #   GBase
-#
-# == Required database table(s)
-#
-# The following table must exist in your default database before you can use the "paging_with_db" directive:
-#
-#   CREATE TABLE paging (
-#     id int(11) NOT NULL auto_increment,
-#     controller varchar(128) NOT NULL default '',
-#     `action` varchar(128) NOT NULL default '',
-#     num_per_page smallint(5) unsigned NOT NULL default '10',
-#     PRIMARY KEY  (id),
-#     UNIQUE KEY controller (controller,`action`)
-#   ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 #
 module Paging
   include GBase
@@ -59,17 +36,17 @@ module Paging
   module ClassMethods
     # Add this directive to your controller and pass it the action(s) you want to be able to have the capability to
     # save the "Rows / Page" link that a user may click.
-    def paging_with_db(*ids)
+    def paging(*ids)
       s = GBase::ids_to_string(*ids)
 
-      module_eval "before_filter :get_num_per_page, :only => [ #{s} ]"
-      module_eval "after_filter :save_num_per_page, :only => [ #{s} ]"
+      module_eval "before_filter :get_paging_params, :only => [ #{s} ]"
+      module_eval "after_filter  :set_paging_params, :only => [ #{s} ]"
     end
   end
 
   # Overrides ActionController::Paginate#paginate() to give ability to automatically pass the correct :per_page URL option
   # value.
-  def paginate(collection_id, options={})
+  def paginate(collection_id, options = {})
     if !options[:per_page].nil?
       params[:num_per_page] = options[:per_page].to_s
     else
@@ -79,39 +56,23 @@ module Paging
     super(collection_id, options.merge(:per_page => params[:num_per_page].to_i))
   end
 
-  protected
-
-  # Overrides ActionController::Base#default_url_options() so we can save the :page and :num_per_page variables between
-  # requests. If you override this in your own controller or another module, you must call:
-  #
-  #    super(options).merge( { your_hash } )
-  #
-  # and not just return a hash. This is so your hash can be chained up the class/module hierarchy and we preserve all 
-  # default URL parameters that came before you.
-  def default_url_options(options)
-    super(options).merge( params.nil? ? {} : { :page => params[:page], :num_per_page => params[:num_per_page] } )
-  end
-
   private
 
-  def save_num_per_page 
+  def set_paging_params 
     if params[:new_num_per_page]
-      p = PagingTable.find_by_controller_and_action(controller_name, action_name)
-
-      if p
-        p.update_attributes(:num_per_page => params[:num_per_page])
-      else
-        p = PagingTable.new(:controller => controller_name, :action => action_name, :num_per_page => params[:num_per_page])
-        p.save
-      end
+      session["paging_#{controller_name}_#{action_name}"] = { :num_per_page => params[:num_per_page] }
+    end
+    if params[:new_page_num]
+      session["paging_#{controller_name}_#{action_name}"] = { :page => params[:page] }
     end
   end
 
-  def get_num_per_page
-    if params[:num_per_page].nil?
-      p = PagingTable.find_by_controller_and_action(controller_name, action_name)
-      
-      params[:num_per_page] = p.num_per_page.to_s if p
+  def get_paging_params
+    if params[:num_per_page].nil? && session["paging_#{controller_name}_#{action_name}"]
+      params[:num_per_page] = session["paging_#{controller_name}_#{action_name}"][:num_per_page]
+    end
+    if params[:page].nil? && session["paging_#{controller_name}_#{action_name}"]
+      params[:page] = session["paging_#{controller_name}_#{action_name}"][:page]
     end
   end
 end

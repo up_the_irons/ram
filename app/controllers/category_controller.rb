@@ -3,8 +3,8 @@ class CategoryController < ProtectedController
 
   observer :change_observer
 
-  sortable       :show
-  paging_with_db :show
+  sortable :show
+  paging   :show, :index
 
   def index
     list
@@ -30,7 +30,16 @@ class CategoryController < ProtectedController
   
   def list
     list_collection do
-      render :partial=>'category/list', :layout=>'application'
+      respond_to do |wants|
+        wants.html do
+          render :partial => 'category/list', :layout => 'application'
+        end
+        wants.js do 
+          render :update do |page|
+            page.replace_html 'category_list', :partial => 'category/list'
+          end
+        end
+      end
     end    
   end
   

@@ -8,7 +8,7 @@ module CollectionMethods
     opts[:table] = controller_name.pluralize unless opts[:table]
     obj = {:table=>controller_name.pluralize, :many_associations=>[],:model=>Object.const_get(opts[:table].classify)}.merge(opts)
     
-    pages, models = paginate_collection current_user.send(obj[:table].to_sym), :page => params[:page]
+    pages, models = paginate_collection current_user.send(obj[:table].to_sym), :page => params[:page], :per_page => params[:num_per_page]
     instance_variable_set("@#{obj[:table].singularize}_pages", pages)
     instance_variable_set("@#{obj[:table]}", models)
     yield and return if block_given?
