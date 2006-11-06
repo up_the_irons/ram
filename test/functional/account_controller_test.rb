@@ -105,6 +105,25 @@ class AccountControllerTest < Test::Unit::TestCase
     post :login, :login => 'quentin', :password => assigns(:new_password)
     assert_equal user.login, assigns(:current_user).login
   end
+  
+  
+  def test_should_allow_password_change
+    login_as :quentin
+    user = users(:quentin)
+    new_pass = '1qaz2wsx3edc4rfv'
+    assert_changed user,:crypted_password do
+      post :edit, :id=>user.id, :user=>{:password=>new_pass,:password_confirmation=>new_pass}
+    end
+    
+    # Now log out
+    get :logout
+    assert_nil session[:user]
+    
+    # Try to log in with new password.
+    post :login, :login => 'quentin', :password => new_pass
+    assert_equal user.login , assigns(:current_user).login
+    
+  end
 
 
   def test_should_require_password_on_signup

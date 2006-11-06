@@ -18,10 +18,13 @@ class ProtectedController < ApplicationController
   end
   
   def create_avatar(user_id,data)
-    avatar = Avatar.create({
-                        :user_id=>user_id,
-                        :uploaded_data=>data
-                        })
+    avatar = Avatar.find_by_user_id(user_id)
+    if avatar
+      avatar.uploaded_data = data
+      avatar.save
+    else
+      avatar = Avatar.create({:user_id=>user_id, :uploaded_data=>data})
+    end
     avatar
   end
   

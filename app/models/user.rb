@@ -132,7 +132,7 @@ class User < ActiveRecord::Base
       tree[sym] = make_branch.call if tree[sym].nil?
       tree[sym][:id] = t.id
       tree[sym][:name] = t.name
-      #we use the category_id check to ensure that the tree displays children categories even if the user has no access to the parent.
+      # We use the category_id check to ensure that the tree displays children categories even if the user has no access to the parent.
       if t.parent_id.nil? || !category_ids.include?(t.parent_id)
         parent = :root
       else
@@ -222,18 +222,17 @@ class User < ActiveRecord::Base
   end
   
   def is_admin?
-    #todo as the application grows this should be broken out into its own model probably somehthing like a role model
-    #role == 1
     (groups.find_by_name(ADMIN_GROUP))? true : false 
   end
-  #expects the obj to respond to user_id
+  
+  # Expects the obj to respond to user_id
   def can_edit?(obj)
     return true if obj.user_id == user_id || is_admin?
     false
   end
 
   def after_create
-    #todo subscribe an observer to this event to notifiy admins that a user signed up
+    # TODO subscribe an observer to this event to notifiy admins that a user signed up
     profile = Profile.find_or_create_by_user_id(id)
     profile.save
     person = Person.find_or_create_by_user_id(id)
@@ -251,8 +250,6 @@ class User < ActiveRecord::Base
       u && u.authenticated?(password) ? u : nil
     end
     
-    # TODO: DRY this up, the same function appears in the Group model
-    
     # Encrypts some data with the salt.
     def encrypt(password, salt)
       Digest::SHA1.hexdigest("--#{salt}--#{password}--")
@@ -266,7 +263,7 @@ class User < ActiveRecord::Base
       Base64.encode64(data << enc.final)
     end
     
-    # getter method to decrypt password
+    # Getter method to decrypt password
     def decrypt_string(encrypted_string)  
       enc = OpenSSL::Cipher::Cipher.new('DES-EDE3-CBC')
       enc.decrypt(RAM_SALT)
