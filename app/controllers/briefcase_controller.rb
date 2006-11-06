@@ -61,9 +61,11 @@ class BriefcaseController < ProtectedController
       existing_assets = []
       assets = params[:assets].uniq
       assets.each do | a |
-        asset = Asset.find(a)
+        # asset = Asset.find(a)
+        asset = current_user.assets_search(a)[0]
+        # breakpoint
         unless asset.nil?
-          n, e = add_to_briefcase(asset) if current_user.assets.include?(asset)
+          n, e = add_to_briefcase(asset) # if current_user.assets.include?(asset)
           new_assets << n unless n.nil?
           existing_assets << e unless e.nil?
         end

@@ -14,7 +14,7 @@ class UserNotifier < ActionMailer::Base
   def reset_password(user,new_password)
     setup_email(user)
     @subject    += 'Your password has been reset'
-    @body[:password]  = "Your new password is #{new_password}"
+    @body[:new_password]  = new_password
   end
   
   protected

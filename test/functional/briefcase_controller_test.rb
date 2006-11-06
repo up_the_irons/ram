@@ -34,9 +34,20 @@ class BriefcaseControllerTest < Test::Unit::TestCase
     assert_response :redirect
   end
   
-  def test_shall_add_item_to_briefcase
+  def test_admin_shall_add_item_to_briefcase
     login_as :quentin
      assert_difference @request.session[:briefcase], :size do
+        @group, @asset = group_and_asset(current_user)
+        post :add, :group_id=>@group.id, :assets=>[@asset.id]
+     end
+     assert_equal @request.session[:briefcase][0], @asset.id
+     assert_equal assigns(:flash)[:notice], "Added (1) New Assets.<br/>"
+     assert_response :redirect
+  end
+  
+  def test_non_admin_shall_add_item_to_briefcase
+    login_as :user_4
+    assert_difference @request.session[:briefcase], :size do
         @group, @asset = group_and_asset(current_user)
         post :add, :group_id=>@group.id, :assets=>[@asset.id]
      end

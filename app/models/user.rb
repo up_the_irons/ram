@@ -120,6 +120,7 @@ class User < ActiveRecord::Base
     groups(reload).map { |g| g.categories(reload) }.flatten.uniq
   end
   
+  
   def categories_as_tree(reload = false)
     make_branch = Proc.new do
       {:parent=>nil,:children=>[],:name=>"",:id=>nil}

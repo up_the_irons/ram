@@ -67,6 +67,11 @@ require 'base64'
 #required for acts_as_attachable
 require 'RMagick'
 
+# OpenStruct is used in several places throughout the app to fake out views, which are expecting AR models.
+# To prevent the tests and application from whining about Object#id we undefine it here so that we can override it later.
+require 'ostruct'
+OpenStruct.class_eval { undef :id }
+
 UPLOAD_SIZE_LIMIT = 50000*1024
 RAM_SALT = 'foodz'
 APP_NAME = 'RAM'

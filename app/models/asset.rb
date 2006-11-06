@@ -105,10 +105,18 @@ class Asset < ActiveRecord::Base
   end
     
   class << self    
-    def search(query, groups, order = nil)
+    def search(keywords, groups, order = nil)
+      query = {:id=>"",:name=>"",:description=>"",:filename=>""}
+      
+      if keywords.class.to_s == "Hash"
+        query = query.merge(keywords)
+      else
+        query.each_pair{|k,v| query[k] = keywords}
+      end
+      
       groups = [groups].flatten
 
-      find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.filename LIKE ? OR attachments.description LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = attachments.id AND taggings.taggable_type = 'Asset' AND tags.name LIKE ?) IS NOT NULL)", "%#{query}%", "%#{query}%", "%#{query}%"], :group => "attachments.id", :order => order)
+      find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.id LIKE ? OR attachments.filename LIKE ? OR attachments.description LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = attachments.id AND taggings.taggable_type = 'Asset' AND tags.name LIKE ?) IS NOT NULL)", "%#{query[:id]}%", "%#{query[:filename]}%", "%#{query[:description]}%", "%#{query[:name]}%"], :group => "attachments.id", :order => order)
     end
 
     def find_with_data(quantity, options = {})

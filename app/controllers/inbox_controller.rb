@@ -1,4 +1,3 @@
-require 'ostruct'
 class InboxController < ProtectedController
   include FeedReader
   def index
@@ -124,7 +123,6 @@ class InboxController < ProtectedController
     @item = @rss.items[id]
 
     # convert the format of the RSS item into a "post", which the template wants.
-    OpenStruct.class_eval { undef :id }
     @post = OpenStruct.new(
       :id=>id,
       :author=>"System Message",
