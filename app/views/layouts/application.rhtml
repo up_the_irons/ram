@@ -15,16 +15,22 @@
   </div>
   <%= display_flash_message %>
   
-  <div id="applicationHeader" style="height:40px;">
+  <div id="applicationHeader" style="height:50px;">
   <% if current_user %>
-    <div id="search_form" style="position:absolute;right:10px;">
+    <div id="ram_search_form" style="position:absolute;right:10px;">
     <%= form_tag :controller => 'search', :action => 'all' %>
   	  <input class="searchField" type="text" name='id' tabindex="1" alt="search box" />
-  	  <input class="searchSubmit" type="submit" value="Search" alt="search button" />
+  	  <input class="searchSubmit" type="submit" value="<%= APP_NAME %> Search" alt="search button" />
     <%= end_form_tag %>
     </div>
   <% end -%>
 
+  <%= render :partial=>'/shared/google_search' %>
+    <div style="position:absolute;right:30px;top:80px">
+      <span>Search using</span>
+      <input id='google_radio' type="radio" onclick="View.show_hide('google_search_form','ram_search_form');$('ram_radio').checked = false;" value="Google" name="google_search">Google&nbsp;&nbsp;
+      <input id='ram_radio' type="radio" onclick="View.show_hide('ram_search_form','google_search_form');$('google_radio').checked = false;" value="RAM" name="ram_search"><%= APP_NAME %>&nbsp;&nbsp;
+    </div>
   <%= yield :application_header %>
   </div>
   

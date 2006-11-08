@@ -132,7 +132,7 @@ class BriefcaseController < ProtectedController
       wants.js do 
         render :update do |page|
           page.redirect_to :controller=>'briefcase',:action=>'list'
-        #todo ajax removal
+          # TODO ajax removal
         end
       end
     end

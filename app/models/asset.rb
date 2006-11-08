@@ -49,12 +49,7 @@ class Asset < ActiveRecord::Base
    has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
          'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Asset" ORDER BY c.created_at'   
    belongs_to :category
-   belongs_to :user
-
-   #FIXME
-   #attr_protected :user_id
-   #TODO Add support for acts_as_versioned.
-   
+   belongs_to :user   
    
   def name
      filename

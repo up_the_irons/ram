@@ -81,8 +81,6 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   def test_shall_prevent_adding_a_restricted_asset
     login_as :quentin
     assert_no_difference @request.session[:briefcase], :size do
-      #FIXME: get_restricted_assets does not work.
-      #restricted_asset = get_restricted_assets(current_user)[0].id
       post :add, :assets=>[7]
     end
     assert_response :redirect
@@ -155,13 +153,6 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   def group_and_asset(user)
     group = current_user.groups[0] 
      [group , group.assets[0]]      
-  end
-  
-  def get_restricted_assets(user)
-    assets = []
-    groups = Group.find(:all) - current_user.groups
-    groups.each{|g| assets << g.assets}
-    assets.flatten.uniq!
   end
   
   def current_user

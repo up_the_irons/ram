@@ -38,11 +38,4 @@ class Linking < ActiveRecord::Base
   end
   
   validates_uniqueness_of :linkable_id, :scope => [:group_id,:category_id,:linkable_type], :message=>'already added.'
-  def validate 
-    # TODO: in the cases where a user user only supplies a partial record (category but no group or vice versa) 
-    # query the db to determine that an existing partial record does not actually complete this new record and 
-    # therefore defeat the need to create this record in the first place.
-    
-    #errors.add_to_base('existing partial record was found so no new record was created.')
-  end 
 end

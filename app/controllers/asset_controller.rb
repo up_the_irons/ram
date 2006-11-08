@@ -6,9 +6,13 @@ class AssetController < ProtectedController
   @@asset_404 = "The asset could not be found."    
 
   def show
-    #TODO: scope this call
-    @asset = Asset.find(params[:id])
-    redirect_to :action=>'download',:id=>@asset.filename unless @asset.image?
+    
+    @asset = current_user.assets_search({:id=>params[:id]})[0]
+    if @asset
+      redirect_to :action=>'download',:id=>@asset.filename unless @asset.image?
+    else
+      render :text=>'could not find asset'
+    end
   end
   
   def download
@@ -23,8 +27,7 @@ class AssetController < ProtectedController
   end
   
   def show_inline
-    #TODO :Scope this call.
-    @asset = Asset.find(params[:id])
+    @asset = current_user.assets_search({:id=>params[:id]})[0]
     send_data @asset.data, :filename => @asset.filename, :type => @asset.content_type, :disposition => 'inline'
   end
 
@@ -74,7 +77,6 @@ class AssetController < ProtectedController
   end
   
   def edit
-    #todo :not sure you should create a category here.
     Asset.with_scope(:find => { :conditions => "user_id = #{current_user.id}", :limit => 1 }) do 
       begin
         @asset = find_asset_by params[:id] if params[:id]

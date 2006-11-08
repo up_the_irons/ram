@@ -23,7 +23,6 @@ class ArticleController < ProtectedController
   end
   
   def write
-    #todo :not sure you should create a category here.
     Article.with_scope(:find => { :conditions => "user_id = #{current_user.id}", :limit => 1 }) do 
       begin
         @article = find_article_by params[:id] if params[:id]

@@ -87,7 +87,6 @@ class Group < Collection
         'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Group" ORDER BY c.created_at'
   
   
-  #has_many :categories, :through => :access_contexts, :foreign_key=>:category_id do
   has_many :categories, :through => :linkings, :select => "DISTINCT collections.*", :foreign_key=>:category_id do
     def <<(category)
       return if @owner.categories.include?category
@@ -166,7 +165,7 @@ class Group < Collection
   validates_uniqueness_of :name
   validates_unchangeable :name, { :message => "A perminant Group's name cannot be changed." , :if => Proc.new { |group| group.permanent } }
   
-  #todo after save add user that created group to membership list
+  # Todo after save add user that created group to membership list
   
   # Returns an array of User objects that are not members of this group
   def non_members(reload = false)

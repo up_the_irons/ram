@@ -18,11 +18,8 @@
   <% checks = [] -%>
   <% current_user.categories.each do |c| -%>
     <% if @category.parent_id == c.id; -%>
-    document.getElementById('branch_checkbox_<%= c.id %>').checked = true
-    $('<%="tick_#{c.id}"%>').show()
-      <%
-      #TODO prevent user from selecting self as the checkbox... so it should disable the node or something
-      -%>
+      document.getElementById('branch_checkbox_<%= c.id %>').checked = true
+      $('<%="tick_#{c.id}"%>').show()
     <% end -%>
     <% checks << "#{c.id}" -%>
   <% end -%>

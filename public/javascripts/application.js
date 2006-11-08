@@ -54,6 +54,11 @@ View = {
 		$(id_1).toggle();
 		$(id_2).toggle();
 		return false;
+	},
+	show_hide : function(show_id,hide_id){
+		$(show_id).show();
+		$(hide_id).hide();
+		return false;
 	}
 }
 View.SelectRow = function(checkbox, parent_row,unselected_class,selected_class){
