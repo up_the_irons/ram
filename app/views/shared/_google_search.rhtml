@@ -1,4 +1,9 @@
-<div id="google_search_form" style="position:absolute;right:10px;display:none;">
+<% if current_user
+    display_as = "none"
+  else
+    display_as = "block"
+  end -%>
+<div id="google_search_form" style="position:absolute;right:10px;display:<%= display_as %>;">
   <!-- Search Google -->
   <form method="get" action="/search/google/" target="_top">
     <input type="text" class="searchField" name="q" maxlength="255" value="" />
