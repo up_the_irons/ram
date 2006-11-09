@@ -185,4 +185,6 @@ task :install => [:banner, :check_for_db_config_file, DB_CONFIG, :pre_migrate, :
 
   puts ""
   puts "Installation complete."
+  puts ""
+  puts "Have a great day and thanks for installing RAM -- Mark & Garry"
 end
