@@ -140,7 +140,7 @@ happen:
 
   1. Create config/database.yml
   2. Create database schema
-  3. WEBrick web server will start
+  3. WEBrick web server will start (optional)
 
   BANNER
 
