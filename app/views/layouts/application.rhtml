@@ -83,5 +83,7 @@
     <%= render :partial=>'shared/page/footer'%>
 	</div>
 	<%= grail_notify({:subject=>"System Message", :body=>flash[:grail]})  if flash.keys.include?(:grail) %>
+	
+ 
 </body>
 </html>

@@ -61,6 +61,27 @@ View = {
 		return false;
 	}
 }
+
+View.Onload = {
+  loaded: false,
+  addEvent: function(fn) {
+    if (this.loaded) fn();
+    else {
+      var oldonload = (window.onload) ? window.onload : function () {};
+      window.onload = function () { oldonload(); fn(); };
+    }
+  },
+  init: function() {
+    this.loaded = true;
+  }
+};
+
+//Fade any flash messages after a certain amount of time.
+View.FadeFlash = function(){
+	new Element.scrollTo('page_flash');
+	window.setTimeout('Effect.Fade(\'page_flash\', {duration:.5})',3000);
+}
+
 View.SelectRow = function(checkbox, parent_row,unselected_class,selected_class){
 	if(checkbox.checked){
 		$(parent_row).className= selected_class;

@@ -6,7 +6,7 @@ module ApplicationHelper
     flash_types = [:error, :warning, :notice ]
     flash_type = flash_types.detect{ |a| flash.keys.include?(a) }
     
-    "<div id='page_flash' class='flash_%s'>%s</div>" % [flash_type.to_s, flash[flash_type]] if flash_type 
+    "<div id='page_flash' class='flash_%s'>%s</div><script type='text/javascript'>/*<![CDATA[ */View.Onload.addEvent(View.FadeFlash);/* ]]> */</script>" % [flash_type.to_s, flash[flash_type]] if flash_type 
   end
   
   
