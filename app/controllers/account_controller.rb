@@ -93,8 +93,8 @@ class AccountController < ProtectedController
       safe_hash[:password_confirmation] = params[:user][:password_confirmation]
     end
     
-    # only create the avatar if a file was selected.
-    unless params[:avatar].nil?
+    # Only create the avatar if a file was selected.
+    if params[:avatar] && params[:avatar][:uploaded_data].size > 0
       @avatar = create_avatar(@user.id,params[:avatar][:uploaded_data])
     end
       

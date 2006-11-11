@@ -25,6 +25,9 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   
+  # This is how you make a static route.
+  # m.connect('404', 'public/404.html', _static=True )
+  
   map.connect "admin/disband/group/:id", :controller=>'admin',:action=>'disband_group'
   
   map.connect "about", :controller=>'site',:action=>'about'

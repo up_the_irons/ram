@@ -70,20 +70,18 @@ a:hover{
 
 #page_flash{
 	display          : block;
-	margin           : 0 50px 0 50px;
-	/*background-color : #FFFF99;*/
-	/*color            : #282E1A;*/
 }
 
 .flash_notice, .flash_warning, .flash_error{
-	border           : 1px solid #c0c5ac;
-	padding: 10px;
-	font-size: 1.2em;
-	background-color : #fbfce5;
-    display          : block;
-	clear            : both;
-	text-align       : center;
-	margin-bottom    : 1.0em;;
+	border            : 1px solid #c0c5ac;
+	background-repeat : repeat-x;
+	padding           : 10px;
+	font-size         : 1.2em;
+	background-color  : #e2e591;
+    display           : block;
+	clear             : both;
+	text-align        : center;
+	background-image  : url('/images/flash_notice_bg.jpg');
 }
 
 .flash_notice a,.flash_notice a:link, .flash_notice a:visited,.flash_notice a:hover,.flash_notice a:active{
@@ -92,9 +90,10 @@ a:hover{
 }
 
 .flash_error{
+	background-image  : url('/images/flash_notice_bg.jpg');
 	border           : 2px solid #aa0000;
 	color            : #ffffff;
-	background-color : #cc0000;
+	background-color : #ff8c8b;
 }
 
 .big_input{
