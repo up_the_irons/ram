@@ -7,13 +7,14 @@ class InboxController < ProtectedController
   def inbox
     @feeds =[]
     @messages = []
-    # We need to store the feed's id in the hash because the RSS instance's id will map to an internal memory location not an active record object.
+    # We need to store the feed's id in the hash because the RSS instance's id will map to an internal memory
+    # location not an active record object.
     current_user.feeds.map{|f| @feeds << {:feed=>RSS::Parser.parse(f.data,false),:id=>f.id} if f.is_local}
     @feeds.each do |feed_hash|
       feed_hash[:feed].channel.items.each_with_index do |i,index|
         # Format the feed items like messages so that they can be displayed in the inbox.
-        # I need need to include the link to the feed and the item of the feed as the id, because the feed item gets a "new" id each time it is loaded unfortunately.
-        # id = "#{feed.channel.link}/#{index}".gsub(/\//, '__')
+        # I need need to include the link to the feed and the item of the feed as the id, 
+        # because the feed item gets a "new" id each time it is loaded unfortunately.
         id = "#{feed_hash[:id]}__#{index}"
         @messages << OpenStruct.new(
                     :body=>i.description,
@@ -49,9 +50,7 @@ class InboxController < ProtectedController
       end
       wants.js do
         render :update do |page|
-          #page.replace_html(params[:update],  :partial=>'feed_form')  unless @feed.valid?
           page.redirect_to :controller=>'inbox', :action=>'edit_feed'
-          # page.redirect_to :controller=>'inbox', :action=>'inbox' if @feed.valid?
         end      
       end
     end

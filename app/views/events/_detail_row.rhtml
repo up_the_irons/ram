@@ -32,7 +32,7 @@ summary = "<p style=\"height:1.5em;display:block;float:left;overflow:hidden;\">#
 <% end -%>
 	
 	<td>
-		<%= link_to_remote image_tag('/images/icons/cross.png'), :url => { :controller => controller, :action => 'delete', :id => id }, :confirm => "Are you sure you want to delete this event?" %>
+		<%= link_to_remote image_tag('/images/icons/cross.png'), :url => { :controller => controller, :action => 'delete', :id => id }, :confirm => "Are you sure you want to delete this #{message_type} ?" %>
 	</td>
 </tr>
 <tr id='message_body_container_<%= id %>' class="message" style='display: none'>

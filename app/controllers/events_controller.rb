@@ -19,8 +19,10 @@ class EventsController < ProtectedController
 
   def delete
     if @event
-      @event.destroy
-      list
+      render :update do |page|
+        page.replace_html "message_#{params[:id]}", ""
+        page.replace_html "message_body_#{params[:id]}", ""
+      end if @event.destroy
     end
   end
 

@@ -14,6 +14,6 @@
 	<% end -%>
 	</table>
 <% else -%>
-	No events in your Inbox.
+	<% flash[:notice] = "No messages in your Inbox." -%>
 <% end -%>
 </div>
