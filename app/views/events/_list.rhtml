@@ -14,6 +14,9 @@
 	<% end -%>
 	</table>
 <% else -%>
-	<% flash[:notice] = "No messages in your Inbox." -%>
+	<% c = display_as_round_box do -%>
+	Your inbox is empty.
+	<% end -%>
+  <%= c %>
 <% end -%>
 </div>
