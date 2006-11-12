@@ -1,72 +1,74 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
+
 class Test::Unit::TestCase
   
   class << self
   
-  	#expects a format like this:
-	#test_required_attributes_in_controller User,
-  	#										{:params=>{:id=>1,:user=>{}},:session=>{:user=>{}}},
-	#										[:create, :update],
-	#										:first_name, :last_name, :username, :email_address, :password
+    # Expects a format like this:
+    #
+    # test_required_attributes_in_controller User,
+    #                    {:params=>{:id=>1,:user=>{}},:session=>{:user=>{}}},
+    #                    [:create, :update],
+    #                    :first_name, :last_name, :username, :email_address, :password
 
-    def test_required_attributes_in_controller( model, options, actions,*required_fields )
-    	
-		sym = model.to_s.downcase.to_sym
-		for field in required_fields
-      		options[:params][sym][field] = ''
-    	end
-		
-      	actions.each do |action|
-        	self.class_eval do
-          		define_method("test_#{action}_method_requires_fields") do
-            		assert_nothing_raised do
-						post action, options[:params],options[:session]
-					end
-            		for field in required_fields
-      					assert !assigns(sym).errors[field].empty? unless options[:params][sym][field] == ''
-    				end
-    				assert !assigns.empty?,"This method requires specific parameters, yet no errors were created with them missing"
-          		end
-        	end
-      	end
-	end
-	
-	  #Expects format like this: 
-	  #   test_required_unique_attributes_in_controller User,
-	  #											{:params=>{:id=>1,:user=>{}},:session=>{:user=>{}}},
-	  #											[:create, :update],
-	  #											:username, :email_address
-	  #
-		
-    def test_required_unique_attributes_in_controller( model, options, actions,*required_fields )
-    	sym = model.to_s.downcase.to_sym
-		for field in required_fields
-      		options[:params][sym][field] = ''
-    	end
-		
-      	actions.each do |action|
-        	self.class_eval do
-          		define_method("test_#{action}_method_requires_unique_fields") do
-            		assert_nothing_raised do
-						post action, options[:params],options[:session]
-					end
-            		for field in required_fields
-      					assert !assigns(sym).errors[field].empty? unless options[:params][sym][field] == ''
-    				end
-    				assert !assigns.empty?,"This method fails without unique parameters, yet no errors were created"
-          		end
-        	end
-      	end
+    def test_required_attributes_in_controller( model, options, actions, *required_fields )
+      sym = model.to_s.downcase.to_sym
+      for field in required_fields
+        options[:params][sym][field] = ''
+      end
+    
+      actions.each do |action|
+        self.class_eval do
+          define_method("test_#{action}_method_requires_fields") do
+            assert_nothing_raised do
+              post action, options[:params],options[:session]
+            end
+            
+            for field in required_fields
+              assert !assigns(sym).errors[field].empty? unless options[:params][sym][field] == ''
+            end
+
+            assert !assigns.empty?,"This method requires specific parameters, yet no errors were created with them missing"
+          end
+        end
+      end
     end
-	
-	#Expects format like this:
-	# test_required_url_parameters_in_controller 
-	#                                           User,
-	#                                                {:params=>{},:session=>{:user=>{}}},
-	#                                                :edit, :destroy, :show, :update	
-	
+  
+    # Expects format like this: 
+    #   test_required_unique_attributes_in_controller User,
+    #                      {:params=>{:id=>1,:user=>{}},:session=>{:user=>{}}},
+    #                      [:create, :update],
+    #                      :username, :email_address
+    #
+    
+    def test_required_unique_attributes_in_controller( model, options, actions,*required_fields )
+      sym = model.to_s.downcase.to_sym
+      for field in required_fields
+        options[:params][sym][field] = ''
+      end
+    
+      actions.each do |action|
+        self.class_eval do
+          define_method("test_#{action}_method_requires_unique_fields") do
+            assert_nothing_raised do
+              post action, options[:params],options[:session]
+            end
+
+            for field in required_fields
+              assert !assigns(sym).errors[field].empty? unless options[:params][sym][field] == ''
+            end
+
+            assert !assigns.empty?,"This method fails without unique parameters, yet no errors were created"
+          end
+        end
+      end
+    end
+  
+    # Expects format like this:
+    # test_required_url_parameters_in_controller User, {:params=>{},:session=>{:user=>{}}},:edit, :destroy, :show, :update  
+    
     def test_required_url_parameters_in_controller(model, options, *actions)
       sym = model.to_s.downcase.to_sym
       actions.each do |action|
@@ -79,8 +81,8 @@ class Test::Unit::TestCase
         end
       end
     end
-	
-  end
+
+  end # end def <<self
   
   def functional_verify_redirection_on_get(action,redirect,options={},session={})
     get action,options,session

@@ -1,9 +1,11 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
+
 include AuthenticatedTestHelper
 include RamTestHelper
 include Arts
+
 class Test::Unit::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
@@ -92,8 +94,8 @@ class Test::Unit::TestCase
     
   end
 
-  #Stub method to loop through your class looking for methods to test.
-  #This ensures that your application doesn't throw any obvious execeptions but is a rather shallow test.
+  # Stub method to loop through your class looking for methods to test.
+  # This ensures that your application doesn't throw any obvious execeptions but is a rather shallow test.
   def self.test_actions(controller, options={})
     exclude = Set.new((options[:except] || []).to_a | [:wsdl, :rescue_action])
     controller_class = eval(Inflector.classify("#{controller}_controller"))
@@ -132,12 +134,12 @@ class Test::Unit::TestCase
     return t
   end
   
-  # a JPEG helper
+  # A JPEG helper
   def uploaded_jpeg(path, filename=nil)
     uploaded_file(path, 'image/jpeg', filename)
   end
 
-  # a GIF helper
+  # A GIF helper
   def uploaded_gif(path, filename=nil)
     uploaded_file(path, 'image/gif', filename)
   end

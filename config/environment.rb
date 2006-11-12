@@ -45,6 +45,7 @@ Rails::Initializer.run do |config|
   # user_observer is throwing a test failure (I don't really know why the group
   # one can be loaded in the controller but the user one must be loaded here)
   config.active_record.observers = :user_observer
+
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
   
@@ -63,19 +64,22 @@ end
 # Include your application configuration below
 require 'openssl'
 require 'base64'
-#require 'rubyzip'
-#required for acts_as_attachable
 require 'RMagick'
+require 'ostruct'
 
 # OpenStruct is used in several places throughout the app to fake out views, which are expecting AR models.
-# To prevent the tests and application from whining about Object#id we undefine it here so that we can override it later.
-require 'ostruct'
+# To prevent the tests and application from whining about Object#id we undefine it here so that we can override it 
+# later.
 OpenStruct.class_eval { undef :id }
 
-UPLOAD_SIZE_LIMIT = 50000*1024
-RAM_SALT = 'foodz'
-APP_NAME = 'RAM'
-ADMIN_GROUP = 'Administrators'
-#codename generated from the dictionary
-REVISION_NUMBER = YAML.load(`svn info`)['Revision'] 
-APP_CODENAME  = IO.readlines("/usr/share/dict/words")[REVISION_NUMBER]
+UPLOAD_SIZE_LIMIT = 50000 * 1024
+RAM_SALT          = 'foodz'
+APP_NAME          = 'RAM'
+ADMIN_GROUP       = 'Administrators'
+
+begin
+  # Codename generated from the dictionary
+  REVISION_NUMBER = YAML.load(`svn info`)['Revision'] 
+  APP_CODENAME  = IO.readlines("/usr/share/dict/words")[REVISION_NUMBER]
+rescue
+end

@@ -1,7 +1,9 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+
 require 'test_help'
 require 'pp'
+
 class Test::Unit::TestCase
 
   def unit_create(model,options)
@@ -16,8 +18,8 @@ class Test::Unit::TestCase
     pre_count = model.count
     @o = model.find(id)
     assert @o.destroy
-	assert_equal pre_count - 1, model.count
-	
+    assert_equal pre_count - 1, model.count
+  
     assert_raise(ActiveRecord::RecordNotFound) { model.find(id) }
   end
   
