@@ -21,7 +21,6 @@ class BriefcaseControllerTest < Test::Unit::TestCase
     login_as :quentin
     get :list
     assert :success
-    assert_equal assigns(:flash)[:notice], "Your briefcase is empty."
   end
   
   def test_shall_create_briefcase_on_login

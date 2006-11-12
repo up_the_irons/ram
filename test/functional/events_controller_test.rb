@@ -34,10 +34,11 @@ class EventsControllerTest < Test::Unit::TestCase
     login_as u.login
 
     assert_difference Event, :count, -1 do
-      xhr :get, :delete, :id => events(:quentin_msg_1_unread).id
+      id = events(:quentin_msg_1_unread).id
+      xhr :get, :delete, :id => id
       assert_response :success
-
-      assert_rjs :replace_html, 'events_table'
+      assert_rjs :replace_html, "message_body_#{id}"
+      assert_rjs :replace_html, "message_#{id}"
     end
   end
 

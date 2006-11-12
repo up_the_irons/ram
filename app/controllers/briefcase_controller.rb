@@ -15,9 +15,7 @@ class BriefcaseController < ProtectedController
   
   def list
     @assets = []
-    if session[:briefcase].empty?
-      flash[:notice] = "Your briefcase is empty." 
-    else
+    unless session[:briefcase].empty?
       session[:briefcase].map do |a| 
         begin
           asset = Asset.find(a)

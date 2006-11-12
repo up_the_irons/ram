@@ -68,8 +68,8 @@ class AdminController
     @user    = User.find(params[:id])
     @person  = @user.person
     @profile = @user.profile
-    @avatar  = @user.avatar ||= Avatar.new
     if request.post? && @user
+      @avatar  = @user.avatar ||= Avatar.new
       @avatar = create_avatar(@user.id,params[:avatar][:uploaded_data]) unless params[:avatar].nil?
       if params[:user] && params[:user][:group_ids]
         groups = []

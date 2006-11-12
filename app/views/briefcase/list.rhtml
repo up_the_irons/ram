@@ -12,4 +12,10 @@
 <span class="button"><%= link_to" #{image_tag('/images/icons/page_white_zip.png')} Download Archive of briefcase as a .zip file", :action=>'zip' %></span>
 </div>
 </form>
+<% else -%>
+<% c = display_as_round_box do -%>
+Your briefcase is empty.
+<% end -%>
+<%= c %>
+
 <% end -%>

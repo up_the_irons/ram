@@ -68,6 +68,7 @@
 
 .dataGrid tr.highlighted{
 	background-color : #FDF766;
+	color:#000;
 }
 
 .pagination{
