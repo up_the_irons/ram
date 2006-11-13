@@ -126,7 +126,8 @@ class User < ActiveRecord::Base
     make_branch = Proc.new do
       { :parent => nil, :children => [], :name => "", :id => nil }
     end
-    category_ids = categories(reload).map{ |c|c .id }
+
+    category_ids = categories(reload).map { |c| c.id }
     tree = { :root => make_branch.call }
     categories.each do |t|
       sym = "b_#{t.id}".to_sym
@@ -143,19 +144,20 @@ class User < ActiveRecord::Base
       tree[sym][:parent] = parent 
       tree[parent][:children] << tree[sym]
     end
+
     tree
   end
   
   def groups=(new_groups)
     old_groups = groups - new_groups # Remove all groups which don't appear in the new_groups list
     new_groups = new_groups - groups # Remove the groups the user already belongs to.
-    new_groups.each do | g |
+    new_groups.each do |g|
       self.groups << g
     end
     
     # Delete all the old memberships, which are no longer needed.
-    old_groups.each do |g |
-      membership = Membership.find_by_collection_id_and_user_id(g.id,id)
+    old_groups.each do |g|
+      membership = Membership.find_by_collection_id_and_user_id(g.id, id)
       Membership.destroy(membership.id)
     end
   end
