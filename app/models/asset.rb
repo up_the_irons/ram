@@ -24,16 +24,19 @@
 #  category_id         :integer(11)   
 #
 
-#class Asset < Attachment
 class Asset < ActiveRecord::Base  
-  acts_as_attachment :thumbnails => { :large=>'485>',:medium => '291>', :small => '95' }
-  validates_as_attachment
-  acts_as_taggable
   set_table_name "attachments"
-  
-  
-  has_many :linkings, :as =>:linkable,:dependent => :destroy
-  has_many :groups, :through=> :linkings do
+
+  acts_as_attachment :thumbnails => { :large => '485>',:medium => '291>', :small => '95' }
+  acts_as_taggable
+
+  validates_as_attachment
+
+  belongs_to :category
+  belongs_to :user   
+
+  has_many :linkings, :as => :linkable, :dependent => :destroy
+  has_many :groups, :through => :linkings do
     def << (group)
       return if @owner.groups.include?group
       l = Linking.create(
@@ -43,41 +46,34 @@ class Asset < ActiveRecord::Base
         )
       l.errors.each_full { |msg| puts msg } unless l.save 
     end
-   end
+  end
    
-   
-   has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+  has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
          'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Asset" ORDER BY c.created_at'   
-   belongs_to :category
-   belongs_to :user   
    
   def name
-     filename
+    filename
   end
-  
   
   def thumbnail_size(size)
     return false unless image?
     file = filename.split(/\..*$/) << "_#{size}"
     thumb = thumbnails.find(:first, :conditions => ["filename LIKE ?", "%#{file}%"])
-    #todo create this thumbnail if it is missing
+    # TODO: Create this thumbnail if it is missing
     thumb
   end
-  
 
-  def tags= (str)
+  def tags=(str)
      arr = str.split(",").uniq
-     self.tag_with arr.map{|a| a}.join(",") unless arr.empty?
+     self.tag_with arr.map { |a| a }.join(",") unless arr.empty?
   end
-
 
   # Read from the model's attributes if it's available.
   def data
     read_attribute(:data) || write_attribute(:data, (db_file_id ? db_file.data : nil))
   end
 
-
-  # set the model's data attribute and attachment_data
+  # Set the model's data attribute and attachment_data
   def data=(value)
     self.attachment_data = write_attribute(:data, value)
   end
@@ -86,27 +82,26 @@ class Asset < ActiveRecord::Base
     (path && filename) ? File.join(path, filename) : (filename || path)
   end
     
-  
-  #TODO refactor this so that the classes which are linked though groups can share the same module instead of duplicating code.
+  # TODO: Refactor this so that the classes which are linked through groups can share the same module instead of duplicating code.
   def remove_all_groups
-    self.groups.each do| m | 
+    self.groups.each do |m| 
       remove_group(m)
     end
   end
   
   def remove_group(group)
-    linking =Linking.find_by_linkable_id_and_linkable_type_and_group_id(self.id,'Asset', group.id)
+    linking = Linking.find_by_linkable_id_and_linkable_type_and_group_id(self.id, 'Asset', group.id)
     linking.destroy if linking.valid?
   end
     
   class << self    
     def search(keywords, groups, order = nil)
-      query = {:id=>"",:name=>"",:description=>"",:filename=>""}
+      query = { :id => "", :name => "", :description => "", :filename => "" }
       
       if keywords.class.to_s == "Hash"
         query = query.merge(keywords)
       else
-        query.each_pair{|k,v| query[k] = keywords}
+        query.each_pair{ |k,v| query[k] = keywords }
       end
       
       groups = [groups].flatten
@@ -125,7 +120,7 @@ class Asset < ActiveRecord::Base
       find_with_data :first, :conditions => ['path = ? and filename = ?', path, filename]
     end
 
-    def mime_type (ext)
+    def mime_type(ext)
       re = /(\.)/
       md = re.match(ext)
       type = case md.post_match.downcase
@@ -186,11 +181,10 @@ class Asset < ActiveRecord::Base
       end
     end
       
-      
-    #Adobe Flash 8 uses a nonstandard syntax for their multipart form posts
-    #Acts_as_attachment expects the standard format, which this method simulates through an open struct
+    # Adobe Flash 8 uses a nonstandard syntax for their multipart form POSTs
+    # acts_as_attachment expects the standard format, which this method simulates through an OpenStruct
     def translate_flash_post(filedata)
-      translated = Struct.new(:content_type,:original_filename,:read)
+      translated = Struct.new(:content_type, :original_filename, :read)
       t = translated.new( "#{Asset.mime_type(filedata.original_filename)}",
                             "#{filedata.original_filename.gsub(/[^a-zA-Z0-9.]/, '_')}",
                             filedata.read

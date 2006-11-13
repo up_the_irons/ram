@@ -1,5 +1,6 @@
 class AccountController < ProtectedController
   include EnlightenObservers
+
   observer :user_observer, :change_observer
 
   def index
@@ -54,26 +55,26 @@ class AccountController < ProtectedController
   end
   
   def profile
-    #TODO scope this request so that people don't see profiles that they should not.
+    # TODO: Scope this request so that people don't see profiles that they should not.
     if params[:id].to_s.match(/^\d+$/)
         @user = User.find(params[:id])
     else
         @user = User.find_by_login(params[:id])
     end
-    render :partial=>'account/profile',
-    	:locals=>{:user=> @user},
-    	:layout=>'application' unless @user.nil?
+    render :partial => 'account/profile',
+           :locals  => { :user => @user },
+           :layout  => 'application' unless @user.nil?
   end
   
   def my_profile
     @user = User.find(current_user.id)
     render :partial=>'account/profile',
-  	  :locals=>{:user=> @user},
-  		:layout=>'application' unless @user.nil?
+      :locals=>{:user=> @user},
+      :layout=>'application' unless @user.nil?
   end
 
   def avatar
-    #TODO :Scope this call.
+    # TODO: Scope this call.
     @avatar = Avatar.find(params[:id])
     send_data @avatar.data, :filename => @avatar.filename, :type => @avatar.content_type, :disposition => 'inline'
   end
@@ -146,8 +147,8 @@ class AccountController < ProtectedController
   protected 
 
   def random_password( len = 20 )
-      chars = (("a".."z").to_a + ("1".."9").to_a )- %w(i o 0 1 l 0)
-      newpass = Array.new(len, '').collect{chars[rand(chars.size)]}.join
+    chars = (("a".."z").to_a + ("1".."9").to_a )- %w(i o 0 1 l 0)
+    newpass = Array.new(len, '').collect{chars[rand(chars.size)]}.join
   end
 
   def after_login

@@ -30,11 +30,12 @@ class EventMailerTest < Test::Unit::TestCase
   end
 
   private
-    def read_fixture(action)
-      IO.readlines("#{FIXTURES_PATH}/event_mailer/#{action}")
-    end
 
-    def encode(subject)
-      quoted_printable(subject, CHARSET)
-    end
+  def read_fixture(action)
+    IO.readlines("#{FIXTURES_PATH}/event_mailer/#{action}")
+  end
+
+  def encode(subject)
+    quoted_printable(subject, CHARSET)
+  end
 end

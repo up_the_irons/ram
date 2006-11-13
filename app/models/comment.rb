@@ -20,13 +20,13 @@
 #
 
 class Comment < Article
-  belongs_to :article,:counter_cache=>"children_count"
+  belongs_to :article, :counter_cache => "children_count"
   has_one :user
   
   def validate
-      if parent_id
-        errors.add_to_base("Comments are not allowed.") unless Article.find(parent_id).allow_comments? 
-      end
+    if parent_id
+      errors.add_to_base("Comments are not allowed.") unless Article.find(parent_id).allow_comments? 
+    end
   end
   
   validates_presence_of :body

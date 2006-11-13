@@ -60,13 +60,12 @@ class InboxControllerTest < Test::Unit::TestCase
       assert assigns(:current_user).feeds(true).map{|feed| feed.name }.include?(cat.name)
     end
     
-    #Do not add the same feed twice
+    # Do not add the same feed twice
     assert_no_difference Feed, :count do
       post :edit_feed, :feed=>{:url=>"http://#{@request.host_with_port}/feed/category/#{cat.id}",:name=>cat.name}
       assert_response :success
       assert assigns(:current_user).feeds(true).map{|feed| feed.name }.include?(cat.name)
     end
-    
   end
   
   def test_shall_subscribe_to_feed
@@ -111,6 +110,7 @@ class InboxControllerTest < Test::Unit::TestCase
   def test_shall_unsubscribe_feed
     login_as :quentin
     u = users(:quentin)
+    
     # Do not unsubscribe on get requests
     assert_unchanged u.feeds, :size do
       get :unsubscribe_feed, :id=>u.feeds[0].id
@@ -144,8 +144,7 @@ class InboxControllerTest < Test::Unit::TestCase
     assert assigns(:rss)
     assert assigns(:item)
     assert assigns(:post)
-    assert_equal assigns(:item).description, assigns(:post).body #ensure the feed item has been converted to the post format, needed by the view.
-
+    assert_equal assigns(:item).description, assigns(:post).body # Ensure the feed item has been converted to the post format, needed by the view.
   end
   
 end

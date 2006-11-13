@@ -7,8 +7,8 @@ class BriefcaseController; def rescue_action(e) raise e end; end
 
 class BriefcaseControllerTest < Test::Unit::TestCase
   include AuthenticatedTestHelper
+
   fixtures :collections, :linkings, :attachments, :db_files, :users, :memberships
-  
   
   def setup
     @controller = BriefcaseController.new
@@ -126,7 +126,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
     assert @request.session[:briefcase].size > 0
     post :zip
     assert File.file?(assigns(:zip_file)), "Zip file should have been created."
-    #clean up the newly created zip files.
+    # Clean up the newly created zip files.
     File.delete assigns(:zip_file)
     assert !File.file?(assigns(:zip_file)), "Zip file should have been deleted."
   end
@@ -137,13 +137,11 @@ class BriefcaseControllerTest < Test::Unit::TestCase
     assets.map{|a| @request.session[:briefcase] << a.id}
     assert_equal assets.size, @request.session[:briefcase].size
     assert @request.session[:briefcase].size > 0
-    #breakpoint
-
   end
   
   protected
   def add_item_for(user)
-    #get the first unique asset to add to the briefcase
+    # Get the first unique asset to add to the briefcase
     assets_for( user ).map do |a|
       return @request.session[:briefcase] << a.id unless @request.session[:briefcase].include? a.id
     end

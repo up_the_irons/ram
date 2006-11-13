@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
+
 class FeedTest < Test::Unit::TestCase
   fixtures :feeds, :users, :subscriptions, :changes, :assets, :articles
 
@@ -24,7 +25,6 @@ class FeedTest < Test::Unit::TestCase
         assert c.is_local?
       end
     end
-    
   end
   
   def test_local_feed
@@ -36,7 +36,7 @@ class FeedTest < Test::Unit::TestCase
     
     assert_equal feed.name, result.channel.title
     assert_equal cat.description, result.channel.description
-    # ensure the change is now an item of the feed.
+    # Ensure the change is now an item of the feed.
     assert_equal change.name, result.channel.items[0].title
     assert_equal change.description, result.channel.items[0].description
   end
@@ -83,51 +83,47 @@ class FeedTest < Test::Unit::TestCase
     
     # Remove the rest
     @feed.subscribers.unsubscribe_all
-    
   end
   
-  
   def test_validations
-     # All these fields are required for a feed without them filled out will produce errors
-     required_fields = [:name]
-     f = Feed.create
-     assert_no_difference Feed, :count do
-       assert !f.valid?
-       assert_equal 1, f.errors.size
-       required_fields.each{|k| assert !f.errors.on(k).empty? }
-     end
-     
-     # Now validate the format of the url
-      assert_no_difference Feed, :count do
-       f.name ="foo"
-       f.is_local = false
-       f.url = "dsfsdfsdfsdfdsf" #bad url
-       assert !f.save
-       assert_equal 1, f.errors.size
-      end
-     
+    # All these fields are required for a feed without them filled out will produce errors
+    required_fields = [:name]
+    f = Feed.create
+    assert_no_difference Feed, :count do
+      assert !f.valid?
+      assert_equal 1, f.errors.size
+      required_fields.each{|k| assert !f.errors.on(k).empty? }
+    end
+    
+    # Now validate the format of the url
+    assert_no_difference Feed, :count do
+      f.name ="foo"
+      f.is_local = false
+      f.url = "dsfsdfsdfsdfdsf" #bad url
+      assert !f.save
+      assert_equal 1, f.errors.size
+    end
+    
     # Now fix everything so it saves
-     assert_difference Feed, :count do
-       f.url = @model_attributes[:url]
-       assert f.save
-     end
-   end
-  
+    assert_difference Feed, :count do
+      f.url = @model_attributes[:url]
+      assert f.save
+    end
+  end
   
   def test_update
     f = Feed.create(@model_attributes);
     assert f.valid?
-    @model_attributes.each_pair do|k,v|
+    @model_attributes.each_pair do |k,v|
       assert_equal f[k], v
     end
-    new_attributes = {:name=>"fooo", :url=>"http://images.apple.com/downloads/macosx/home/recent.rss",}
+    new_attributes = { :name=>"fooo", :url=>"http://images.apple.com/downloads/macosx/home/recent.rss" }
     f.update_attributes(new_attributes)
     
-    new_attributes.each_pair do|k,v|
+    new_attributes.each_pair do |k,v|
       assert_equal f[k], v
     end
   end
-  
   
   def test_destroy
     f = a_feed
@@ -135,6 +131,5 @@ class FeedTest < Test::Unit::TestCase
     f.destroy
     assert_raise(ActiveRecord::RecordNotFound){Feed.find(f.id)}
   end
- 
   
 end

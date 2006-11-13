@@ -1,4 +1,5 @@
 require_dependency 'collection_methods'
+
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include CollectionMethods

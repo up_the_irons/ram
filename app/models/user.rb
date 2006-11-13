@@ -13,12 +13,14 @@
 #  role                :integer(11)   default(0)
 #  last_login_at       :datetime      
 #
+
 require 'digest/sha1'
+
 class User < ActiveRecord::Base
-	
 	has_one  :person
 	has_one  :profile
 	has_one  :avatar
+  
 	has_many :memberships
 	has_many :articles
 	has_many :assets
@@ -27,18 +29,19 @@ class User < ActiveRecord::Base
 	# TODO: Abstract this inside the acts_as_subscribable plug-in.... however to do this we need to find out why the user model will not load 
 	# the mixin associations. It may be because of the user_observer. 
 	# The ideal format is: acts_as_subscribable :subscribe_to=>['Feed']
-	has_many :feeds, :finder_sql=>'SELECT DISTINCT f.* ' +
+	has_many :feeds, :finder_sql => 'SELECT DISTINCT f.* ' +
         'FROM feeds f, subscriptions s ' +
         'WHERE s.subscribed_to_type = \'Feed\' AND s.subscriber_id = #{id} AND s.subscriber_type = \'User\' AND f.id = s.subscribed_to_id' do
     
     # @user.feeds << Feed.find(:first)
     def <<(feed)
       return if @owner.feeds.include?(feed)
+
       Subscription.create(
-        :subscribed_to_type=> 'Feed',
-        :subscribed_to_id=>feed.id,
-        :subscriber_type=>'User',
-        :subscriber_id=>@owner.id
+        :subscribed_to_type => 'Feed',
+        :subscribed_to_id => feed.id,
+        :subscriber_type => 'User',
+        :subscriber_id => @owner.id
       )
       
       # Reload the user's feeds to ensure the correct count
@@ -48,7 +51,7 @@ class User < ActiveRecord::Base
     # @user.feeds.unsubscribe @user.feeds[0]
     def unsubscribe(feed)
       return unless @owner.feeds.include?(feed)
-      s = Subscription.find_by_subscriber_id_and_subscriber_type_and_subscribed_to_type_and_subscribed_to_id(@owner.id,'User', 'Feed', feed.id)
+      s = Subscription.find_by_subscriber_id_and_subscriber_type_and_subscribed_to_type_and_subscribed_to_id(@owner.id, 'User', 'Feed', feed.id)
       return unless s
       s.destroy # Destroy the subscription.
       
@@ -57,9 +60,8 @@ class User < ActiveRecord::Base
     end
   end
 	
-	
-	has_many :groups, :through=>:memberships,
-	                  :conditions => "memberships.collection_type = 'Group'",:include=>:categories do
+	has_many :groups, :through => :memberships,
+	                  :conditions => "memberships.collection_type = 'Group'", :include => :categories do
 
     # @user.groups << Group.find(2)
     def <<(group)
@@ -73,11 +75,11 @@ class User < ActiveRecord::Base
     end
   end
   
-  has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+  has_many :changes, :finder_sql => 'SELECT DISTINCT * ' +
         'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "User" ORDER BY c.created_at'
   
-  
   has_many :my_groups, :class_name => 'Collection', :foreign_key => 'user_id'
+
   STATUS = ['Pending','Suspended','Active'].freeze
             
   def pending_memberships(reload = true) # now with magic caching
@@ -97,8 +99,8 @@ class User < ActiveRecord::Base
   validates_length_of       :login    , :within => 3..40
   validates_length_of       :email    , :within => 3..100
   validates_uniqueness_of   :login    , :email
-  before_save :encrypt_password
 
+  before_save :encrypt_password
   
   def method_missing(*args)
     if self[args[0].to_sym]
@@ -120,13 +122,12 @@ class User < ActiveRecord::Base
     groups(reload).map { |g| g.categories(reload) }.flatten.uniq
   end
   
-  
   def categories_as_tree(reload = false)
     make_branch = Proc.new do
-      {:parent=>nil,:children=>[],:name=>"",:id=>nil}
+      { :parent => nil, :children => [], :name => "", :id => nil }
     end
-    category_ids = categories(reload).map{|c|c.id}
-    tree = {:root=>make_branch.call}
+    category_ids = categories(reload).map{ |c|c .id }
+    tree = { :root => make_branch.call }
     categories.each do |t|
       sym = "b_#{t.id}".to_sym
       tree[sym] = make_branch.call if tree[sym].nil?
@@ -146,8 +147,8 @@ class User < ActiveRecord::Base
   end
   
   def groups=(new_groups)
-    old_groups = groups - new_groups #remove all groups which don't appear in the new_groups list
-    new_groups = new_groups - groups #remove the groups the user already belongs to.
+    old_groups = groups - new_groups # Remove all groups which don't appear in the new_groups list
+    new_groups = new_groups - groups # Remove the groups the user already belongs to.
     new_groups.each do | g |
       self.groups << g
     end
@@ -168,7 +169,7 @@ class User < ActiveRecord::Base
   end
   
   def accessible_articles
-    articles = groups.map{|g| g.articles}
+    articles = groups.map { |g| g.articles }
     articles = articles.flatten.uniq || []
     articles
   end
@@ -208,6 +209,7 @@ class User < ActiveRecord::Base
   def state
     self[:state]
   end
+
   def state=(status)
     self[:state] = status
   end
@@ -232,7 +234,7 @@ class User < ActiveRecord::Base
   end
 
   def after_create
-    # TODO subscribe an observer to this event to notifiy admins that a user signed up
+    # TODO: Subscribe an observer to this event to notifiy admins that a user signed up
     profile = Profile.find_or_create_by_user_id(id)
     profile.save
     person = Person.find_or_create_by_user_id(id)
@@ -275,6 +277,7 @@ class User < ActiveRecord::Base
   end
   
   protected
+
   # before filter 
   def encrypt_password
     return if password.blank?

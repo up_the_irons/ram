@@ -18,6 +18,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/../test_unit_helper'
+
 class ArticleTest < Test::Unit::TestCase
   fixtures :collections, :articles, :linkings, :users, :memberships
   
@@ -40,6 +41,7 @@ class ArticleTest < Test::Unit::TestCase
   def test_create_article
     unit_create @model, @new_obj
   end
+
   def test_validations
     a = Article.create @new_obj.merge({:user_id=>nil,:title=>nil,:body=>nil})
     assert_equal false, a.valid?

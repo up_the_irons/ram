@@ -14,27 +14,14 @@
 #  updated_at          :datetime      
 #
 
-# Schema as of Fri Oct 27 16:48:28 PDT 2006 (schema version 21)
-#
-#  id                  :integer(11)   not null
-#  name                :string(255)   
-#  description         :text          
-#  public              :boolean(1)    default(true)
-#  user_id             :integer(11)   
-#  type                :string(255)   
-#  state_id            :integer(11)   
-#  parent_id           :integer(11)   
-#  counter_cache       :boolean(1)    default(true)
-#  permanent           :boolean(1)    
-#  created_at          :datetime      
-#  updated_at          :datetime      
-#
-
 class Group < Collection
   acts_as_taggable
+
   include TagMethods
 
-  has_many :memberships, :foreign_key=>:collection_id
+  has_many :linkings
+  has_many :memberships, :foreign_key => :collection_id
+
   has_many :users, :through => :memberships, :conditions => "memberships.collection_type = 'Group'" do
     def <<(user)
       return if @owner.users.include?user
@@ -43,7 +30,7 @@ class Group < Collection
         m = Membership.create(
           :user_id => user.id,
           :collection_id => @owner.id,
-          :collection_type => 'Group' #@owner.class.class_name      
+          :collection_type => 'Group' 
         )
         GroupObserver.after_add(@owner, user)
     
@@ -52,14 +39,12 @@ class Group < Collection
         @owner.users(true) 
       end
 
-      #TODO: add category ids to user's category tree
+      # TODO: Add category ids to user's category tree
     end
   end
   
-  has_many :linkings
-  
-  #TODO: Possibly make this more generic and accept many polymorphic types by using @owner.class.class_name in place of assets
-  has_many :assets, :through=> :linkings, :source=>:asset, :conditions=>"linkings.linkable_type='Asset'" do
+  # TODO: Possibly make this more generic and accept many polymorphic types by using @owner.class.class_name in place of assets
+  has_many :assets, :through => :linkings, :source => :asset, :conditions => "linkings.linkable_type = 'Asset'" do
     def <<(asset)
       return false if @owner.assets.include?asset
       l = Linking.create(
@@ -71,7 +56,7 @@ class Group < Collection
     end
   end
   
-  has_many :articles, :through=> :linkings, :source=>:article, :conditions=>"linkings.linkable_type='Article'" do
+  has_many :articles, :through => :linkings, :source => :article, :conditions => "linkings.linkable_type = 'Article'" do
     def <<(article)
       return false if @owner.articles.include?article
       l = Linking.create(
@@ -83,11 +68,10 @@ class Group < Collection
     end
   end
   
-  has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+  has_many :changes, :finder_sql => 'SELECT DISTINCT * ' +
         'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Group" ORDER BY c.created_at'
   
-  
-  has_many :categories, :through => :linkings, :select => "DISTINCT collections.*", :foreign_key=>:category_id do
+  has_many :categories, :through => :linkings, :select => "DISTINCT collections.*", :foreign_key => :category_id do
     def <<(category)
       return if @owner.categories.include?category
       a = Linking.create(
@@ -134,7 +118,7 @@ class Group < Collection
     remove_all_members
   end
   
-  #this will also remove all assets and articles, since access ot these models is dependent on the category as well.
+  # This will also remove all assets and articles, since access ot these models is dependent on the category as well.
   def remove_all_categories
     linkings.each do |link| 
       #borked.
@@ -161,11 +145,11 @@ class Group < Collection
     remove_member(user)
   end
 
-  validates_presence_of :user_id, :name
+  validates_presence_of   :user_id, :name
   validates_uniqueness_of :name
-  validates_unchangeable :name, { :message => "A perminant Group's name cannot be changed." , :if => Proc.new { |group| group.permanent } }
+  validates_unchangeable  :name, { :message => "A perminant Group's name cannot be changed." , :if => Proc.new { |group| group.permanent } }
   
-  # Todo after save add user that created group to membership list
+  # TODO: After save add user that created group to membership list
   
   # Returns an array of User objects that are not members of this group
   def non_members(reload = false)
@@ -173,7 +157,7 @@ class Group < Collection
   end
   
   def after_create
-    #FIXME this should go in an observer but I am having trouble getting it to work.
+    # FIXME: This should go in an observer but I am having trouble getting it to work.
     #breakpoint
     #@users = users
     #g = Group.find_by_name(ADMIN_GROUP).users.each{|m| @users << m}

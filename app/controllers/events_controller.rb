@@ -1,5 +1,4 @@
 class EventsController < ProtectedController
-  # before_filter :admins_only
   before_filter :find_single_event, :only => [:delete, :show]
 
   sortable      :list, :delete
@@ -30,6 +29,7 @@ class EventsController < ProtectedController
     @event[:author] = "unknown"
     @event[:author] = User.find(@event.sender_id).full_name if @event.sender_id
     @event[:typeof] = "event"
+
     render :update do |page|
       page.toggle       "message_body_container_#{params[:id]}"
       page.replace_html "message_body_#{params[:id]}", :partial => 'shared/post', :locals => { :post => @event }
@@ -44,10 +44,5 @@ class EventsController < ProtectedController
 
   def find_single_event
     @event = Event.find(params[:id], :conditions => ["recipient_id = ?", current_user.id])
-  end
-
-  # Same code is in AdminController, let's DRY this up soon...
-  def admins_only
-    redirect_to :controller => 'account', :action => 'index' unless current_user && current_user.is_admin?
   end
 end

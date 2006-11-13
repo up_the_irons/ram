@@ -3,16 +3,17 @@ class ArticleController < ProtectedController
 
   observer :change_observer
     
-  verify :method => :post, :only => [ :shred ],
-          :redirect_to => { :action => :index }
+  verify :method => :post, :only => [ :shred ], :redirect_to => { :action => :index }
 
   @@article_404 = "Could not find article."
+
   def read
     @article = find_article_by( params[:id] )
     unless current_user.is_admin?
 
       raise ActiveRecord::RecordNotFound unless current_user.accessible_articles.include?(@article)
-      #raise error if a user tries to view an article which is not published and they are not an admin or the author.
+
+      # Raise error if a user tries to view an article which is not published and they are not an admin or the author.
       raise ActiveRecord::RecordNotFound  if !@article.published? && @article.user_id != current_user.id
     end
       
@@ -39,7 +40,8 @@ class ArticleController < ProtectedController
     return unless request.post?
     @article.tags = "" # Clear tags, so new tags in params can be injected
     @potential_groups = []
-    #don't allow the user_id to be passed in as a param.
+
+    # Don't allow the user_id to be passed in as a param.
     params[:article].delete('user_id') unless params[:article][:user_id].nil?
     @article.user_id = current_user.id if @article.new_record?
     unless params[:article][:group_ids].nil?
@@ -70,8 +72,8 @@ class ArticleController < ProtectedController
     end
   end
   
-  #expects
-  #post :comment_on, :id=>a.id, :comment=>{:user_id=>,:title=>,:body=>''}
+  # Expects:
+  # post :comment_on, :id=>a.id, :comment=>{:user_id=>,:title=>,:body=>''}
   def comment_on
     Article.with_scope(:find => { :conditions => "allow_comments = true", :limit => 1 }) do 
       begin
@@ -93,6 +95,7 @@ class ArticleController < ProtectedController
   end
   
   protected 
+
   def find_article_by(param)
     if params[:id].to_s.match(/^\d+$/)
       article = Article.find(param)

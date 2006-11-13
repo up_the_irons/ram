@@ -7,6 +7,7 @@ class CategoryController; def rescue_action(e) raise e end; end
 
 class CategoryControllerTest < Test::Unit::TestCase
   fixtures :collections, :linkings, :attachments, :db_files, :users, :memberships
+
   def setup
     @controller = CategoryController.new
     @request    = ActionController::TestRequest.new
@@ -37,14 +38,14 @@ class CategoryControllerTest < Test::Unit::TestCase
   end
   
   def test_user_shall_not_be_a_able_to_show_a_restricted_category
-     login_as :user_4
-     u = User.find(4)
-     unauthorized_categories = Category.find(:all) - u.categories
+    login_as :user_4
+    u = User.find(4)
+    unauthorized_categories = Category.find(:all) - u.categories
 
-      unauthorized_categories.each do |c|
-        get :show, :id=> c.id
-        assert_equal nil, assigns(:category)
-      end
+    unauthorized_categories.each do |c|
+      get :show, :id=> c.id
+      assert_equal nil, assigns(:category)
+    end
   end
   
   def test_show_category_scoped_to_users_access

@@ -61,7 +61,7 @@ class BriefcaseController < ProtectedController
       assets.each do | a |
         # asset = Asset.find(a)
         asset = current_user.assets_search(a)[0]
-        # breakpoint
+
         unless asset.nil?
           n, e = add_to_briefcase(asset) # if current_user.assets.include?(asset)
           new_assets << n unless n.nil?
@@ -77,7 +77,6 @@ class BriefcaseController < ProtectedController
     render_list
   end
   
-  
   def add_to_briefcase(asset)
     results = [nil,nil]
     unless session[:briefcase].include? asset.id
@@ -88,7 +87,6 @@ class BriefcaseController < ProtectedController
     end
     results
   end
-  
   
   def remove
     unless params[:assets].nil?
@@ -111,9 +109,10 @@ class BriefcaseController < ProtectedController
     redirect_to :action=>'list'
   end
   
-  #TODO: Create some sweeper event, which will remove zip files after a certain amount of time.
+  # TODO: Create some sweeper event, which will remove zip files after a certain amount of time.
   def zip
-      @zip_file = "#{RAILS_ROOT}/downloads/#{current_user.login}_briefcase_#{(Time.now).to_i}.zip"
+    @zip_file = "#{RAILS_ROOT}/downloads/#{current_user.login}_briefcase_#{(Time.now).to_i}.zip"
+
     if create_zip(@zip_file)
       send_file @zip_file
     else
@@ -122,6 +121,7 @@ class BriefcaseController < ProtectedController
   end
   
   protected
+
   def render_list
     respond_to do |wants|
       wants.html do
@@ -130,7 +130,7 @@ class BriefcaseController < ProtectedController
       wants.js do 
         render :update do |page|
           page.redirect_to :controller=>'briefcase',:action=>'list'
-          # TODO ajax removal
+          # TODO: Ajax removal
         end
       end
     end
@@ -138,7 +138,7 @@ class BriefcaseController < ProtectedController
   
   def create_zip(path)
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
-      zip.dir.mkdir('briefcase') #acts as the root folder
+      zip.dir.mkdir('briefcase') # Acts as the root folder
       session[:briefcase].map do | a |
         asset = Asset.find a
         unless asset.nil?
@@ -150,7 +150,7 @@ class BriefcaseController < ProtectedController
     end
   end
   
-  #assumes that the user has logged in and assigned an access-scoped category tree
+  # Assumes that the user has logged in and assigned an access-scoped category tree
   def create_category_tree(category_id)
     @path = ""
     tree = current_user.categories_as_tree
@@ -159,7 +159,7 @@ class BriefcaseController < ProtectedController
       @path =  "#{cat[:name]}/" << @path
       cat = tree[cat[:parent]]
     end
-    @path = @path.gsub(/\ +/, '-').downcase #remove white spaces from filenames
+    @path = @path.gsub(/\ +/, '-').downcase # Remove white spaces from filenames
   end
   
   def find_asset_in_category_for_group_member(category_id = nil, asset_id = nil)

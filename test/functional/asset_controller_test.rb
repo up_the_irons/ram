@@ -17,7 +17,7 @@ class AssetControllerTest < Test::Unit::TestCase
 
   end
 
-  #todo not sure this needs to be tested since it is just the base of the STI
+  # TODO: Not sure this needs to be tested since it is just the base of the STI
   def test_bulk_upload
    get :bulk_upload, :id=>@category_with_asset
    assert_equal assigns(:login), CGI.escape(@user.encrypt_login)
@@ -30,26 +30,26 @@ class AssetControllerTest < Test::Unit::TestCase
     assert_redirected_to :controller=>'inbox'
     post :create_en_masse, :hash=>CGI.escape(@user.encrypt_login), :user=>{:group_ids=>[@user.groups.join(",")]}
     
-    #todo find a way to stub out the flash portions of the app so that they too can be tested.
+    # TODO: Find a way to stub out the flash portions of the app so that they too can be tested.
   end
   
   def test_add_and_remove_groups
     a = @user.assets[0]
-    assert a.groups.size > 1 #atleast two groups
+    assert a.groups.size > 1 # At least two groups
     group_to_keep = a.groups[0].id 
-    another_group = a.groups[1].id #used in the get request below
-    post :edit, :id=>a.id,:asset=>{:group_ids=>[ group_to_keep ]} #only submit one groups
+    another_group = a.groups[1].id # Used in the get request below
+    post :edit, :id=>a.id,:asset=>{:group_ids=>[ group_to_keep ]} # Only submit one groups
     assert_response :success
     assert_equal 1, assigns(:asset).groups.size
     assert assigns(:asset).groups[0].id, group_to_keep
     
-    #can't assign groups on assets
+    # Can't assign groups on assets
     assert_no_difference assigns(:asset).groups, :count do
       get :edit, :id=>a.id,:asset=>{:group_ids=>[group_to_keep, another_group]}
     end
     assert_response :success
     
-    #assign a new group to the asset
+    # Assign a new group to the asset
     assert_difference assigns(:asset).groups, :count do
       post :edit, :id=>a.id,:asset=>{:group_ids=>[group_to_keep, another_group]}
     end
@@ -60,7 +60,7 @@ class AssetControllerTest < Test::Unit::TestCase
   def test_create
     file = "#{RAILS_ROOT}/test/fixtures/images/rails.png"
     temp_file = uploaded_jpeg(file)
-    assert_difference Asset, :count, 4 do # there is 1 new asset and 3 new thumbnails
+    assert_difference Asset, :count, 4 do # There is 1 new asset and 3 new thumbnails
       post :edit, :asset=>{:description=>"I made this asset on #{Time.now.to_s}", :category_id=>@category_with_asset, :user_id=>@user.id, :uploaded_data=>temp_file}
       assert assigns(:asset)
       assert_equal 3, assigns(:asset).thumbnails.size
@@ -81,7 +81,7 @@ class AssetControllerTest < Test::Unit::TestCase
     assert_response :success
     assert assigns(:asset).description == props[:description]
     assert assigns(:asset).category_id == props[:category_id]
-    assert assigns(:asset).user_id != props[:user_id] #To prevent URL hacking user_ids are not allowed to change through mass assignment
+    assert assigns(:asset).user_id != props[:user_id] # To prevent URL hacking user_ids are not allowed to change through mass assignment
   end
   
   def test_shall_not_add_the_same_group_twice
@@ -137,7 +137,7 @@ class AssetControllerTest < Test::Unit::TestCase
     assert assigns(:asset)
     before = assigns(:asset).tags.size
     assert_equal assigns(:asset).tags.include?("ruby on rails"), false
-    #add new tags
+    # Add new tags
     post :edit, :id=>1, :asset=>{:category_id=>@category_with_asset,:tags=>"\"ruby on rails\", logo"}
     assert_equal assigns(:asset).tags.size, 2
     assert assigns(:asset).tags.include?("ruby on rails")

@@ -3,9 +3,10 @@ require 'article_controller'
 
 # Re-raise errors caught by the controller.
 class ArticleController; def rescue_action(e) raise e end; end
+
 class ArticleControllerTest < Test::Unit::TestCase
-  #fixtures :users, :articles, :collections, :linkings, :memberships
   fixtures :users, :articles, :tags, :collections, :memberships, :linkings, :taggings
+
   def setup
     @controller = ArticleController.new
     @request    = ActionController::TestRequest.new
@@ -14,11 +15,12 @@ class ArticleControllerTest < Test::Unit::TestCase
     @title   = "Questions for the seller."
     @excerpt = "To whom it may concern"
     @body    = "To whom it may concern, I am writing to enquire about the vintage computer space stand-up, which was used in the movie Solient Green. It is still for sale?"
+
     login_as :quentin
+
     @current_user = User.find(@request.session[:user])
     @another_user = users(:ralph_baer)
   end
-
   
   def test_create_article
     #[true, false].each do |allow_comments|
@@ -47,12 +49,12 @@ class ArticleControllerTest < Test::Unit::TestCase
   def test_edit_existing_article
     a = @current_user.articles.find(:first)
     params =  article_params
-    #ensure no params match
+    # Ensure no params match
     params.each_pair{|k,v| assert a[k] != v, ":#{k} should not be equal <#{a[k]}> but was <#{v}>"}
     params.merge!({:category_id=>a.category_id})
     post :write, :id=>a.id, :article=>params
     assert assigns(:article)
-    #ensure all params match
+    # Ensure all params match
     assert_equal assigns(:flash)[:notice], "\"#{assigns(:article).title}\" was saved.<br/>Added (#{assigns(:added).size}) groups and removed (#{assigns(:removed).size})"
     params.each_pair{|k,v| assert_equal assigns(:article)[k], v, ":#{k} should equal <#{assigns(:article)[k]}> but was <#{v}>"}
   end
@@ -101,7 +103,6 @@ class ArticleControllerTest < Test::Unit::TestCase
     @groups.each do|g|
       assert_equal nil, Linking.find_by_linkable_type_and_linkable_id_and_group_id('Article',@a.id,g.id)
     end
-    
   end
   
   def test_article_shall_belong_to_only_unique_groups
@@ -254,6 +255,7 @@ class ArticleControllerTest < Test::Unit::TestCase
   end
   
   protected
+
   def article_params(opts={})
     t = "#{Time.now.to_s}"
     params = {:body=>"#{@body}"<<t, :title=>"#{@title}"<<t, :excerpt=>@excerpt, :allow_comments=>true}.merge!(opts)

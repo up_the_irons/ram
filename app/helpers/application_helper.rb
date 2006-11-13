@@ -2,16 +2,14 @@
 module ApplicationHelper
   
   def display_flash_message
-
     flash_types = [:error, :warning, :notice ]
     flash_type = flash_types.detect{ |a| flash.keys.include?(a) }
     
     "<div id='page_flash' class='flash_%s'>%s</div><script type='text/javascript'>/*<![CDATA[ */View.Onload.addEvent(View.FadeFlash);/* ]]> */</script>" % [flash_type.to_s, flash[flash_type]] if flash_type 
   end
   
-  
-  def grail_notify(opts={})
-    props = {:skin=>nil,:subject=>nil, :body=>nil,:type=>nil}.merge(opts)
+  def grail_notify(opts = {})
+    props = {:skin => nil, :subject => nil, :body => nil,:type => nil}.merge(opts)
     out =  "<script type='text/javascript'>\n"
     out << "/* <![CDATA[ */\n"
     out << "Loader.addOnLoad(function(){grail.notify({type:\"#{CGI.escapeHTML props[:type]}\", subject:\"#{CGI.escapeHTML props[:subject]}\",skin:\"#{CGI.escapeHTML props[:skin]}\", body:\"#{CGI.escapeHTML props[:body]}\"})})\r"
@@ -20,8 +18,7 @@ module ApplicationHelper
     out << "</script>"
   end
   
-  
-  def display_as(asset, opts={:size=>"medium"})
+  def display_as(asset, opts = { :size => "medium" })
     case asset.content_type
       when 'image/jpeg','image/jpg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png'
         unless asset.thumbnail_size(opts[:size]).nil?
@@ -36,12 +33,11 @@ module ApplicationHelper
     end
   end
   
-  
-  #used to create a category tree for use with the tree.js and tree.css files. This method is called recursivly
+  # Used to create a category tree for use with the tree.js and tree.css files. This method is called recursivly.
   def parse_tree(branches)
     code = ""
     branches.each do |b|
-      link = link_to truncate(b[:name],25),:controller=>'category', :action=>'show',:id=>b[:id]
+      link = link_to truncate(b[:name], 25), :controller => 'category', :action => 'show', :id => b[:id]
       if b[:children].size > 0
         code << "<li id=\"branch_#{b[:id]}\">#{link}\n\r" 
         code << "<ul>#{parse_tree(b[:children])}</ul></li>\n\r"
@@ -56,10 +52,10 @@ module ApplicationHelper
   # model The model, which this tree effects
   # many_object, the object which, the branches of the tree represent
   # model_attribte, if single_select is true then the branches represent this attribute and the variety of values it can be set to.
-  def parse_selectable_tree(branches,opts={:single_select=>false,:unselect_method=>'unselect',:model=>nil,:many_object=>nil,:model_attribute=>nil})
+  def parse_selectable_tree(branches, opts = { :single_select => false, :unselect_method => 'unselect', :model => nil, :many_object => nil, :model_attribute => nil })
      code = ""
      branches.each do |b|
-       #used to toggle on and off the checkbox graphic
+       # Used to toggle on and off the checkbox graphic
        if opts[:single_select]
          name = "#{opts[:model]}[#{opts[:model_attribute]}]"
        else
@@ -68,8 +64,8 @@ module ApplicationHelper
         onclick_method = "#{opts[:unselect_method]}(#{b[:id]});"
        
        link = %{<input type='checkbox' style="display:none;" name="#{name}" value="#{b[:id]}" id="branch_checkbox_#{b[:id]}" />} 
-       link << image_tag('icons/tick.png',{:style=>"display:none",:id=>"tick_#{b[:id]}"})
-       link << link_to(truncate(b[:name],25),"#checkbox_#{b[:id]}",{:onclick=>onclick_method})
+       link << image_tag('icons/tick.png', { :style => "display:none", :id => "tick_#{b[:id]}" })
+       link << link_to(truncate(b[:name], 25), "#checkbox_#{b[:id]}", { :onclick => onclick_method })
        if b[:children].size > 0
          code << "<li id=\"selectable_branch_#{b[:id]}\">#{link}\n\r" 
          code << "<ul>#{parse_selectable_tree(b[:children],opts)}</ul></li>\n\r"
@@ -79,13 +75,12 @@ module ApplicationHelper
      code
   end
   
-  
   def admin_only_content
     yield if current_user.is_admin?
   end
   
   def display_as_round_box(&block)
-    out =""
+    out = ""
     out << %{
     <div class="roundBox">
     	<div class="topRightCorner"><div class="topLeftCorner"></div></div>
@@ -96,19 +91,16 @@ module ApplicationHelper
       </div>}
     out
   end
-
   
-  def link_to_if_editable(name,options={},html_options=nil,*parameters_for_method_reference)
+  def link_to_if_editable(name,options = {}, html_options = nil, *parameters_for_method_reference)
     if current_user.is_admin?
-      url = link_to name,options,html_options,*parameters_for_method_reference
+      url = link_to name, options, html_options, *parameters_for_method_reference
     end
   end
-
 
   def sort_arrow(sort)
     !sort.nil? ? sort == 'asc' ? '&uarr;' : '&darr;' : ''
   end
-
 
   def sort_header(opts = {})
     title = opts[:title]

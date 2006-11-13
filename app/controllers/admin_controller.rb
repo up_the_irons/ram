@@ -7,7 +7,7 @@ class AdminController
   
   observer :group_observer, :change_observer, :category_observer
 
-  volatile = [:destroy_group, :create_group, :update_group, :destroy_category, :create_category, :update_category ]
+  volatile = [:destroy_group, :create_group, :update_group, :destroy_category, :create_category, :update_category]
   before_filter :admin_access_required
   
   verify :method => :post, :only =>volatile, :redirect_to => { :action => :dashboard }
@@ -76,9 +76,9 @@ class AdminController
         params[:user][:group_ids].map{ | g | groups << Group.find(g)}
         params[:user].delete('group_ids')
         @user.groups = groups
-        @user = User.find(@user.id) #force the reload TODO: rework this so you don't have to find the record twice.
+        @user = User.find(@user.id) # Force the reload.  TODO: Rework this so you don't have to find the record twice.
       end
-      #TODO: Find a way to make this more dry.
+      # TODO: Find a way to make this more dry.
       if @user.update_attributes(params[:user]) && @user.person.update_attributes(params[:person]) &&  @user.profile.update_attributes(params[:profile])
         @profile = @user.profile
         @person  = @user.person 
@@ -89,7 +89,6 @@ class AdminController
         flash[:notice] = "There was an error saving your information."
       end 
     end
-    #render 'account/edit'
   end
   
   def show_user

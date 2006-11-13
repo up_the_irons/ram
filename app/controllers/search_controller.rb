@@ -9,6 +9,7 @@ class SearchController < ProtectedController
     categories
     groups
     articles
+
     # Reset these module params (note: the modules should take care of this automatically at some point)
     params[:sort] = params[:sort_dir] = params[:page] = nil
 
@@ -26,7 +27,6 @@ class SearchController < ProtectedController
 
     conditional_render
   end
-  
   
   def articles
     @articles = current_user.articles_search(params[:id], @order)

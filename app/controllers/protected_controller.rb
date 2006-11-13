@@ -1,12 +1,7 @@
 class ProtectedController < ApplicationController
-  #before_filter :set_current_user
   before_filter :login_required, :except => [ :category, :login, :signup, :create_profile, :forgot_password, :login_as, :create_en_masse, :google]
   
-  #def set_current_user
-  #  User.current = session[:user]
-  #end
-  
-  #helper methods for scope relative searches
+  # Helper methods for scope relative searches
   def find_in_users_groups(id)
     g = Group.find(id)
     return g if current_user.groups.include? g
@@ -17,13 +12,13 @@ class ProtectedController < ApplicationController
     return c if current_user.categories.include? c
   end
   
-  def create_avatar(user_id,data)
+  def create_avatar(user_id, data)
     avatar = Avatar.find_by_user_id(user_id)
     if avatar
       avatar.uploaded_data = data
       avatar.save
     else
-      avatar = Avatar.create({:user_id=>user_id, :uploaded_data=>data})
+      avatar = Avatar.create({ :user_id => user_id, :uploaded_data => data })
     end
     avatar
   end

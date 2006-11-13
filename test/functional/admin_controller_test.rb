@@ -1,4 +1,5 @@
 module IncludedTests; end
+
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/admin_controller_test/group_methods_test'
 require File.dirname(__FILE__) + '/admin_controller_test/category_methods_test'
@@ -21,7 +22,7 @@ class AdminControllerTest < Test::Unit::TestCase
     @existing_category_id = 8
     @user_with_access_to_all_categories = 1
     @user_with_access_to_no_categories  = 7
-    login_as :quentin #has admin_rights
+    login_as :quentin # Has admin_rights
   end
   
   def test_shall_redirect_to_index_when_a_non_admin_accesses_controller

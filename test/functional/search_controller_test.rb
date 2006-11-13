@@ -14,7 +14,7 @@ class SearchControllerTest < Test::Unit::TestCase
   end
 
   def test_search_all_for_user
-    login_as :user_4 # nolan bushnell
+    login_as :user_4 # Nolan bushnell
 
     post :all, :id => 'nes'
     assert :success
@@ -38,7 +38,7 @@ class SearchControllerTest < Test::Unit::TestCase
   end
 
   def test_search_all_for_user2
-    login_as :quentin # admin
+    login_as :quentin # Admin
     post :all, :id => 'nes'
     assert :success
     assert a = assigns['assets']

@@ -83,7 +83,7 @@ module IncludedTests::GroupMethodsTest
     
     new_categories = (users(:quentin).categories - c.categories).map{|cat| cat.id}
     assert new_categories.size > 0
-    #remove all but one user, and remove all the categories
+    # Remove all but one user, and remove all the categories
     event_count_before = Event.count
     post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id],:category_ids=>[]}
     assert_response :success
@@ -92,7 +92,7 @@ module IncludedTests::GroupMethodsTest
     assert_equal event_count_before + 2, Event.count
     
     users = User.find(:all) - c.members
-    #add new members and new categories
+    # Add new members and new categories
     event_count_before = Event.count
     post :edit_group, :id=>c.id, :group=>{:user_ids=>[c.users[0].id, users[0].id],:category_ids=>new_categories}
     assert_equal c.users(true).size, 2

@@ -14,7 +14,8 @@
 
 class Avatar < ActiveRecord::Base
   belongs_to :user
-  acts_as_attachment :content_type => :image, :resize_to => [100,100]
+
+  acts_as_attachment :content_type => :image, :resize_to => [100, 100]
   validates_as_attachment
   
   # Read from the model's attributes if it's available.

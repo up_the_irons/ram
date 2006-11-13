@@ -20,20 +20,22 @@ class Category < Collection
 
   include TagMethods
 
-  has_many :children, :class_name=>'Collection',:foreign_key=>'parent_id' do
+  has_many :assets, :order => 'updated_on DESC'
+  has_many :articles, :order => 'published_at DESC'
+  has_many :memberships, :foreign_key => :collection_id
+  has_many :linkings
+ 
+  has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+        'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Category" ORDER BY c.created_at'
+
+  has_many :children, :class_name => 'Collection', :foreign_key => 'parent_id' do
     def << (category)
       return if @owner.children.include?category
       @owner.children << category
     end
   end
-  has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
-        'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Category" ORDER BY c.created_at'
-  
-  has_many :memberships, :foreign_key=>:collection_id
-  
-  has_many :linkings
-  
-  has_many :groups, :through =>:linkings, :select => "DISTINCT collections.*", :foreign_key=>:group_id do
+
+  has_many :groups, :through => :linkings, :select => "DISTINCT collections.*", :foreign_key=>:group_id do
     def <<(group)
       return if @owner.groups.include?group
 
@@ -46,23 +48,18 @@ class Category < Collection
     end  
   end
   
-  has_many :assets, :order=>'updated_on DESC'
-  has_many :articles, :order=>'published_at DESC'
-
   def contents
     [articles,assets]
   end
   
-  
   def remove_all_groups
-    self.groups.each do| m | 
+    self.groups.each do |m| 
       remove_group(m)
     end
   end
-  
 
   def remove_group(group)
-    linking =Linking.find_by_category_id_and_group_id(self.id, group.id)
+    linking = Linking.find_by_category_id_and_group_id(self.id, group.id)
     linking.destroy if linking.valid?
     callback(:after_save)
   end
@@ -74,10 +71,10 @@ class Category < Collection
   end
 
   validates_presence_of   :user_id, :name
-  validates_uniqueness_of :name, :scope=>:parent_id
+  validates_uniqueness_of :name, :scope => :parent_id
   
-  # Todo after create automatically add this category to the administrators group.
-  # Todo after create automatically add this category to the user group list if none is supplied || allow users to see categories where they are the owner.. even if they don't belong to a group containing that category.
+  # TODO: After create automatically add this category to the administrators group.
+  # TODO: After create automatically add this category to the user group list if none is supplied || allow users to see categories where they are the owner.. even if they don't belong to a group containing that category.
   def validate
     errors.add_to_base "The category cannot specify itself as the parent" if parent_id == id and !new_record?
     errors.add_to_base "The category must belong to at least one group" if groups.empty? and !new_record?

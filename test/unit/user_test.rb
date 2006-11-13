@@ -4,6 +4,7 @@ class UserTest < Test::Unit::TestCase
   # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead.
   # Then, you can remove it from this and the functional test.
   include AuthenticatedTestHelper
+
   fixtures :users, :tags, :collections, :memberships, :linkings, :event_subscriptions, :attachments, :taggings
 
   def test_should_associate_groups
@@ -14,7 +15,6 @@ class UserTest < Test::Unit::TestCase
 
     u.groups << Collection.find(1)
     assert_equal s+1, u.groups(true).size
-
   end
   
   def test_pending_memberships
@@ -34,7 +34,7 @@ class UserTest < Test::Unit::TestCase
   # end
   
   def test_should_only_count_unique_categories_in_category_list
-    #this user has access to all categories and has redundent memberships though several groups 
+    # This user has access to all categories and has redundent memberships though several groups 
     u = User.find(1)
     s = 0
     u.groups.map{|g| s += g.categories.size unless g.categories.empty? }
@@ -81,12 +81,12 @@ class UserTest < Test::Unit::TestCase
     admin = users(:quentin)
     user  = users(:user_4) 
     user.assets << an_asset({:user_id=>user.id})
-    #admins can edit anything
+    # Admins can edit anything
     assert admin.can_edit?(user.assets[0])
     assert admin.can_edit?(user.groups[0])
     assert admin.can_edit?(user.categories[0])
     
-    #users can edit only the items they create not the items they belong to.
+    # Users can edit only the items they create not the items they belong to.
     assert_equal false, user.can_edit?(user.groups[0])
     assert_equal false, user.can_edit?(user.categories[0])
     assert_equal false, user.can_edit?(admin.assets[0])

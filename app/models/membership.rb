@@ -8,17 +8,6 @@
 #  created_at          :datetime      
 #
 
-# Schema as of Fri Oct 27 16:48:28 PDT 2006 (schema version 21)
-#
-#  id                  :integer(11)   not null
-#  user_id             :integer(11)   
-#  collection_id       :integer(11)   
-#  collection_type     :string(255)   
-#  state_id            :integer(11)   default(0)
-#  created_at          :datetime      
-#
-
-
 class Membership < ActiveRecord::Base
   belongs_to :user,  :foreign_key => 'user_id'
   belongs_to :group, :foreign_key => 'collection_id', :class_name => 'Group',

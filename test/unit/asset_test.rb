@@ -14,7 +14,7 @@ class AssetTest < Test::Unit::TestCase
   		}
   end
 
-  #test based on the acts_as_attachment test examples
+  # Test based on the acts_as_attachment test examples
   def test_should_create_image_from_uploaded_file
     assert_created Asset do
       attachment = upload_file :filename => '../fixtures/images/rails.png'
@@ -40,7 +40,7 @@ class AssetTest < Test::Unit::TestCase
   end
   
   def test_assets_shall_not_belong_to_the_same_group_twice
-    #todo: this silently fails would be good to bubble up some errors
+    # TODO: This silently fails would be good to bubble up some errors
     a = Asset.find(:first)
     assert_no_difference a.groups, :count do
       a.groups << a.groups.find(:first)
@@ -49,7 +49,7 @@ class AssetTest < Test::Unit::TestCase
   
   def test_destroying_an_asset_shall_destroy_their_linkings
     
-    #test fixtures contain 11 linkings so once deleted the linking count should be reduced by 11
+    # Test fixtures contain 11 linkings so once deleted the linking count should be reduced by 11
     assert_difference Linking, :count, -11 do
       Asset.find(:all). each do |a|
         a.destroy()
@@ -75,36 +75,37 @@ class AssetTest < Test::Unit::TestCase
   
   # Taken from the attachment_test.rb file that ships with acts_as_attachment
   protected
-    def upload_file(options = {})
-      att = (options[:class] || Attachment).create :uploaded_data => fixture_file_upload(options[:filename], options[:content_type] || 'image/png')
-      att.reload unless att.new_record?
-      att
-    end
-    
-    def assert_created(klass = Attachment, num = 1)
-      assert_difference klass, :count, num do
-        if klass.included_modules.include? DbFile
-          assert_difference DbFile, :count, num do
-            yield
-          end
-        else
+  
+  def upload_file(options = {})
+    att = (options[:class] || Attachment).create :uploaded_data => fixture_file_upload(options[:filename], options[:content_type] || 'image/png')
+    att.reload unless att.new_record?
+    att
+  end
+  
+  def assert_created(klass = Attachment, num = 1)
+    assert_difference klass, :count, num do
+      if klass.included_modules.include? DbFile
+        assert_difference DbFile, :count, num do
           yield
         end
-      end
-    end
-    
-    def assert_not_created
-      assert_created Attachment, 0 do
+      else
         yield
       end
     end
-    
-    def should_reject_by_size_with(klass)
-      assert_not_created do
-        attachment = upload_file :class => klass, :filename => '/files/rails.png'
-        assert attachment.new_record?
-        assert attachment.errors.on(:size)
-        assert_nil attachment.db_file if attachment.respond_to?(:db_file)
-      end
+  end
+  
+  def assert_not_created
+    assert_created Attachment, 0 do
+      yield
     end
+  end
+  
+  def should_reject_by_size_with(klass)
+    assert_not_created do
+      attachment = upload_file :class => klass, :filename => '/files/rails.png'
+      assert attachment.new_record?
+      assert attachment.errors.on(:size)
+      assert_nil attachment.db_file if attachment.respond_to?(:db_file)
+    end
+  end
 end

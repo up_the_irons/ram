@@ -28,8 +28,10 @@
 # Used from the attachment class as part of acts_as_attachment
 class Attachment < ActiveRecord::Base  
   before_validation :sanitize_path_if_available
+
   #validates_uniqueness_of :filename, :scope => [:path, :site_id]
   #TODO: Validate_uniqueness with a scope around an access_context
+  
   acts_as_attachment
 
   class << self    
@@ -73,6 +75,7 @@ class Attachment < ActiveRecord::Base
   #end
 
   protected
+
   def sanitize_path_if_available
     self.path.gsub!(/^\/+|\/+$/, '') unless path.blank?
   end

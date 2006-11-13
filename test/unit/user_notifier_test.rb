@@ -16,17 +16,19 @@ class UserNotifierTest < Test::Unit::TestCase
     @expected.set_content_type "text", "plain", { "charset" => CHARSET }
   end
   
-  #TODO: Test!
+  # TODO: Test!
   def test_stub
   	assert_equal true, true
   end	
 	
   private
-    def read_fixture(action)
-      IO.readlines("#{FIXTURES_PATH}/user_notifier/#{action}")
-    end
 
-    def encode(subject)
-      quoted_printable(subject, CHARSET)
-    end
+  def read_fixture(action)
+    IO.readlines("#{FIXTURES_PATH}/user_notifier/#{action}")
+  end
+
+  def encode(subject)
+    quoted_printable(subject, CHARSET)
+  end
+
 end

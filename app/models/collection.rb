@@ -27,10 +27,9 @@ class Collection < ActiveRecord::Base
   def dont_delete_permanent_collections
     raise "You cannot delete this." if self.permanent
   end
-  
 
   def state
-    self.class.states[self.state_id]
+    self.class.states[state_id]
   end
     
   BOOLEAN = [true, false] 

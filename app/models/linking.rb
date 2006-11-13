@@ -10,7 +10,6 @@
 #  updated_on          :datetime      
 #
 
-
 class Linking < ActiveRecord::Base
   belongs_to :user,     :foreign_key => 'user_id' 
   belongs_to :group,    :foreign_key => 'group_id',    :class_name => 'Group'
@@ -20,22 +19,20 @@ class Linking < ActiveRecord::Base
   belongs_to :linkable, :polymorphic => true
   
   def join(opts)
-      linking = {:user_id=>nil,:category_id=>nil,:group_id=>nil,:linkable_id=>nil,:linkable_type=>nil}.merge(opts)
-      if self.new_record?
-        self.create(linking)
-      else
-        self.attributes.merge(opts)
-        self.save!
-      end
+    linking = { :user_id => nil, :category_id => nil, :group_id => nil, :linkable_id => nil, :linkable_type => nil }.merge(opts)
+    if self.new_record?
+      self.create(linking)
+    else
+      self.attributes.merge(opts)
+      self.save!
+    end
   end
   
   def break(linking)
-  
   end
   
   def break_all(linking)
-  
   end
   
-  validates_uniqueness_of :linkable_id, :scope => [:group_id,:category_id,:linkable_type], :message=>'already added.'
+  validates_uniqueness_of :linkable_id, :scope => [:group_id, :category_id, :linkable_type], :message => 'already added.'
 end

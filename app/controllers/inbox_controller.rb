@@ -1,15 +1,17 @@
 class InboxController < ProtectedController
   include FeedReader
+
   def index
     inbox
   end
   
   def inbox
-    @feeds =[]
+    @feeds    = []
     @messages = []
-    # We need to store the feed's id in the hash because the RSS instance's id will map to an internal memory
+
+    # We need to store the feed's ID in the hash because the RSS instance's ID will map to an internal memory
     # location not an active record object.
-    current_user.feeds.map{|f| @feeds << {:feed=>RSS::Parser.parse(f.data,false),:id=>f.id} if f.is_local}
+    current_user.feeds.map{ |f| @feeds << { :feed => RSS::Parser.parse(f.data, false), :id => f.id } if f.is_local }
     @feeds.each do |feed_hash|
       feed_hash[:feed].channel.items.each_with_index do |i,index|
         # Format the feed items like messages so that they can be displayed in the inbox.
@@ -17,10 +19,10 @@ class InboxController < ProtectedController
         # because the feed item gets a "new" id each time it is loaded unfortunately.
         id = "#{feed_hash[:id]}__#{index}"
         @messages << OpenStruct.new(
-                    :body=>i.description,
-                    :subject=> i.title,
-                    :created_at=>i.pubDate,
-                    :params=>{:message_type=>'Feed',:controller=>'inbox',:action=>'read_feed_item',:id=>id}
+                    :body => i.description,
+                    :subject => i.title,
+                    :created_at => i.pubDate,
+                    :params => { :message_type => 'Feed', :controller => 'inbox', :action => 'read_feed_item', :id => id }
                     )
       end
     end
@@ -38,7 +40,8 @@ class InboxController < ProtectedController
     end
     
     @feed = Feed.new unless @feed
-    return unless request.post? # Get cannot do anything below this point
+    return unless request.post? # GET cannot do anything below this point
+
     unless params[:feed].nil?
       @feed.update_attributes params[:feed] 
       current_user.feeds << @feed if @feed.valid?
@@ -58,21 +61,21 @@ class InboxController < ProtectedController
   end
   
   def read_article
-    url = current_user.feeds.map{|f| f.url}[params[:channel_id].to_i]
-    @item = feed_item(url,params[:item_id])
+    url = current_user.feeds.map{ |f| f.url }[params[:channel_id].to_i]
+    @item = feed_item(url, params[:item_id])
+
     respond_to do |wants|     
       wants.html do
       end 
-      #render inline RJS as responce
+      # Render inline RJS as response
       wants.js do 
         render :update do |page|
-          #TODO replace the onclick handler so that we don't have to load the messages again
-          page.replace_html(params[:update],  :partial=>'feed_item',:locals=>{:item=>@item})
+          # TODO: Replace the onclick handler so that we don't have to load the messages again
+          page.replace_html(params[:update],  :partial => 'feed_item', :locals => { :item => @item })
         end
       end
     end
   end
-  
   
   def subscribe_feed
     if request.post?
@@ -84,26 +87,26 @@ class InboxController < ProtectedController
         flash[:error] = "There was an error creating your subscription."
       end
     end
-    redirect_to :action=>'inbox'
+    redirect_to :action => 'inbox'
   end
   
   def read_feed
-    redirect_to(:controller=>'inbox', :action=>'inbox') and return false unless params[:id]
+    redirect_to(:controller => 'inbox', :action => 'inbox') and return false unless params[:id]
     begin
       @feed = Feed.find(params[:id])
       @data = RSS::Parser.parse(@feed.data,false) if @feed.is_local
     rescue
       flash[:error] = "Could not find feed."
-      redirect_to(:controller=>'inbox', :action=>'inbox') and return false unless @feed
+      redirect_to(:controller => 'inbox', :action => 'inbox') and return false unless @feed
     end
     @messages = []
     @data.channel.items.each do |i|
       # Format the feed items like messages so that they can be displayed in the inbox.
       @messages << OpenStruct.new(
-          :body=>i.description,
-          :subject=> i.title,
-          :id=>@data.id,
-          :created_at=>i.pubDate
+          :body => i.description,
+          :subject => i.title,
+          :id => @data.id,
+          :created_at => i.pubDate
       )
     end
     @messages
@@ -117,29 +120,28 @@ class InboxController < ProtectedController
     arr = params[:id].split("__")
     
     current_user.feeds.map{|f| @feed = f if f.id == arr[0].to_i }
-    @rss = RSS::Parser.parse(@feed.data,false) if @feed.is_local
+    @rss = RSS::Parser.parse(@feed.data, false) if @feed.is_local
     id = arr[1].to_i
     @item = @rss.items[id]
 
     # convert the format of the RSS item into a "post", which the template wants.
     @post = OpenStruct.new(
-      :id=>id,
-      :author=>"System Message",
-      :typeof=>'Feed',
-      :body=>@item.description,
-      :created_at=>@item.pubDate.strftime("%m/%d/%Y")
+      :id => id,
+      :author => "System Message",
+      :typeof => 'Feed',
+      :body => @item.description,
+      :created_at => @item.pubDate.strftime("%m/%d/%Y")
     ) if @item
 
     render :update do |page|
       page.toggle       "message_body_container_#{params[:id]}"
-      page.replace_html "message_body_#{params[:id]}", :partial => 'shared/post', :locals=>{:post=>@post}
+      page.replace_html "message_body_#{params[:id]}", :partial => 'shared/post', :locals => { :post => @post }
 
       # Replace the onclick handler that got us here with a simple element toggler. We already have the msg
       # body loaded, so we don't need to call this action again.
       page << "$(Content.cache.push($('message_body_container_#{params[:id]}')))"
     end if @post
   end
-  
   
   def unsubscribe_feed
     begin

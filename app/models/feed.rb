@@ -8,7 +8,9 @@
 #  is_local            :boolean(1)    default(true)
 #  local_path          :string(255)   
 #
+
 require 'rss/2.0'
+
 class Feed < ActiveRecord::Base
   acts_as_subscribable
   
@@ -25,7 +27,8 @@ class Feed < ActiveRecord::Base
   end
   
   protected
-  def create_rss_from(path="")
+
+  def create_rss_from(path = "")
     path_parts = local_path.split('/')
     id = path_parts.pop
     klass = path_parts.pop.classify.constantize
@@ -36,7 +39,6 @@ class Feed < ActiveRecord::Base
     chan.description = @model.description
     chan.link = local_path
     rss.channel = chan
-    # breakpoint
     contents = []    
     contents << @model.changes if @model.respond_to?('changes')
     contents = contents.flatten
@@ -69,6 +71,6 @@ class Feed < ActiveRecord::Base
     end
   end
   
-  validates_presence_of :name
-  validates_uniqueness_of :name, :scope=> :url
+  validates_presence_of   :name
+  validates_uniqueness_of :name, :scope => :url
 end
