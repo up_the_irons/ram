@@ -1,3 +1,13 @@
+#--
+# $Id$
+#
+# Copyright (c) 2006 Mark Daggett & Garry Dolley
+#
+# This file is part of RAM (Ruby Asset Manager) 
+# 
+# Released under the MIT / X11 License.  See LICENSE file for details.
+#++
+
 # TODO: It would be a good idea to allow the opts hash to take a string or a proc for keys like :on_success and :on_failure.
 # providing this would allow you to do something more ellaborate than just display a status message.
 

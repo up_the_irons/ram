@@ -1,3 +1,13 @@
+#--
+# $Id$
+#
+# Copyright (c) 2006 Mark Daggett & Garry Dolley
+#
+# This file is part of RAM (Ruby Asset Manager) 
+# 
+# Released under the MIT / X11 License.  See LICENSE file for details.
+#++
+
 class ProtectedController < ApplicationController
   before_filter :login_required, :except => [ :category, :login, :signup, :create_profile, :forgot_password, :login_as, :create_en_masse, :google]
   
