@@ -7,7 +7,7 @@ class CreateDefaultAdminUser < ActiveRecord::Migration
       e = EventSubscription.new
       e.user = u
       e.event_trigger = EventTrigger.find_by_code(code)
-      e.save
+      e.save!
     end
 
     u.person.first_name = "Administrator"
