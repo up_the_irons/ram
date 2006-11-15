@@ -38,6 +38,8 @@ class AssetController < ProtectedController
   
   def show_inline
     @asset = current_user.assets_search({:id=>params[:id]})[0]
+    thumb = @asset.thumbnail_size(params[:thumbnail]) if @asset and params[:thumbnail]
+    @asset = thumb if thumb
     send_data @asset.data, :filename => @asset.filename, :type => @asset.content_type, :disposition => 'inline'
   end
 
