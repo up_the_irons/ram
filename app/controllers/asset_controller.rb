@@ -16,8 +16,8 @@ class AssetController < ProtectedController
   @@asset_404 = "The asset could not be found."    
 
   def show
-    
     @asset = current_user.assets_search({:id=>params[:id]})[0]
+    
     if @asset
       redirect_to :action=>'download',:id=>@asset.filename unless @asset.image?
     else

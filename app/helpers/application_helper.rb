@@ -31,7 +31,7 @@ module ApplicationHelper
   def display_as(asset, opts = { :size => "medium" })
     case asset.content_type
       when 'image/jpeg','image/jpg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png'
-        unless asset.thumbnail_size(opts[:size]).nil?
+        unless asset.thumbnail_size(opts[:size]).nil? || !asset.thumbnail_size(opts[:size])
           return "#{image_tag(url_for(:controller=>'asset', :action=>'show_inline', :id=>asset.thumbnail_size(opts[:size]))) }"
         else
           return "#{image_tag(url_for(:controller=>'asset', :action=>'show_inline', :id=>asset.id)) }"
