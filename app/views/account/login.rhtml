@@ -13,9 +13,10 @@
 <%= submit_tag 'Log in' ,{:class=>'submit'}%> <%= link_to "Forgot your password?", :controller=>'account', :action=>'forgot_password' %></li>
 </ul>
 <%= end_form_tag %>
-<%=
+<%
 #added for testing before launch (obviously)
-%>
+if RAILS_ENV == 'development' 
+-%>
 <ul class="login_form">
   <li>Or for testing purposes log in as a pre-existing user</li>
 	<li><label for="login_as">login as:</label>
@@ -24,4 +25,5 @@
 		<%= options_for_select User.find(:all).map{|u| [u.login,u.id]} %>
 	</li>
 </ul>
+<% end -%>
 <br class="clear_both" />

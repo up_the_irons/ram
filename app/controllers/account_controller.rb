@@ -125,6 +125,7 @@ class AccountController < ProtectedController
   end
   
   def login_as
+    redirect_to :action=>'login' and return false unless RAILS_ENV == 'development' 
     self.current_user = User.find(params[:user_id])
     if current_user.account_active?
       after_login
