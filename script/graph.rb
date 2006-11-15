@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# As seen on Matt Biddulph's site: http://www.hackdiary.com/archives/000093.html
 require "config/environment"
 Dir.glob("app/models/*rb") { |f|
     require f
