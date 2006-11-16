@@ -141,6 +141,7 @@ class AssetController < ProtectedController
     raise if request.get?
     @asset = find_asset_by params[:id]
     raise if @asset.nil?
+    raise unless @asset.user_id == current_user.id || current_user.is_admin?
     @category = Category.find(@asset.category_id)
     raise unless accessible_items(@category,'assets',current_user.groups).include?(@asset)
     raise unless @asset.destroy

@@ -116,6 +116,7 @@ class AssetControllerTest < Test::Unit::TestCase
   end
     
   def test_shall_prevent_deletes_without_access
+    # This test also covers when a user tries to delete an asset, which they did not upload and they are not an admin.
     @a = @user.assets[0]
     login_as :user_without_group_memberships
     assert_no_difference Asset, :count do
