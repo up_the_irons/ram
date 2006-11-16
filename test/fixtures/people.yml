@@ -10,18 +10,6 @@
 #  updated_on          :datetime      
 #
 
-# Schema as of Sun Jun 04 11:25:18 PDT 2006 (schema version 6)
-#
-#  id                  :integer(11)   not null
-#  user_id             :integer(11)   
-#  first_name          :string(200)   default()
-#  last_name           :string(200)   default()
-#  gender              :integer(11)   default(0), not null
-#  date_of_birth       :date          
-#  created_on          :datetime      
-#  updated_on          :datetime      
-#
-
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 people_4:
@@ -33,15 +21,6 @@ people_4:
   date_of_birth: <%= 6000.days.ago.to_s :db %>
   created_on: <%= 2.days.ago.to_s :db %>
   updated_on: <%= 2.days.ago.to_s :db %>
-people_5:
-  id: 2
-  user_id: 5
-  first_name: Minoru
-  last_name: Arkawa
-  gender: 1
-  date_of_birth: <%= 4000.days.ago.to_s :db %>
-  created_on: <%= 2.days.ago.to_s :db %>
-  updated_on: <%= 2.days.ago.to_s :db %>
 people_1:
   id: 3
   user_id: 1
@@ -51,34 +30,30 @@ people_1:
   date_of_birth: <%= 10000.days.ago.to_s :db %>
   created_on: <%= 2.days.ago.to_s :db %>
   updated_on: <%= 2.days.ago.to_s :db %>
-people_2:
+people_8:
+  id: 2
+  user_id: 7
+  first_name: No Membership
+  last_name: User
+  gender: 1
+  date_of_birth: <%= 10000.days.ago.to_s :db %>
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
+people_8:
   id: 4
-  user_id: 2
-  first_name: Yuji
-  last_name: Naka
+  user_id: 8
+  first_name: Pending
+  last_name: User
   gender: 1
-  date_of_birth: <%= 5500.days.ago.to_s :db %>
+  date_of_birth: <%= 10000.days.ago.to_s :db %>
   created_on: <%= 2.days.ago.to_s :db %>
   updated_on: <%= 2.days.ago.to_s :db %>
-people_6:
+people_9:
   id: 5
-  user_id: 6
-  first_name: Ralph
-  last_name: Baer
+  user_id: 9
+  first_name: Suspended
+  last_name: User
   gender: 1
-  date_of_birth: <%= 7500.days.ago.to_s :db %>
+  date_of_birth: <%= 10000.days.ago.to_s :db %>
   created_on: <%= 2.days.ago.to_s :db %>
-  updated_on: <%= 2.days.ago.to_s :db %>
-people_3:
-  id: 6
-  user_id: 3
-  first_name: Mark
-  last_name: Daggett
-  gender: 1
-  date_of_birth: <%= 3100.days.ago.to_s :db %>
-  created_on: <%= 2.days.ago.to_s :db %>
-  updated_on: <%= 2.days.ago.to_s :db %>
-
-
-
-
+  updated_on: <%= 2.days.ago.to_s :db %>  

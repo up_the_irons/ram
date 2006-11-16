@@ -29,6 +29,12 @@ administrator:
   user_id: 1
   created_on: <%= 2.days.ago.to_s :db %>
   updated_on: <%= 2.days.ago.to_s :db %>
+user_without_group_memberships:
+  id: 6
+  user_id: 7
+  bio: ""
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
 pending_user:
   id: 7
   user_id: 8
