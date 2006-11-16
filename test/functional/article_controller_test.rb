@@ -16,10 +16,10 @@ class ArticleControllerTest < Test::Unit::TestCase
     @excerpt = "To whom it may concern"
     @body    = "To whom it may concern, I am writing to enquire about the vintage computer space stand-up, which was used in the movie Solient Green. It is still for sale?"
 
-    login_as :quentin
+    login_as :administrator
 
     @current_user = User.find(@request.session[:user])
-    @another_user = users(:ralph_baer)
+    @another_user = users(:normal_user)
   end
   
   def test_create_article
@@ -80,14 +80,14 @@ class ArticleControllerTest < Test::Unit::TestCase
   end
   
   def test_link_article_to_groups
-    post :write, :article=>article_params.merge({:group_ids=>users(:quentin).groups.map{|g|g.id} })
+    post :write, :article=>article_params.merge({:group_ids=>users(:administrator).groups.map{|g|g.id} })
     assert_redirected_to :action=>'write', :id=>assigns(:article).id
-    assert_equal assigns(:article).groups.size, users(:quentin).groups.size
+    assert_equal assigns(:article).groups.size, users(:administrator).groups.size
   end
   
   def test_delete_article_remove_linkings_to_groups
-    login_as :quentin
-    post :write, :article=>article_params.merge({:group_ids=>users(:quentin).groups.map{|g|g.id} })
+    login_as :administrator
+    post :write, :article=>article_params.merge({:group_ids=>users(:administrator).groups.map{|g|g.id} })
     @a = assigns(:article)
     @groups = assigns(:article).groups
     assert @groups.size > 1
@@ -106,20 +106,20 @@ class ArticleControllerTest < Test::Unit::TestCase
   end
   
   def test_article_shall_belong_to_only_unique_groups
-    post :write, :article=>article_params.merge({:group_ids=>users(:quentin).groups.map{|g|g.id} })
+    post :write, :article=>article_params.merge({:group_ids=>users(:administrator).groups.map{|g|g.id} })
     assert_redirected_to :action=>'write', :id=>assigns(:article).id
-    assert_equal assigns(:article).groups.size, users(:quentin).groups.size
+    assert_equal assigns(:article).groups.size, users(:administrator).groups.size
     orig_size = assigns(:article).groups.size
-    post :write, :id=>assigns(:article).id, :article=>article_params.merge({:group_ids=>users(:quentin).groups.map{|g|g.id} })
+    post :write, :id=>assigns(:article).id, :article=>article_params.merge({:group_ids=>users(:administrator).groups.map{|g|g.id} })
     assert_equal assigns(:article).groups.size, orig_size
   end
   
   # This should probably be an integration test.
   def test_users_shall_not_see_article_unless_they_have_access_though_groups
     # Login and get an article of this user
-    login_as :user_4
+    login_as :normal_user
 
-    user = users(:user_4)
+    user = users(:normal_user)
     assert_equal false, user.is_admin?
     a = an_article(:user_id=>user.id, :category_id=>user.categories[0].id, :published_at=>Time.now.to_s)
     assert(a.valid?)
@@ -176,23 +176,23 @@ class ArticleControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_not_edit_articles_without_ownership
-    login_as :user_4
-    a = users(:quentin).articles[0]
+    login_as :normal_user
+    a = users(:administrator).articles[0]
     post :write, :id=>a.id, :article=>{:title=>'don\'t change a thing'}
     assert assigns(:article).new_record?
     assert assigns(:flash)[:notice] = 'Could not find article'
   end
   
   def test_shall_not_view_articles_without_access
-    login_as :user_4
-    a = users(:quentin).articles[0]
+    login_as :normal_user
+    a = users(:administrator).articles[0]
     get :read, :id=>a.id
     assert_redirect :controller=>'inbox'
     assert_equal "Could not find article.", assigns(:flash)[:notice]
   end
   
   def test_delete_article
-    @a = an_article({:user_id=>users(:quentin).id})
+    @a = an_article({:user_id=>users(:administrator).id})
     post :shred, :id=>@a.id
     assert assigns(:flash)[:notice] = 'Your Article was deleted.'
     assert_raise(ActiveRecord::RecordNotFound) do
@@ -201,43 +201,43 @@ class ArticleControllerTest < Test::Unit::TestCase
   end
   
   def test_non_published_articles_are_not_viewable_except_to_author_or_admin
-    login_as :user_4
-    a = an_article({:user_id=>users(:user_4).id})
-    a.groups << users(:user_4).groups[0] # Ensure that there is atleast one group in common
+    login_as :normal_user
+    a = an_article({:user_id=>users(:normal_user).id})
+    a.groups << users(:normal_user).groups[0] # Ensure that there is atleast one group in common
     get :read, :id=>a.id
     assert_response :success
     assert_equal assigns(:article).title, a.title
     
     # Now switch the user and assert that the article cannot be seen.
     b = an_article({:user_id=>@another_user.id})
-    b.groups << users(:user_4).groups[0] # Ensure that there is atleast one group in common
+    b.groups << users(:normal_user).groups[0] # Ensure that there is atleast one group in common
     assert b.valid?
     get :read, :id=>b.id
     assert_redirected_to :controller=>'inbox'
   end
   
   def test_shall_prevent_on_gets
-    @a = users(:quentin).articles[0]
+    @a = users(:administrator).articles[0]
     get :shred, :id=>@a.id
     assert assigns(:flash)[:notice] = 'Could not find article'
     assert Article.find(@a.id)
   end
   
   def test_shall_prevent_deletes_without_acces
-    @a = users(:quentin).articles[0]
-    login_as :user_4
+    @a = users(:administrator).articles[0]
+    login_as :normal_user
     post :shred, :id=>@a.id
     assert assigns(:flash)[:notice] = 'Could not find article'
     assert Article.find(@a.id)
   end
   
   def test_add_comment_on_article
-    a = an_article({:allow_comments=>true,:user_id=>users(:quentin).id})
-    users(:quentin).groups.each{|g| a.groups << g}
+    a = an_article({:allow_comments=>true,:user_id=>users(:administrator).id})
+    users(:administrator).groups.each{|g| a.groups << g}
     assert a.valid?
     get :read, :id=>a.id
     assert_equal assigns(:article).title, a.title
-    post :comment_on, :id=>a.id, :comment=>{:user_id=>users(:quentin).id ,:title=>'this is total bullocks',:body=>'How can you say that "Baby-Pac" was better than "Pac-Man" you are totally wrong you n00b.'}
+    post :comment_on, :id=>a.id, :comment=>{:user_id=>users(:administrator).id ,:title=>'this is total bullocks',:body=>'How can you say that "Baby-Pac" was better than "Pac-Man" you are totally wrong you n00b.'}
     assert_redirected_to :controller=>'article',:id=>a.id
     assert assigns(:comment).valid?
     assert_equal 'this is total bullocks', assigns(:comment).title
@@ -248,7 +248,7 @@ class ArticleControllerTest < Test::Unit::TestCase
     a = an_article({:allow_comments=>false})
     get :read, :id=>a.id
     assert_equal assigns(:article).title, a.title
-    post :comment_on, :id=>a.id, :comment=>{:user_id=>users(:quentin).id ,:title=>'this is total bullocks',:body=>'How can you say that "Baby-Pac" was better than "Pac-Man" you are totally wrong you n00b.'}
+    post :comment_on, :id=>a.id, :comment=>{:user_id=>users(:administrator).id ,:title=>'this is total bullocks',:body=>'How can you say that "Baby-Pac" was better than "Pac-Man" you are totally wrong you n00b.'}
     assert_response :success
     assert_equal "Your comments were not saved.", assigns(:flash)[:notice]
     assert_equal 0, Article.find(a.id).children_count

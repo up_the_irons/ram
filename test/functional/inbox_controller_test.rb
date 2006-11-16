@@ -13,7 +13,7 @@ class InboxControllerTest < Test::Unit::TestCase
   end
 
   def test_get_index
-    login_as :quentin
+    login_as :administrator
     get :index
     assert_response :success
   end
@@ -24,15 +24,15 @@ class InboxControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_display_subscriber_feeds
-    login_as :quentin
+    login_as :administrator
     get :index
     assert assigns(:feeds)
     assert !assigns(:current_user).feeds.empty?
   end
   
   def test_shall_edit_feed
-    login_as :quentin
-    cat = users(:quentin).categories[0]
+    login_as :administrator
+    cat = users(:administrator).categories[0]
     f = a_feed    
     
     assert_no_difference Feed, :count do
@@ -51,8 +51,8 @@ class InboxControllerTest < Test::Unit::TestCase
   end
   
   def test_create_new_feed
-    login_as :quentin
-    cat = users(:quentin).categories[0]
+    login_as :administrator
+    cat = users(:administrator).categories[0]
     
     assert_difference Feed, :count do
       post :edit_feed, :feed=>{:url=>"http://#{@request.host_with_port}/feed/category/#{cat.id}",:name=>cat.name}
@@ -69,8 +69,8 @@ class InboxControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_subscribe_to_feed
-    login_as :quentin
-    u = users(:quentin)
+    login_as :administrator
+    u = users(:administrator)
     @category = u.categories[0]
     feed_url = CGI.escape("http://localhost:3000/feed/category/#{@category.id}" )
     assert_changed u.feeds, :size do
@@ -81,8 +81,8 @@ class InboxControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_not_subscribe_to_same_feed_twice
-    login_as :quentin
-    u = users(:quentin)
+    login_as :administrator
+    u = users(:administrator)
     f = u.feeds[0]
     assert_no_difference Feed, :count do
       post :subscribe_feed, :local_path=>f.local_path, :name=>f.name
@@ -91,8 +91,8 @@ class InboxControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_read_feed
-    login_as :quentin
-    u = users(:quentin)
+    login_as :administrator
+    u = users(:administrator)
     f = u.feeds[0]
     get :read_feed, :id=>f.id
     assert assigns(:messages)
@@ -101,15 +101,15 @@ class InboxControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_redirect_on_bad_feed
-    login_as :quentin
+    login_as :administrator
     get :read_feed, :id=>'-212121' # Bad Feed id.
     assert_response :redirect
     assert !assigns(:flash)[:error].empty?
   end
   
   def test_shall_unsubscribe_feed
-    login_as :quentin
-    u = users(:quentin)
+    login_as :administrator
+    u = users(:administrator)
     
     # Do not unsubscribe on get requests
     assert_unchanged u.feeds, :size do
@@ -132,8 +132,8 @@ class InboxControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_read_feed_item
-    login_as :quentin
-    u = users(:quentin)
+    login_as :administrator
+    u = users(:administrator)
     assert u.feeds.size > 0
     a_change(:user_id=>u.id, :record_id=>8, :created_at=>Time.now.to_s) # Record 8 coresponds to the feed in index 0 of the user's feeds.
     index = 0

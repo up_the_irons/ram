@@ -4,14 +4,14 @@ class MembershipTest < Test::Unit::TestCase
   fixtures :memberships, :users, :collections
 
   def test_new_membership_shows_users
-    s = User.find(5).memberships.size
-    gs = User.find(5).groups.size
+    s = User.find(4).memberships.size
+    gs = User.find(4).groups.size
     g = Group.find(3).users.size
 
-    m = Membership.create(:user_id => 5, :collection_id => 3, :collection_type => 'Group')
+    m = Membership.create(:user_id => 4, :collection_id => 3, :collection_type => 'Group')
     assert m.save
-    assert_equal s+1,  User.find(5).memberships.size
-    assert_equal gs+1, User.find(5).groups.size
+    assert_equal s+1,  User.find(4).memberships.size
+    assert_equal gs+1, User.find(4).groups.size
     assert_equal g+1,  Group.find(3).users.size
   end
   

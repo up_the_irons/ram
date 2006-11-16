@@ -8,9 +8,9 @@ class UserTest < Test::Unit::TestCase
   fixtures :users, :tags, :collections, :memberships, :linkings, :event_subscriptions, :attachments, :taggings
 
   def test_should_associate_groups
-    u = User.find(5)
+    u = User.find(4)
     s = u.groups.size
-    u.groups << Collection.find(1)
+    u.groups << Collection.find(2)
     assert_equal s+1, u.groups(true).size
 
     u.groups << Collection.find(1)
@@ -20,13 +20,13 @@ class UserTest < Test::Unit::TestCase
   def test_pending_memberships
     u = User.find(4)
     p = u.pending_memberships.size
-    Membership.create(:user_id => 2, :collection_id => u.my_groups.first.id, :collection_type => 'Group')
+    Membership.create(:user_id => 1, :collection_id => u.my_groups.first.id, :collection_type => 'Group')
     assert_equal p+1, u.pending_memberships.size
 
-    Membership.create(:user_id => 5, :collection_id => u.my_groups.first.id, :collection_type => 'Group')
+    Membership.create(:user_id => 4, :collection_id => u.my_groups.first.id, :collection_type => 'Group')
     assert_equal p+2, u.pending_memberships.size
 
-    Membership.create(:user_id => 5, :collection_id => u.my_groups.first.id, :collection_type => 'Group')
+    Membership.create(:user_id => 4, :collection_id => u.my_groups.first.id, :collection_type => 'Group')
     assert_equal p+2, u.pending_memberships.size
   end
   
@@ -64,7 +64,7 @@ class UserTest < Test::Unit::TestCase
   end
   
   def test_adding_a_user_to_the_admin_group_makes_them_an_admin
-    u = User.find(2)
+    u = User.find(4)
     assert_equal false, u.is_admin?
     u.groups << Group.find_by_name(ADMIN_GROUP)
     u.reload
@@ -78,8 +78,8 @@ class UserTest < Test::Unit::TestCase
   end
   
   def test_can_edit_method
-    admin = users(:quentin)
-    user  = users(:user_4) 
+    admin = users(:administrator)
+    user  = users(:normal_user) 
     user.assets << an_asset({:user_id=>user.id})
     # Admins can edit anything
     assert admin.can_edit?(user.assets[0])
@@ -115,7 +115,7 @@ class UserTest < Test::Unit::TestCase
   end
   
   def test_categories_as_tree
-    user = users(:quentin)
+    user = users(:administrator)
     tree = user.categories_as_tree
     user.categories.each do |c|
       sym = "b_#{c.id}".to_sym
@@ -144,17 +144,17 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_should_reset_password
-    users(:quentin).update_attributes(:password => 'foobarbaz', :password_confirmation => 'foobarbaz')
-    assert_equal users(:quentin), User.authenticate('quentin', 'foobarbaz')
+    users(:administrator).update_attributes(:password => 'foobarbaz', :password_confirmation => 'foobarbaz')
+    assert_equal users(:administrator), User.authenticate('administrator', 'foobarbaz')
   end
 
   def test_should_not_rehash_password
-    users(:quentin).update_attributes(:login => 'quentin2')
-    assert_equal users(:quentin), User.authenticate('quentin2', 'qazwsx')
+    users(:administrator).update_attributes(:login => 'administrator2')
+    assert_equal users(:administrator), User.authenticate('administrator2', 'qazwsx')
   end
 
   def test_should_authenticate_user
-    assert_equal users(:quentin), User.authenticate('quentin', 'qazwsx')
+    assert_equal users(:administrator), User.authenticate('administrator', 'qazwsx')
   end
 
   # An Event should be recored after a user is created
@@ -166,10 +166,10 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_event_subscriptions
-    es = users(:quentin).event_subscriptions
+    es = users(:administrator).event_subscriptions
 
-    e1 = event_subscriptions(:quentin_1)
-    e2 = event_subscriptions(:quentin_2)
+    e1 = event_subscriptions(:administrator_1)
+    e2 = event_subscriptions(:administrator_2)
 
     assert es.include?(e1)
     assert es.include?(e2)
@@ -178,7 +178,7 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_assets_search
-    u = users(:user_4)
+    u = users(:normal_user)
     assets = u.assets_search('nes')
     assert_equal 0, assets.size
 
@@ -192,7 +192,7 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_categories_search
-    u = users(:quentin)
+    u = users(:administrator)
 
     cats = u.categories_search('nintendo')
     assert_equal 2, cats.size
@@ -210,7 +210,7 @@ class UserTest < Test::Unit::TestCase
     assert_equal 1, cats.size
     assert_equal collections(:collection_8).name, cats[0].name
 
-    u = users(:user_4)
+    u = users(:normal_user)
 
     cats = u.categories_search('')
     assert_equal 3, cats.size
@@ -227,7 +227,7 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_groups_search
-    u = users(:user_4)
+    u = users(:normal_user)
 
     p = Proc.new do |names, groups|
       names = [names].flatten
@@ -244,7 +244,7 @@ class UserTest < Test::Unit::TestCase
     groups = u.groups_search('atari')
     p.call('Atari', groups)
 
-    u = users(:quentin)
+    u = users(:administrator)
     groups = u.groups_search('a')
     p.call(['Atari', ADMIN_GROUP], groups)
 

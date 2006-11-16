@@ -21,9 +21,9 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_group_shall_accept_new_members
-    g= Group.find(:first)
+    g= Group.find(2)
     s = g.users.size
-    g.users << User.find(5)
+    g.users << User.find(4)
     assert g.save
     assert_equal s+1, Group.find(g.id).users.size
   end
@@ -94,19 +94,19 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_shall_not_add_duplicate_members
-    assert !@record_one.users.include?(User.find(3)), "Fixtures have been modified!"
-    s = User.find(3).groups.size
-    @record_one.users << User.find(3)
+    assert !@record_one.users.include?(User.find(8)), "Fixtures have been modified!"
+    s = User.find(8).groups.size
+    @record_one.users << User.find(8)
     @record_one.reload
     
-    assert @record_one.users.include?(User.find(3))
+    assert @record_one.users.include?(User.find(8))
     assert_not_nil Membership.find(:all, :conditions => 'user_id = 3 and collection_id = 1')
-    assert_not_equal [], User.find(3).groups
-    assert User.find(3).groups.include?(@record_one)
-    assert_equal s+1, User.find(3).groups.size
+    assert_not_equal [], User.find(8).groups
+    assert User.find(8).groups.include?(@record_one)
+    assert_equal s+1, User.find(8).groups.size
 
-    @record_one.users << User.find(3)
-    assert_equal s+1, User.find(3).groups.size
+    @record_one.users << User.find(8)
+    assert_equal s+1, User.find(8).groups.size
   end
   
   def test_destroy_group
@@ -142,8 +142,8 @@ class GroupTest < Test::Unit::TestCase
     m = Group.find(1).memberships.size
     u = Group.find(1).user
     assert !Group.find(1).memberships.include?(u)
-    Group.find(1).switch_ownership(3)
+    Group.find(1).switch_ownership(4)
     assert Group.find(1).memberships.map(&:user_id).include?(1)
-    assert !Group.find(1).memberships.include?(User.find(3))
+    assert !Group.find(1).memberships.include?(User.find(4))
   end
 end

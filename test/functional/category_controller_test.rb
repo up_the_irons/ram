@@ -14,7 +14,7 @@ class CategoryControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     
     @@existing_category_id = 8
-    login_as :quentin
+    login_as :administrator
     
     @@user_with_access_to_all_categories = 1
     @@user_with_access_to_no_categories = 7
@@ -32,13 +32,13 @@ class CategoryControllerTest < Test::Unit::TestCase
   end
     
   def test_user_shall_not_see_a_restricted_groups_assets_in_a_category
-    login_as :user_7
+    login_as :user_without_group_memberships
     get :show, :id=>6
     assert_equal nil, assigns(:assets)
   end
   
   def test_user_shall_not_be_a_able_to_show_a_restricted_category
-    login_as :user_4
+    login_as :normal_user
     u = User.find(4)
     unauthorized_categories = Category.find(:all) - u.categories
 
@@ -49,7 +49,7 @@ class CategoryControllerTest < Test::Unit::TestCase
   end
   
   def test_show_category_scoped_to_users_access
-    login_as :user_4
+    login_as :normal_user
     u = User.find(4) 
     u.categories.each do |c|
       get :show, :id=> c.id

@@ -22,11 +22,11 @@ class AdminControllerTest < Test::Unit::TestCase
     @existing_category_id = 8
     @user_with_access_to_all_categories = 1
     @user_with_access_to_no_categories  = 7
-    login_as :quentin # Has admin_rights
+    login_as :administrator # Has admin_rights
   end
   
   def test_shall_redirect_to_index_when_a_non_admin_accesses_controller
-    login_as :user_7
+    login_as :user_without_group_memberships
     get :index
     assert_redirected_to :controller=>'inbox'
   end
@@ -37,7 +37,7 @@ class AdminControllerTest < Test::Unit::TestCase
   end
   
   def test_track_model_changes
-    login_as :quentin
+    login_as :administrator
     @group    = a_group
     @category = a_category({:parent_id=>@existing_category_id})
     @user     = create_user
@@ -51,8 +51,8 @@ class AdminControllerTest < Test::Unit::TestCase
   end
   
   def test_category_change_log_tracks_children_changes
-    login_as :quentin
-    user = users(:quentin)
+    login_as :administrator
+    user = users(:administrator)
     category = user.categories[0]
     assert_difference category.changes, :count, 2 do
       @a = an_asset({:user_id=>user.id,:category_id=>category.id})

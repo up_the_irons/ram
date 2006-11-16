@@ -18,13 +18,13 @@ class <%= controller_class_name %>ControllerTest < Test::Unit::TestCase
   end
 
   def test_should_login_and_redirect
-    post :login, :login => 'quentin', :password => 'quentin'
+    post :login, :login => 'administrator', :password => 'administrator'
     assert session[:<%= file_name %>]
     assert_response :redirect
   end
 
   def test_should_fail_login_and_not_redirect
-    post :login, :login => 'quentin', :password => 'bad password'
+    post :login, :login => 'administrator', :password => 'bad password'
     assert_nil session[:<%= file_name %>]
     assert_response :success
   end
@@ -69,7 +69,7 @@ class <%= controller_class_name %>ControllerTest < Test::Unit::TestCase
   end
 
   def test_should_logout
-    login_as :quentin
+    login_as :administrator
     get :logout
     assert_nil session[:<%= file_name %>]
     assert_response :redirect

@@ -24,8 +24,8 @@ module IncludedTests::CategoryMethodsTest
     assert_difference Category, :count  do
       new_name = 'knock-offs'
       new_tags = ["atari", "2600"]
-      post :edit_category, :category => { :name => new_name, :user_id => users(:quentin).id, :parent_id => users(:quentin).categories[0].id, :tags => new_tags.join(', '), 
-                                          :group_ids => [users(:quentin).groups[0].id]}
+      post :edit_category, :category => { :name => new_name, :user_id => users(:administrator).id, :parent_id => users(:administrator).categories[0].id, :tags => new_tags.join(', '), 
+                                          :group_ids => [users(:administrator).groups[0].id]}
 
       assert_redirect :action=>'edit_category', :id=>assigns(:category).id
       assert assigns(:category)
@@ -49,10 +49,10 @@ module IncludedTests::CategoryMethodsTest
   end
   
   def test_add_group_to_category
-    login_as :quentin
+    login_as :administrator
     c = Category.find(@existing_category_id)
-    g = a_group({:user_id=>users(:quentin).id})
-    g.members << users(:quentin)
+    g = a_group({:user_id=>users(:administrator).id})
+    g.members << users(:administrator)
     assert g.valid?
     s = c.groups.size
     group_ids = c.groups.map{|cat| cat.id }
@@ -67,8 +67,8 @@ module IncludedTests::CategoryMethodsTest
   end
 
   def test_user_shall_not_add_a_group_to_a_category_that_they_do_not_belong_to
-    login_as :quentin
-    current_user = users(:quentin)
+    login_as :administrator
+    current_user = users(:administrator)
     all = Category.find(:all)
     excluded = all - current_user.categories
     c = excluded[0]
@@ -167,7 +167,7 @@ module IncludedTests::CategoryMethodsTest
   end
   
   def test_prevent_bad_updates_to_categories
-    @category = users(:quentin).categories[0]
+    @category = users(:administrator).categories[0]
     get :edit_category, :id => @category.id, :category =>{:name=>"New Name #{Time.now.to_s}"}
     assert_equal assigns(:category).name, @category.name
     

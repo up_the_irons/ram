@@ -18,14 +18,14 @@ class BriefcaseControllerTest < Test::Unit::TestCase
 
   # Replace this with your real tests.
   def test_shall_list_briefcase_items
-    login_as :quentin
+    login_as :administrator
     get :list
     assert :success
   end
   
   def test_shall_create_briefcase_on_login
     @controller = AccountController.new
-    post :login, :login => 'quentin', :password => 'qazwsx'
+    post :login, :login => 'administrator', :password => 'qazwsx'
     @controller = BriefcaseController.new
     assert assigns(:session)[:user]    
     assert assigns(:session)[:briefcase]
@@ -34,7 +34,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   end
   
   def test_admin_shall_add_item_to_briefcase
-    login_as :quentin
+    login_as :administrator
      assert_difference @request.session[:briefcase], :size do
         @group, @asset = group_and_asset(current_user)
         post :add, :group_id=>@group.id, :assets=>[@asset.id]
@@ -45,7 +45,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   end
   
   def test_non_admin_shall_add_item_to_briefcase
-    login_as :user_4
+    login_as :normal_user
     assert_difference @request.session[:briefcase], :size do
         @group, @asset = group_and_asset(current_user)
         post :add, :group_id=>@group.id, :assets=>[@asset.id]
@@ -56,7 +56,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_prevent_duplicate_adds
-    login_as :quentin
+    login_as :administrator
     @group, @asset = group_and_asset(current_user)
     assert_difference @request.session[:briefcase], :size do
       post :add, :group_id=>@group.id, :assets=>[@asset.id]
@@ -69,7 +69,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_prevent_ads_on_get
-    login_as :quentin
+    login_as :administrator
     @group, @asset = group_and_asset(current_user)
     assert_no_difference @request.session[:briefcase], :size do
       get :add, :assets=>[@asset.id]
@@ -78,7 +78,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_prevent_adding_a_restricted_asset
-    login_as :quentin
+    login_as :administrator
     assert_no_difference @request.session[:briefcase], :size do
       post :add, :assets=>[7]
     end
@@ -86,7 +86,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_delete_item_from_briefcase
-    login_as :quentin
+    login_as :administrator
     add_item_for current_user
     assert_equal 1, @request.session[:briefcase].size
     
@@ -104,7 +104,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   end
     
   def test_shall_empty_entire_briefcase
-    login_as :quentin
+    login_as :administrator
     assets = assets_for(current_user)
     assets.map{|a| @request.session[:briefcase] << a.id}
     assert_equal assets.size, @request.session[:briefcase].size
@@ -119,7 +119,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_zip_briefcase_for_download
-    login_as :quentin
+    login_as :administrator
     assets = assets_for(current_user)
     assets.map{|a| @request.session[:briefcase] << a.id}
     assert_equal assets.size, @request.session[:briefcase].size
@@ -132,7 +132,7 @@ class BriefcaseControllerTest < Test::Unit::TestCase
   end
   
   def test_zip_shall_mimic_category_hierarchy
-    login_as :quentin
+    login_as :administrator
     assets = assets_for(current_user)
     assets.map{|a| @request.session[:briefcase] << a.id}
     assert_equal assets.size, @request.session[:briefcase].size

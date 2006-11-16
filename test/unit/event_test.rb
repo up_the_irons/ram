@@ -9,7 +9,7 @@ class EventTest < Test::Unit::TestCase
   end
 
   def test_notification_on_create
-    recipient_id = users(:quentin).id
+    recipient_id = users(:administrator).id
     subject      = 'New Event Notification'
     msg_body     = 'In UR Eventz, Eatin URR Queueueuez'
 
@@ -24,7 +24,7 @@ class EventTest < Test::Unit::TestCase
   end
 
   def test_timestamp
-    e = Event.create(:recipient_id => users(:quentin).id)
+    e = Event.create(:recipient_id => users(:administrator).id)
 
     assert_not_nil e.created_at
     assert e.created_at <= Time.now

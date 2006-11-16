@@ -14,7 +14,7 @@ class EventsControllerTest < Test::Unit::TestCase
   end
 
   def test_list
-    u = users(:quentin)
+    u = users(:administrator)
 
     login_as u.login
 
@@ -30,11 +30,11 @@ class EventsControllerTest < Test::Unit::TestCase
   end
 
   def test_delete
-    u = users(:quentin)
+    u = users(:administrator)
     login_as u.login
 
     assert_difference Event, :count, -1 do
-      id = events(:quentin_msg_1_unread).id
+      id = events(:administrator_msg_1_unread).id
       xhr :get, :delete, :id => id
       assert_response :success
       assert_rjs :replace_html, "message_body_#{id}"
@@ -43,7 +43,7 @@ class EventsControllerTest < Test::Unit::TestCase
   end
 
   def test_delete_with_id_that_does_not_belong_to_user
-    u = users(:quentin)
+    u = users(:administrator)
     login_as u.login
 
     assert_no_difference Event, :count do
@@ -54,15 +54,15 @@ class EventsControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    u = users(:quentin)
+    u = users(:administrator)
     login_as u.login
 
-    id = events(:quentin_msg_1_unread).id
+    id = events(:administrator_msg_1_unread).id
     xhr :get, :show, :id => id
 
     assert_rjs :toggle, "message_body_container_#{id}"
 
     # TODO: find a way to include this assertian again
-    # assert_rjs :replace_html, "event_body_#{id}", events(:quentin_msg_1_unread).msg_body
+    # assert_rjs :replace_html, "event_body_#{id}", events(:administrator_msg_1_unread).msg_body
   end
 end

@@ -6,37 +6,37 @@ module IncludedTests::GroupMethodsTest
   end
    
   def test_admins_will_automatically_get_assigned_to_new_groups
-    login_as :quentin
-    @user = users(:quentin)
+    login_as :administrator
+    @user = users(:administrator)
     before = @user.groups.size
-    Group.create({ :name => "Group_#{Time.now.to_s}",:user_id=>users(:user_2).id })
+    Group.create({ :name => "Group_#{Time.now.to_s}",:user_id=>users(:normal_user).id })
     @user = User.find(@user.id)
     assert_equal before+1, @user.groups.size
   end
    
   def test_shall_show_groups
-    login_as :quentin
-    get :show_group, :id=>users(:quentin).groups[0].id
+    login_as :administrator
+    get :show_group, :id=>users(:administrator).groups[0].id
     assert assigns(:group)
   end
    
   def test_admin_shall_edit_groups
-    login_as :quentin
-    get :edit_group, :id=>users(:quentin).groups[0].id
+    login_as :administrator
+    get :edit_group, :id=>users(:administrator).groups[0].id
     assert :success
     assert assigns(:group)
   end
   
   def test_update_group
-    login_as :quentin
+    login_as :administrator
 
     # User.is_admin? changed from looking at "role" field to seeing if the user is in group named "Administrators", so 
     # if we change the name of this group, we get screwed; therefore, we filter out "Administrators" from this find()
-    g = users(:quentin).groups.find(:first, :conditions => "name != '#{ADMIN_GROUP}'")
+    g = users(:administrator).groups.find(:first, :conditions => "name != '#{ADMIN_GROUP}'")
     new_name = 'Atari Monkeys'
     new_tags = ["atari", "2600"]
     assert_not_nil g
-    post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', '), :user_ids => [users(:quentin).id] }
+    post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', '), :user_ids => [users(:administrator).id] }
     assert_response :success
     group_after_update = Group.find(g.id)
     assert_equal new_name, group_after_update.name
@@ -47,7 +47,7 @@ module IncludedTests::GroupMethodsTest
 
     # Now make sure the old tags get overwritten with new ones
     new_tags = ['beach', 'bird','dog']
-    post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', '), :user_ids => [users(:quentin).id] }
+    post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', '), :user_ids => [users(:administrator).id] }
     assert_response :success
     group_after_update = Group.find(g.id)
     assert_equal new_name, group_after_update.name
@@ -59,21 +59,21 @@ module IncludedTests::GroupMethodsTest
 
   def test_update_group_with_blank_tags
     new_tags = ['beach', 'bird','dog']
-    g = users(:quentin).groups.find(:first, :conditions => "name != '#{ADMIN_GROUP}'")
-    post :edit_group, :id => g.id, :group =>{:name=>'Atari Monkeys', :user_ids => [users(:quentin).id], :tags => new_tags.join(', ')}
+    g = users(:administrator).groups.find(:first, :conditions => "name != '#{ADMIN_GROUP}'")
+    post :edit_group, :id => g.id, :group =>{:name=>'Atari Monkeys', :user_ids => [users(:administrator).id], :tags => new_tags.join(', ')}
     assert_response :success
     
     # Make sure tags display correctly (comma delimited)
     assert_tag :tag => 'input', :attributes => { :value => 'beach, bird, dog' }
 
     # Now let's delete the tags
-    post :edit_group, :id => g.id, :group =>{:name=>'Atari Monkeys', :user_ids => [users(:quentin).id], :tags => ''}
+    post :edit_group, :id => g.id, :group =>{:name=>'Atari Monkeys', :user_ids => [users(:administrator).id], :tags => ''}
     assert_response :success
     assert_tag :tag => 'input', :attributes => { :value => '' }
   end
    
   def test_group_add_member_and_categories_from_multiselect
-    login_as :quentin
+    login_as :administrator
     c = collections(:collection_3)
     @request.env["HTTP_REFERER"] = "show_group/1"
     event_count_before = Event.count
@@ -81,7 +81,7 @@ module IncludedTests::GroupMethodsTest
     assert_equal c.users(true).size, 3
     assert_equal event_count_before + 3, Event.count
     
-    new_categories = (users(:quentin).categories - c.categories).map{|cat| cat.id}
+    new_categories = (users(:administrator).categories - c.categories).map{|cat| cat.id}
     assert new_categories.size > 0
     # Remove all but one user, and remove all the categories
     event_count_before = Event.count
@@ -103,10 +103,10 @@ module IncludedTests::GroupMethodsTest
   end
 
   def test_disband_group
-    login_as :quentin
-    users(:quentin).groups.each do |g|
+    login_as :administrator
+    users(:administrator).groups.each do |g|
       unless g.name == ADMIN_GROUP
-        # 1 Event is sent to admin "quentin" and 1 for each user belonging to this group
+        # 1 Event is sent to admin "administrator" and 1 for each user belonging to this group
         assert_difference Event, :count, (1 + g.users.count) do
           post :disband_group, :id=>g.id 
           assert_redirect :groups
@@ -121,13 +121,13 @@ module IncludedTests::GroupMethodsTest
   end
 
   def test_add_and_disband_group_updates_category_tree
-    quentin = users(:quentin)
+    administrator = users(:administrator)
 
-    # Remove quentin from admin group to make this test meaningful (else, he has access to all categories simply by being an administrator)
-    Group.find_by_name(ADMIN_GROUP).remove_member(quentin)
-    quentin.categories_as_tree(true) # Reload
+    # Remove administrator from admin group to make this test meaningful (else, he has access to all categories simply by being an administrator)
+    Group.find_by_name(ADMIN_GROUP).remove_member(administrator)
+    administrator.categories_as_tree(true) # Reload
 
-    login_as :quentin
+    login_as :administrator
     c = collections(:collection_40)
 
     get :index
@@ -145,7 +145,7 @@ module IncludedTests::GroupMethodsTest
       end
     end
 
-    post :edit_group, :id => c.id, :group => { :user_ids => [quentin.id], :category_ids => [collections(:collection_41).id] }
+    post :edit_group, :id => c.id, :group => { :user_ids => [administrator.id], :category_ids => [collections(:collection_41).id] }
 
     # Cheap way of making sure category tree gets updated
     assert @controller.session[:category_tree].to_s =~ /#{collections(:collection_41).name}/
@@ -154,7 +154,7 @@ module IncludedTests::GroupMethodsTest
     assert @controller.session[:category_tree].to_s !~ /#{collections(:collection_41).name}/
 
     # Now add him again to collection_41 and let's destroy this group
-    post :edit_group, :id => c.id, :group => { :user_ids => [quentin.id], :category_ids => [collections(:collection_41).id] }
+    post :edit_group, :id => c.id, :group => { :user_ids => [administrator.id], :category_ids => [collections(:collection_41).id] }
     assert @controller.session[:category_tree].to_s =~ /#{collections(:collection_41).name}/
 
     post :disband_group, :id=>c.id 
@@ -162,7 +162,7 @@ module IncludedTests::GroupMethodsTest
   end
   
   def test_rescue_on_invalid_disband
-    login_as :quentin
+    login_as :administrator
     post :disband_group, :id=>-1000
     assert_redirect :groups
     assert_equal assigns(:flash)[:notice], "Could not find group."
@@ -174,7 +174,7 @@ module IncludedTests::GroupMethodsTest
   end
 
   def test_prevent_disband_group_by_unauthorized_users
-    login_as :user_7 #has no access to any groups 
+    login_as :user_without_group_memberships #has no access to any groups 
     assert_no_difference Group, :count do
       @doomed = Group.find(:first).id
       post :disband_group, :id=>@doomed
@@ -183,18 +183,18 @@ module IncludedTests::GroupMethodsTest
   end
   
   def test_create_group
-    login_as :quentin
+    login_as :administrator
     assert_no_difference Group, :count do
-      post :edit_group, :group => { :name => '', :user_id => users(:quentin).id }
+      post :edit_group, :group => { :name => '', :user_id => users(:administrator).id }
       assert assigns(:group).new_record?
       assert_equal 1, assigns(:group).errors.count
     end
 
     assert_difference Group, :count  do
-      # 1 Event is sent for Group creation and 1 is sent to notify quentin he has been added to the new group
+      # 1 Event is sent for Group creation and 1 is sent to notify administrator he has been added to the new group
       assert_difference Event, :count, 2 do
         new_tags = ["atari", "2600"]
-        post :edit_group, :group => { :name =>'Guest Group', :user_id=>users(:quentin).id, :user_ids=>[users(:quentin).id], :tags => new_tags.join(', ')}
+        post :edit_group, :group => { :name =>'Guest Group', :user_id=>users(:administrator).id, :user_ids=>[users(:administrator).id], :tags => new_tags.join(', ')}
         assert_redirected_to :action => 'edit_group'
         assert_equal 0, assigns(:group).errors.count
         assert assigns(:group)

@@ -6,23 +6,23 @@
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-quentin_1:
+administrator_1:
   id: 1
   user_id: 1
   event_trigger_id: 1
-quentin_2:
+administrator_2:
   id: 2
   user_id: 1
   event_trigger_id: 3
-user_5:
+normal_user:
   id: 3
-  user_id: 5
+  user_id: 4
   event_trigger_id: 1
-quentin_3:
+administrator_3:
   id: 4
   user_id: 1
   event_trigger_id: 4
-quentin_4:
+administrator_4:
   id: 5
   user_id: 1
   event_trigger_id: 2

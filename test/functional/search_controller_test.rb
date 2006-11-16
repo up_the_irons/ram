@@ -14,7 +14,7 @@ class SearchControllerTest < Test::Unit::TestCase
   end
 
   def test_search_all_for_user
-    login_as :user_4 # Nolan bushnell
+    login_as :normal_user # Nolan bushnell
 
     post :all, :id => 'nes'
     assert :success
@@ -38,7 +38,7 @@ class SearchControllerTest < Test::Unit::TestCase
   end
 
   def test_search_all_for_user2
-    login_as :quentin # Admin
+    login_as :administrator # Admin
     post :all, :id => 'nes'
     assert :success
     assert a = assigns['assets']
@@ -64,7 +64,7 @@ class SearchControllerTest < Test::Unit::TestCase
   end
   
   def test_search_returns_no_results
-    login_as :quentin
+    login_as :administrator
     post :all, :id => '-43gfffff4234f4fc34c3cf3333f'
     assert :success
     assert_equal assigns(:flash)[:notice], "Your search returned no results."

@@ -12,8 +12,8 @@ class AssetControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @category_with_asset = 8
-    login_as :quentin
-    @user = users(:quentin)
+    login_as :administrator
+    @user = users(:administrator)
 
   end
 
@@ -72,7 +72,7 @@ class AssetControllerTest < Test::Unit::TestCase
     asset = @user.assets[0]
     another_cat = (@user.categories - [Category.find(asset.category_id)])[0]
     another_description = "foo's birthday is #{Time.now.to_s}"
-    another_user = User.find(2)
+    another_user = User.find(4)
     props = {:description=>another_description,:category_id=>another_cat.id,:user_id=>another_user.id}
     props.each_pair do |k,v|
       assert asset[k] != v
@@ -117,7 +117,7 @@ class AssetControllerTest < Test::Unit::TestCase
     
   def test_shall_prevent_deletes_without_access
     @a = @user.assets[0]
-    login_as :user_7
+    login_as :user_without_group_memberships
     assert_no_difference Asset, :count do
       post :destroy, :id=>@a.id
       assert assigns(:flash)[:notice] = 'Could not delete asset.'

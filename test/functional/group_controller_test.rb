@@ -11,11 +11,11 @@ class GroupControllerTest < Test::Unit::TestCase
     @controller = GroupController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    login_as :quentin
+    login_as :administrator
   end
   
   def test_shall_only_list_groups_within_access_scope
-    login_as :user_4 # Nolan bushnell
+    login_as :normal_user # Nolan bushnell
     get :list
     assert_equal User.find(4).groups, assigns(:groups) 
   end
@@ -28,7 +28,7 @@ class GroupControllerTest < Test::Unit::TestCase
   end
   
   def test_deny_show_to_unauthorized_users
-    login_as :user_4
+    login_as :normal_user
     u = User.find(4)
     unauthorized_groups = Group.find(:all) - u.groups
 

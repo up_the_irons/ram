@@ -5,10 +5,9 @@ class EventTriggerTest < Test::Unit::TestCase
 
   def test_subscribers_of
     users = EventTrigger.subscribers_of(:user_signup)
-
     assert_equal 2, users.size
-    assert users.include?(users(:quentin))
-    assert users.include?(users(:user_5))
+    assert users.include?(users(:administrator))
+    assert users.include?(users(:normal_user))
   end
 
   def test_existance_of_default_triggers

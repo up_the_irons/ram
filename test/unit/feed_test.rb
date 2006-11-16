@@ -28,8 +28,8 @@ class FeedTest < Test::Unit::TestCase
   end
   
   def test_local_feed
-    cat = users(:quentin).categories[0]
-    change = a_change({"record_type"=>cat.class.class_name, "event"=>"UPDATE", "user_id"=>users(:quentin).id, "record_id"=>cat.id, "created_at"=>Time.now.to_s})
+    cat = users(:administrator).categories[0]
+    change = a_change({"record_type"=>cat.class.class_name, "event"=>"UPDATE", "user_id"=>users(:administrator).id, "record_id"=>cat.id, "created_at"=>Time.now.to_s})
     assert_equal(cat.changes[0].id, change.id) # Change one thing about the category so that there is atleast one feed item.
     feed = a_feed @model_attributes.merge({:is_local=>true,:local_path=>"/feed/category/#{cat.id}"})
     result = RSS::Parser.parse(feed.data, false)
@@ -52,11 +52,11 @@ class FeedTest < Test::Unit::TestCase
   end
   
   def test_add_and_remove_subscriber
-    quentin = User.find(1)
+    administrator = User.find(1)
     
-    assert_equal 1, User.find(quentin.id).feeds.size
+    assert_equal 1, User.find(administrator.id).feeds.size
     assert_equal 1, Subscription.find(:all).size
-    assert_unchanged quentin.feeds, :size do
+    assert_unchanged administrator.feeds, :size do
       assert_no_difference Subscription, :count do
         @feed = Feed.create(@model_attributes)
       end
@@ -72,14 +72,14 @@ class FeedTest < Test::Unit::TestCase
         end
       end
     end
-    assert_equal 2, User.find(quentin.id).feeds.size
+    assert_equal 2, User.find(administrator.id).feeds.size
 
     # Remove
     assert_difference @feed.subscribers, :size, -1 do
-      @feed.subscribers.unsubscribe users(:quentin)
+      @feed.subscribers.unsubscribe users(:administrator)
     end
     
-    assert_equal 1, User.find(quentin.id).feeds.size
+    assert_equal 1, User.find(administrator.id).feeds.size
     
     # Remove the rest
     @feed.subscribers.unsubscribe_all
