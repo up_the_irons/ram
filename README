@@ -1,4 +1,4 @@
-  = Installation
+= Installation
 
 1. From the root directory of this application type "rake install". This will launch the install wizard, which will take you step by step in setting up RAM.
 
