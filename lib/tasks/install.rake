@@ -39,6 +39,10 @@ file DB_CONFIG do
   adapter = DB_ADAPTERS[ch.to_i - 1].to_a[0][0]
 
   puts ""
+  puts "** IMPORTANT -- PLEASE READ **"
+  puts ""
+  puts "The RAM installer cannot create your database for you (yet)."
+  puts ""
   puts "Create an empty database with your #{DB_ADAPTERS[ch.to_i - 1].to_a[0][1]} admin tool and then enter"
   puts "the following:"
   puts  ""
@@ -59,6 +63,11 @@ file DB_CONFIG do
   loop do
     print "Database Password: "
     break if (db_password = STDIN.gets.chomp) =~ /^.+$/ 
+
+    if db_password == ''
+      print "Use empty password? [y/N] : "
+      break if STDIN.gets =~ /^[yY]$/
+    end
   end
 
   db_hostname = ''
@@ -125,7 +134,7 @@ end
 
 task :banner do
   puts <<-BANNER
-Ruby Asset Manager (RAM) Installer v0.8
+Ruby Asset Manager (RAM) Installer v0.9
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 Welcome and thank you for choosing Ruby Asset Manager for your digital
