@@ -132,8 +132,38 @@ task :post_migrate do
   puts "Migration complete."
 end
 
+task :dependencies do
+  begin
+    # This comes straight from config/environment.rb.
+    # If a change to this list is made there, make it here too.
+    require 'openssl'
+    require 'base64'
+    require 'RMagick'
+    require 'ostruct'
+  rescue LoadError => boom
+    puts ""
+    puts "We're sorry, but it appears you don't have all the required dependencies"
+    puts "to run RAM. The error I got was:"
+    puts ""
+    puts boom.message
+    puts ""
+    puts "RAM requires the following Ruby libraries:"
+    puts ""
+    puts "  * OpenSSL"
+    puts "  * RMagick (soon to be made optional)"
+    puts "  * Base64"
+    puts "  * OpenStruct"
+    puts ""
+    puts "Please make sure you have all these installed and then run 'rake install'"
+    puts "again."
+    puts ""
+    exit
+  end
+end
+
 task :banner do
   puts <<-BANNER
+
 Ruby Asset Manager (RAM) Installer v0.9
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -161,7 +191,7 @@ happen:
 end
 
 desc "Configure and install RAM for the first time"
-task :install => [:banner, :check_for_db_config_file, DB_CONFIG, :pre_migrate, :migrate, :post_migrate] do
+task :install => [:dependencies, :banner, :check_for_db_config_file, DB_CONFIG, :pre_migrate, :migrate, :post_migrate] do
   puts  ""
   puts  "Congratulations!  Your Ruby Asset Manager is ready to go!"
   puts  ""
