@@ -20,7 +20,7 @@ class InboxControllerTest < Test::Unit::TestCase
   
   def test_shall_redirect_unless_logged_in
     get :index
-    assert_redirected_to :controller=>'account',:action=>'login'
+    assert_redirected_to :controller => 'account', :action => 'login'
   end
   
   def test_shall_display_subscriber_feeds
@@ -29,6 +29,15 @@ class InboxControllerTest < Test::Unit::TestCase
     assert assigns(:feeds)
     assert !assigns(:current_user).feeds.empty?
   end
+
+  def test_get_index_doesnt_show_blank_inbox_header
+    login_as :anonymous
+    get :index
+    assert_response :success
+
+    assert_tag :tag => 'h1', :content => 'Your Inbox'
+  end
+
   
   def test_shall_edit_feed
     login_as :administrator

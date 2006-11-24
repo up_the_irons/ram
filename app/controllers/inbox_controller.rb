@@ -1,7 +1,7 @@
 #--
 # $Id$
 #
-# Copyright (c) 2006 Mark Daggett & Garry Dolley
+# Copyright (c) 2006 Mark Daggett, Garry Dolley
 #
 # This file is part of RAM (Ruby Asset Manager) 
 # 
@@ -21,7 +21,8 @@ class InboxController < ProtectedController
 
     # We need to store the feed's ID in the hash because the RSS instance's ID will map to an internal memory
     # location not an active record object.
-    current_user.feeds.map{ |f| @feeds << { :feed => RSS::Parser.parse(f.data, false), :id => f.id } if f.is_local }
+    current_user.feeds.map { |f| @feeds << { :feed => RSS::Parser.parse(f.data, false), :id => f.id } if f.is_local }
+
     @feeds.each do |feed_hash|
       feed_hash[:feed].channel.items.each_with_index do |i,index|
         # Format the feed items like messages so that they can be displayed in the inbox.
@@ -29,15 +30,22 @@ class InboxController < ProtectedController
         # because the feed item gets a "new" id each time it is loaded unfortunately.
         id = "#{feed_hash[:id]}__#{index}"
         @messages << OpenStruct.new(
-                    :body => i.description,
-                    :subject => i.title,
-                    :created_at => i.pubDate,
-                    :params => { :message_type => 'Feed', :controller => 'inbox', :action => 'read_feed_item', :id => id }
-                    )
+                      :body => i.description,
+                      :subject => i.title,
+                      :created_at => i.pubDate,
+                      :params => { :message_type => 'Feed', :controller => 'inbox', :action => 'read_feed_item', :id => id })
       end
     end
-    @messages << (Event.find_all_by_recipient_id(current_user.id, :order => @order).flatten).each{|m| m[:params] = {:message_type=>"Event", :controller=>"events"}}
+
+    @messages << (Event.find_all_by_recipient_id(current_user.id, :order => @order).flatten).each{|m| m[:params] = {:message_type => "Event", :controller => "events"}}
     @messages = @messages.flatten
+
+    if current_user.respond_to?('full_name') && current_user.full_name.strip != ''
+      @heading = current_user.full_name + "'s Inbox"
+    else
+      @heading = "Your Inbox"
+    end
+
     render 'inbox/inbox'
   end
   
