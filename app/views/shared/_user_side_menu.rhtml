@@ -1,14 +1,14 @@
 <div id="inboxMenu">
 	<ul>
-		<li class="menuLabel_selected"><%= link_to 'My Messages', :controller => 'events', :action => 'list' %></li>
-		<li class="menuLabel_selected">My Subscriptions</li>
+		<li class="menuLabel_selected"><%= (controller.controller_name != 'events' ? link_to('My Messages', :controller => 'events', :action => 'list') : 'My Messages') %></li>
+    <li class="menuLabel_selected"><%= (controller.controller_name != 'inbox' ? link_to('My Subscriptions', :controller => 'inbox') : 'My Subscriptions') %></li>
 		<li class="menuData">
 		  <ul>
 			<% current_user.feeds.each do |feed| -%>
-			  <% row_class =  cycle("even", "odd") %>
-		    <li class="menuDataItem_<%=row_class %>">
-		      <%= link_to feed.name, :action=>'read_feed',:id=>feed.id %> 
-		      [ <%= link_to "unsubscribe", {:controller=>'inbox', :action=>'unsubscribe_feed',:id=>feed.id},{:confirm=>"Are you sure you want to unsubscribe from #{feed.name}?",:post=>true} %> ]
+			  <% row_class = cycle("even", "odd") %>
+		    <li class="menuDataItem_<%= row_class %>">
+		      <%= link_to feed.name, :action => 'read_feed', :id => feed.id %> 
+		      [ <%= link_to "unsubscribe", { :controller => 'inbox', :action => 'unsubscribe_feed', :id => feed.id }, { :confirm => "Are you sure you want to unsubscribe from #{feed.name}?", :post => true } %> ]
 		    </li>
 		  <% end -%>
 			</ul>

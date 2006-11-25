@@ -55,7 +55,7 @@
 					  <li><%= link_to 'Categories', :controller=>'category' %></li>
 				  </ul>
 				  <div id="menu_content">
-				  <% unless params[:controller] == 'inbox' || params[:action] == 'dashboard'-%>
+				  <% unless params[:controller] == 'inbox' || params[:action] == 'dashboard' || params[:controller] == 'events' -%>
 				    <ul class="tree">
   				    <%= parse_tree(session[:category_tree][:root][:children]) %>
   				  </ul>

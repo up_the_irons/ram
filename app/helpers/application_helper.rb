@@ -1,7 +1,7 @@
 #--
 # $Id$
 #
-# Copyright (c) 2006 Mark Daggett & Garry Dolley
+# Copyright (c) 2006 Mark Daggett, Garry Dolley
 #
 # This file is part of RAM (Ruby Asset Manager) 
 # 
@@ -106,6 +106,16 @@ module ApplicationHelper
   def link_to_if_editable(name,options = {}, html_options = nil, *parameters_for_method_reference)
     if current_user.is_admin?
       url = link_to name, options, html_options, *parameters_for_method_reference
+    end
+  end
+
+  def inbox_header
+    controller.instance_eval do
+      if current_user.respond_to?('full_name') && current_user.full_name.strip != ''
+        current_user.full_name + "'s Inbox"
+      else
+        "Your Inbox"
+      end
     end
   end
 

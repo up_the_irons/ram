@@ -1,6 +1,7 @@
 <% content_for('application_header') do -%>
-<h1><%= @heading %></h1>
+<h1><%= inbox_header %></h1>
 <% end -%>
+
 <table class="message_list" cellpadding="0" cellspacing="0">
 	<tr class="heading">
 		<th><!--icon //--></th>
@@ -10,11 +11,9 @@
 		<th>Actions</th>
     </tr>
 	<% @messages.each do |message| 
-	  locals = {:message=>message, :row_class=>cycle("even", "odd")}
+	  locals = { :message => message, :row_class => cycle("even", "odd") }
 	  locals = locals.merge(message.params) unless message.params.nil?
 	-%>
-		<%= render :partial=>'events/detail_row', :locals=>locals %>
+		<%= render :partial => 'events/detail_row', :locals => locals %>
 	<% end -%>
 </table>
-
-

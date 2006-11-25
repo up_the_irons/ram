@@ -40,12 +40,6 @@ class InboxController < ProtectedController
     @messages << (Event.find_all_by_recipient_id(current_user.id, :order => @order).flatten).each{|m| m[:params] = {:message_type => "Event", :controller => "events"}}
     @messages = @messages.flatten
 
-    if current_user.respond_to?('full_name') && current_user.full_name.strip != ''
-      @heading = current_user.full_name + "'s Inbox"
-    else
-      @heading = "Your Inbox"
-    end
-
     render 'inbox/inbox'
   end
   
