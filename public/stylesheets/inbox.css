@@ -225,6 +225,13 @@ blockquote p { padding-bottom:0; }
 	padding: 0.5em;
 	padding-left: 0.8em;
 }
+
+.message_list .heading th a:link,
+.message_list .heading th a:active,
+.message_list .heading th a:visited {
+  color: #fff;
+}
+
 .message_list td{
 	padding: 0.1em;
 	padding-left: 0.5em;
