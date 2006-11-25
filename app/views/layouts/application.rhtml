@@ -15,18 +15,22 @@
   </div>
   
   <div id="applicationHeader" style="height:50px;">
-  <%= render :partial=>'/shared/google_search' %>
-  <% if current_user %>
-    <div id="ram_search_form" style="position:absolute;right:10px;">
-    <%= form_tag :controller => 'search', :action => 'all' %>
-  	  <input class="searchField" type="text" name='id' tabindex="1" alt="search box" />
-  	  <input class="searchSubmit" type="submit" value="<%= APP_NAME %> Search" alt="search button" />
-    <%= end_form_tag %>  
-      <span>Search using</span>
-      <input id='google_radio' type="radio" onclick="View.show_hide('google_search_form','ram_search_form');$('ram_radio').checked = false;" value="Google" name="google_radio" /><label for="google_radio">Google</label>&nbsp;&nbsp;
-      <input id='ram_radio' type="radio" onclick="View.show_hide('ram_search_form','google_search_form');$('google_radio').checked = false;" value="RAM" name="ram_radio" /><label for="ram_radio"><%= APP_NAME %></label>&nbsp;&nbsp;
+    <div style="position:absolute;right:10px;">
+      <%= render :partial => '/shared/google_search' %>
+      <% if current_user %>
+      <div id="ram_search_form" <% if controller.action_name == 'google' -%>style="display: none"<% end -%>>
+      <%= form_tag :controller => 'search', :action => 'all' %>
+  	    <input class="searchField" type="text" name='id' tabindex="1" alt="search box" />
+  	    <input class="searchSubmit" type="submit" value="<%= APP_NAME %> Search" alt="search button" />
+      <%= end_form_tag %>  
+      </div>
+      <div style="padding-top: 5px">
+        <span>Search using: </span>
+        <input id='ram_radio'    type="radio" onclick="View.show_hide('ram_search_form','google_search_form'); $('google_radio').checked = false; this.checked = true" value="RAM" name="ram_radio" <% unless controller.action_name == 'google' -%>checked<% end -%>/> <label for="ram_radio"><%= APP_NAME %></label>&nbsp;&nbsp;&nbsp;
+        <input id='google_radio' type="radio" onclick="View.show_hide('google_search_form','ram_search_form'); $('ram_radio').checked = false;    this.checked = true" value="Google" name="google_radio" <% if controller.action_name == 'google' -%>checked<% end -%>/> <label for="google_radio">Google</label>&nbsp;&nbsp;
+      </div>
+      <% end %>
     </div>
-  <% end -%>
   <%= yield :application_header %>
   </div>
   
