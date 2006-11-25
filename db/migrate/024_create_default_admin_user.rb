@@ -15,6 +15,6 @@ class CreateDefaultAdminUser < ActiveRecord::Migration
   end
 
   def self.down
-    User.find_by_login('admin').destroy
+    User.find_by_login('admin',:include_deleted=>true).destroy
   end
 end

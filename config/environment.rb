@@ -64,7 +64,12 @@ end
 # Include your application configuration below
 require 'openssl'
 require 'base64'
-require 'RMagick'
+begin
+  require 'RMagick'
+rescue LoadError
+  # Failed to load RMagick
+  # TODO disable all RMagick functionality
+end
 require 'ostruct'
 
 # OpenStruct is used in several places throughout the app to fake out views, which are expecting AR models.

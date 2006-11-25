@@ -6,6 +6,13 @@
 <%= error_messages_for 'profile'      %>
 
 <%= start_form_tag :action => "edit_user" ,:id=>@user.id -%>
+<% admin_only_content do -%>
+<dl class="adminOptions">
+  <dt>Admin Only Options</dt>
+    <dd><%= link_to("#{image_tag('/images/icons/cross.png')} Delete User", {:controller=>'admin', :action=>'destroy_user',:id=>@user},{:confirm=>"Are you sure you want to delete #{@user.login}?",:post=>true}) if current_user.is_admin? %></dd>
+</dl>
+<% end -%>
+
 <ul class="web_form_stacked">
 <%= render :partial=>'account/user_data_form'     %>
 <%= render :partial=>'account/admin_options' if current_user.is_admin? && params[:controller] =='admin'%>

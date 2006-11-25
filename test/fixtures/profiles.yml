@@ -47,3 +47,9 @@ suspended_user:
   bio: ""
   created_on: <%= 2.days.ago.to_s :db %>
   updated_on: <%= 2.days.ago.to_s :db %>
+deleted_user: 
+  id: 9
+  user_id: 11
+  bio: ""
+  created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>

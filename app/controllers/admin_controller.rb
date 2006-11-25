@@ -68,14 +68,30 @@ class AdminController
   end
   
   # The user methods do not use the collection_methods module
-  
   def users
     @user_pages, @users = paginate :users, :per_page => 10
     render 'admin/users'
   end
   
+  def deleted_users
+    @user_pages, @users  = paginate_collection(User.find(:all, :conditions => "deleted_at IS NOT NULL", :include_deleted => true))
+    render 'admin/users'
+  end
+  
+  def destroy_user
+    @user = User.find(params[:id])
+    raise unless @user
+    redirect_to :action=>'show_user', :id=>@user.id and return false unless request.post?
+    raise unless @user.destroy
+    flash[:notice] = "You deleted #{@user.login}"
+    redirect_to :action=>'users'
+  rescue
+    flash[:notice] = "Could not find user."
+    redirect_to :action=>'users'
+  end
+  
   def edit_user
-    @user    = User.find(params[:id])
+    @user    = User.find(params[:id],:include_deleted=>true)
     @person  = @user.person
     @profile = @user.profile
     if request.post? && @user

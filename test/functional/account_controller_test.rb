@@ -32,11 +32,15 @@ class AccountControllerTest < Test::Unit::TestCase
   def test_shall_fail_login_for_pending_or_suspended_accounts
     post :login, :login => 'pending_user', :password => 'qazwsx'
     assert_response :success
-    assert_equal flash[:error], "Your Account is pending approval from the administrator"
+    assert_equal flash[:error], "Your account is pending approval from the administrator."
     
     post :login, :login => 'suspended_user', :password => 'qazwsx'
     assert_response :success
-    assert_equal flash[:error], "Your Account is Suspended"
+    assert_equal flash[:error], "Your account is suspended."
+    
+    post :login, :login => 'deleted_user', :password => 'qazwsx'
+    assert_response :success
+    assert_equal flash[:error], "An account could not be found with that username or password"
   end
 
   def test_should_allow_signup

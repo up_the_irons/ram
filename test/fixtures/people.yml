@@ -56,6 +56,15 @@ people_9:
   gender: 1
   date_of_birth: <%= 10000.days.ago.to_s :db %>
   created_on: <%= 2.days.ago.to_s :db %>
+  updated_on: <%= 2.days.ago.to_s :db %>
+people_11:
+  id: 7
+  user_id: 11
+  first_name: 'Deleted'
+  last_name: 'User'
+  gender: 1
+  date_of_birth: <%= 10000.days.ago.to_s :db %>
+  created_on: <%= 2.days.ago.to_s :db %>
   updated_on: <%= 2.days.ago.to_s :db %>  
 anonymous:
   id: 6

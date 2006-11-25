@@ -30,9 +30,6 @@ class UserTest < Test::Unit::TestCase
     assert_equal p+2, u.pending_memberships.size
   end
   
-  # def test_should_not_join_own_group
-  # end
-  
   def test_should_only_count_unique_categories_in_category_list
     # This user has access to all categories and has redundent memberships though several groups 
     u = User.find(1)
@@ -63,6 +60,33 @@ class UserTest < Test::Unit::TestCase
     assert_equal u.is_admin?, false
   end
   
+  def test_cannot_delete_user
+    n = users(:normal_user)
+
+    # By default, User.count returns only non-deleted users, so we should see a difference
+    # after destroying a user
+    assert_difference User, :count, -1 do
+      assert n.destroy
+    end
+
+    # Normal finds should not find this user any more
+    assert_raise(ActiveRecord::RecordNotFound) do
+      User.find(n.id)
+    end
+    
+    # Specific finds on a user's atttribute should also return nil.
+    assert_equal nil, User.find_by_login(n.login)
+
+    # Now see if you can still find the record.
+    assert_equal n.login, User.find(n.id, :include_deleted => true).login
+    assert_equal User.count_with_deleted, User.find(:all, :include_deleted => true).size
+    deleted_user = User.find_by_login(n.login, :include_deleted => true)
+    assert_equal n.login, deleted_user.login
+    
+    # The deleted_at key should not be nil.
+    assert deleted_user.deleted_at
+  end
+    
   def test_adding_a_user_to_the_admin_group_makes_them_an_admin
     u = User.find(4)
     assert_equal false, u.is_admin?

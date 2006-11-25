@@ -11,6 +11,7 @@ class AddAuthenticatedTable < ActiveRecord::Migration
       t.column :created_at       , :datetime
       t.column :updated_at       , :datetime
       t.column :role             , :integer, :default=>0
+      t.column :deleted_at       , :datetime, :default=>nil
     end
   end
 

@@ -44,6 +44,54 @@ module IncludedTests::UserMethodsTest
      assert_response :success
    end
    
+   def test_shall_destroy_user
+     login_as :administrator
+     u = users(:normal_user)
+     get :show_user, :id=>u.id
+     assert assigns(:user)
+     assert_equal User.find_by_login('normal_user'), assigns(:user)
+     
+     # Do nothing on get requests.
+     assert_no_difference User, :count do
+       get :destroy_user, :id=>u.id
+       assert_redirected_to :action=>'show_user', :id=>u.id
+     end     
+     
+     # Redirect if no id is supplied.
+     assert_no_difference User, :count do
+       post :destroy_user
+       assert_redirected_to :action=>'users'
+       assert_equal assigns(:flash)[:notice], 'Could not find user.'
+     end
+     
+     # Destroy the user
+     assert_difference User, :count, -1 do
+       post :destroy_user, :id=>u.id
+       assert_redirected_to :action=>'users'
+       assert_equal assigns(:flash)[:notice], "You deleted #{u.login}"
+     end
+   end
+   
+   def test_shall_list_destroyed_users
+     u = users(:normal_user)
+     assert_difference User, :count, -1 do
+       assert u.destroy
+     end
+     get :deleted_users
+     assert_response :success
+     assert assigns(:users)
+     assert assigns(:users).include?(u)
+   end
+   
+   def test_shall_resurrect_destroyed_users
+     u = User.find_by_login('deleted_user',:include_deleted=>true)
+     login_as :administrator
+     new_state = 2
+     assert_difference User, :count do
+       post :edit_user, :id=>u.id, :user=>{:state=>new_state}
+       assert_equal assigns(:user).state, new_state
+     end
+   end
    
    def test_shall_find_users_by_login_or_by_id
       login_as :administrator

@@ -1,7 +1,7 @@
 #--
 # $Id$
 #
-# Copyright (c) 2006 Mark Daggett & Garry Dolley
+# Copyright (c) 2006 Mark Daggett, Garry Dolley
 #
 # This file is part of RAM (Ruby Asset Manager) 
 # 
@@ -25,8 +25,10 @@
 #
 
 require 'digest/sha1'
-
+# require File.dirname(__FILE__) + '/../../lib/overrides_finder.rb'
 class User < ActiveRecord::Base
+	# has_a_custom_finder
+	
 	has_one  :person
 	has_one  :profile
 	has_one  :avatar
@@ -90,7 +92,7 @@ class User < ActiveRecord::Base
   
   has_many :my_groups, :class_name => 'Collection', :foreign_key => 'user_id'
 
-  STATUS = ['Pending','Suspended','Active'].freeze
+  STATUS = ['Pending','Suspended','Active','Deleted'].freeze
             
   def pending_memberships(reload = true) # now with magic caching
     return [] if my_groups.size == 0
@@ -213,25 +215,33 @@ class User < ActiveRecord::Base
   end
   
   def account_active?
+    return false if self[:state] == 3
     self[:state] > 1
   end
   
   # Used to force state because the profile object also uses "state" but
   # in a geographic context and we don't want it to get set through the method missing.
   def state
+    return 3 if deleted_at
     self[:state]
   end
 
   def state=(status)
     self[:state] = status
+    update_attribute('deleted_at', nil) if deleted_at and status != 3
+  end
+  
+  # Don't destroy the record just set the deleted_at key
+  def destroy
+    update_attribute(:deleted_at, Time.now)
   end
   
   def account_status
     case self[:state]
       when 1
-        "Your Account is Suspended"
+        "Your account is suspended."
       when 0
-        "Your Account is pending approval from the administrator"
+        "Your account is pending approval from the administrator."
     end
   end
   
@@ -254,6 +264,14 @@ class User < ActiveRecord::Base
   end
 
   class <<self
+
+    alias_method :count_with_deleted, :count
+
+    # Scoped count (non-deleted users)
+    def count(*args)
+      with_scope(:find => { :conditions => "deleted_at is NULL" }) { super }
+    end
+
     def find_by_id_or_login(id)
       id.to_s.match(/^\d+$/) ? find(id) : find_by_login(id)
     end
@@ -285,6 +303,23 @@ class User < ActiveRecord::Base
       decrypted_string = (text << enc.final)
     rescue
       nil
+    end
+
+    protected
+
+    def validate_find_options(options)
+      super(options.reject { |k, v| k == :include_deleted })
+    end
+
+    private
+
+    # Scope find calls to exclude deleted accounts by default
+    def find_every(options)
+      if options.delete(:include_deleted) == true
+        super(options)
+      else
+        with_scope(:find => { :conditions => "deleted_at is NULL" }) { super(options) }
+      end
     end
   end
   
