@@ -57,6 +57,14 @@ class CategoryControllerTest < Test::Unit::TestCase
       assert assigns(:category)
     end
   end
+  
+  def test_index_shows_root_category
+    login_as :normal_user
+    u = User.find(4)
+    get :index
+    root = assigns(:current_user).categories_as_tree{:root}[:root][:children][0][:id]
+    assert_redirected_to :action=>'show', :id=>root
+  end
 
   def test_show_pagination_format
     get :show, :id => collections(:collection_9).id

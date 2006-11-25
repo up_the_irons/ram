@@ -17,7 +17,12 @@ class CategoryController < ProtectedController
   paging   :show, :index
 
   def index
-    list
+    if current_user.categories.empty?
+      flash[:notice] = "Your do not have access to any categories."
+      render :text => "", :layout => 'application'
+    else
+      redirect_to :action=>"show", :id => current_user.categories_as_tree{:root}[:root][:children][0][:id]
+    end
   end
   
   def show
@@ -36,21 +41,5 @@ class CategoryController < ProtectedController
     end
      
     @sort_header_url = {}
-  end
-  
-  def list
-    list_collection do
-      respond_to do |wants|
-        wants.html do
-          render :partial => 'category/list', :layout => 'application'
-        end
-        wants.js do 
-          render :update do |page|
-            page.replace_html 'category_list', :partial => 'category/list'
-          end
-        end
-      end
-    end    
-  end
-  
+  end  
 end
