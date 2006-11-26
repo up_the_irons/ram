@@ -200,6 +200,14 @@ class UserTest < Test::Unit::TestCase
 
     assert_equal 4, es.size
   end
+  
+  def test_no_duplicate_assets
+    u = users(:administrator)
+    assert !u.assets.empty? 
+    assert_no_difference u.assets, :size do
+      u.assets << u.assets[0]
+    end
+  end
 
   def test_assets_search
     u = users(:normal_user)

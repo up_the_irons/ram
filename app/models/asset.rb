@@ -106,7 +106,7 @@ class Asset < ActiveRecord::Base
     
   class << self    
     def search(keywords, groups, order = nil)
-      query = { :id => "", :name => "", :description => "", :filename => "" }
+      query = { :id => "", :name => "", :description => "", :filename => "",:user_id=>"" }
       
       if keywords.class.to_s == "Hash"
         query = query.merge(keywords)
@@ -118,7 +118,7 @@ class Asset < ActiveRecord::Base
       unless query[:id] == query[:name] # ID was not supplied. If you want to search by ID, either do Asset.find or send the query as a hash.
         find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND attachments.id = ? ", "#{query[:id]}"], :group => "attachments.id", :order => order)
       else
-        find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.id LIKE ? OR attachments.filename LIKE ? OR attachments.description LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = attachments.id AND taggings.taggable_type = 'Asset' AND tags.name LIKE ?) IS NOT NULL)", "%#{query[:id]}%", "%#{query[:filename]}%", "%#{query[:description]}%", "%#{query[:name]}%"], :group => "attachments.id", :order => order)
+        find(:all, :select => "attachments.*", :joins => "INNER JOIN linkings ON attachments.id = linkings.linkable_id", :conditions => ["linkings.group_id IN (#{groups.join(',')}) AND (linkings.linkable_type='Asset') AND (attachments.id LIKE ? OR attachments.filename LIKE ? OR attachments.description LIKE ? OR attachments.user_id LIKE ? OR (SELECT tags.name FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id WHERE taggings.taggable_id = attachments.id AND taggings.taggable_type = 'Asset' AND tags.name LIKE ?) IS NOT NULL)", "%#{query[:id]}%", "%#{query[:filename]}%", "%#{query[:description]}%","%#{query[:user_id]}%", "%#{query[:name]}%"], :group => "attachments.id", :order => order)
       end
     end
 

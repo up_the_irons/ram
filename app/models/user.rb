@@ -35,7 +35,12 @@ class User < ActiveRecord::Base
   
 	has_many :memberships
 	has_many :articles
-	has_many :assets
+	has_many :assets do
+	  def <<(asset)
+	    return false if @owner.assets.include?(asset)
+	    super
+    end
+  end
   has_many :event_subscriptions
 	
 	# TODO: Abstract this inside the acts_as_subscribable plug-in.... however to do this we need to find out why the user model will not load 
