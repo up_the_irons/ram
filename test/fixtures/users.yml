@@ -40,7 +40,7 @@ administrator:
   login: administrator
   email: administrator@example.com
   created_at: 2006-05-02 13:16:30 -07:00
-  last_login_at: 2006-05-07 13:57:23 -07:00  
+  last_login_at: 2006-05-07 13:57:23 -07:00
 user_without_group_memberships: 
   salt: 7e3b27b7b3b41d7c167bbb594995fcadcf5bab3b
   updated_at: 2006-05-07 13:55:25 -07:00

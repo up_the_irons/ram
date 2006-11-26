@@ -233,7 +233,11 @@ class User < ActiveRecord::Base
 
   def state=(status)
     self[:state] = status
-    update_attribute('deleted_at', nil) if deleted_at and status != 3
+    if status == 3
+      update_attribute('deleted_at', Time.now)
+    else
+      update_attribute('deleted_at', nil)
+    end
   end
   
   # Don't destroy the record just set the deleted_at key

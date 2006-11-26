@@ -78,7 +78,7 @@ class InitialSchema < ActiveRecord::Migration
       t.column "state_id", :integer
       t.column "parent_id", :integer
       t.column "counter_cache", :boolean, :default => true
-      t.column "permanent", :boolean
+      t.column "permanent", :boolean, :default=> false
       t.column "created_at", :datetime
       t.column "updated_at", :datetime
     end
@@ -215,7 +215,7 @@ class InitialSchema < ActiveRecord::Migration
     execute "ALTER TABLE event_subscriptions ADD FOREIGN KEY (event_trigger_id) REFERENCES event_triggers(id) ON DELETE CASCADE"
      
     #Dirty hack for mysql because rails defaults to just "blob", which is too small for most images.
-    execute "ALTER TABLE `db_files` MODIFY `data` MEDIUMBLOB" if self.adapter_name.to_s == "MySQL"
+    execute "ALTER TABLE `db_files` MODIFY `data` MEDIUMBLOB" if adapter_name.to_s == "MySQL"
      
     # Make default associations. 
     EventTrigger.create(:code => 'UserSignup')
@@ -238,13 +238,12 @@ class InitialSchema < ActiveRecord::Migration
     
     # Create the administration group.
     g = Group.create(:name => 'Administrators', 
-                     :description => "Admins have access to all categories", 
+                     :description => "Admins have access to all categories",
                      :public => 1,
                      :user_id => 1, 
-                     :state_id => 1, 
-                     :permanent => true)
-
-    g.users << User.find_by_login('admin')
+                     :state_id => 1)
+    g.update_attribute("permanent", true)
+    Membership.create({:user_id=>u.id,:collection_id=>g.id,:collection_type=>'Group'})
   end
 
   def self.down

@@ -110,7 +110,6 @@ module IncludedTests::UserMethodsTest
       @user = users(:normal_user)
       assert @user.profile
       assert @user.person
-
       post :edit_user, :id=>users(:normal_user).id, :user=>{:state=>new_state}
       assert_equal assigns(:user).state, new_state
     end
