@@ -90,9 +90,9 @@ a:hover{
 }
 
 .flash_error{
-	background-image  : url('/images/flash_notice_bg.jpg');
+	background-image  : url('/images/flash_error_bg.jpg');
 	border           : 2px solid #aa0000;
-	color            : #ffffff;
+	color            : #000000;
 	background-color : #ff8c8b;
 }
 
