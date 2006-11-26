@@ -1,3 +1,13 @@
+#--
+# $Id$
+#
+# Copyright (c) 2006 Mark Daggett
+#
+# This file is part of RAM (Ruby Asset Manager) 
+# 
+# Released under the MIT / X11 License.  See LICENSE file for details.
+#++
+
 module ActiveRecord
   module Acts #:nodoc:
     module Subscribable #:nodoc:
