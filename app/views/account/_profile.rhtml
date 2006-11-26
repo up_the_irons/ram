@@ -7,12 +7,7 @@ round_box = display_as_round_box do -%>
 </div>
 <div class="profileData">
 	<h1>
-	<%= 
-		unless !defined?(user.full_name) || user.full_name.nil?
-			user.full_name
-		else
-			'unknown'
-		end  -%>
+	<%= (user.full_name)? user.full_name : "Unknown" -%>
 		<span class="mice_type">(<%= user.login %>)
 		<%= link_to("#{image_tag('/images/icons/pencil.png')} Edit Profile", {:controller=>'account',:action=>'edit',:id=>user.id}, {:class=>"editOptions"}) if user.id == current_user.id || current_user.is_admin? %>
 		</span> 
