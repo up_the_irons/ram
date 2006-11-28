@@ -1,0 +1,30 @@
+<% content_for :application_header do -%>
+<h1>Event Subscriptions</h1>
+<% end -%>
+
+<b>You are subscribed to the following event notifications:</b>
+
+<br/>
+<br/>
+
+<%= form_tag %>
+
+<table class="dataGrid" cellspacing="0" cellpadding="0">
+  <tr>
+    <th></th>
+    <th>Trigger</th>
+    <th>Description</th>
+  </tr>
+<% count = 0 -%>
+<% EventTrigger.find(:all).each do |trigger| -%>
+<tr class="<%= count % 2 == 0 ? 'even' : 'odd' %>">
+  <td><%= check_box_tag 'event_subscriptions[]', trigger.code, @subscribed_to.include?(trigger.code), :id => 'event_subscriptions_' + trigger.code %></td>
+  <td><%= trigger.code %></td>
+  <td><%= trigger.description %></td>
+</tr>
+<% count += 1 -%>
+<% end -%>
+</table>
+
+<%= submit_tag 'Update' %>
+<%= end_form_tag %>

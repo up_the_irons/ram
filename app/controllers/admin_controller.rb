@@ -119,13 +119,27 @@ class AdminController
   
   def show_user
     @user = User.find_by_id_or_login(params[:id])
-    render :partial=>'account/profile',
-      :locals=>{:user=> @user},
-      :layout=>'application' unless @user.nil?
+    render :partial => 'account/profile',
+           :locals  => { :user => @user},
+           :layout  =>'application' unless @user.nil?
   end
     
   def dashboard
     @events = Event.find_all_by_recipient_id(current_user.id, :order => @order)
+  end
+
+  def event_subscriptions
+    if request.post?
+      EventSubscription.transaction do
+        EventSubscription.delete_all("user_id = #{current_user.id}")
+
+        params[:event_subscriptions].each do |code|
+          EventSubscription.create(:user_id => current_user.id, :event_trigger => EventTrigger.find_by_code(code))
+        end
+      end 
+    end
+
+    @subscribed_to = current_user.event_subscriptions.reload.map { |o| o.event_trigger.code }
   end
 
   protected
@@ -133,7 +147,7 @@ class AdminController
   def admin_access_required
     unless current_user.is_admin?
       flash[:notice] = "Access Denied"
-      redirect_to :controller=>'inbox' 
+      redirect_to :controller => 'inbox' 
     end
   end
 end

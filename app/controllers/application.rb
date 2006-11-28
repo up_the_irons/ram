@@ -1,7 +1,7 @@
 #--
 # $Id$
 #
-# Copyright (c) 2006 Mark Daggett & Garry Dolley
+# Copyright (c) 2006 Mark Daggett, Garry Dolley
 # 
 # This file is part of RAM (Ruby Asset Manager) 
 # 

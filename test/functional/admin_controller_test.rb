@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/admin_controller_test/group_methods_test'
 require File.dirname(__FILE__) + '/admin_controller_test/category_methods_test'
 require File.dirname(__FILE__) + '/admin_controller_test/user_methods_test'
+require File.dirname(__FILE__) + '/admin_controller_test/event_subscriptions_test'
 require 'admin_controller'
 
 # Re-raise errors caught by the controller.
@@ -11,9 +12,11 @@ class AdminController; def rescue_action(e) raise e end; end
 
 class AdminControllerTest < Test::Unit::TestCase
   fixtures :collections, :attachments, :db_files, :users, :linkings, :memberships,:changes, :profiles, :people
+
   include IncludedTests::UserMethodsTest
   include IncludedTests::GroupMethodsTest
   include IncludedTests::CategoryMethodsTest
+  include IncludedTests::EventSubscriptionsTest
   
   def setup
     @controller = AdminController.new
