@@ -45,7 +45,8 @@ class AssetController < ProtectedController
 
   #the bulk upload process is initiated from flash.
   def bulk_upload
-    @size_limit = UPLOAD_SIZE_LIMIT #50000*1024
+    # @size_limit = UPLOAD_SIZE_LIMIT #50000*1024
+    @size_limit = $application_settings.filesize_limit
     if @category = find_in_users_categories(params[:id])
       @login = CGI.escape(current_user.encrypt_login)
       @url_params = "maxFileSize=#{@size_limit}"
