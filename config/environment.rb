@@ -82,8 +82,8 @@ OpenStruct.class_eval { undef :id }
 
 UPLOAD_SIZE_LIMIT = 50000 * 1024
 RAM_SALT          = 'foodz'
-APP_NAME          = 'RAM'
-ADMIN_GROUP       = 'Administrators'
+# APP_NAME          = 'RAM'
+# ADMIN_GROUP       = 'Administrators'
 begin
   $application_settings = Setting.find(:first) unless RAILS_ENV == 'test' # The record, which hold all the website configurations
 rescue
