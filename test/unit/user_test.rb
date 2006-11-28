@@ -6,7 +6,7 @@ class UserTest < Test::Unit::TestCase
   include AuthenticatedTestHelper
 
   fixtures :users, :tags, :collections, :memberships, :linkings, :event_subscriptions, :attachments, :taggings
-
+  
   def test_should_associate_groups
     u = User.find(4)
     s = u.groups.size
@@ -90,7 +90,7 @@ class UserTest < Test::Unit::TestCase
   def test_adding_a_user_to_the_admin_group_makes_them_an_admin
     u = User.find(4)
     assert_equal false, u.is_admin?
-    u.groups << Group.find_by_name(ADMIN_GROUP)
+    u.groups << Group.find($application_settings.admin_group_id)
     u.reload
     assert_equal true, u.is_admin?
   end
@@ -278,13 +278,13 @@ class UserTest < Test::Unit::TestCase
 
     u = users(:administrator)
     groups = u.groups_search('a')
-    p.call(['Atari', ADMIN_GROUP], groups)
+    p.call(['Atari', Group.find($application_settings.admin_group_id).name], groups)
 
     groups = u.groups_search('secret')
-    p.call(ADMIN_GROUP, groups)
+    p.call(Group.find($application_settings.admin_group_id).name, groups)
 
     groups = u.groups_search('purple')
-    p.call([ADMIN_GROUP, 'Atari'], groups)
+    p.call([Group.find($application_settings.admin_group_id).name, 'Atari'], groups)
   end
 
 end

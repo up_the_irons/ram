@@ -6,7 +6,7 @@ class GroupTest < Test::Unit::TestCase
 
   def setup
     @model = Group
-    @record_one = Group.find(1) #(:friends)    
+    @record_one = Group.find(1)
     @new_obj = {
       :name => 'atari fans',
       :description => 'a collection of the most rad game fans eva',
@@ -29,7 +29,7 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_cannot_destroy_a_permanent_group
-    g = Group.find_by_name(ADMIN_GROUP) # Permanent group
+    g = Group.find_by_name(Group.find($application_settings.admin_group_id).name) # Permanent group
     assert_no_difference Group, :count do
       assert_raise(RuntimeError) {g.destroy}
     end
@@ -44,7 +44,7 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_cannot_rename_a_permanent_group
-    g = Group.find_by_name(ADMIN_GROUP) # Permanent group
+    g = Group.find($application_settings.admin_group_id) # Permanent group
     assert_unchanged g, :name do
       g.update_attributes({:name=>"#{Time.now.to_s}"})
       assert !g.valid?
@@ -110,11 +110,11 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_destroy_group
-    unit_destroy @model, @model.find(:first).id
+    unit_destroy @model, collections(:collection_4).id
   end
   
   def test_update_group
-    @id = @model.find(:first).id
+    @id = collections(:collection_4).id
     @new_values = {
       :name=> 'Donkey Kong Fans',
       :description=>'A group for those of us that like monkeys and hate plumbers'
@@ -123,7 +123,7 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_make_group_private
-    @id = @model.find(:first).id
+    @id = collections(:collection_4).id
     @group = @model.find(@id)
     @group.public = false
     @group.save
@@ -131,7 +131,7 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_make_group_public
-    @id = @model.find(:first).id
+    @id = collections(:collection_4).id
     @group = @model.find(@id)
     @group.public = true
     @group.save

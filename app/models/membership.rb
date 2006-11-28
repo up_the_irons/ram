@@ -1,3 +1,13 @@
+# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
+#
+#  id                  :integer(11)   not null
+#  user_id             :integer(11)   
+#  collection_id       :integer(11)   
+#  collection_type     :string(255)   
+#  state_id            :integer(11)   default(0)
+#  created_at          :datetime      
+#
+
 #--
 # $Id$
 #
@@ -7,16 +17,6 @@
 # 
 # Released under the MIT / X11 License.  See LICENSE file for details.
 #++
-
-# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
-#
-#  id                  :integer(11)   not null
-#  user_id             :integer(11)   
-#  collection_id       :integer(11)   
-#  collection_type     :string(255)   
-#  state_id            :integer(11)   default(0)
-#  created_at          :datetime      
-#
 
 class Membership < ActiveRecord::Base
   belongs_to :user,  :foreign_key => 'user_id'

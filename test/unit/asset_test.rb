@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AssetTest < Test::Unit::TestCase
-  fixtures :collections, :attachments, :db_files, :linkings, :users, :memberships
+  fixtures :collections, :attachments, :db_files, :linkings, :users, :memberships, :settings
 
   def setup
   		@model = Asset

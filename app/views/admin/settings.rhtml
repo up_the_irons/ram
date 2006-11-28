@@ -1,0 +1,29 @@
+<% content_for('application_header') do -%>
+<h1>Application Settings</h1>
+<% end -%>
+<%= error_messages_for 'settings' %>
+<%= start_form_tag :action => "settings"-%>
+<ul class="web_form_stacked">
+  <li><label for="application_name">Application Name:</label>
+    <%= text_field :settings, :application_name %>
+  </li>
+  <li><label for="filesize_limit">Maximum per file size limit for uploads</label>
+    <select name="settings[filesize_limit]">
+      <% 10.times do |size|
+      limit = ((size*1000)+10000) * 1024
+      -%>
+      <option <%= "selected" if limit ==  @settings.filesize_limit %> value="<%= limit %>"><%= (size*10) + 10 %> Megabytes</option>
+      <% end -%>
+    </select>
+  </li>
+  <li><label for="administrator_group">Administrators Group</label>
+    <select size="5" name="settings[admin_group_id]">
+    <%= options_from_collection_for_select(Group.find(:all), "id", "name" ) %>
+    </selct>
+  </li>
+  <li>
+    <label for="save_button">Save Application Settings</label>
+    <%= submit_tag "Submit" %>
+  </li>
+</ul>
+</form>

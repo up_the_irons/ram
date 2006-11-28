@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class MembershipTest < Test::Unit::TestCase
-  fixtures :memberships, :users, :collections
+  fixtures :memberships, :users, :collections, :settings
 
   def test_new_membership_shows_users
     s = User.find(4).memberships.size

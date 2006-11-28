@@ -32,13 +32,14 @@ module IncludedTests::GroupMethodsTest
 
     # User.is_admin? changed from looking at "role" field to seeing if the user is in group named "Administrators", so 
     # if we change the name of this group, we get screwed; therefore, we filter out "Administrators" from this find()
-    g = users(:administrator).groups.find(:first, :conditions => "name != '#{ADMIN_GROUP}'")
+    g = users(:administrator).groups.find(1)
     new_name = 'Atari Monkeys'
     new_tags = ["atari", "2600"]
     assert_not_nil g
     post :edit_group, :id => g.id, :group => {:name => new_name, :tags => new_tags.join(', '), :user_ids => [users(:administrator).id] }
     assert_response :success
-    group_after_update = Group.find(g.id)
+    group_after_update = users(:administrator).groups.find(:first, :conditions => "name = '#{new_name}'")
+    assert group_after_update
     assert_equal new_name, group_after_update.name
     assert (new_tags - group_after_update.tags.map { |o| o.name }).empty?
 
@@ -59,7 +60,7 @@ module IncludedTests::GroupMethodsTest
 
   def test_update_group_with_blank_tags
     new_tags = ['beach', 'bird','dog']
-    g = users(:administrator).groups.find(:first, :conditions => "name != '#{ADMIN_GROUP}'")
+    g = users(:administrator).groups.find(:first, :conditions => "name != '#{Group.find($application_settings.admin_group_id).name}'")
     post :edit_group, :id => g.id, :group =>{:name=>'Atari Monkeys', :user_ids => [users(:administrator).id], :tags => new_tags.join(', ')}
     assert_response :success
     
@@ -105,7 +106,7 @@ module IncludedTests::GroupMethodsTest
   def test_disband_group
     login_as :administrator
     users(:administrator).groups.each do |g|
-      unless g.name == ADMIN_GROUP
+      unless g.name == Group.find($application_settings.admin_group_id).name
         # 1 Event is sent to admin "administrator" and 1 for each user belonging to this group
         assert_difference Event, :count, (1 + g.users.count) do
           post :disband_group, :id=>g.id 
@@ -124,7 +125,7 @@ module IncludedTests::GroupMethodsTest
     administrator = users(:administrator)
 
     # Remove administrator from admin group to make this test meaningful (else, he has access to all categories simply by being an administrator)
-    Group.find_by_name(ADMIN_GROUP).remove_member(administrator)
+    Group.find($application_settings.admin_group_id).remove_member(administrator)
     administrator.categories_as_tree(true) # Reload
 
     login_as :administrator

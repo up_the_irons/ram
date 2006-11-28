@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class EventTriggerTest < Test::Unit::TestCase
-  fixtures :event_triggers, :users
+  fixtures :event_triggers, :users, :settings
 
   def test_subscribers_of
     users = EventTrigger.subscribers_of(:user_signup)

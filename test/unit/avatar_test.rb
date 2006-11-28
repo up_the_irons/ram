@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AvatarTest < Test::Unit::TestCase
-  fixtures :users, :avatars
+  fixtures :users, :avatars, :settings
 
   def test_create_avatar
     assert_difference Avatar, :count do

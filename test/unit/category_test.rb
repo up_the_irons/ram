@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/../test_unit_helper'
 
 class CategoryTest < Test::Unit::TestCase
-  fixtures :collections, :memberships, :users, :linkings
+  fixtures :collections, :memberships, :users, :linkings, :settings
 
   def setup
     @model = Category

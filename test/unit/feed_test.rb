@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class FeedTest < Test::Unit::TestCase
-  fixtures :feeds, :users, :subscriptions, :changes, :assets, :articles
+  fixtures :feeds, :users, :subscriptions, :changes, :assets, :articles, :settings
 
   def setup
     @model_attributes={:name=>Time.now.to_s, :url=>'http://developer.apple.com/rss/adcheadlines.rss',:is_local=>false, :local_path=>'/feed/category/8'}

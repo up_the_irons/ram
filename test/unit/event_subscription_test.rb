@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class EventSubscriptionTest < Test::Unit::TestCase
-  fixtures :event_subscriptions, :event_triggers, :users
+  fixtures :event_subscriptions, :event_triggers, :users, :settings
 
   def test_belongs_to_user
     e = event_subscriptions(:administrator_1)

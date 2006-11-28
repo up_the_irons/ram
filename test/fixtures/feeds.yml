@@ -1,4 +1,4 @@
-# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
+# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
 #
 #  id                  :integer(11)   not null
 #  url                 :string(255)   

@@ -1,14 +1,4 @@
-#--
-# $Id$
-#
-# Copyright (c) 2006 Mark Daggett, Garry Dolley
-#
-# This file is part of RAM (Ruby Asset Manager) 
-# 
-# Released under the MIT / X11 License.  See LICENSE file for details.
-#++
-
-# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
+# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
 #
 #  id                  :integer(11)   not null
 #  login               :string(40)    
@@ -21,8 +11,19 @@
 #  created_at          :datetime      
 #  updated_at          :datetime      
 #  role                :integer(11)   default(0)
+#  deleted_at          :datetime      
 #  last_login_at       :datetime      
 #
+
+#--
+# $Id$
+#
+# Copyright (c) 2006 Mark Daggett, Garry Dolley
+#
+# This file is part of RAM (Ruby Asset Manager) 
+# 
+# Released under the MIT / X11 License.  See LICENSE file for details.
+#++
 
 require 'digest/sha1'
 # require File.dirname(__FILE__) + '/../../lib/overrides_finder.rb'
@@ -255,7 +256,7 @@ class User < ActiveRecord::Base
   end
   
   def is_admin?
-    (groups.find_by_name(ADMIN_GROUP))? true : false 
+    (user.groups.include?(Group.find($application_settings.admin_group_id)))? true : false 
   end
   
   # Expects the obj to respond to user_id

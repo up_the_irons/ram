@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/../test_unit_helper'
 
 class LinkingTest < Test::Unit::TestCase
-  fixtures :attachments, :collections, :linkings
+  fixtures :attachments, :collections, :linkings, :settings
 
   def setup
     @model = Linking

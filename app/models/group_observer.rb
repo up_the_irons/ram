@@ -31,7 +31,7 @@ class GroupObserver < ActiveRecord::Observer
 
   def after_save(group)
     # Admins get access to new groups automatically
-    Group.find_by_name(ADMIN_GROUP).users.each { |m| group.users << m }
+    Group.find($application_settings.admin_group_id).users.each { |m| group.users << m }
   end
 
   class <<self

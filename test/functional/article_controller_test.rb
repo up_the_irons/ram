@@ -5,7 +5,7 @@ require 'article_controller'
 class ArticleController; def rescue_action(e) raise e end; end
 
 class ArticleControllerTest < Test::Unit::TestCase
-  fixtures :users, :articles, :tags, :collections, :memberships, :linkings, :taggings
+  fixtures :users, :articles, :tags, :collections, :memberships, :linkings, :taggings, :settings
 
   def setup
     @controller = ArticleController.new
@@ -209,7 +209,7 @@ class ArticleControllerTest < Test::Unit::TestCase
     assert_equal assigns(:article).title, a.title
     
     # Now switch the user and assert that the article cannot be seen.
-    b = an_article({:user_id=>@another_user.id})
+    b = an_article({:user_id=>users(:suspended_user).id})
     b.groups << users(:normal_user).groups[0] # Ensure that there is atleast one group in common
     assert b.valid?
     get :read, :id=>b.id

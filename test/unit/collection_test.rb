@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CollectionTest < Test::Unit::TestCase
-  fixtures :collections
+  fixtures :collections, :settings
 
   def test_state
     c = Collection.new(:state_id => 2)

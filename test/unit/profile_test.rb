@@ -16,7 +16,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/../test_unit_helper'
 
 class ProfileTest < Test::Unit::TestCase
-  fixtures :profiles
+  fixtures :profiles, :settings
 
   # Replace this with your real tests.
   def setup

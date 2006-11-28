@@ -127,6 +127,17 @@ class AdminController
   def dashboard
     @events = Event.find_all_by_recipient_id(current_user.id, :order => @order)
   end
+  
+  def settings
+      # There should only be one setting record for the application
+      @settings = Setting.find(:first)
+      return false unless request.post?
+      
+      if @settings.update_attributes(params[:settings])
+        flash[:notice] = "Your changes have been saved."
+        $application_settings = Setting.find(@settings.id)
+      end
+  end
 
   def event_subscriptions
     if request.post?

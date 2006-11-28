@@ -1,14 +1,4 @@
-#--
-# $Id$
-#
-# Copyright (c) 2006 Mark Daggett & Garry Dolley
-#
-# This file is part of RAM (Ruby Asset Manager) 
-# 
-# Released under the MIT / X11 License.  See LICENSE file for details.
-#++
-
-# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
+# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
 #
 #  id                  :integer(11)   not null
 #  parent_id           :integer(11)   
@@ -28,6 +18,16 @@
 #  allow_comments      :boolean(1)    
 #  status              :integer(11)   default(0), not null
 #
+
+#--
+# $Id$
+#
+# Copyright (c) 2006 Mark Daggett & Garry Dolley
+#
+# This file is part of RAM (Ruby Asset Manager) 
+# 
+# Released under the MIT / X11 License.  See LICENSE file for details.
+#++
 
 # TODO: Remove the status row if it is not going to be used. 
 

@@ -1,3 +1,9 @@
+# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
+#
+#  id                  :integer(11)   not null
+#  code                :string(64)    
+#
+
 #--
 # $Id$
 #
@@ -7,12 +13,6 @@
 # 
 # Released under the MIT / X11 License.  See LICENSE file for details.
 #++
-
-# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
-#
-#  id                  :integer(11)   not null
-#  code                :string(64)    
-#
 
 class EventTrigger < ActiveRecord::Base
   @@default_codes = %w(UserSignup UserDeleted UserSuspended GroupModification)

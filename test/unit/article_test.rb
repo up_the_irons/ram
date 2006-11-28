@@ -20,7 +20,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/../test_unit_helper'
 
 class ArticleTest < Test::Unit::TestCase
-  fixtures :collections, :articles, :linkings, :users, :memberships
+  fixtures :collections, :articles, :linkings, :users, :memberships, :settings
   
   def setup
     @model = Article

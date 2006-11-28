@@ -1,14 +1,4 @@
-#--
-# $Id$
-#
-# Copyright (c) 2006 Mark Daggett & Garry Dolley
-#
-# This file is part of RAM (Ruby Asset Manager) 
-# 
-# Released under the MIT / X11 License.  See LICENSE file for details.
-#++
-
-# Schema as of Fri Oct 27 20:31:51 PDT 2006 (schema version 22)
+# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
 #
 #  id                  :integer(11)   not null
 #  url                 :string(255)   
@@ -18,6 +8,16 @@
 #  is_local            :boolean(1)    default(true)
 #  local_path          :string(255)   
 #
+
+#--
+# $Id$
+#
+# Copyright (c) 2006 Mark Daggett & Garry Dolley
+#
+# This file is part of RAM (Ruby Asset Manager) 
+# 
+# Released under the MIT / X11 License.  See LICENSE file for details.
+#++
 
 require 'rss/2.0'
 
