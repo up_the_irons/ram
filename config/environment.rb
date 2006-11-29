@@ -94,4 +94,6 @@ begin
   REVISION_NUMBER = YAML.load(`svn info`)['Revision'] 
   APP_CODENAME  = IO.readlines("/usr/share/dict/words")[REVISION_NUMBER]
 rescue
+  REVISION_NUMBER = ""
+  APP_CODENAME = ""
 end
