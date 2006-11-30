@@ -1,1 +1,1 @@
-<p><%= link_to 'RAM',:controller=>'site',:action=>'about' %> Build:<%= REVISION_NUMBER %> the <em><%= link_to APP_CODENAME, "http://dictionary.reference.com/browse/#{APP_CODENAME}", {:target=>'_new'} %></em> edition.</p>
+<p><%= link_to "#{$application_settings.application_name}",:controller=>'site',:action=>'about' %> Build:<%= REVISION_NUMBER %> the <em><%= link_to APP_CODENAME, "http://dictionary.reference.com/browse/#{APP_CODENAME}", {:target=>'_new'} %></em> edition.</p>

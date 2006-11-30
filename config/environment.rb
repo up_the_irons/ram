@@ -91,9 +91,12 @@ rescue
 end
 begin
   # Codename generated from the dictionary
-  REVISION_NUMBER = YAML.load(`svn info`)['Revision'] 
-  APP_CODENAME  = IO.readlines("/usr/share/dict/words")[REVISION_NUMBER]
+  @rev = YAML.load(`svn info`)['Revision'] 
+  @codename  = IO.readlines("/usr/share/dict/words")[@rev]
 rescue
-  REVISION_NUMBER = ""
-  APP_CODENAME = ""
+  @rev = ""
+  @codename =""
 end
+  REVISION_NUMBER = @rev
+  APP_CODENAME = @codename
+
