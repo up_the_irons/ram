@@ -1,0 +1,7 @@
+author: 
+    name: heavysixer Mark Daggett
+    homepage: http://locusfoc.us
+summary: Flexible polymorphic subcriber / subscribee class
+homepage: http://locusfoc.us
+plugin: http://svn.locusfoc.us/projects/plugins/acts_as_subscribable
+license: MIT

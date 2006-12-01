@@ -1,0 +1,1530 @@
+# Logfile created on Thu Nov 30 22:10:18 PST 2006 by logger.rb/1.5.2.7
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Unknown table 'subscriptions': DROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.021072)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Unknown table 'feeds': DROP TABLE feeds[0m
+  [4;36;1mSQL (0.005657)[0m   [0;1mCREATE TABLE feeds (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `url` varchar(255), `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Unknown table 'users': DROP TABLE users[0m
+  [4;36;1mSQL (0.002511)[0m   [0;1mCREATE TABLE users (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `login` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001913)[0m   [0mCREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.000672)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;35;1mSQL (0.022632)[0m   [0mSHOW FIELDS FROM schema_info[0m
+  [4;36;1mSQL (0.001913)[0m   [0;1mUPDATE schema_info SET version = 0[0m
+  [4;35;1mSQL (0.110233)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.014969)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001983)[0m   [0mDROP TABLE feeds[0m
+  [4;36;1mSQL (0.002406)[0m   [0;1mCREATE TABLE feeds (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `url` varchar(255), `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002127)[0m   [0mDROP TABLE users[0m
+  [4;36;1mSQL (0.019069)[0m   [0;1mCREATE TABLE users (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `login` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.002251)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000640)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000072)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Columns (0.025348)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mUser Load (0.000000)[0m   [0;1mMysql::Error: Unknown column 'deleted_at' in 'where clause': SELECT * FROM users WHERE (deleted_at is NULL) AND (users.login = 'nolan') LIMIT 1[0m
+  [4;35;1mSQL (0.000142)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002117)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.016008)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Unknown table 'books': DROP TABLE Books[0m
+  [4;36;1mSQL (0.002976)[0m   [0;1mCREATE TABLE Books (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `author` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Unknown table 'readers': DROP TABLE Readers[0m
+  [4;36;1mSQL (0.002456)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001728)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.002409)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000072)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000114)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002220)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.020145)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002234)[0m   [0mDROP TABLE Books[0m
+  [4;36;1mSQL (0.002756)[0m   [0;1mCREATE TABLE Books (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `author` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002258)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002246)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001859)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000777)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000072)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.009482)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000412)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.001102)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.010266)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.079507)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.003095)[0m   [0mDROP TABLE Books[0m
+  [4;36;1mSQL (0.035533)[0m   [0;1mCREATE TABLE Books (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `author` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.004148)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.053472)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.009995)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.002558)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000059)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.003005)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000331)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.001537)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.016759)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002531)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002156)[0m   [0mDROP TABLE Books[0m
+  [4;36;1mSQL (0.004092)[0m   [0;1mCREATE TABLE Books (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `author` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002743)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002611)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001810)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000875)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000073)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002155)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000309)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.001543)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002019)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.021250)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.023072)[0m   [0mDROP TABLE Books[0m
+  [4;36;1mSQL (0.002473)[0m   [0;1mCREATE TABLE Books (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `author` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.003166)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.008607)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001789)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000525)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000078)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.001962)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000285)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000993)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002165)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.014787)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002090)[0m   [0mDROP TABLE Books[0m
+  [4;36;1mSQL (0.002410)[0m   [0;1mCREATE TABLE Books (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `author` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002036)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002612)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.002304)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000715)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000082)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002313)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000310)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mBook Columns (0.029335)[0m   [0mSHOW FIELDS FROM books[0m
+  [4;36;1mSQL (0.001417)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.013284)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002442)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001823)[0m   [0mDROP TABLE Books[0m
+  [4;36;1mSQL (0.002797)[0m   [0;1mCREATE TABLE Books (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `author` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002738)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002856)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001781)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000532)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000072)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002380)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000296)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.001108)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.003126)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.012596)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Unknown table 'magazines': DROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002312)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002057)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.003491)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.004301)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000781)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;35;1mSQL (0.002110)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002572)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002020)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002423)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001841)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002569)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001969)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.001271)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000071)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002216)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000303)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002060)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000663)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.003022)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002735)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001753)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002510)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001919)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002310)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001719)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.001149)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000071)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002224)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000289)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002233)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000296)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSQL (0.000607)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002600)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.003195)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.011860)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002368)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002535)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.003474)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001691)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000684)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000064)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002418)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000312)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002044)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000326)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Load (0.000636)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.004110)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.002514)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:31:52', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:31:52')[0m
+  [4;36;1mSubscription Load (0.000414)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Count (0.000392)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001538)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002169)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.020525)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002164)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002283)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.004534)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002230)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.002032)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000612)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000072)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002302)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000291)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002032)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000267)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000464)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002014)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000326)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:33:54', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:33:54')[0m
+  [4;36;1mSubscription Load (0.000366)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000665)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002061)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002806)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001810)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002466)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001799)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002198)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001924)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.002271)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000071)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002165)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000310)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002151)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000302)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000584)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002957)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000370)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:35:13', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:35:13')[0m
+  [4;36;1mSubscription Load (0.000387)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001431)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002087)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002559)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002105)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002269)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001761)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002592)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001817)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000617)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000073)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.001982)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000280)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.001911)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000252)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000465)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.001989)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000337)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:37:46', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:37:46')[0m
+  [4;36;1mSubscription Load (0.000337)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000228)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000242)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.002003)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002340)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.020804)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002166)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.003007)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002418)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002655)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001858)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000658)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000070)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002373)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000740)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.001950)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000306)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000538)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000662)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002314)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002469)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.014939)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.003822)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002689)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002566)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001876)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000766)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000060)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002313)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000308)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.001980)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000288)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000538)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002121)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000465)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:39:14', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:39:14')[0m
+  [4;36;1mSubscription Load (0.000373)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000256)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000323)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000716)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002461)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002663)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001829)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002225)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002200)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002163)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001849)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.002117)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000071)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.001939)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000378)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002024)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000277)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000512)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002124)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000318)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:39:54', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:39:54')[0m
+  [4;36;1mSubscription Load (0.000326)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000226)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000215)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000850)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002483)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002407)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001824)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002532)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002194)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002468)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001800)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000892)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000069)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002229)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000317)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002011)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000334)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000557)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002963)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000348)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:42:17', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:42:17')[0m
+  [4;36;1mSubscription Load (0.000435)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000268)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000267)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000691)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000103)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000240)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;36;1mSQL (0.000286)[0m   [0;1mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;35;1mSubscription Load (0.000446)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000341)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:42:17', 'Magazine', 'Reader', 2, 2, '2006-11-30 22:42:17')[0m
+  [4;35;1mSubscription Load (0.001245)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000430)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000286)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:42:17', 'Magazine', 'Reader', 3, 2, '2006-11-30 22:42:17')[0m
+  [4;36;1mSubscription Load (0.000312)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000168)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000278)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:42:17', 'Magazine', 'Reader', 4, 2, '2006-11-30 22:42:17')[0m
+  [4;35;1mSubscription Load (0.000630)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000806)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.000279)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:42:17', 'Magazine', 'Reader', 5, 2, '2006-11-30 22:42:17')[0m
+  [4;36;1mSubscription Load (0.000333)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000208)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000227)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:42:17', 'Magazine', 'Reader', 6, 2, '2006-11-30 22:42:17')[0m
+  [4;35;1mSubscription Load (0.000292)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000886)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.015882)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.015737)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002348)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.003361)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002168)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002416)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001731)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000570)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000072)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.001980)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000311)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002059)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000277)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000541)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002100)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000312)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:43:39', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:43:39')[0m
+  [4;36;1mSubscription Load (0.000340)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000215)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000212)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.002490)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000119)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000300)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;36;1mSQL (0.001101)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002113)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002932)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001903)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002346)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002795)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.003265)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001846)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000991)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000060)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002264)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000733)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002022)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000283)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000596)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.003043)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000360)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:44:55', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:44:55')[0m
+  [4;36;1mSubscription Load (0.000374)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000242)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000248)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000693)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000107)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000264)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;36;1mSubscription Count (0.000309)[0m   [0;1mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000340)[0m   [0mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;36;1mSQL (0.000363)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:44:55', 'Magazine', 'Reader', 2, 2, '2006-11-30 22:44:55')[0m
+  [4;35;1mSubscription Load (0.000378)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000573)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000278)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:44:55', 'Magazine', 'Reader', 3, 2, '2006-11-30 22:44:55')[0m
+  [4;36;1mSubscription Load (0.000307)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000178)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000314)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:44:55', 'Magazine', 'Reader', 4, 2, '2006-11-30 22:44:55')[0m
+  [4;35;1mSubscription Load (0.000337)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000297)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.000293)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:44:55', 'Magazine', 'Reader', 5, 2, '2006-11-30 22:44:55')[0m
+  [4;36;1mSubscription Load (0.000329)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000198)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000258)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:44:55', 'Magazine', 'Reader', 6, 2, '2006-11-30 22:44:55')[0m
+  [4;35;1mSubscription Load (0.000306)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000751)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.015682)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002524)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002233)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002957)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002054)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002613)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001651)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000681)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000070)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002064)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000305)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.001781)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000278)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000516)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002001)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000305)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:46:57', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:46:57')[0m
+  [4;36;1mSubscription Load (0.000338)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000231)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000219)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000574)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000091)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000245)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;36;1mSubscription Count (0.000609)[0m   [0;1mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000301)[0m   [0mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;36;1mSQL (0.000348)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:46:57', 'Magazine', 'Reader', 2, 2, '2006-11-30 22:46:57')[0m
+  [4;35;1mSubscription Load (0.000406)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000198)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000221)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:46:57', 'Magazine', 'Reader', 3, 2, '2006-11-30 22:46:57')[0m
+  [4;36;1mSubscription Load (0.000266)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000152)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000254)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:46:57', 'Magazine', 'Reader', 4, 2, '2006-11-30 22:46:57')[0m
+  [4;35;1mSubscription Load (0.000301)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000176)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.000234)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:46:57', 'Magazine', 'Reader', 5, 2, '2006-11-30 22:46:57')[0m
+  [4;36;1mSubscription Load (0.000324)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000235)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000799)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:46:57', 'Magazine', 'Reader', 6, 2, '2006-11-30 22:46:57')[0m
+  [4;35;1mSubscription Load (0.000356)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Destroy (0.000224)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 2
+[0m
+  [4;35;1mSubscription Destroy (0.000149)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 3
+[0m
+  [4;36;1mSubscription Destroy (0.000146)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;35;1mSubscription Destroy (0.000158)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;36;1mSubscription Destroy (0.000164)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;35;1mSubscription Load (0.000250)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001138)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002180)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002450)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001838)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002749)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002079)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002648)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.002082)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.002416)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000070)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002909)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000307)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002206)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000315)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000588)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002187)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000361)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:49:05', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:49:05')[0m
+  [4;36;1mSubscription Load (0.000438)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000263)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000748)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001504)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000367)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000298)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000375)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSQL (0.000231)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;36;1mSubscription Count (0.000328)[0m   [0;1mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000241)[0m   [0mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;36;1mSQL (0.000271)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:49:05', 'Magazine', 'Reader', 3, 3, '2006-11-30 22:49:05')[0m
+  [4;35;1mSubscription Load (0.000302)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000185)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000298)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:49:05', 'Magazine', 'Reader', 4, 3, '2006-11-30 22:49:05')[0m
+  [4;36;1mSubscription Load (0.000642)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000244)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000256)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:49:05', 'Magazine', 'Reader', 5, 3, '2006-11-30 22:49:05')[0m
+  [4;35;1mSubscription Load (0.000287)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000167)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.000231)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:49:05', 'Magazine', 'Reader', 6, 3, '2006-11-30 22:49:05')[0m
+  [4;36;1mSubscription Load (0.000273)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000205)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000283)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:49:05', 'Magazine', 'Reader', 7, 3, '2006-11-30 22:49:05')[0m
+  [4;35;1mSubscription Load (0.001050)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Destroy (0.000263)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 2
+[0m
+  [4;35;1mSubscription Destroy (0.000178)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 3
+[0m
+  [4;36;1mSubscription Destroy (0.000187)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;35;1mSubscription Destroy (0.000141)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;36;1mSubscription Destroy (0.000144)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;35;1mSubscription Load (0.000242)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001070)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002286)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.016195)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002613)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.003115)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001931)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002702)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001742)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000949)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000074)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002228)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000302)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002007)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000548)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000584)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002076)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000350)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:51:24', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:51:24')[0m
+  [4;36;1mSubscription Load (0.000355)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000241)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000244)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000701)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000105)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000260)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000224)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Load (0.000343)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000324)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:51:24', 'Magazine', 'Reader', 2, 2, '2006-11-30 22:51:24')[0m
+  [4;35;1mSubscription Load (0.000346)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000761)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000100)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000247)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000214)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;36;1mSQL (0.000167)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000336)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000233)[0m   [0;1mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;35;1mSQL (0.000261)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:51:24', 'Magazine', 'Reader', 4, 4, '2006-11-30 22:51:24')[0m
+  [4;36;1mSubscription Load (0.000340)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000226)[0m   [0mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;36;1mSQL (0.000285)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:51:24', 'Magazine', 'Reader', 5, 4, '2006-11-30 22:51:24')[0m
+  [4;35;1mSubscription Load (0.000340)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000220)[0m   [0;1mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;35;1mSQL (0.000279)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:51:24', 'Magazine', 'Reader', 6, 4, '2006-11-30 22:51:24')[0m
+  [4;36;1mSubscription Load (0.000312)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000180)[0m   [0mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;36;1mSQL (0.000258)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:51:24', 'Magazine', 'Reader', 7, 4, '2006-11-30 22:51:24')[0m
+  [4;35;1mSubscription Load (0.000620)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000239)[0m   [0;1mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;35;1mSQL (0.000289)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:51:24', 'Magazine', 'Reader', 8, 4, '2006-11-30 22:51:24')[0m
+  [4;36;1mSubscription Load (0.000398)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000351)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 3
+[0m
+  [4;36;1mSubscription Destroy (0.000162)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;35;1mSubscription Destroy (0.000164)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;36;1mSubscription Destroy (0.000169)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;35;1mSubscription Destroy (0.000148)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;36;1mSubscription Load (0.000264)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001190)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002709)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002342)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002589)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002246)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001850)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.003193)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.002684)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000546)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000078)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002283)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000299)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.001989)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000309)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.003054)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002876)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000368)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:51:48', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:51:48')[0m
+  [4;36;1mSubscription Load (0.000372)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.001132)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000817)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000853)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000112)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000262)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000223)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Load (0.000321)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000295)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:51:48', 'Magazine', 'Reader', 2, 2, '2006-11-30 22:51:48')[0m
+  [4;35;1mSubscription Load (0.000299)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001459)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000108)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000254)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000229)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;36;1mSQL (0.000226)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000380)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000263)[0m   [0;1mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;35;1mSQL (0.000435)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:52:26', 'Magazine', 'Reader', 4, 4, '2006-11-30 22:52:26')[0m
+  [4;36;1mSubscription Load (0.001062)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000266)[0m   [0mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;36;1mSQL (0.000290)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:52:26', 'Magazine', 'Reader', 5, 4, '2006-11-30 22:52:26')[0m
+  [4;35;1mSubscription Load (0.000312)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000188)[0m   [0;1mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;35;1mSQL (0.000338)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:52:26', 'Magazine', 'Reader', 6, 4, '2006-11-30 22:52:26')[0m
+  [4;36;1mSubscription Load (0.000310)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000174)[0m   [0mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;36;1mSQL (0.000263)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:52:26', 'Magazine', 'Reader', 7, 4, '2006-11-30 22:52:26')[0m
+  [4;35;1mSubscription Load (0.000283)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000217)[0m   [0;1mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;35;1mSQL (0.000288)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:52:26', 'Magazine', 'Reader', 8, 4, '2006-11-30 22:52:26')[0m
+  [4;36;1mSubscription Load (0.000318)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000228)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 3
+[0m
+  [4;36;1mSubscription Destroy (0.000145)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;35;1mSubscription Destroy (0.000146)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;36;1mSubscription Destroy (0.000155)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;35;1mSubscription Destroy (0.000162)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;36;1mSubscription Load (0.000233)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001238)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.020721)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.213359)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002131)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002306)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001816)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002646)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001812)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000984)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000072)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.003184)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000275)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002026)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000256)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000459)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002659)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000323)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:56:26', 'Magazine', 'Reader', 1, 1, '2006-11-30 22:56:26')[0m
+  [4;36;1mSubscription Load (0.000322)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000220)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000218)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.002271)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000200)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000282)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000316)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Load (0.000815)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000355)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:56:26', 'Magazine', 'Reader', 2, 2, '2006-11-30 22:56:26')[0m
+  [4;35;1mSubscription Load (0.000368)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001100)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000120)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000277)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000646)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;36;1mSQL (0.000376)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'o\'rly')[0m
+  [4;35;1mSubscription Count (0.000411)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000285)[0m   [0;1mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;35;1mSQL (0.000245)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:56:30', 'Magazine', 'Reader', 4, 4, '2006-11-30 22:56:30')[0m
+  [4;36;1mSubscription Load (0.000303)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000204)[0m   [0mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;36;1mSQL (0.000830)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:56:30', 'Magazine', 'Reader', 5, 4, '2006-11-30 22:56:30')[0m
+  [4;35;1mSubscription Load (0.000721)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000765)[0m   [0;1mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;35;1mSQL (0.000287)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:56:30', 'Magazine', 'Reader', 6, 4, '2006-11-30 22:56:30')[0m
+  [4;36;1mSubscription Load (0.000308)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000207)[0m   [0mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;36;1mSQL (0.000220)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:56:30', 'Magazine', 'Reader', 7, 4, '2006-11-30 22:56:30')[0m
+  [4;35;1mSubscription Load (0.000284)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000157)[0m   [0;1mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;35;1mSQL (0.000200)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 22:56:30', 'Magazine', 'Reader', 8, 4, '2006-11-30 22:56:30')[0m
+  [4;36;1mSubscription Load (0.000280)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000195)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 3
+[0m
+  [4;36;1mSubscription Destroy (0.000179)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;35;1mSubscription Destroy (0.000238)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;36;1mSubscription Destroy (0.000218)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;35;1mSubscription Destroy (0.000358)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;36;1mSubscription Load (0.000276)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 4 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001300)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002722)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002520)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.027556)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002732)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002595)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.003257)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001808)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.001379)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000070)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002148)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000279)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.001913)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000281)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000516)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.001813)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000303)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:02:06', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:02:06')[0m
+  [4;36;1mSubscription Load (0.000309)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000246)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000231)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000882)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000104)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000249)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000219)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Load (0.000502)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001314)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:02:06', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:02:06')[0m
+  [4;35;1mSubscription Load (0.000931)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000819)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000103)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000244)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000222)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000295)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000654)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000100)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000243)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000241)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000240)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSubscription Count (0.000330)[0m   [0;1mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000271)[0m   [0mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;36;1mSQL (0.000337)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:02:06', 'Magazine', 'Reader', 5, 5, '2006-11-30 23:02:06')[0m
+  [4;35;1mSubscription Load (0.000370)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000212)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000287)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:02:06', 'Magazine', 'Reader', 6, 5, '2006-11-30 23:02:06')[0m
+  [4;36;1mSubscription Load (0.000336)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000214)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000270)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:02:06', 'Magazine', 'Reader', 7, 5, '2006-11-30 23:02:06')[0m
+  [4;35;1mSubscription Load (0.002083)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000276)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.000239)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:02:06', 'Magazine', 'Reader', 8, 5, '2006-11-30 23:02:06')[0m
+  [4;36;1mSubscription Load (0.000331)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000175)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000228)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:02:06', 'Magazine', 'Reader', 9, 5, '2006-11-30 23:02:06')[0m
+  [4;35;1mSubscription Load (0.000328)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Destroy (0.000233)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 3
+[0m
+  [4;35;1mSubscription Destroy (0.000304)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;36;1mSubscription Destroy (0.000177)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;35;1mSubscription Destroy (0.000174)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;36;1mSubscription Destroy (0.000171)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;35;1mSubscription Load (0.000273)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001730)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002208)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002478)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002097)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002403)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002221)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002446)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.003051)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.001522)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000084)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002107)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000290)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.001996)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000270)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000515)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002032)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000324)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:03:03', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:03:03')[0m
+  [4;36;1mSubscription Load (0.000305)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000236)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000230)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000892)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000122)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000276)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000761)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Load (0.000413)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001149)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:03:03', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:03:03')[0m
+  [4;35;1mSubscription Load (0.000351)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000728)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000130)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000266)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000217)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000320)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000687)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000092)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000229)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000176)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000221)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSubscription Count (0.000328)[0m   [0;1mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000296)[0m   [0mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;36;1mSQL (0.000301)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:03:03', 'Magazine', 'Reader', 5, 5, '2006-11-30 23:03:03')[0m
+  [4;35;1mSubscription Load (0.000328)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000233)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000272)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:03:03', 'Magazine', 'Reader', 6, 5, '2006-11-30 23:03:03')[0m
+  [4;36;1mSubscription Load (0.000308)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000183)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000393)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:03:03', 'Magazine', 'Reader', 7, 5, '2006-11-30 23:03:03')[0m
+  [4;35;1mSubscription Load (0.000352)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.003224)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.001084)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:03:03', 'Magazine', 'Reader', 8, 5, '2006-11-30 23:03:03')[0m
+  [4;36;1mSubscription Load (0.000382)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000216)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000258)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:03:03', 'Magazine', 'Reader', 9, 5, '2006-11-30 23:03:03')[0m
+  [4;35;1mSubscription Load (0.000359)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Destroy (0.000226)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 3
+[0m
+  [4;35;1mSubscription Destroy (0.000158)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;36;1mSubscription Destroy (0.000157)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;35;1mSubscription Destroy (0.000156)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;36;1mSubscription Destroy (0.000165)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;35;1mSubscription Load (0.000227)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001400)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002044)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.045950)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002081)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002342)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002279)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002231)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001823)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000553)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000077)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.004776)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000308)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002305)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000298)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000546)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002314)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000358)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:10:33', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:10:33')[0m
+  [4;36;1mSubscription Load (0.000401)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000258)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000640)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001193)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000114)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000269)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000506)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Load (0.000377)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000302)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:10:33', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:10:33')[0m
+  [4;35;1mSubscription Load (0.000328)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000654)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000099)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000237)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000165)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000302)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000331)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:10:33', 'Magazine', 'Reader', 3, 3, '2006-11-30 23:10:33')[0m
+  [4;36;1mSubscription Load (0.000373)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000761)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000084)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000243)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000164)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000160)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSubscription Count (0.001211)[0m   [0;1mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000272)[0m   [0mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;36;1mSQL (0.000306)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:10:33', 'Magazine', 'Reader', 5, 5, '2006-11-30 23:10:33')[0m
+  [4;35;1mSubscription Load (0.000342)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000220)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000277)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:10:33', 'Magazine', 'Reader', 6, 5, '2006-11-30 23:10:33')[0m
+  [4;36;1mSubscription Load (0.000438)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000234)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000687)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:10:33', 'Magazine', 'Reader', 7, 5, '2006-11-30 23:10:33')[0m
+  [4;35;1mSubscription Load (0.000588)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000204)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.000249)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:10:33', 'Magazine', 'Reader', 8, 5, '2006-11-30 23:10:33')[0m
+  [4;36;1mSubscription Load (0.000292)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000160)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000225)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:10:33', 'Magazine', 'Reader', 9, 5, '2006-11-30 23:10:33')[0m
+  [4;35;1mSubscription Load (0.000271)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Destroy (0.000220)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;35;1mSubscription Destroy (0.000163)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;36;1mSubscription Destroy (0.000137)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;35;1mSubscription Destroy (0.000143)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;36;1mSubscription Destroy (0.000148)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 8
+[0m
+  [4;35;1mSubscription Load (0.000235)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001221)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002012)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.018493)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002941)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.003209)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002521)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.003077)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.002753)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.001948)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000070)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002182)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000333)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002123)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000336)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000567)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002261)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000353)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:11:53', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:11:53')[0m
+  [4;36;1mSubscription Load (0.000390)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000382)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000891)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001144)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000197)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000842)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000280)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Load (0.000447)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000272)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:11:53', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:11:53')[0m
+  [4;35;1mSubscription Load (0.000280)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000943)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000084)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000261)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000225)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000327)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000368)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:11:53', 'Magazine', 'Reader', 3, 3, '2006-11-30 23:11:53')[0m
+  [4;36;1mSubscription Load (0.000435)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000698)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000094)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000271)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000304)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000220)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSubscription Count (0.000369)[0m   [0;1mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000223)[0m   [0mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;36;1mSQL (0.000351)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:11:53', 'Magazine', 'Reader', 5, 5, '2006-11-30 23:11:53')[0m
+  [4;35;1mSubscription Load (0.000327)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000239)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000251)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:11:53', 'Magazine', 'Reader', 6, 5, '2006-11-30 23:11:53')[0m
+  [4;36;1mSubscription Load (0.000351)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000275)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000260)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:11:53', 'Magazine', 'Reader', 7, 5, '2006-11-30 23:11:53')[0m
+  [4;35;1mSubscription Load (0.000317)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000291)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.000277)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:11:53', 'Magazine', 'Reader', 8, 5, '2006-11-30 23:11:53')[0m
+  [4;36;1mSubscription Load (0.000304)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000169)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000238)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:11:53', 'Magazine', 'Reader', 9, 5, '2006-11-30 23:11:53')[0m
+  [4;35;1mSubscription Load (0.000306)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Destroy (0.000200)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;35;1mSubscription Destroy (0.000150)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;36;1mSubscription Destroy (0.000146)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;35;1mSubscription Destroy (0.000142)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;36;1mSubscription Destroy (0.000142)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 8
+[0m
+  [4;35;1mSubscription Load (0.000346)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001166)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002786)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.018097)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.003602)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002854)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002352)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002246)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001729)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.001553)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000070)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002315)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000314)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002125)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000299)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000539)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002191)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000964)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:14:20', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:14:20')[0m
+  [4;36;1mSubscription Load (0.000425)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000247)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000246)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000929)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000131)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000284)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000779)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Load (0.000375)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.002329)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:14:20', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:14:20')[0m
+  [4;35;1mSubscription Load (0.000468)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001304)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000165)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000342)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000186)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000277)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000234)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:14:20', 'Magazine', 'Reader', 3, 3, '2006-11-30 23:14:20')[0m
+  [4;36;1mSubscription Load (0.000337)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mMagazine Load (0.000416)[0m   [0mSELECT * FROM magazines WHERE (magazines.id = 3) LIMIT 1[0m
+  [4;36;1mSQL (0.000995)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000075)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000298)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000190)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000147)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000334)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000695)[0m   [0;1mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;35;1mSQL (0.001005)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:17:25', 'Magazine', 'Reader', 5, 5, '2006-11-30 23:17:25')[0m
+  [4;36;1mSubscription Load (0.000848)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000322)[0m   [0mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;36;1mSQL (0.000304)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:17:25', 'Magazine', 'Reader', 6, 5, '2006-11-30 23:17:25')[0m
+  [4;35;1mSubscription Load (0.000305)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000247)[0m   [0;1mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;35;1mSQL (0.000301)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:17:25', 'Magazine', 'Reader', 7, 5, '2006-11-30 23:17:25')[0m
+  [4;36;1mSubscription Load (0.000301)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000254)[0m   [0mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;36;1mSQL (0.001123)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:17:25', 'Magazine', 'Reader', 8, 5, '2006-11-30 23:17:25')[0m
+  [4;35;1mSubscription Load (0.000361)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000241)[0m   [0;1mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;35;1mSQL (0.000300)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:17:25', 'Magazine', 'Reader', 9, 5, '2006-11-30 23:17:25')[0m
+  [4;36;1mSubscription Load (0.000326)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000227)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;36;1mSubscription Destroy (0.000166)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;35;1mSubscription Destroy (0.000156)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;36;1mSubscription Destroy (0.000629)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;35;1mSubscription Destroy (0.000212)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 8
+[0m
+  [4;36;1mSubscription Load (0.000266)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001408)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.017998)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002509)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002064)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.003126)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.003182)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002431)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001758)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000707)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000070)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002100)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000287)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002379)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000297)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000481)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002067)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000324)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:05', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:18:05')[0m
+  [4;36;1mSubscription Load (0.000321)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000204)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000364)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001333)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000266)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000243)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000240)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Load (0.000344)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000373)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:05', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:18:05')[0m
+  [4;35;1mSubscription Load (0.000398)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000746)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000103)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000243)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000168)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000279)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000336)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:05', 'Magazine', 'Reader', 3, 3, '2006-11-30 23:18:05')[0m
+  [4;36;1mSubscription Load (0.000374)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000790)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000098)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000232)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000295)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000206)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSubscription Count (0.000328)[0m   [0;1mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000212)[0m   [0mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;36;1mSQL (0.000266)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:05', 'Magazine', 'Reader', 5, 5, '2006-11-30 23:18:05')[0m
+  [4;35;1mSubscription Load (0.000276)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000164)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000201)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:05', 'Magazine', 'Reader', 6, 5, '2006-11-30 23:18:05')[0m
+  [4;36;1mSubscription Load (0.000242)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000149)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000191)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:05', 'Magazine', 'Reader', 7, 5, '2006-11-30 23:18:05')[0m
+  [4;35;1mSubscription Load (0.000246)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000284)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.000288)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:05', 'Magazine', 'Reader', 8, 5, '2006-11-30 23:18:05')[0m
+  [4;36;1mSubscription Load (0.000303)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000219)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000253)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:05', 'Magazine', 'Reader', 9, 5, '2006-11-30 23:18:05')[0m
+  [4;35;1mSubscription Load (0.000306)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Destroy (0.000205)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;35;1mSubscription Destroy (0.000148)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;36;1mSubscription Destroy (0.000145)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;35;1mSubscription Destroy (0.000155)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;36;1mSubscription Destroy (0.000165)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 8
+[0m
+  [4;35;1mSubscription Load (0.000231)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001548)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002281)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002398)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001985)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002183)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001724)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002477)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.002233)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.002040)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000070)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.001507)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000679)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002260)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000728)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000498)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002004)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000324)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:36', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:18:36')[0m
+  [4;36;1mSubscription Load (0.000320)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000311)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000258)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001082)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000532)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000723)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000261)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Load (0.000348)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000341)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:36', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:18:36')[0m
+  [4;35;1mSubscription Load (0.000338)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000767)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000122)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000243)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000261)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000320)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000279)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:18:36', 'Magazine', 'Reader', 3, 3, '2006-11-30 23:18:36')[0m
+  [4;36;1mSubscription Load (0.000393)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSubscription Load (0.000509)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001440)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000095)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000260)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000182)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000230)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000337)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000647)[0m   [0;1mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;35;1mSQL (0.000285)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:12', 'Magazine', 'Reader', 5, 5, '2006-11-30 23:20:12')[0m
+  [4;36;1mSubscription Load (0.000328)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000192)[0m   [0mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;36;1mSQL (0.000210)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:12', 'Magazine', 'Reader', 6, 5, '2006-11-30 23:20:12')[0m
+  [4;35;1mSubscription Load (0.000263)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000213)[0m   [0;1mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;35;1mSQL (0.000214)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:12', 'Magazine', 'Reader', 7, 5, '2006-11-30 23:20:12')[0m
+  [4;36;1mSubscription Load (0.000279)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000155)[0m   [0mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;36;1mSQL (0.000270)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:12', 'Magazine', 'Reader', 8, 5, '2006-11-30 23:20:12')[0m
+  [4;35;1mSubscription Load (0.000280)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000169)[0m   [0;1mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;35;1mSQL (0.000240)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:12', 'Magazine', 'Reader', 9, 5, '2006-11-30 23:20:12')[0m
+  [4;36;1mSubscription Load (0.000306)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000234)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;36;1mSubscription Destroy (0.000163)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;35;1mSubscription Destroy (0.000149)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;36;1mSubscription Destroy (0.000152)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;35;1mSubscription Destroy (0.000152)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 8
+[0m
+  [4;36;1mSubscription Load (0.000220)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001391)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.001993)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.010444)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002073)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002247)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002556)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.004247)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001933)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.000582)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000071)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002331)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000295)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002096)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000299)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000577)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002169)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000382)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:24', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:20:24')[0m
+  [4;36;1mSubscription Load (0.000393)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000264)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000264)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000860)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000236)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000269)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000235)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Load (0.000381)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000285)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:24', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:20:24')[0m
+  [4;35;1mSubscription Load (0.000300)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000698)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000110)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000232)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000198)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000324)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000290)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:24', 'Magazine', 'Reader', 3, 3, '2006-11-30 23:20:24')[0m
+  [4;36;1mSubscription Load (0.000375)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 3 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000740)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000152)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000261)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000197)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000209)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSubscription Count (0.000336)[0m   [0;1mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000343)[0m   [0mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;36;1mSQL (0.000316)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:24', 'Magazine', 'Reader', 5, 5, '2006-11-30 23:20:24')[0m
+  [4;35;1mSubscription Load (0.000328)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000186)[0m   [0;1mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;35;1mSQL (0.000347)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:24', 'Magazine', 'Reader', 6, 5, '2006-11-30 23:20:24')[0m
+  [4;36;1mSubscription Load (0.000337)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000219)[0m   [0mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;36;1mSQL (0.000270)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:24', 'Magazine', 'Reader', 7, 5, '2006-11-30 23:20:24')[0m
+  [4;35;1mSubscription Load (0.000324)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000217)[0m   [0;1mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;35;1mSQL (0.000276)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:24', 'Magazine', 'Reader', 8, 5, '2006-11-30 23:20:24')[0m
+  [4;36;1mSubscription Load (0.000320)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000209)[0m   [0mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;36;1mSQL (0.000292)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:20:24', 'Magazine', 'Reader', 9, 5, '2006-11-30 23:20:24')[0m
+  [4;35;1mSubscription Load (0.000365)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Destroy (0.000258)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 4
+[0m
+  [4;35;1mSubscription Destroy (0.000208)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 5
+[0m
+  [4;36;1mSubscription Destroy (0.000260)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;35;1mSubscription Destroy (0.000178)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;36;1mSubscription Destroy (0.000169)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 8
+[0m
+  [4;35;1mSubscription Load (0.000277)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 5 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.001645)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.001819)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002666)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002018)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002419)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002207)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002272)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.001661)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.001379)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000074)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002027)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000278)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002138)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000289)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mBook Columns (0.002122)[0m   [0mSHOW FIELDS FROM books[0m
+  [4;36;1mSQL (0.001265)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000109)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000237)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000211)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000753)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000132)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000237)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000173)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.000745)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000100)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000225)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000288)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.002002)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.000368)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000296)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mSQL (0.000697)[0m   [0mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;36;1mSQL (0.001288)[0m   [0;1mROLLBACK[0m
+  [4;35;1mSQL (0.002456)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002547)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001803)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002793)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001984)[0m   [0mDROP TABLE Books[0m
+  [4;36;1mSQL (0.018105)[0m   [0;1mCREATE TABLE Books (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.002111)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.002972)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.002607)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.001051)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000081)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002273)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000302)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002096)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000295)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mBook Columns (0.001921)[0m   [0mSHOW FIELDS FROM books[0m
+  [4;36;1mSQL (0.000295)[0m   [0;1mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;35;1mSubscription Count (0.000538)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.010733)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.001470)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:26:08')[0m
+  [4;36;1mSubscription Load (0.000385)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000237)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000246)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000742)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000096)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000262)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000266)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000199)[0m   [0mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;36;1mSQL (0.000310)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 2 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000294)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Book', 'Reader', 2, 2, '2006-11-30 23:26:08')[0m
+  [4;36;1mSubscription Load (0.000325)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 2 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000801)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:26:08')[0m
+  [4;36;1mSubscription Load (0.000351)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 2 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000768)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000110)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000256)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000230)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000211)[0m   [0mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;36;1mSubscription Load (0.000339)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000279)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Magazine', 'Reader', 3, 3, '2006-11-30 23:26:08')[0m
+  [4;36;1mSubscription Load (0.000301)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000748)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000101)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000230)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000410)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000247)[0m   [0mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;36;1mSQL (0.000335)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 4 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000265)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Magazine', 'Reader', 4, 4, '2006-11-30 23:26:08')[0m
+  [4;36;1mSubscription Load (0.000355)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 4 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000730)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000099)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000259)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000223)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000233)[0m   [0mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;36;1mSQL (0.000173)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000288)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000267)[0m   [0;1mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;35;1mSQL (0.000362)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Magazine', 'Reader', 6, 6, '2006-11-30 23:26:08')[0m
+  [4;36;1mSubscription Load (0.000383)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000462)[0m   [0mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;36;1mSQL (0.000330)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Magazine', 'Reader', 7, 6, '2006-11-30 23:26:08')[0m
+  [4;35;1mSubscription Load (0.000337)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000191)[0m   [0;1mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;35;1mSQL (0.000595)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Magazine', 'Reader', 8, 6, '2006-11-30 23:26:08')[0m
+  [4;36;1mSubscription Load (0.000340)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000187)[0m   [0mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;36;1mSQL (0.000212)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Magazine', 'Reader', 9, 6, '2006-11-30 23:26:08')[0m
+  [4;35;1mSubscription Load (0.000261)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000156)[0m   [0;1mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;35;1mSQL (0.000198)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:08', 'Magazine', 'Reader', 10, 6, '2006-11-30 23:26:08')[0m
+  [4;36;1mSubscription Load (0.000266)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000191)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;36;1mSubscription Destroy (0.000147)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;35;1mSubscription Destroy (0.000142)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 8
+[0m
+  [4;36;1mSubscription Destroy (0.000270)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 9
+[0m
+  [4;35;1mSubscription Destroy (0.000461)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 10
+[0m
+  [4;36;1mSubscription Load (0.000281)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001459)[0m   [0mROLLBACK[0m
+  [4;35;1mSQL (0.002226)[0m   [0mDROP TABLE subscriptions[0m
+  [4;36;1mSQL (0.002793)[0m   [0;1mCREATE TABLE subscriptions (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `subscriber_id` int(11), `subscriber_type` varchar(255), `subscribed_to_id` int(11), `subscribed_to_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001873)[0m   [0mDROP TABLE Magazines[0m
+  [4;36;1mSQL (0.002249)[0m   [0;1mCREATE TABLE Magazines (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001799)[0m   [0mDROP TABLE Books[0m
+  [4;36;1mSQL (0.002648)[0m   [0;1mCREATE TABLE Books (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `publisher` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.001915)[0m   [0mDROP TABLE Readers[0m
+  [4;36;1mSQL (0.003131)[0m   [0;1mCREATE TABLE Readers (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Table 'schema_info' already exists: CREATE TABLE schema_info (version int(11))[0m
+  [4;36;1mSQL (0.002286)[0m   [0;1mSHOW FIELDS FROM schema_info[0m
+  [4;35;1mSQL (0.001707)[0m   [0mUPDATE schema_info SET version = 0[0m
+  [4;36;1mSQL (0.000073)[0m   [0;1mBEGIN[0m
+  [4;35;1mReader Columns (0.002124)[0m   [0mSHOW FIELDS FROM readers[0m
+  [4;36;1mSQL (0.000313)[0m   [0;1mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;35;1mMagazine Columns (0.002048)[0m   [0mSHOW FIELDS FROM magazines[0m
+  [4;36;1mSQL (0.000262)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mBook Columns (0.002002)[0m   [0mSHOW FIELDS FROM books[0m
+  [4;36;1mSQL (0.000263)[0m   [0;1mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;35;1mSubscription Count (0.000465)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSubscription Columns (0.002068)[0m   [0;1mSHOW FIELDS FROM subscriptions[0m
+  [4;35;1mSQL (0.000354)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Magazine', 'Reader', 1, 1, '2006-11-30 23:26:59')[0m
+  [4;36;1mSubscription Load (0.000422)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000298)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 1
+[0m
+  [4;36;1mSubscription Load (0.000276)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 1 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000716)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000099)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000284)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000319)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000225)[0m   [0mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;36;1mSQL (0.000284)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 2 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000265)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Book', 'Reader', 2, 2, '2006-11-30 23:26:59')[0m
+  [4;36;1mSubscription Load (0.000321)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 2 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000254)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Magazine', 'Reader', 2, 2, '2006-11-30 23:26:59')[0m
+  [4;36;1mSubscription Load (0.000268)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 2 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSubscription Load (0.000321)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Book'[0m
+  [4;36;1mSubscription Load (0.000296)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 2 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000813)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000084)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000255)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000184)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000171)[0m   [0mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;36;1mSubscription Load (0.000347)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000808)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Magazine', 'Reader', 3, 3, '2006-11-30 23:26:59')[0m
+  [4;36;1mSubscription Load (0.000833)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 3 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000747)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000105)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000289)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000208)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000239)[0m   [0mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;36;1mSQL (0.000410)[0m   [0;1mSELECT count(*) AS count_all FROM subscriptions WHERE (subscriptions.subscriber_id = 4 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.000295)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Magazine', 'Reader', 4, 4, '2006-11-30 23:26:59')[0m
+  [4;36;1mSubscription Load (0.000375)[0m   [0;1mSELECT * FROM subscriptions WHERE (subscriptions.subscriber_id = 4 AND (subscriptions.subscriber_type = 'Reader')) [0m
+  [4;35;1mSQL (0.001224)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000606)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.001023)[0m   [0mINSERT INTO readers (`name`) VALUES('nolan')[0m
+  [4;36;1mSQL (0.000212)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSQL (0.000232)[0m   [0mINSERT INTO books (`title`, `publisher`) VALUES('Catch22', 'beats me')[0m
+  [4;36;1mSQL (0.000209)[0m   [0;1mINSERT INTO magazines (`title`, `publisher`) VALUES('Make', 'O\'rly?')[0m
+  [4;35;1mSubscription Count (0.000425)[0m   [0mSELECT COUNT(*) FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000260)[0m   [0;1mINSERT INTO readers (`name`) VALUES(0)[0m
+  [4;35;1mSQL (0.000244)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Magazine', 'Reader', 6, 6, '2006-11-30 23:26:59')[0m
+  [4;36;1mSubscription Load (0.000348)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000197)[0m   [0mINSERT INTO readers (`name`) VALUES(1)[0m
+  [4;36;1mSQL (0.000921)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Magazine', 'Reader', 7, 6, '2006-11-30 23:26:59')[0m
+  [4;35;1mSubscription Load (0.000435)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000242)[0m   [0;1mINSERT INTO readers (`name`) VALUES(2)[0m
+  [4;35;1mSQL (0.000253)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Magazine', 'Reader', 8, 6, '2006-11-30 23:26:59')[0m
+  [4;36;1mSubscription Load (0.000373)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.000213)[0m   [0mINSERT INTO readers (`name`) VALUES(3)[0m
+  [4;36;1mSQL (0.000262)[0m   [0;1mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Magazine', 'Reader', 9, 6, '2006-11-30 23:26:59')[0m
+  [4;35;1mSubscription Load (0.000288)[0m   [0mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;36;1mSQL (0.000172)[0m   [0;1mINSERT INTO readers (`name`) VALUES(4)[0m
+  [4;35;1mSQL (0.000263)[0m   [0mINSERT INTO subscriptions (`updated_at`, `subscribed_to_type`, `subscriber_type`, `subscriber_id`, `subscribed_to_id`, `created_at`) VALUES('2006-11-30 23:26:59', 'Magazine', 'Reader', 10, 6, '2006-11-30 23:26:59')[0m
+  [4;36;1mSubscription Load (0.000310)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSubscription Destroy (0.000198)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 6
+[0m
+  [4;36;1mSubscription Destroy (0.000173)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 7
+[0m
+  [4;35;1mSubscription Destroy (0.000164)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 8
+[0m
+  [4;36;1mSubscription Destroy (0.000169)[0m   [0;1m DELETE FROM subscriptions
+ WHERE id = 9
+[0m
+  [4;35;1mSubscription Destroy (0.000164)[0m   [0m DELETE FROM subscriptions
+ WHERE id = 10
+[0m
+  [4;36;1mSubscription Load (0.000247)[0m   [0;1mSELECT subscriptions.* FROM subscriptions WHERE subscriptions.subscribed_to_id = 6 AND subscriptions.subscribed_to_type ='Magazine'[0m
+  [4;35;1mSQL (0.001581)[0m   [0mROLLBACK[0m

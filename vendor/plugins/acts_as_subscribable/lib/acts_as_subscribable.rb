@@ -30,7 +30,25 @@ module ActiveRecord
         
         # For example a User is_a_subscriber to Feeds
         def is_a_subscriber
-          has_many :subscriptions, :foreign_key=>'subscriber_id', :conditions=>'subscriptions.subscriber_type = ' +"'#{self.class_name}'"
+          has_many :subscriptions, :foreign_key => 'subscriber_id', :conditions => 'subscriptions.subscriber_type = ' +"'#{self.class_name}'" do
+            # Override the  << method so that it doesn't fuk up the association proxy.
+            def <<(subscription)
+              return unless @owner.subscriptions.map{|s| return false if s.subscribed_to_id == subscription.id && s.subscribed_to_type == subscription.class.class_name}
+              s = Subscription.create(
+                :subscriber_id      => @owner.id,
+                :subscriber_type    => @owner.class.class_name,
+                :subscribed_to_id   => subscription.id,
+                :subscribed_to_type => subscription.class.class_name
+              )
+              @owner.subscriptions(true)
+            end
+            
+            # @reader.subscriptions.include?(@magazine) #=> true / false
+            def include?(subscription)
+              @owner.subscriptions.map{|s| return true if s.subscribed_to_id == subscription.id && s.subscribed_to_type == subscription.class.class_name}
+              return false
+            end
+          end
         end
         
         # For example a Feed is subscribed_to by A User.
@@ -43,7 +61,7 @@ module ActiveRecord
           # I use single quotes to get the correct id and double qoutes to get the correct
           # classname.
 
-          has_many :subscribers,:class_name=>'Subscription', :finder_sql =>
+          has_many :subscribers, :class_name => 'Subscription', :finder_sql =>
                 'SELECT subscriptions.* ' +
                 'FROM subscriptions ' +
                 'WHERE subscriptions.subscribed_to_id = #{self.id} AND subscriptions.subscribed_to_type =' + "'#{self.class_name}'" do
@@ -57,8 +75,13 @@ module ActiveRecord
                :subscribed_to_id   => @owner.id,
                :subscribed_to_type => @owner.class.class_name	    
                )
-               #s.save!
             @owner.subscribers(true) 
+           end
+           
+           # @feed.subscribers.include?(@reader) #=> true / false
+           def include?(subscriber)
+             @owner.subscribers.map{|s| return true if s.subscriber_id == subscriber.id && s.subscriber_type == subscriber.class.class_name}
+             return false
            end
            
            # @feed.subscribers.unsubscribe << @feed.subscribers[0]
