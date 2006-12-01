@@ -53,5 +53,4 @@ class Test::Unit::TestCase #:nodoc:
 end
 
 require File.join(File.dirname(__FILE__), 'fixtures/reader')
-require File.join(File.dirname(__FILE__), 'fixtures/magazine')
 require File.join(File.dirname(__FILE__), 'fixtures/book')

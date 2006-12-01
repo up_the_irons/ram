@@ -8,12 +8,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.column "updated_at", :datetime
   end
   
-  create_table "Magazines", :force => true do |t|
-    t.column "title", :string
-    t.column "publisher", :string
-  end
-  
-  create_table "Books", :force => true do |t|
+  create_table "printings", :force => true do |t|
     t.column "title", :string
     t.column "publisher", :string
   end

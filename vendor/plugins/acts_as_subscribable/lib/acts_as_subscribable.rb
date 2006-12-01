@@ -16,8 +16,9 @@ module ActiveRecord
       end
       
       module ClassMethods
+
         def acts_as_subscribable(options = {:subscribe_to=>[]})
-          
+                    
           # The mixee is subscribed to other models
           is_a_subscriber unless options[:subscribe_to].empty?
           
@@ -30,6 +31,7 @@ module ActiveRecord
         
         # For example a User is_a_subscriber to Feeds
         def is_a_subscriber
+          
           has_many :subscriptions, :foreign_key => 'subscriber_id', :conditions => 'subscriptions.subscriber_type = ' +"'#{self.class_name}'" do
             # Override the  << method so that it doesn't fuk up the association proxy.
             def <<(subscription)
@@ -47,7 +49,14 @@ module ActiveRecord
             def include?(subscription)
               @owner.subscriptions.map{|s| return true if s.subscribed_to_id == subscription.id && s.subscribed_to_type == subscription.class.class_name}
               return false
-            end
+            end 
+          end
+          
+          # Dynamically create methods which map to the specific types of subscriptions
+          self.class.module_eval do
+            # def books
+            #   puts "foo"
+            # end  
           end
         end
         
@@ -101,7 +110,6 @@ module ActiveRecord
       end
       
       module SingletonMethods
-        
       end
       
       module InstanceMethods
