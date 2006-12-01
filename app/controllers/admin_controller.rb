@@ -45,7 +45,7 @@ class AdminController
   end
   
   def edit_group
-    edit_collection({:table=>'groups', :many_associations=>['users','categories']})
+      edit_collection({:table=>'groups', :many_associations=>['users','categories'], :required_associations=>['user_ids']})
   end
   
   def edit_category

@@ -15,6 +15,7 @@ class GroupObserver < ActiveRecord::Observer
                    :subject      => "Group '#{group.name}' has been created.",
                    :msg_body     => "Group '#{group.name}' has been created.  You may add one or more users to this group.")
     end
+    add_admins_to group
   end
 
   def after_destroy(group)
@@ -29,7 +30,9 @@ class GroupObserver < ActiveRecord::Observer
     end
   end
 
-  def after_save(group)
+  # This was set to "after_save", but that prevents a group from even being able to be created that doesn't belong to an admin.
+  # It is fine to add them initally on new_records but there should be some way to remove them from the group if this is desired.
+  def add_admins_to(group)
     # Admins get access to new groups automatically
     Group.find($application_settings.admin_group_id).users.each { |m| group.users << m }
   end

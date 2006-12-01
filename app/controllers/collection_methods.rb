@@ -86,13 +86,12 @@ module CollectionMethods
     obj = default_obj
     opts[:table] = controller_name.pluralize unless opts[:table]
     obj = { :table => controller_name.pluralize, :many_associations => [], :model => Object.const_get(opts[:table].classify) }.merge(opts)
-    
     # Find the object in the user's model for example current_user.categories etc.
-    instance_variable_set("@#{obj[:table].singularize}", obj[:model].send(:new))
     instance_variable_set("@#{obj[:table].singularize}", send("find_in_users_#{obj[:table]}", params[:id])) if params[:id]
+    instance_variable_set("@#{obj[:table].singularize}", obj[:model].send(:new)) unless instance_variable_get("@#{obj[:table].singularize}")
     
     model_instance = instance_variable_get("@#{obj[:table].singularize}")
-    raise and return unless model_instance # The view will produce an error without instance variable
+    raise "Could not find or create #{obj[:table].singularize}" and return false unless model_instance # The view will produce an error without instance variable
     yield and return if block_given?  # Thar be dragons past this point!
     
     model_sym = obj[:table].singularize.to_sym
@@ -101,7 +100,18 @@ module CollectionMethods
     return unless request.post? && model_instance
     
     params[model_sym][:user_id] = current_user.id if model_instance.new_record?
-      
+    
+    #ensure that the required associations are supplied in the url post
+    opts[:required_associations].each do | assoc |
+      included = false
+      params[model_sym].each_pair do |k,v| 
+        included = true if k.to_sym == assoc.to_sym && v && !v.empty?
+      end
+      unless included
+        model_instance.errors.add_to_base "The #{obj[:table].singularize} requires at least one: #{opts[:required_associations].map{|x| x.to_s.singularize}.join(', ')}"
+        return false
+      end
+    end if opts[:required_associations]
     # Save the record and strip out the has_many associations so that the record saves correctly.
     # TODO: Find a way to make this more succient. 
     attributes = params[model_sym].dup
@@ -110,11 +120,10 @@ module CollectionMethods
       attributes.delete("tags") if params[model_sym][:tags]
     end
     model_instance.attributes = attributes
-    model_instance.save
-
+    
+    return false unless model_instance.save
     # Tags must be assigned after the object is saved b/c they rely on the ID of the record
     model_instance.tags = params[model_sym][:tags] if params[model_sym][:tags]
-      
     obj[:many_associations].each do |many_association|
       potential_elements = []
       added   = []
@@ -135,15 +144,15 @@ module CollectionMethods
       end
 
       many_associations_results << "<br/>Added (#{added.size}) #{many_association} and removed (#{removed.size})" if defined?(added) && defined?(removed)  
-
-      # Display results
-      if model_instance.valid?
-        flash[:notice] = "\"#{model_instance.name}\" was saved."
-        flash[:notice] << many_associations_results
-        redirect_to(:action => "edit_#{obj[:table].singularize}", :id => model_instance.id) and return false unless params[:id]
-      else
-        flash[:notice] = "The #{model_instance.class.class_name} could not be saved."
-      end
+    end
+    
+    # Display results
+    if model_instance.valid?
+      flash[:notice] = "\"#{model_instance.name}\" was saved."
+      flash[:notice] << many_associations_results
+      redirect_to(:action => "edit_#{obj[:table].singularize}", :id => model_instance.id) and return false unless params[:id]
+    else
+      flash[:notice] = "The #{model_instance.class.class_name} could not be saved."
     end
 
   rescue

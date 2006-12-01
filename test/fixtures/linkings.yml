@@ -344,6 +344,7 @@ linking_30:
   user_id: 
   linkable_type: 'Article'
   linkable_id: 1
+# Links non admin category with non-admin group
 linking_31: 
   created_on: 2006-06-11 11:04:12 -07:00
   updated_on: 2006-06-11 11:04:12 -07:00

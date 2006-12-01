@@ -11,13 +11,14 @@
     <%= parse_selectable_tree(session[:category_tree][:root][:children],{:model=>'group',:many_object=>'category_ids',:unselect_method=>unselect_method}) %>
   </ul>
 </li>
-<% unless @group.categories.empty? -%>
 <script language="javascript" type="text/javascript">
   /* <![CDATA[ */
   <% checks = [] -%>
-  <% @group.categories.each do |g| -%>
-  $('branch_checkbox_<%= g.id %>').checked = true;
+  <% unless @group.categories.empty? -%>
+    <% @group.categories.each do |g| -%>
+    $('branch_checkbox_<%= g.id %>').checked = true;
     $('<%="tick_#{g.id}"%>').show();
+    <% end -%>
   <% end -%>
   <% current_user.groups.each do |group|
       checks << group.categories.map{|c|c.id}
@@ -38,4 +39,3 @@ function <%=unselect_method%>(id){
   
   /* ]]> */ 
 </script>
-<% end -%>

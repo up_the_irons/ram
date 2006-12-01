@@ -57,6 +57,18 @@ module IncludedTests::GroupMethodsTest
     # Make sure tags display correctly (comma delimited)
     assert_tag :tag => 'input', :attributes => { :value => 'beach, bird, dog' }
   end
+  
+  def test_remove_categories_from_a_group
+    login_as :administrator
+    admins = Group.find($application_settings.admin_group_id)
+    assert admins.categories.size > 1
+    # remove half of the categories
+    remaining_categories = admins.categories.map{|x|x.id}[0..admins.categories.size/2]
+    assert !remaining_categories.empty?
+    post :edit_group, :id => admins.id, :group => {:name => admins.name, :user_ids => admins.users.map{|u| u.id}, :tags => admins.tags.join(', '), :category_ids => remaining_categories }
+    # Assert that the remaining categories are correct
+    assert_equal remaining_categories, assigns(:group).categories.map{|x| x.id}
+  end
 
   def test_update_group_with_blank_tags
     new_tags = ['beach', 'bird','dog']
@@ -120,46 +132,42 @@ module IncludedTests::GroupMethodsTest
       end
     end
   end
-
-  def test_add_and_disband_group_updates_category_tree
-    administrator = users(:administrator)
-
-    # Remove administrator from admin group to make this test meaningful (else, he has access to all categories simply by being an administrator)
-    Group.find($application_settings.admin_group_id).remove_member(administrator)
-    administrator.categories_as_tree(true) # Reload
-
-    login_as :administrator
-    c = collections(:collection_40)
-
+  
+  def test_removing_group_updates_category_tree
+    u = users(:normal_user)
+    login_as :normal_user
+    u.categories_as_tree(true) # Reload
+    non_admin_group = collections(:collection_40)
+    non_admin_category = collections(:collection_41)
+    assert non_admin_group.categories.include?(non_admin_category)
     get :index
-    assert @controller.session[:category_tree].to_s !~ /#{collections(:collection_41).name}/
-
-    # Fake out the filters in AdminController
-    @controller.instance_eval do
-      class <<current_user
-        def is_admin?; true; end
-      end
-    end
-    class <<@controller # Cheat authentication for this test
-      def find_in_users_groups(id)
-        Group.find(id)
-      end
-    end
-
-    post :edit_group, :id => c.id, :group => { :user_ids => [administrator.id], :category_ids => [collections(:collection_41).id] }
-
-    # Cheap way of making sure category tree gets updated
-    assert @controller.session[:category_tree].to_s =~ /#{collections(:collection_41).name}/
-
-    post :edit_group, :id => c.id, :group => { :user_ids => [], :category_ids => [collections(:collection_41).id] }
-    assert @controller.session[:category_tree].to_s !~ /#{collections(:collection_41).name}/
-
-    # Now add him again to collection_41 and let's destroy this group
-    post :edit_group, :id => c.id, :group => { :user_ids => [administrator.id], :category_ids => [collections(:collection_41).id] }
-    assert @controller.session[:category_tree].to_s =~ /#{collections(:collection_41).name}/
-
-    post :disband_group, :id=>c.id 
-    assert @controller.session[:category_tree].to_s !~ /#{collections(:collection_41).name}/
+    # The user doesn't have access to this category
+    assert !assigns(:current_user).categories.include?(non_admin_category)
+    # Their category tree doesn't display this category
+    assert !@controller.session[:category_tree][:b_41]
+    
+    # Simulate an Admin adding a user to a group, which has access to this category.
+    u.groups << non_admin_group
+    assert u.groups(true).include?(non_admin_group)
+    
+    # If they log in again they should have access to this category
+    login_as :normal_user
+    get :index
+    assert @controller.session[:category_tree][:b_41]
+    
+    # If the group is destroyed they should lose access to this category
+    Group.destroy(non_admin_group.id)
+    login_as :normal_user
+    get :index
+    assert !assigns(:current_user).categories.include?(non_admin_category)
+    @controller.session[:category_tree] = User.find(u.id).categories_as_tree
+    # Their category tree doesn't display this category
+    assert !@controller.session[:category_tree][:b_41]
+    
+  end
+  
+  def test_remove_admin_from_group
+    todo
   end
   
   def test_rescue_on_invalid_disband
@@ -195,10 +203,12 @@ module IncludedTests::GroupMethodsTest
       # 1 Event is sent for Group creation and 1 is sent to notify administrator he has been added to the new group
       assert_difference Event, :count, 2 do
         new_tags = ["atari", "2600"]
-        post :edit_group, :group => { :name =>'Guest Group', :user_id=>users(:administrator).id, :user_ids=>[users(:administrator).id], :tags => new_tags.join(', ')}
+        post :edit_group, :group => { :category_ids=>users(:administrator).categories.map{|c|c.id}, :name =>'Guest Group', :user_ids=>[users(:administrator).id], :user_id=>users(:administrator).id, :user_ids=>[users(:administrator).id], :tags => new_tags.join(', ')}
         assert_redirected_to :action => 'edit_group'
         assert_equal 0, assigns(:group).errors.count
         assert assigns(:group)
+
+        #assert_equal users(:administrator).categories.size, assigns(:group).categories.size 
         assert (new_tags - assigns(:group).tags.map { |o| o.name }).empty?
 
         # Make sure tags display correctly (comma delimited)
@@ -206,6 +216,21 @@ module IncludedTests::GroupMethodsTest
         assert_tag :tag => 'input', :attributes => { :value => 'atari, 2600' }
       end
 
+    end
+  end
+  
+  def test_cannot_create_a_group_without_members
+    login_as :administrator
+    props = {:name=>"foo", :tags=>"", :user_ids=>[], :description=>"", :user_id=>users(:administrator).id}
+    assert_no_difference Group, :count do
+      post :edit_group, :group=>props
+      assert assigns(:group).new_record?
+      assert_equal "The group requires at least one: user_id", assigns(:group).errors[:base]
+    end
+    props[:user_ids] = [users(:administrator).id]
+    assert_difference Group, :count do
+      post :edit_group, :group=>props
+      assert assigns(:group).valid?
     end
   end
   
