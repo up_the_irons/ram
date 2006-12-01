@@ -29,7 +29,7 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_cannot_destroy_a_permanent_group
-    g = Group.find_by_name(Group.find($application_settings.admin_group_id).name) # Permanent group
+    g = Group.find_by_name(Group.find($APPLICATION_SETTINGS.admin_group_id).name) # Permanent group
     assert_no_difference Group, :count do
       assert_raise(RuntimeError) {g.destroy}
     end
@@ -44,7 +44,7 @@ class GroupTest < Test::Unit::TestCase
   end
   
   def test_cannot_rename_a_permanent_group
-    g = Group.find($application_settings.admin_group_id) # Permanent group
+    g = Group.find($APPLICATION_SETTINGS.admin_group_id) # Permanent group
     assert_unchanged g, :name do
       g.update_attributes({:name=>"#{Time.now.to_s}"})
       assert !g.valid?

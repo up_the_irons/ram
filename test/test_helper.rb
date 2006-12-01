@@ -39,7 +39,7 @@ class Test::Unit::TestCase
   end
   
   # Needed by tests to simulate the use of this global variables in the application.
-  $application_settings = Setting.new({:application_name=>'RAM',:admin_group_id=>31,:filesize_limit=>55000})
+  $APPLICATION_SETTINGS = Setting.new({:application_name=>'RAM',:admin_group_id=>31,:filesize_limit=>55000})
   
   # Validates unique and required fields within the model.
   # NOTE: If you set a default value for a required attribute this test will not test the requirement because there

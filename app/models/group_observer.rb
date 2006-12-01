@@ -34,7 +34,7 @@ class GroupObserver < ActiveRecord::Observer
   # It is fine to add them initally on new_records but there should be some way to remove them from the group if this is desired.
   def add_admins_to(group)
     # Admins get access to new groups automatically
-    Group.find($application_settings.admin_group_id).users.each { |m| group.users << m }
+    Group.find($APPLICATION_SETTINGS.admin_group_id).users.each { |m| group.users << m }
   end
 
   class <<self

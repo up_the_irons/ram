@@ -256,7 +256,7 @@ class User < ActiveRecord::Base
   end
   
   def is_admin?
-    (user.groups.include?(Group.find($application_settings.admin_group_id)))? true : false 
+    (user.groups.include?(Group.find($APPLICATION_SETTINGS.admin_group_id)))? true : false 
   end
   
   # Expects the obj to respond to user_id

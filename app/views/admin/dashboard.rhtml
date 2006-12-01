@@ -2,16 +2,5 @@
 <h1>Administrator's Dashboard</h1>
 <% end -%>
 <!-- /Page Options //-->
-<div class="pageActionOptions">
-	<dl>
-		<dt>From here you can manage:</dt>
-		<dd><%= link_to('Users', :controller=>'admin',:action=>'users') %></dd>
-  	<dd><%= link_to('Categories', :controller=>'admin',:action=>'categories') %></dd>
-		<dd><%= link_to('Groups', :controller=>'admin',:action=>'groups')%></dd>
-		<dd><%= link_to('Event Subscriptions', :controller => 'admin', :action => 'event_subscriptions') %></dd>
-		<dd><%= link_to('Application Settings', :action=>'settings')%></dd>
-  </dl>										
-</div>
-<div class="row"></div>
 <%= render :partial => 'events/list' %>
 

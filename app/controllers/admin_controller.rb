@@ -14,7 +14,7 @@ require_dependency 'collection_methods'
 class AdminController
   include Sortable
   include EnlightenObservers
-  
+  layout 'admin'
   observer :group_observer, :change_observer, :category_observer
 
   volatile = [:destroy_group, :create_group, :update_group, :destroy_category, :create_category, :update_category]
@@ -135,7 +135,7 @@ class AdminController
       
       if @settings.update_attributes(params[:settings])
         flash[:notice] = "Your changes have been saved."
-        $application_settings = Setting.find(@settings.id)
+        $APPLICATION_SETTINGS = Setting.find(@settings.id)
       end
   end
 

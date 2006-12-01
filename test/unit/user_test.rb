@@ -90,7 +90,7 @@ class UserTest < Test::Unit::TestCase
   def test_adding_a_user_to_the_admin_group_makes_them_an_admin
     u = User.find(4)
     assert_equal false, u.is_admin?
-    u.groups << Group.find($application_settings.admin_group_id)
+    u.groups << Group.find($APPLICATION_SETTINGS.admin_group_id)
     u.reload
     assert_equal true, u.is_admin?
   end
@@ -278,13 +278,13 @@ class UserTest < Test::Unit::TestCase
 
     u = users(:administrator)
     groups = u.groups_search('a')
-    p.call(['Atari', Group.find($application_settings.admin_group_id).name], groups)
+    p.call(['Atari', Group.find($APPLICATION_SETTINGS.admin_group_id).name], groups)
 
     groups = u.groups_search('secret')
-    p.call(Group.find($application_settings.admin_group_id).name, groups)
+    p.call(Group.find($APPLICATION_SETTINGS.admin_group_id).name, groups)
 
     groups = u.groups_search('purple')
-    p.call([Group.find($application_settings.admin_group_id).name, 'Atari'], groups)
+    p.call([Group.find($APPLICATION_SETTINGS.admin_group_id).name, 'Atari'], groups)
   end
 
 end

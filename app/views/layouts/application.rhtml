@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title><%= $application_settings.application_name %>: <%= @page_title || controller.action_name %></title>
+  <title><%= $APPLICATION_SETTINGS.application_name %>: <%= @page_title || controller.action_name %></title>
   <%= render :partial=>'layouts/global_includes' %>
 </head>
 <body>
@@ -21,12 +21,12 @@
       <div id="ram_search_form" <% if controller.action_name == 'google' -%>style="display: none"<% end -%>>
       <%= form_tag :controller => 'search', :action => 'all' %>
   	    <input class="searchField" type="text" name='id' tabindex="1" alt="search box" />
-  	    <input class="searchSubmit" type="submit" value="<%= $application_settings.application_name %> Search" alt="search button" />
+  	    <input class="searchSubmit" type="submit" value="<%= $APPLICATION_SETTINGS.application_name %> Search" alt="search button" />
       <%= end_form_tag %>  
       </div>
       <div style="padding-top: 5px">
         <span>Search using: </span>
-        <input id='ram_radio'    type="radio" onclick="View.show_hide('ram_search_form','google_search_form'); $('google_radio').checked = false; this.checked = true" value="RAM" name="ram_radio" <% unless controller.action_name == 'google' -%>checked<% end -%>/> <label for="ram_radio"><%= $application_settings.application_name %></label>&nbsp;&nbsp;&nbsp;
+        <input id='ram_radio'    type="radio" onclick="View.show_hide('ram_search_form','google_search_form'); $('google_radio').checked = false; this.checked = true" value="RAM" name="ram_radio" <% unless controller.action_name == 'google' -%>checked<% end -%>/> <label for="ram_radio"><%= $APPLICATION_SETTINGS.application_name %></label>&nbsp;&nbsp;&nbsp;
         <input id='google_radio' type="radio" onclick="View.show_hide('google_search_form','ram_search_form'); $('ram_radio').checked = false;    this.checked = true" value="Google" name="google_radio" <% if controller.action_name == 'google' -%>checked<% end -%>/> <label for="google_radio">Google</label>&nbsp;&nbsp;
       </div>
       <% end %>

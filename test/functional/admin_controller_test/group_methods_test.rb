@@ -60,7 +60,7 @@ module IncludedTests::GroupMethodsTest
   
   def test_remove_categories_from_a_group
     login_as :administrator
-    admins = Group.find($application_settings.admin_group_id)
+    admins = Group.find($APPLICATION_SETTINGS.admin_group_id)
     assert admins.categories.size > 1
     # remove half of the categories
     remaining_categories = admins.categories.map{|x|x.id}[0..admins.categories.size/2]
@@ -72,7 +72,7 @@ module IncludedTests::GroupMethodsTest
 
   def test_update_group_with_blank_tags
     new_tags = ['beach', 'bird','dog']
-    g = users(:administrator).groups.find(:first, :conditions => "name != '#{Group.find($application_settings.admin_group_id).name}'")
+    g = users(:administrator).groups.find(:first, :conditions => "name != '#{Group.find($APPLICATION_SETTINGS.admin_group_id).name}'")
     post :edit_group, :id => g.id, :group =>{:name=>'Atari Monkeys', :user_ids => [users(:administrator).id], :tags => new_tags.join(', ')}
     assert_response :success
     
@@ -118,7 +118,7 @@ module IncludedTests::GroupMethodsTest
   def test_disband_group
     login_as :administrator
     users(:administrator).groups.each do |g|
-      unless g.name == Group.find($application_settings.admin_group_id).name
+      unless g.name == Group.find($APPLICATION_SETTINGS.admin_group_id).name
         # 1 Event is sent to admin "administrator" and 1 for each user belonging to this group
         assert_difference Event, :count, (1 + g.users.count) do
           post :disband_group, :id=>g.id 

@@ -85,9 +85,9 @@ RAM_SALT          = 'foodz'
 # APP_NAME          = 'RAM'
 # ADMIN_GROUP       = 'Administrators'
 begin
-  $application_settings = Setting.find(:first) unless RAILS_ENV == 'test' # The record, which hold all the website configurations
+  $APPLICATION_SETTINGS = Setting.find(:first) unless RAILS_ENV == 'test' # The record, which hold all the website configurations
 rescue
-  $application_settings = OpenStruct.new({:application_name=>'RAM',:admin_group_id=>1,:filesize_limit=>55000})
+  $APPLICATION_SETTINGS = OpenStruct.new({:application_name=>'RAM',:admin_group_id=>1,:filesize_limit=>55000})
 end
 begin
   # Codename generated from the dictionary

@@ -170,7 +170,7 @@ class Group < Collection
     # FIXME: This should go in an observer but I am having trouble getting it to work.
     #breakpoint
     #@users = users
-    #g = Group.find($application_settings.admin_group_id).users.each{|m| @users << m}
+    #g = Group.find($APPLICATION_SETTINGS.admin_group_id).users.each{|m| @users << m}
     #self.users(true)
   end
 
