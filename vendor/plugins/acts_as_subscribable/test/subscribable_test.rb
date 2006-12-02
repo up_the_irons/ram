@@ -67,20 +67,24 @@ class SubscribableTest < Test::Unit::TestCase
     assert @make.subscribers.include?(@nolan)
   end
   
-  def test_prevent_subscriptions_to_non_specificed_classes
-    #TODO Possibly
-  end
-  
   # The subscriber should be able to dynamically segment their subscriptions like:
-  # @reader.subscriptions.books, @reader.subscriptions.magazines.
+  # @reader.books, @reader.magazines.
   def test_dynamic_access_to_subscribed_classes
     assert @nolan.subscriptions.empty?
     assert_difference @nolan.subscriptions, :size, 2 do
       @nolan.subscriptions << @catch22
       @nolan.subscriptions << @make
     end
-    assert_equal @catch22.id, @nolan.subscriptions.books[0].id
-    assert_equal @make.id, @nolan.subscriptions.magazines[0].id
+    assert @nolan.books.include?(@catch22)
+    assert @nolan.magazines.include?(@make)
+  end
+  
+  def test_push_on_dynamic_associations
+    r = a_reader
+    b = a_book
+    r.books << b
+    # TODO
+    # assert r.books.include?(b)
   end
         
   protected

@@ -31,40 +31,38 @@ module ActiveRecord
         
         # For example a User is_a_subscriber to Feeds
         def is_a_subscriber(options)
-          
-          has_many :subscriptions, :foreign_key => 'subscriber_id', :conditions => 'subscriptions.subscriber_type = ' +"'#{self.class_name}'" do
+          has_many :subscriptions, :foreign_key => 'subscriber_id', :conditions => 'subscriptions.subscriber_type = ' +"'#{self.to_s}'" do
             # Override the  << method so that it doesn't fuk up the association proxy.
             def <<(subscription)
-              return unless @owner.subscriptions.map{|s| return false if s.subscribed_to_id == subscription.id && s.subscribed_to_type == subscription.class.class_name}
+              return unless @owner.subscriptions.map{|s| return false if s.subscribed_to_id == subscription.id && s.subscribed_to_type == subscription.class.to_s}
               s = Subscription.create(
                 :subscriber_id      => @owner.id,
-                :subscriber_type    => @owner.class.class_name,
+                :subscriber_type    => @owner.class.to_s,
                 :subscribed_to_id   => subscription.id,
-                :subscribed_to_type => subscription.class.class_name
+                :subscribed_to_type => subscription.class.to_s
               )
               @owner.subscriptions(true)
             end
             
             # @reader.subscriptions.include?(@magazine) #=> true / false
             def include?(subscription)
-              @owner.subscriptions.map{|s| return true if s.subscribed_to_id == subscription.id && s.subscribed_to_type == subscription.class.class_name}
+              @owner.subscriptions.map{|s| return true if s.subscribed_to_id == subscription.id && s.subscribed_to_type == subscription.class.to_s}
               return false
             end 
           end
         
-          # Dynamically create methods which map to the specific types of subscriptions          
+          # Dynamically create methods which map to the specific types of subscriptions    
+          # TODO see if you can replace this with an alias method to the has_many      
           self.module_eval do
             options[:subscribe_to].each do | assoc |
               define_method(assoc.to_s.pluralize) do
-                klass = assoc.to_s.singularize.classify
-                puts klass
+                klass = assoc.to_s.singularize.classify.constantize
                 objects = []
-                subscriptions.map{|s| objects << Klass.find(s.subscribed_to_id) s.subscribed_to_type == klass.to_s}
+                subscriptions.map{|s| objects << klass.send(:find, s.subscribed_to_id) if s.subscribed_to_type == klass.to_s}
                 return objects
               end
             end
           end
-          breakpoint
         end
         
         # For example a Feed is subscribed_to by A User.
@@ -80,23 +78,23 @@ module ActiveRecord
           has_many :subscribers, :class_name => 'Subscription', :finder_sql =>
                 'SELECT subscriptions.* ' +
                 'FROM subscriptions ' +
-                'WHERE subscriptions.subscribed_to_id = #{self.id} AND subscriptions.subscribed_to_type =' + "'#{self.class_name}'" do
+                'WHERE subscriptions.subscribed_to_id = #{self.id} AND subscriptions.subscribed_to_type =' + "'#{self.to_s}'" do
             
             # Override the  << method so that it doesn't fuk up the association proxy.
             def <<(subscriber)
-              return unless @owner.subscribers.map{|s| return false if s.subscriber_id == subscriber.id && s.subscriber_type == subscriber.class.class_name}
+              return unless @owner.subscribers.map{|s| return false if s.subscriber_id == subscriber.id && s.subscriber_type == subscriber.class.to_s}
               s = Subscription.create(
                :subscriber_id      => subscriber.id,
-               :subscriber_type    => subscriber.class.class_name,
+               :subscriber_type    => subscriber.class.to_s,
                :subscribed_to_id   => @owner.id,
-               :subscribed_to_type => @owner.class.class_name	    
+               :subscribed_to_type => @owner.class.to_s	    
                )
             @owner.subscribers(true) 
            end
            
            # @feed.subscribers.include?(@reader) #=> true / false
            def include?(subscriber)
-             @owner.subscribers.map{|s| return true if s.subscriber_id == subscriber.id && s.subscriber_type == subscriber.class.class_name}
+             @owner.subscribers.map{|s| return true if s.subscriber_id == subscriber.id && s.subscriber_type == subscriber.class.to_s}
              return false
            end
            
