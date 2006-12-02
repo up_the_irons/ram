@@ -20,17 +20,17 @@ module ActiveRecord
         def acts_as_subscribable(options = {:subscribe_to=>[]})
                     
           # The mixee is subscribed to other models
-          is_a_subscriber unless options[:subscribe_to].empty?
+          is_a_subscriber(options) unless options[:subscribe_to].empty?
           
           # The mixee has other classes subscribing to it
-          is_subscribed_to if  options[:subscribe_to].empty?
+          is_subscribed_to(options) if options[:subscribe_to].empty?
           
           include ActiveRecord::Acts::Subscribable::InstanceMethods
           extend ActiveRecord::Acts::Subscribable::SingletonMethods          
         end
         
         # For example a User is_a_subscriber to Feeds
-        def is_a_subscriber
+        def is_a_subscriber(options)
           
           has_many :subscriptions, :foreign_key => 'subscriber_id', :conditions => 'subscriptions.subscriber_type = ' +"'#{self.class_name}'" do
             # Override the  << method so that it doesn't fuk up the association proxy.
@@ -51,17 +51,24 @@ module ActiveRecord
               return false
             end 
           end
-          
-          # Dynamically create methods which map to the specific types of subscriptions
-          self.class.module_eval do
-            # def books
-            #   puts "foo"
-            # end  
+        
+          # Dynamically create methods which map to the specific types of subscriptions          
+          self.module_eval do
+            options[:subscribe_to].each do | assoc |
+              define_method(assoc.to_s.pluralize) do
+                klass = assoc.to_s.singularize.classify
+                puts klass
+                objects = []
+                subscriptions.map{|s| objects << Klass.find(s.subscribed_to_id) s.subscribed_to_type == klass.to_s}
+                return objects
+              end
+            end
           end
+          breakpoint
         end
         
         # For example a Feed is subscribed_to by A User.
-        def is_subscribed_to
+        def is_subscribed_to(options)
           
           # Why I am mixing single and double quotes in the finder_sql statement you ask?
           # Excellent question! The answer is when you use "double quotes" the string is 
