@@ -7,27 +7,27 @@
   <dt>Admin Only Options</dt>
   <dd><%= link_to "#{image_tag('/images/icons/pencil.png')} Edit Asset", :controller=>'asset', :action=>'edit',:id=>@asset %></dd>
   <dd><%= link_to "#{image_tag('/images/icons/cross.png')} Delete Asset", {:controller=>'asset', :action=>'destroy',:id=>@asset},{:confirm=>"Are you sure you want to remove #{@asset.filename}?",:post=>true} %></dd>
-	<dd><%= link_to "#{image_tag('/images/icons/briefcase.png',{:title=>'Add to Briefcase to Download'})} Add To Briefcase", {:controller=>'briefcase', :action=>'add', :category_id=>@asset.category.id,:assets=>[@asset.id]},:post=>true %></dd>
+  <dd><%= link_to "#{image_tag('/images/icons/briefcase.png',{:title=>'Add to Briefcase to Download'})} Add To Briefcase", {:controller=>'briefcase', :action=>'add', :category_id=>@asset.category.id,:assets=>[@asset.id]},:post=>true %></dd>
 </dl>
 <% end -%>
 
 <div class="post">
-		<ul class="postHeader">
-			<li>Content Type: <%= @asset.content_type %></li>
-			<li>Author: <%= User.find(@asset.user_id).login if @asset.user_id %></li>
-		</ul>
-		<h1 class='title'><%= h @asset.name %>
-		<% if @asset.name != @asset.content_type -%> <span class="miceType">(<%=h @asset.content_type%> )</span> <% end -%>
-		</h1>
-		<p><%= link_to("View Larger Size", :action => "show_inline", :id=>@asset.id)%></p>
-		<%= display_as(@asset)%>
-		<p>
-		<%= @asset.description %></p>
-		<ul class="tags">
-			<label><%= image_tag('/images/icons/tag_blue.png')%> Tags</label>
-			<% for tag in @asset.tags -%>
-			<li><%= link_to tag.name, {:controller=>'search',:action=>'all',:id=>tag.name},:post=>true %></li>
-			<% end -%>
-		</ul>
+    <ul class="postHeader">
+      <li>Content Type: <%= @asset.content_type %></li>
+      <li>Author: <%= User.find(@asset.user_id).login if @asset.user_id %></li>
+    </ul>
+    <h1 class='title'><%= h @asset.name %>
+    <% if @asset.name != @asset.content_type -%> <span class="miceType">(<%=h @asset.content_type%> )</span> <% end -%>
+    </h1>
+    <p><%= link_to("View Larger Size", :action => "show_inline", :id=>@asset.id)%></p>
+    <%= display_as(@asset)%>
+    <p>
+    <%= @asset.description %></p>
+    <ul class="tags">
+      <label><%= image_tag('/images/icons/tag_blue.png')%> Tags</label>
+      <% for tag in @asset.tags -%>
+      <li><%= link_to tag.name, {:controller=>'search',:action=>'all',:id=>tag.name},:post=>true %></li>
+      <% end -%>
+    </ul>
 </div>
 <br class="clear_both" />

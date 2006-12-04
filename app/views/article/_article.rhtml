@@ -1,42 +1,42 @@
 <div class="post" id="article_<%= article.id %>">
-	<dl class="header">
-	  <dt class="title"><%= article.title %>"<span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} Edit", {:controller=>'article',:action=>'write', :id=>article.id},{:class=>"editOptions"}) if current_user.id == article.user_id %></span></dt>
-	  <dd class="author">Author: <%= User.find(article.author).login  %></dd>
-	  <dd class="published_on">Published On: <%=article.published_at %></dd>
-	  <% unless article.category_id.nil? -%>
-	  <dd class="published_in">Published in Category: <%= link_to Category.find(article.category_id).name, :controller=>'category',:action=>'show',:id=>article.category_id %>
+  <dl class="header">
+    <dt class="title"><%= article.title %>"<span class='mice_type'><%= link_to("#{image_tag('/images/icons/pencil.png')} Edit", {:controller=>'article',:action=>'write', :id=>article.id},{:class=>"editOptions"}) if current_user.id == article.user_id %></span></dt>
+    <dd class="author">Author: <%= User.find(article.author).login  %></dd>
+    <dd class="published_on">Published On: <%=article.published_at %></dd>
+    <% unless article.category_id.nil? -%>
+    <dd class="published_in">Published in Category: <%= link_to Category.find(article.category_id).name, :controller=>'category',:action=>'show',:id=>article.category_id %>
     </dd>
     <% end -%>
-	  <% if article.allow_comments? -%>
-	  <dd class="comments">Comments: <%= article.comment_count %></dd>
-	  <% end -%>
-	</dl>
+    <% if article.allow_comments? -%>
+    <dd class="comments">Comments: <%= article.comment_count %></dd>
+    <% end -%>
+  </dl>
 
-	<p id="article_body_#{article.id}" class="body"><%= article.body %></p>
-	<ul class="tags">
-		<label><%= image_tag('/images/icons/tag_blue.png')%> Tags</label>
-		<% for tag in article.tags -%>
-		<li><%= link_to tag.name, {:controller=>'search',:action=>'all',:id=>tag.name},:post=>true %></li>
-		<% end -%>
-	</ul>
-	
-	<% if article.allow_comments? -%>
-	  <h4>Comments (<%= article.comment_count %>) <em><a href="#comment_form_for_<%= article.id %>" onclick="Element.toggle($('comment_form_for_<%= article.id %>'))">make a comment</a></em></h4>
-	  <% article.comments.each do | comment | -%>
+  <p id="article_body_#{article.id}" class="body"><%= article.body %></p>
+  <ul class="tags">
+    <label><%= image_tag('/images/icons/tag_blue.png')%> Tags</label>
+    <% for tag in article.tags -%>
+    <li><%= link_to tag.name, {:controller=>'search',:action=>'all',:id=>tag.name},:post=>true %></li>
+    <% end -%>
+  </ul>
+  
+  <% if article.allow_comments? -%>
+    <h4>Comments (<%= article.comment_count %>) <em><a href="#comment_form_for_<%= article.id %>" onclick="Element.toggle($('comment_form_for_<%= article.id %>'))">make a comment</a></em></h4>
+    <% article.comments.each do | comment | -%>
         <%= render :partial=>'article/comment',:locals=>{:comment=>comment} %>
     <% end -%>
-	
-	  <%= error_messages_for 'article' -%>
-	  <%= start_form_tag :controller=>'article', :action=>'comment_on' , :id=>article %>
-	    <ul class="web_form" id="comment_form_for_<%= article.id %>" style="display:none;">
-	    <%= render :partial=>'article/comment_form'%>
-	    <li><label>Add Comment:</label><%= submit_tag "Submit" %></li>
-	    </ul>
-	  </form>
-	<% end -%>
-	
-	<%= "<p> Comments are not allowed.</p>"    unless article.allow_comments? %>
-	<% unless article.published? -%>
+  
+    <%= error_messages_for 'article' -%>
+    <%= start_form_tag :controller=>'article', :action=>'comment_on' , :id=>article %>
+      <ul class="web_form" id="comment_form_for_<%= article.id %>" style="display:none;">
+      <%= render :partial=>'article/comment_form'%>
+      <li><label>Add Comment:</label><%= submit_tag "Submit" %></li>
+      </ul>
+    </form>
+  <% end -%>
+  
+  <%= "<p> Comments are not allowed.</p>"    unless article.allow_comments? %>
+  <% unless article.published? -%>
   <p class="pageInstructions"><%= "\"#{article.title}\" is saved as a draft, which means others will not see it until it is published.\"" %></p>
   <% end -%>
 </div>

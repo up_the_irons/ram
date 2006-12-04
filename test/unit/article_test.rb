@@ -24,18 +24,18 @@ class ArticleTest < Test::Unit::TestCase
   
   def setup
     @model = Article
-		@record_one = Article.find(1)
-		@new_obj = {
-			:parent_id => Article.find(:first).id,
-		  :user_id=> User.find(:first).id,        
-		  :title=>'My Favorite Game System',                
-		  :excerpt=>"My Favorite Game System is the Atari2600",        
-		  :body=>'My Favorite Game System is the Atari2600 because it contained the most awesome hardware eva.',           
-		  :excerpt_html=>'<b>My Favorite Game System is the Atari2600</b>',   
-		  :body_html=>'<b>My Favorite Game System is the Atari2600</b> because it contained the most awesome hardware eva.',                 
-		  :allow_comments=>true,
-		  :status=>0
-		}
+    @record_one = Article.find(1)
+    @new_obj = {
+      :parent_id => Article.find(:first).id,
+      :user_id=> User.find(:first).id,        
+      :title=>'My Favorite Game System',                
+      :excerpt=>"My Favorite Game System is the Atari2600",        
+      :body=>'My Favorite Game System is the Atari2600 because it contained the most awesome hardware eva.',           
+      :excerpt_html=>'<b>My Favorite Game System is the Atari2600</b>',   
+      :body_html=>'<b>My Favorite Game System is the Atari2600</b> because it contained the most awesome hardware eva.',                 
+      :allow_comments=>true,
+      :status=>0
+    }
   end
 
   def test_create_article
@@ -66,7 +66,7 @@ class ArticleTest < Test::Unit::TestCase
   end
   def test_update_article
     @id = @model.find(:first).id
-  	unit_update @model, @id, @new_obj
+    unit_update @model, @id, @new_obj
   end
   
   def test_shall_allow_tags

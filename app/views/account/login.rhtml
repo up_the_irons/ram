@@ -19,11 +19,11 @@ if RAILS_ENV == 'development'
 -%>
 <ul class="login_form">
   <li>Or for testing purposes log in as a pre-existing user</li>
-	<li><label for="login_as">login as:</label>
-		<select id='login_as' onchange='new Ajax.Request("/account/login_as?user_id="+$(this).value);' >	
-		<option>Select A User Account</option>
-		<%= options_for_select User.find(:all).map{|u| [u.login,u.id]} %>
-	</li>
+  <li><label for="login_as">login as:</label>
+    <select id='login_as' onchange='new Ajax.Request("/account/login_as?user_id="+$(this).value);' >  
+    <option>Select A User Account</option>
+    <%= options_for_select User.find(:all).map{|u| [u.login,u.id]} %>
+  </li>
 </ul>
 <% end -%>
 <br class="clear_both" />

@@ -1,122 +1,122 @@
 a.editOptions
 {
-	color               : #EC6428;
+  color               : #EC6428;
 }
 
 .roundBox
 {
-	width               : 480px;
-	display             : block;
-	margin              : 5px;
-	margin-bottom       : 20px;
+  width               : 480px;
+  display             : block;
+  margin              : 5px;
+  margin-bottom       : 20px;
 }
 .roundBox .topRightCorner, .roundBox .topLeftCorner, .roundBox .bottomLeftCorner, .roundBox .bottomRightCorner
 {
-	background-repeat   : no-repeat;
-	display             : block;
-	height              : 10px;
-	width               : 100%;
+  background-repeat   : no-repeat;
+  display             : block;
+  height              : 10px;
+  width               : 100%;
 }
 .roundBox .bottomRightCorner
 {
-	background-image    : url(/images/corner-br-light-blue.gif);
-	background-position : bottom right;
-	float               : right;
+  background-image    : url(/images/corner-br-light-blue.gif);
+  background-position : bottom right;
+  float               : right;
 }
 .roundBox .bottomLeftCorner
 {
-	background-image    : url(/images/corner-bl-light-blue.gif);
-	background-position : bottom left;
+  background-image    : url(/images/corner-bl-light-blue.gif);
+  background-position : bottom left;
 }
 .roundBox .topRightCorner
 {
-	background-image    : url(/images/corner-tr-light-blue.gif);
-	background-position : top right;
-	float               : right;
+  background-image    : url(/images/corner-tr-light-blue.gif);
+  background-position : top right;
+  float               : right;
 }
 .roundBox .topLeftCorner
 {
-	background-image    : url(/images/corner-tl-light-blue.gif);
-	background-position : top left;
+  background-image    : url(/images/corner-tl-light-blue.gif);
+  background-position : top left;
 }
 
 .roundBox .content
 {
-	border-left         : #DBD9D9 solid 1px;
-	border-right        : #DBD9D9 solid 1px;
-	background-color    : #FAFAFA;
-	padding             : 0 10px 0 10px;
+  border-left         : #DBD9D9 solid 1px;
+  border-right        : #DBD9D9 solid 1px;
+  background-color    : #FAFAFA;
+  padding             : 0 10px 0 10px;
 }
 .content li
 {
-	display             : inline
+  display             : inline
 }
 
 .profileImage
 {
-	width               : 110px;
-	text-align          : center;
-	float               : left;
-	margin              : 0 5px 0 0;
+  width               : 110px;
+  text-align          : center;
+  float               : left;
+  margin              : 0 5px 0 0;
 }
 .profileImage img
 {
-	border              : solid 4px #666666;
+  border              : solid 4px #666666;
 }
 .profileImage a
 {
-	font-size           : 0.7em;
+  font-size           : 0.7em;
 }
 
 .profileData
 {
-	width               : 330px;
-	list-style          : none;
-	float               : left;
+  width               : 330px;
+  list-style          : none;
+  float               : left;
 }
 
 .content ul
 {
-	padding             : 10px 0 10px 0;
+  padding             : 10px 0 10px 0;
 }
 .content h1
 {
-	font-size           : 1.4em;
-	margin-bottom       : 10px;
+  font-size           : 1.4em;
+  margin-bottom       : 10px;
 }
 .content h2
 {
-	font-size           : 1.0em;
-	margin-bottom       : 10px;
+  font-size           : 1.0em;
+  margin-bottom       : 10px;
 }
 .content h3
 {
-	font-size           : 0.9em;
-	font-weight         : lighter;
+  font-size           : 0.9em;
+  font-weight         : lighter;
 }
 .content h4
 {
-	font-size           : 0.7em;
-	font-weight         : lighter;
+  font-size           : 0.7em;
+  font-weight         : lighter;
 }
 .content .roles li
 {
-	border-right        : solid 1px #DBD9D9;
-	padding             : 0 5px 0 5px;
+  border-right        : solid 1px #DBD9D9;
+  padding             : 0 5px 0 5px;
 }
 .adminOptions{
-	clear             : both;
-	display           : block;
-	border            : 1px solid #D5D6B2;
-	padding           : 5px;
-	margin-bottom     : 5px;
-	background-color  : #F7F8D8;	
+  clear             : both;
+  display           : block;
+  border            : 1px solid #D5D6B2;
+  padding           : 5px;
+  margin-bottom     : 5px;
+  background-color  : #F7F8D8;  
 }
 .adminOptions dt{
-	font-weight: normal;
+  font-weight: normal;
 }
 .adminOptions li, .adminOptions dd{
-	border            : none;
-	display           : inline;
-	padding           : 0 20px 0 0;
+  border            : none;
+  display           : inline;
+  padding           : 0 20px 0 0;
 }

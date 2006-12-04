@@ -4,14 +4,14 @@ class AssetTest < Test::Unit::TestCase
   fixtures :collections, :attachments, :db_files, :linkings, :users, :memberships, :settings
 
   def setup
-  		@model = Asset
-  		@record_one = Asset.find(1)
-  		@new_obj = {
-  			:filename => 'rails.png',
-  			:size=> 4,
-  			:content_type => 'image/png',
-  			:linking =>Linking.find(1)
-  		}
+      @model = Asset
+      @record_one = Asset.find(1)
+      @new_obj = {
+        :filename => 'rails.png',
+        :size=> 4,
+        :content_type => 'image/png',
+        :linking =>Linking.find(1)
+      }
   end
 
   # Test based on the acts_as_attachment test examples

@@ -28,13 +28,13 @@
 function <%=unselect_method%>(id){
   var checkboxes = [<%= checks.map{|g| "$('branch_checkbox_#{g}')"}.join(", ") -%>]
   var ticks = [<%= checks.map{|g| "$('tick_#{g}')"}.join(", ") -%>]
-  	
+    
   if(!$('branch_checkbox_'+id).checked){
     $('tick_'+id).show()
   }else{
     $('tick_'+id).hide();
   }
-  	
+    
 }
   
   /* ]]> */ 

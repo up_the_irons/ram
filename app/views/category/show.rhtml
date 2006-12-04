@@ -25,12 +25,12 @@
 
 
 <div class="pageActionOptions">
-	From here you can:
-	<dl>
-		<dd><%= link_to_remote( "#{image_tag('/images/icons/add.png')} Upload A file", 
-											 :url => { :controller=>'asset', :action => "edit", :category_id =>@category.id, :update=>'new_asset_form' } ) %></dd>
-		<dd><%= link_to "#{image_tag('/images/icons/add.png')} Write An Article", :controller=>'article',:action=>'write',:category_id=>@category.id %></dd>
-	</dl>											
+  From here you can:
+  <dl>
+    <dd><%= link_to_remote( "#{image_tag('/images/icons/add.png')} Upload A file", 
+                       :url => { :controller=>'asset', :action => "edit", :category_id =>@category.id, :update=>'new_asset_form' } ) %></dd>
+    <dd><%= link_to "#{image_tag('/images/icons/add.png')} Write An Article", :controller=>'article',:action=>'write',:category_id=>@category.id %></dd>
+  </dl>                      
 </div>
 
 <%= render :partial=>'article/list' if params[:display] == 'articles' -%>
@@ -43,7 +43,7 @@
 <dl>
   <dt>Last Updated: <%= @category.updated_at %></dt>
   <dt>You have access through <span id="group_size"><%= @groups.size.to_s %></span> groups:</dt>
-	  <%= @groups.map{|g| "<dd>#{link_to g.name, :controller=>'group',:action=>'show',:id=>g.id}</dd>"} -%>
+    <%= @groups.map{|g| "<dd>#{link_to g.name, :controller=>'group',:action=>'show',:id=>g.id}</dd>"} -%>
 </dl>
 <% end -%>
 

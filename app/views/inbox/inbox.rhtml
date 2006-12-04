@@ -3,17 +3,17 @@
 <% end -%>
 
 <table class="message_list" cellpadding="0" cellspacing="0">
-	<tr class="heading">
-		<th><!--icon //--></th>
-      	<th>Type</th>
-      	<th>Title</th>
-      	<th>Date Received</th>
-		<th>Actions</th>
+  <tr class="heading">
+    <th><!--icon //--></th>
+        <th>Type</th>
+        <th>Title</th>
+        <th>Date Received</th>
+    <th>Actions</th>
     </tr>
-	<% @messages.each do |message| 
-	  locals = { :message => message, :row_class => cycle("even", "odd") }
-	  locals = locals.merge(message.params) unless message.params.nil?
-	-%>
-		<%= render :partial => 'events/detail_row', :locals => locals %>
-	<% end -%>
+  <% @messages.each do |message| 
+    locals = { :message => message, :row_class => cycle("even", "odd") }
+    locals = locals.merge(message.params) unless message.params.nil?
+  -%>
+    <%= render :partial => 'events/detail_row', :locals => locals %>
+  <% end -%>
 </table>

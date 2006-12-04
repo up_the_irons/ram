@@ -14,29 +14,29 @@
   c = display_as_round_box do -%>
   <ul style="display:block;">
     <li style="display:block;">
-  	  <label for="leader">Leader:</label> <%= h User.find(@group.user_id).login %>
+      <label for="leader">Leader:</label> <%= h User.find(@group.user_id).login %>
     </li>
     <li style="display:block;">
-  	  <label for="description">Description: </label><%= @group.description %>
+      <label for="description">Description: </label><%= @group.description %>
     </li>
     <li style="display:block;">  
       <label for="users">Users: </label>
       <dl>
-  	  <% for u in @group.users -%>
-  	    <dd><%=link_to u.login, :controller=>'account',:action=>'profile',:id=>u.id %></dd>
-  	  <% end -%>
-  	  </dl>
-  	</li>
-  	<li style="display:block;">
-  	  <label for="categories">Categories</label>
-  	  <dl>
-  	  <% for c in @group.categories %>
-  	    <%= 
-  		  #TODO: display the categories within their parent/child context where applicable.
-  		  # render :partial=> 'category/category', :locals=>{:category=>c} 
-  		  "<dd>#{link_to c.name, :controller=>'category',:action=>'show',:id=>c.id}</dd>"
-  	    -%>
-  	  <% end unless @group.categories.nil?%>
+      <% for u in @group.users -%>
+        <dd><%=link_to u.login, :controller=>'account',:action=>'profile',:id=>u.id %></dd>
+      <% end -%>
+      </dl>
+    </li>
+    <li style="display:block;">
+      <label for="categories">Categories</label>
+      <dl>
+      <% for c in @group.categories %>
+        <%= 
+        #TODO: display the categories within their parent/child context where applicable.
+        # render :partial=> 'category/category', :locals=>{:category=>c} 
+        "<dd>#{link_to c.name, :controller=>'category',:action=>'show',:id=>c.id}</dd>"
+        -%>
+      <% end unless @group.categories.nil?%>
       </dl>
     </li>
   <% end 

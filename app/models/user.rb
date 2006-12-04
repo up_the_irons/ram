@@ -28,26 +28,26 @@
 require 'digest/sha1'
 # require File.dirname(__FILE__) + '/../../lib/overrides_finder.rb'
 class User < ActiveRecord::Base
-	# has_a_custom_finder
-	
-	has_one  :person
-	has_one  :profile
-	has_one  :avatar
+  # has_a_custom_finder
   
-	has_many :memberships
-	has_many :articles
-	has_many :assets do
-	  def <<(asset)
-	    return false if @owner.assets.include?(asset)
-	    super
+  has_one  :person
+  has_one  :profile
+  has_one  :avatar
+  
+  has_many :memberships
+  has_many :articles
+  has_many :assets do
+    def <<(asset)
+      return false if @owner.assets.include?(asset)
+      super
     end
   end
   has_many :event_subscriptions
-	
-	# TODO: Abstract this inside the acts_as_subscribable plug-in.... however to do this we need to find out why the user model will not load 
-	# the mixin associations. It may be because of the user_observer. 
-	# The ideal format is: acts_as_subscribable :subscribe_to=>['Feed']
-	has_many :feeds, :finder_sql => 'SELECT DISTINCT f.* ' +
+  
+  # TODO: Abstract this inside the acts_as_subscribable plug-in.... however to do this we need to find out why the user model will not load 
+  # the mixin associations. It may be because of the user_observer. 
+  # The ideal format is: acts_as_subscribable :subscribe_to=>['Feed']
+  has_many :feeds, :finder_sql => 'SELECT DISTINCT f.* ' +
         'FROM feeds f, subscriptions s ' +
         'WHERE s.subscribed_to_type = \'Feed\' AND s.subscriber_id = #{id} AND s.subscriber_type = \'User\' AND f.id = s.subscribed_to_id' do
     
@@ -77,9 +77,9 @@ class User < ActiveRecord::Base
       @owner.feeds(true)
     end
   end
-	
-	has_many :groups, :through => :memberships,
-	                  :conditions => "memberships.collection_type = 'Group'", :include => :categories do
+  
+  has_many :groups, :through => :memberships,
+                    :conditions => "memberships.collection_type = 'Group'", :include => :categories do
 
     # @user.groups << Group.find(2)
     def <<(group)
@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
       Membership.create(
         :user_id => @owner.id,
         :collection_id => group.id,
-        :collection_type => 'Group'	    
+        :collection_type => 'Group'      
       )
       GroupObserver.after_add(group, @owner)
     end

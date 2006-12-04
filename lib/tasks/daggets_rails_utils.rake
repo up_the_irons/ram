@@ -46,38 +46,38 @@ end
 
 task :recreate_database => :environment do
   abcs = ActiveRecord::Base.configurations
-	tdb = Array.new
+  tdb = Array.new
   tdb << 'test'
   tdb << 'development'
 
- 	for db in tdb
-	  case abcs[db]["adapter"]
-	    when "mysql"
-	      ActiveRecord::Base.establish_connection(db.to_sym)
-	      ActiveRecord::Base.connection.recreate_database(abcs[db]["database"])
-	    when "postgresql"
-	      ENV['PGHOST']     = abcs[db]["host"] if abcs[db]["host"]
-	      ENV['PGPORT']     = abcs[db]["port"].to_s if abcs[db]["port"]
-	      ENV['PGPASSWORD'] = abcs[db]["password"].to_s if abcs[db]["password"]
-	      enc_option = "-E #{abcs[db]["encoding"]}" if abcs[db]["encoding"]
-	      `dropdb -U "#{abcs[db]["username"]}" #{abcs[db]["database"]}`
-	      `createdb #{enc_option} -U "#{abcs[db]["username"]}" #{abcs[db]["database"]}`
-	    when "sqlite","sqlite3"
-	      dbfile = abcs[db]["database"] || abcs[db]["dbfile"]
-	      File.delete(dbfile) if File.exist?(dbfile)
-	    when "sqlserver"
-	      dropfkscript = "#{abcs[db]["host"]}.#{abcs[db]["database"]}.DP1".gsub(/\\/,'-')
-	      `osql -E -S #{abcs[db]["host"]} -d #{abcs[db]["database"]} -i db\\#{dropfkscript}`
-	      `osql -E -S #{abcs[db]["host"]} -d #{abcs[db]["database"]} -i db\\#{RAILS_ENV}_structure.sql`
-	    when "oci"
-	      ActiveRecord::Base.establish_connection(db.to_sym)
-	      ActiveRecord::Base.connection.structure_drop.split(";\n\n").each do |ddl|
-	        ActiveRecord::Base.connection.execute(ddl)
-	      end
-	    else
-	      raise "Task not supported by '#{abcs[db]["adapter"]}'"
-	  end
-	end
+   for db in tdb
+    case abcs[db]["adapter"]
+      when "mysql"
+        ActiveRecord::Base.establish_connection(db.to_sym)
+        ActiveRecord::Base.connection.recreate_database(abcs[db]["database"])
+      when "postgresql"
+        ENV['PGHOST']     = abcs[db]["host"] if abcs[db]["host"]
+        ENV['PGPORT']     = abcs[db]["port"].to_s if abcs[db]["port"]
+        ENV['PGPASSWORD'] = abcs[db]["password"].to_s if abcs[db]["password"]
+        enc_option = "-E #{abcs[db]["encoding"]}" if abcs[db]["encoding"]
+        `dropdb -U "#{abcs[db]["username"]}" #{abcs[db]["database"]}`
+        `createdb #{enc_option} -U "#{abcs[db]["username"]}" #{abcs[db]["database"]}`
+      when "sqlite","sqlite3"
+        dbfile = abcs[db]["database"] || abcs[db]["dbfile"]
+        File.delete(dbfile) if File.exist?(dbfile)
+      when "sqlserver"
+        dropfkscript = "#{abcs[db]["host"]}.#{abcs[db]["database"]}.DP1".gsub(/\\/,'-')
+        `osql -E -S #{abcs[db]["host"]} -d #{abcs[db]["database"]} -i db\\#{dropfkscript}`
+        `osql -E -S #{abcs[db]["host"]} -d #{abcs[db]["database"]} -i db\\#{RAILS_ENV}_structure.sql`
+      when "oci"
+        ActiveRecord::Base.establish_connection(db.to_sym)
+        ActiveRecord::Base.connection.structure_drop.split(";\n\n").each do |ddl|
+          ActiveRecord::Base.connection.execute(ddl)
+        end
+      else
+        raise "Task not supported by '#{abcs[db]["adapter"]}'"
+    end
+  end
 end
 
 desc "Start Application"

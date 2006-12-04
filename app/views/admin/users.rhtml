@@ -1,11 +1,11 @@
 <% @page_actions = capture do -%>
 <div class="pageActionOptions">
-	From here you can:
-	<dl>
-		<dd><%= link_to "#{image_tag('/images/icons/add.png')} Add A New User", :controller=>'account', :action=>'signup' %></dd>
-		<dd><%= link_to "#{image_tag('/images/icons/user.png')} List Users", :action=>'users' %></dd>
-		<dd><%= link_to "#{image_tag('/images/icons/user_delete.png')} List Deleted Users", :action=>'deleted_users' %></dd>
-	</dl>											
+  From here you can:
+  <dl>
+    <dd><%= link_to "#{image_tag('/images/icons/add.png')} Add A New User", :controller=>'account', :action=>'signup' %></dd>
+    <dd><%= link_to "#{image_tag('/images/icons/user.png')} List Users", :action=>'users' %></dd>
+    <dd><%= link_to "#{image_tag('/images/icons/user_delete.png')} List Deleted Users", :action=>'deleted_users' %></dd>
+  </dl>                      
 </div>
 <% end %>
 

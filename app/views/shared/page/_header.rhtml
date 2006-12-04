@@ -1,7 +1,7 @@
 <h1 id="site_name"><%= link_to $APPLICATION_SETTINGS.application_name, '/' %></h1>
 <%= 
-	 render :partial=>'shared/page/site_menu' unless current_user.nil?
+   render :partial=>'shared/page/site_menu' unless current_user.nil?
 -%>
 <%= 
-	render :partial=>'shared/page/user_menu' 
+  render :partial=>'shared/page/user_menu' 
 -%>

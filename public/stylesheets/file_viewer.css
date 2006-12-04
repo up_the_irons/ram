@@ -1,115 +1,115 @@
 .post{
-	font-family      : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
-	background-color : #FAFAFA;
-	border           : solid 1px #E9E8E8;
-	padding          : 10px;
-	color            : #111;
+  font-family      : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
+  background-color : #FAFAFA;
+  border           : solid 1px #E9E8E8;
+  padding          : 10px;
+  color            : #111;
 }
 .post .header{
-	padding-bottom   : 1em;
-	border-bottom    : 1px dotted #000; 
+  padding-bottom   : 1em;
+  border-bottom    : 1px dotted #000; 
 }
 .post .header .author,.post .header .published_on,.post .header .comments{
-	font-size        : 0.9em;
+  font-size        : 0.9em;
 }
 .post .body{
-	font-size        : 1.0em;
-	line-height      : 1.5em;
+  font-size        : 1.0em;
+  line-height      : 1.5em;
 }
 .post p{
-	margin           : 10px 0 10px 0;
+  margin           : 10px 0 10px 0;
 }
 
 .post .title{
-	font-size        : 2.0em;
-	margin           : 10px 0 10px 0;
+  font-size        : 2.0em;
+  margin           : 10px 0 10px 0;
 }
 
 .post ul.postHeader li, .post ul.tags li, .post ul.tags label{
-	display          : inline;
-	color            : #C0C0C0;
-	border-right     : solid 1px #C2C2C2;
-	padding          : 5px;
+  display          : inline;
+  color            : #C0C0C0;
+  border-right     : solid 1px #C2C2C2;
+  padding          : 5px;
 }
 .post ul.tags{
-	margin           : 10px 0 10px 0;
+  margin           : 10px 0 10px 0;
 }
 .post ul.tags li{
-	border           : none;
+  border           : none;
 }
 .post ul.tags label{
-	font-size        : 1em;
+  font-size        : 1em;
 }
 .comment{
-	border-top       : solid 1px #E9E8E8;
-	padding          : 10px;
-	color            : #3F3F3F;
-	
+  border-top       : solid 1px #E9E8E8;
+  padding          : 10px;
+  color            : #3F3F3F;
+  
 }
 .comment dt{
-	font-size        : 1.2em;
-	margin-bottom    : 10px;
+  font-size        : 1.2em;
+  margin-bottom    : 10px;
 }
 .dataGrid{
-	width: 100%;
-	margin           : 5px 0 5px 0;
+  width: 100%;
+  margin           : 5px 0 5px 0;
 }
 
 .dataGrid tr.odd{
-	background-color : #FDFDFB;
+  background-color : #FDFDFB;
 }
 
 .dataGrid tr.even{
-	background-color : #F8F8F4;
+  background-color : #F8F8F4;
 }
 .dataGrid tr.selected{
-	background-color : #F9F7C4;
+  background-color : #F9F7C4;
 }
 
 .dataGrid tr.highlighted{
-	background-color : #FDF766;
-	color:#000;
+  background-color : #FDF766;
+  color:#000;
 }
 
 .pagination{
-	background-color  : #efefef;
-	padding           : 10px;
+  background-color  : #efefef;
+  padding           : 10px;
 }
 .pagination a{
-	text-decoration   : underline;
+  text-decoration   : underline;
 }
 
 .pagination .selected{
-	color             : #f00;
+  color             : #f00;
 }
 .button{
-	margin            : 0.2em;
-	background-color  : #efefef;
-	color             : #000;
-	padding           : 0.5em 0.8em 0.5em 0.8em;
-	border-right      : 1px solid #ccc;
-	border-bottom      : 1px solid #ccc;
+  margin            : 0.2em;
+  background-color  : #efefef;
+  color             : #000;
+  padding           : 0.5em 0.8em 0.5em 0.8em;
+  border-right      : 1px solid #ccc;
+  border-bottom      : 1px solid #ccc;
 }
 .dataGrid th{
-	font-size         : 1.1em;
-	font-weight       : lighter;
-	border-left       : 1px solid #40445e;
-	text-align        : left;
-	padding           : 5px;
-	background-image  : url(/images/datagrid_background.jpg);
-	background-repeat : repeat-x;
-	color             : #fff;
+  font-size         : 1.1em;
+  font-weight       : lighter;
+  border-left       : 1px solid #40445e;
+  text-align        : left;
+  padding           : 5px;
+  background-image  : url(/images/datagrid_background.jpg);
+  background-repeat : repeat-x;
+  color             : #fff;
 }
 .dataGrid .options{
-	background-color  : #BCBCCB;
+  background-color  : #BCBCCB;
 }
 .dataGrid th a{
-	color             : #fff;
+  color             : #fff;
 }
 .dataGrid td{
-	padding           : 5px 5px 5px 5px;
+  padding           : 5px 5px 5px 5px;
 }
 .dataGrid td li{
-	list-style       : none;
-	display          : inline;
+  list-style       : none;
+  display          : inline;
 }

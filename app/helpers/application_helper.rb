@@ -94,11 +94,11 @@ module ApplicationHelper
     out = ""
     out << %{
     <div class="roundBox">
-    	<div class="topRightCorner"><div class="topLeftCorner"></div></div>
-    		<div class="content">}
+      <div class="topRightCorner"><div class="topLeftCorner"></div></div>
+        <div class="content">}
       out << capture(&block) if block_given?
-    out <<	%{  		</div>
-      	<div class="bottomRightCorner"><div class="bottomLeftCorner"></div></div>				
+    out <<  %{      </div>
+        <div class="bottomRightCorner"><div class="bottomLeftCorner"></div></div>        
       </div>}
     out
   end

@@ -1,9 +1,9 @@
 <ul>
     <% unless current_user.nil? -%>
-	  <li><%= link_to("Welcome: #{current_user.login}", :controller=>'account', :action=>'my_profile') %></li>
-	  <li><%= link_to("Briefcase: #{pluralize(session[:briefcase].size, 'item')}", :controller=>'briefcase',:action=>'list') %></li>
-	  <li><%= link_to('Logout', :controller=>'account',:action=>'logout') %></li>
+    <li><%= link_to("Welcome: #{current_user.login}", :controller=>'account', :action=>'my_profile') %></li>
+    <li><%= link_to("Briefcase: #{pluralize(session[:briefcase].size, 'item')}", :controller=>'briefcase',:action=>'list') %></li>
+    <li><%= link_to('Logout', :controller=>'account',:action=>'logout') %></li>
     <% else -%>
-	  <li><%= link_to('Login', :controller=>'account', :action=>'login') %></li>
+    <li><%= link_to('Login', :controller=>'account', :action=>'login') %></li>
     <% end -%>
 </ul>

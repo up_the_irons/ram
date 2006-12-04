@@ -18,9 +18,9 @@ class UserNotifierTest < Test::Unit::TestCase
   
   # TODO: Test!
   def test_stub
-  	assert_equal true, true
-  end	
-	
+    assert_equal true, true
+  end  
+  
   private
 
   def read_fixture(action)

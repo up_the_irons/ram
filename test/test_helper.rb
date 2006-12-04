@@ -31,7 +31,7 @@ class Test::Unit::TestCase
   # Add more helper methods to be used by all tests here...
   # Add more helper methods to be used by all tests here...
   def login(name='user', password='super')
-  	post:login, :user=>{:username=>name, :password=>password}
+    post:login, :user=>{:username=>name, :password=>password}
     assert_redirected_to :action =>'index'
     assert_not_nil(session[:user])
     user = User.find(session[:user].id)

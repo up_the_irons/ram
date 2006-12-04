@@ -1,292 +1,292 @@
 img{ border:none;}
 *{
-		margin           : 0;
-		padding          : 0;
+    margin           : 0;
+    padding          : 0;
 }
 body{ 
-	margin            : 0;
-	padding           : 0;
-	background-image  : url('/images/background.jpg');
-	background-repeat : repeat-x;
-	background-color  : #6e8db9;
-	font-family       : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
-	font-size         : 12px;
-	line-height       : 19px;
-	color             : #000;
+  margin            : 0;
+  padding           : 0;
+  background-image  : url('/images/background.jpg');
+  background-repeat : repeat-x;
+  background-color  : #6e8db9;
+  font-family       : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
+  font-size         : 12px;
+  line-height       : 19px;
+  color             : #000;
 }
 form, ul, li{
-	padding           : 0;
-	margin            : 0;
-	list-style        : none;
+  padding           : 0;
+  margin            : 0;
+  list-style        : none;
 }
 div{
-		/* border       : 1px solid grey; */
+    /* border       : 1px solid grey; */
 }
 a:link, a:visited{
-	text-decoration   : none;
+  text-decoration   : none;
 }
 a:hover{
-	text-decoration   : underline;
-	background        : none;
+  text-decoration   : underline;
+  background        : none;
 }
 .clear_both{
-	display           : block;
-	clear             : both;
+  display           : block;
+  clear             : both;
 }
 .inline_list{
-	list-style        : none;
+  list-style        : none;
 }
 .inline_list li{
-	display           : inline;
+  display           : inline;
 }
 .about{
-	z-index:2;
-	top:-80px;
-	left:80px;
-	position:relative;
-	width: 500px;
+  z-index:2;
+  top:-80px;
+  left:80px;
+  position:relative;
+  width: 500px;
 }
 
 .about h1{
-	width: 500px;
+  width: 500px;
 }
 .about dt{
-	margin-top: 10px;
-	font-weight: bold;
+  margin-top: 10px;
+  font-weight: bold;
 }
 .about dd{
-	padding: 2px;
+  padding: 2px;
 }
 .page_message, .important_page_message, #page_flash{
-	font-weight       : bolder;
-	text-align        : center;
-	display           : block;
-	clear             : both;
+  font-weight       : bolder;
+  text-align        : center;
+  display           : block;
+  clear             : both;
 }
 
 .important_page_message, #page_flash{
-	font-size         : 120%;
+  font-size         : 120%;
 }
 
 #page_flash{
-	display          : block;
+  display          : block;
 }
 
 .flash_notice, .flash_warning, .flash_error{
-	border            : 1px solid #c0c5ac;
-	background-repeat : repeat-x;
-	padding           : 10px;
-	font-size         : 1.2em;
-	background-color  : #e2e591;
+  border            : 1px solid #c0c5ac;
+  background-repeat : repeat-x;
+  padding           : 10px;
+  font-size         : 1.2em;
+  background-color  : #e2e591;
     display           : block;
-	clear             : both;
-	text-align        : center;
-	background-image  : url('/images/flash_notice_bg.jpg');
+  clear             : both;
+  text-align        : center;
+  background-image  : url('/images/flash_notice_bg.jpg');
 }
 
 .flash_notice a,.flash_notice a:link, .flash_notice a:visited,.flash_notice a:hover,.flash_notice a:active{
-	color:#000;
-	text-decoration:underline;
+  color:#000;
+  text-decoration:underline;
 }
 
 .flash_error{
-	background-image  : url('/images/flash_error_bg.jpg');
-	border           : 2px solid #aa0000;
-	color            : #000000;
-	background-color : #ff8c8b;
+  background-image  : url('/images/flash_error_bg.jpg');
+  border           : 2px solid #aa0000;
+  color            : #000000;
+  background-color : #ff8c8b;
 }
 
 .big_input{
-	font-size: 2.0em;
+  font-size: 2.0em;
 }
 
 .web_form, .web_form_stacked{
-	display          : inline;
-	list-style       : none;
+  display          : inline;
+  list-style       : none;
 }
 .web_form_stacked{
-	display: block;
-	padding: 15px;
-	background-color : #efefef;
-	border:  1px solid #cfcfcf;
+  display: block;
+  padding: 15px;
+  background-color : #efefef;
+  border:  1px solid #cfcfcf;
 }
 
 .web_form li{
-	/*border-top       : 1px solid #dcdcdc;*/
-	padding          : 0.5em 0 0.5em 0;
+  /*border-top       : 1px solid #dcdcdc;*/
+  padding          : 0.5em 0 0.5em 0;
 }
 
 .web_form label{
-	display          : block;
-	width            : 150px;
-	padding-right    : 10px;
-	text-align       : right;
-	float            : left;
-	font-size        : 110%;
+  display          : block;
+  width            : 150px;
+  padding-right    : 10px;
+  text-align       : right;
+  float            : left;
+  font-size        : 110%;
 }
 .web_form_stacked label{
-	display          : block;
-	width            : 100%;
-	text-align       : left;
-	font-weight      : bold;
-	/*border-top       : 4px solid #aaa;*/
-	padding          : 2px;
-	margin-top       : 10px;
+  display          : block;
+  width            : 100%;
+  text-align       : left;
+  font-weight      : bold;
+  /*border-top       : 4px solid #aaa;*/
+  padding          : 2px;
+  margin-top       : 10px;
 }
 
 .web_form input, .web_form_stacked input,
 .web_form select,.web_form_stacked select,
 .web_form textarea, .web_form_stacked textarea{
-	border           : 1px solid #dcdcdc;
-	background-color : #efefee;
-	font-family       : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
+  border           : 1px solid #dcdcdc;
+  background-color : #efefee;
+  font-family       : "Lucida Grande", Verdana, Geneva, Arial, sans-serif;
 }
 .web_form_stacked input,
 .web_form_stacked select,
 .web_form_stacked textarea{
-	background-color: #fff;
-	padding:2px;
+  background-color: #fff;
+  padding:2px;
 }
 .web_form dt{
-	font-size       : 110%;
-	font-weight     : bolder;
+  font-size       : 110%;
+  font-weight     : bolder;
 }
 
 .web_form dd{
-	padding          : 2px 0 2px 0
+  padding          : 2px 0 2px 0
 }
 .login_form{
-	margin           : auto;
-	margin-top       : 10px;
-	display          : block;
-	background-color : #efefef;
-	border-right     :  1px solid #cfcfcf;
-	border-bottom    :  1px solid #cfcfcf;	
-	padding          : 10px;
-	width            : 320px;
+  margin           : auto;
+  margin-top       : 10px;
+  display          : block;
+  background-color : #efefef;
+  border-right     :  1px solid #cfcfcf;
+  border-bottom    :  1px solid #cfcfcf;  
+  padding          : 10px;
+  width            : 320px;
 }
 .login_form input{
-	font-size        : 1.1em;
-	background-color : #ffffff;
-	padding          : 0 5px 0 5px;
-	width            : 90%;
-	border           : none;
-	border-left      : 1px solid #cfcfcf;
-	border-top       : 1px solid #cfcfcf;
-	height           : 1.5em;
-	margin           : 0.1em;
+  font-size        : 1.1em;
+  background-color : #ffffff;
+  padding          : 0 5px 0 5px;
+  width            : 90%;
+  border           : none;
+  border-left      : 1px solid #cfcfcf;
+  border-top       : 1px solid #cfcfcf;
+  height           : 1.5em;
+  margin           : 0.1em;
 }
 .login_form label{
-	display          : block;
-	font-weight      : normal;
-	width            : 100%;
-	text-align       : left;
-	padding          : 2px;
-	margin-top       : 10px;
+  display          : block;
+  font-weight      : normal;
+  width            : 100%;
+  text-align       : left;
+  padding          : 2px;
+  margin-top       : 10px;
 }
 .login_form .submit{
-	width            : 6em;
-	height           : 2.0em;
-	background-color : #cfcfcf;
-	border-bottom    : #333 1px solid;
-	border-right     : #333 1px solid;
+  width            : 6em;
+  height           : 2.0em;
+  background-color : #cfcfcf;
+  border-bottom    : #333 1px solid;
+  border-right     : #333 1px solid;
 }
 
 .label{
-	margin           : 0;
-	padding          : 0;
+  margin           : 0;
+  padding          : 0;
 }
 
 .mice_type{
-	font-size        : 0.7em;
+  font-size        : 0.7em;
 }
 
 .has_many_sort_helper{
 
 }
 .has_many_sort_helper th{
-	margin-bottom    : 0.5em;
-	font-size        : 1.0em;
-	font-weight      : normal;
+  margin-bottom    : 0.5em;
+  font-size        : 1.0em;
+  font-weight      : normal;
 }
 .has_many_sort_helper input{
-	padding          : 1px 10px 1px 10px;
-	background-color : #dfdfdf;
-	border           : 1px solid #ccc;
-	margin           : 2px;
-	width            : 2em;
-	overflow         : hidden;
+  padding          : 1px 10px 1px 10px;
+  background-color : #dfdfdf;
+  border           : 1px solid #ccc;
+  margin           : 2px;
+  width            : 2em;
+  overflow         : hidden;
 }
 .has_many_sort_helper select{
-	border           : 1px solid #ccc;
+  border           : 1px solid #ccc;
 }
 .has_many_sort_helper option{
-	padding          : 0 0.2em 0 0.2em;
+  padding          : 0 0.2em 0 0.2em;
 }
 .has_many_sort_helper br{
-	position         :relative;
-	clear            :both;
+  position         :relative;
+  clear            :both;
 }
 #site_name a, #site_name a:link, #site_name a:visited, #site_name a:hover, #site_name a:active{
-	color            : #fff;
+  color            : #fff;
 }
 
 #site_menu, #user_menu{
-	display          : block;
-	float            : right;
-	list-style       : none;
+  display          : block;
+  float            : right;
+  list-style       : none;
 }
 
 #site_menu{
-	float:left;
+  float:left;
 }
 
 #site_menu li, #user_menu li {
-	display          : inline;
+  display          : inline;
 }
 
 #page_container, #menu_container,#page_footer{
-	margin           : 0 auto;
-	padding          : 0;
-	display          : block;
-	background-color : #FFFFFF;
-	clear            : both;
+  margin           : 0 auto;
+  padding          : 0;
+  display          : block;
+  background-color : #FFFFFF;
+  clear            : both;
 }
 
 #menu_container{
     border           : none;
-	display          : block;
-	padding          : 10px;
-	margin           : auto;
-	background-color : #000;
-	color            : #CCCCCC;
+  display          : block;
+  padding          : 10px;
+  margin           : auto;
+  background-color : #000;
+  color            : #CCCCCC;
 }
 
 #page_content, #page_left_gutter{
-	/*float            : left;*/
-	display          : block;
-	clear            : right;
-	padding          : 10px;
+  /*float            : left;*/
+  display          : block;
+  clear            : right;
+  padding          : 10px;
 }
 
 #page_right_gutter{
-	display          : block;
-	float            : left;
-	margin           : 5px;
+  display          : block;
+  float            : left;
+  margin           : 5px;
 }
 
 #page_right_gutter ul{
-	list-style       : none;
-	padding          : 5px;
+  list-style       : none;
+  padding          : 5px;
 }
 
 #page_right_gutter .header{
-	padding          : 0;
-	margin           : 0;
-	text-align       : center;
-	background-color : #2279e5;
-	color            : #fff;
-	font-weight      : bolder;
+  padding          : 0;
+  margin           : 0;
+  text-align       : center;
+  background-color : #2279e5;
+  color            : #fff;
+  font-weight      : bolder;
 }
 
 #page_footer{

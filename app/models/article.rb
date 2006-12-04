@@ -46,8 +46,8 @@ class Article < ActiveRecord::Base
     def << (group)
       return if @owner.groups.include?(group)
       l = Linking.find_or_create_by_linkable_id_and_linkable_type_and_group_id(@owner.id, "Article", group.id)
-  	  l.errors.each_full { |msg| puts msg } unless l.save
-  	  @owner.groups(true) # Force the reload
+      l.errors.each_full { |msg| puts msg } unless l.save
+      @owner.groups(true) # Force the reload
     end
   end
   

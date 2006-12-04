@@ -4,20 +4,20 @@ form_tag({:controller=>'asset', :action =>'edit', :id=>@asset.id}, {:multipart =
 <input type="hidden" id="update" name="update" value="asset_form" />
 <ul class="web_form_stacked">
   <% unless @category.nil? -%>
-	<li>
-	  <label>Category</label>
-	  <%= link_to @category.name, :controller=>'category',:action=>'show',:id=>@category.id %>
-	  <%= hidden_field :asset, :category_id, {:value=>@category.id} %>
-	</li>
-	<% end -%>
-	<li id="image_field">
-	  <label>File</label>
+  <li>
+    <label>Category</label>
+    <%= link_to @category.name, :controller=>'category',:action=>'show',:id=>@category.id %>
+    <%= hidden_field :asset, :category_id, {:value=>@category.id} %>
+  </li>
+  <% end -%>
+  <li id="image_field">
+    <label>File</label>
     <%= (@asset.new_record?)? file_field(:asset, :uploaded_data) : display_as(@asset) -%>
-	</li>
-	<li>
-	  <label>Groups</label>
-	  <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@asset,:selected=>@asset.groups,:available=>@current_user.groups - @asset.groups} unless @asset.new_record?%>
-	  <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@asset,:selected=>@current_user.groups,:available=>[]} if @asset.new_record?%>
+  </li>
+  <li>
+    <label>Groups</label>
+    <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@asset,:selected=>@asset.groups,:available=>@current_user.groups - @asset.groups} unless @asset.new_record?%>
+    <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@asset,:selected=>@current_user.groups,:available=>[]} if @asset.new_record?%>
   </li>
   <li>
     <label>Description</label>
@@ -26,9 +26,9 @@ form_tag({:controller=>'asset', :action =>'edit', :id=>@asset.id}, {:multipart =
   <li>
     <%= render :partial => 'shared/form_elements/tags', :locals => { :model => :asset,:opts=>{:style=>"width:100%"} } %>
   </li>
-	<li>
-	  <label>Start the Upload</label>
-	  <%= submit_tag "Submit", {:style=>'padding:5px;'}%>
-	</li>
+  <li>
+    <label>Start the Upload</label>
+    <%= submit_tag "Submit", {:style=>'padding:5px;'}%>
+  </li>
 </ul>
 <%= end_form_tag %>

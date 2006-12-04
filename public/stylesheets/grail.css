@@ -1,5 +1,5 @@
 /*
-	TODO: It is better to specify the skins as classes here instead of in the Grail.js file
+  TODO: It is better to specify the skins as classes here instead of in the Grail.js file
 */
 
 #grail{
@@ -9,14 +9,14 @@
 
 }
 #grail_background{
-	
+  
 }
 #grail_message{
-	color              : #fff;
-	padding            : 0;
-	padding-left       : 20px;
-	padding-top        : 10px;
-	text-align         : left;
+  color              : #fff;
+  padding            : 0;
+  padding-left       : 20px;
+  padding-top        : 10px;
+  text-align         : left;
     font-style         : normal;
     font-variant       : normal;
     font-weight        : normal;
@@ -26,39 +26,39 @@
     font-stretch       : normal;
 }
 .music_video_container{
-	position           :absolute;
-	border             :1px solid #000;
+  position           :absolute;
+  border             :1px solid #000;
 }
 .music_video_icon{
-	display            : block;
-	/*border             : 1px solid #cfcfcf;*/
-	background-color   : #fff;
-	background         : transparent;
-	margin             : 10px;
-	padding            : 15px;
-	width              : 50px;
-	height             : 50px;
-	top                : 0px;
-	left               : 0px;
-	position           : absolute;
-	z-index            : 2;
+  display            : block;
+  /*border             : 1px solid #cfcfcf;*/
+  background-color   : #fff;
+  background         : transparent;
+  margin             : 10px;
+  padding            : 15px;
+  width              : 50px;
+  height             : 50px;
+  top                : 0px;
+  left               : 0px;
+  position           : absolute;
+  z-index            : 2;
 }
 .music_video_background{
-	background-color   : #333;
-	opacity            : 0.8;
+  background-color   : #333;
+  opacity            : 0.8;
 }
 .music_video_message{
-	position           : absolute;
-	display            : block;
-	z-index            : 3;
-	top                : 0px;
-	left               : 90px;
+  position           : absolute;
+  display            : block;
+  z-index            : 3;
+  top                : 0px;
+  left               : 90px;
 }
 .music_video_subject{
-	font-size          : 1.5em;
-	line-height        : 1.5em;
+  font-size          : 1.5em;
+  line-height        : 1.5em;
 }
 .music_video_body{
-	font-size          : 1.0em;
-	line-height        : 1.2em;
+  font-size          : 1.0em;
+  line-height        : 1.2em;
 }

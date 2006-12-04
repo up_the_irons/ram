@@ -24,31 +24,31 @@
     <% checks << "#{c.id}" -%>
   <% end -%>
   /*
-  	For trees which at most only one branch can be selected at a time. Call this method to unselect them
+    For trees which at most only one branch can be selected at a time. Call this method to unselect them
   */
   function <%=unselect_method%>(id){
     var checkboxes = [<%= checks.map{|c| "$('branch_checkbox_#{c}')"}.join(", ") -%>]
-  	var ticks = [<%= checks.map{|c| "$('tick_#{c}')"}.join(", ") -%>]
-  	
-  	<% unless @category.new_record? -%>
+    var ticks = [<%= checks.map{|c| "$('tick_#{c}')"}.join(", ") -%>]
+    
+    <% unless @category.new_record? -%>
     if(<%= @category.id %> == id){
       alert("A category cannot be it's own parent.");
       checkboxes[id].checked = false;
       return;
     }
-  	<% end -%>
-  	
-  	for(var itm = 0; itm < checkboxes.length; itm++){
-  		checkboxes[itm].checked = false;
+    <% end -%>
+    
+    for(var itm = 0; itm < checkboxes.length; itm++){
+      checkboxes[itm].checked = false;
       ticks[itm].hide();
-  	}
-  	
-  	if(!$('branch_checkbox_'+id).checked){
+    }
+    
+    if(!$('branch_checkbox_'+id).checked){
       $('tick_'+id).show()
     }else{
       $('tick_#{b[:id]}').hide();
     }
-  	
+    
   }
   
   /* ]]> */ 

@@ -87,7 +87,7 @@ module ActiveRecord
                :subscriber_id      => subscriber.id,
                :subscriber_type    => subscriber.class.to_s,
                :subscribed_to_id   => @owner.id,
-               :subscribed_to_type => @owner.class.to_s	    
+               :subscribed_to_type => @owner.class.to_s      
                )
             @owner.subscribers(true) 
            end

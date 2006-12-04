@@ -46,7 +46,7 @@ class CGI
           
           if (not head)
             if /#{EOL}#{EOL}/n.match(buf)
-					    buf = buf.sub(/\A((?:.|\n)*?#{EOL})#{EOL}/n) do
+              buf = buf.sub(/\A((?:.|\n)*?#{EOL})#{EOL}/n) do
                 head = $1.dup
                 ""              
               end
@@ -91,11 +91,11 @@ class CGI
 
         /Content-Disposition:.* filename="?([^\";]*)"?/ni.match(head)
         filename = ($1 or "")
-	      if /Mac/ni.match(env_table['HTTP_USER_AGENT']) and
-	          /Mozilla/ni.match(env_table['HTTP_USER_AGENT']) and
-	          (not /MSIE/ni.match(env_table['HTTP_USER_AGENT']))
-	        filename = CGI::unescape(filename)
-	      end
+        if /Mac/ni.match(env_table['HTTP_USER_AGENT']) and
+            /Mozilla/ni.match(env_table['HTTP_USER_AGENT']) and
+            (not /MSIE/ni.match(env_table['HTTP_USER_AGENT']))
+          filename = CGI::unescape(filename)
+        end
         
         /Content-Type: (.*)/ni.match(head)
         content_type = ($1 or "")
