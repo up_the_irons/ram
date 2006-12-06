@@ -7,7 +7,7 @@
 DIST_DIR = RAILS_ROOT + '/dist'
 TMP_DIR  = DIST_DIR   + '/tmp'
 
-SVN_INFO = YAML.load(`svn info`)
+SVN_INFO = YAML.load(`svn info`) rescue nil
 
 desc "Create bundled distribution files (.tar.gz, .gem, .zip) for a new release of RAM"
 task :release => [:make_dirs] do
