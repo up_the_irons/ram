@@ -1,3 +1,9 @@
-RAM -- RUBY ASSET MANAGER
+= RAM: Ruby Asset Manager
 
--- NOTE: This application makes use of RMagick, which does not play well with Window's versions of Ruby newer than 1.8.2
+See README for installation instructions.
+
+There is a RAM Web Services API coming soon.  Supports both XML-RPC and SOAP.
+See the following for a preview:
+
+  AssetsService
+  TestService
