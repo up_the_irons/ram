@@ -91,7 +91,7 @@ rescue
 end
 begin
   # Codename generated from the dictionary
-  @rev = YAML.load(`svn info`)['Revision'] 
+  @rev = YAML.load(`svn info`)['Revision'] if File.exist?('.svn')
   @codename  = IO.readlines("/usr/share/dict/words")[@rev]
 rescue
   @rev = ""
