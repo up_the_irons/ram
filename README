@@ -1,8 +1,21 @@
 = Installation
 
-1. From the root directory of this application type "rake install". This will launch the install wizard, which will take you step by step in setting up RAM.
+From the root directory of this application type:
 
-If you have problems installing RAM, consult the support section of our website, which can be found here: http://www.locusfoc.us/ram/pages/docs.
+  rake install
+  
+This will launch the install wizard, which will take you step by step in setting up RAM.
+
+If you have problems installing RAM, consult the support section of our 
+website, which can be found here: http://www.locusfoc.us/ram/pages/docs.
+
+Additionally, you can come by our IRC channel at:
+
+  Server  : irc.freenode.net
+  Channel : #ram
+
+We hope you enjoy RAM!
+
 
 = License
 
