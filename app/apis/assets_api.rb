@@ -9,8 +9,7 @@ class AssetsApi < ActionWebService::API::Base #:nodoc:
              :expects => [{ :username => :string     },
                           { :password => :string     },
                           { :id       => :int        },
-                          { :asset    => AssetStruct }],
-             :returns => [:bool]
+                          { :asset    => AssetStruct }]
 
   api_method :search, 
              :expects => [:text => :string]

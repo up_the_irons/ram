@@ -55,7 +55,7 @@ class AssetsService < ActionWebService::Base
   #     updated_on is automatically updated when this call updates any of the Asset's attributes.
   #
   # === Returns
-  #   boolean: true on success, false on failure
+  #   Nothing
   #
   def update(username, password, id, new_asset_obj)
     raise NotImplementedError, "Not implemented"
