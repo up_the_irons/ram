@@ -1,15 +1,3 @@
-# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
-#
-#  id                  :integer(11)   not null
-#  user_id             :integer(11)   
-#  category_id         :integer(11)   
-#  group_id            :integer(11)   
-#  linkable_id         :integer(11)   
-#  linkable_type       :string(255)   
-#  created_on          :datetime      
-#  updated_on          :datetime      
-#
-
 #--
 # $Id$
 #

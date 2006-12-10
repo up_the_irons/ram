@@ -1,10 +1,11 @@
 require File.join(File.dirname(__FILE__), 'abstract_unit')
 
 class SubscribableTest < Test::Unit::TestCase
+
   def setup
     @nolan = a_reader({:name => 'nolan'})
-    @make = a_magazine({:title => 'Make', :publisher=>"O'rly?"})
-    @catch22 = a_book
+    @make = a_magazine({:title => 'Make', :publisher => "O'rly?"})
+    @catch22 = a_book({:title=>'Catch 22',:publisher => "Classics Press"})
   end
   
   # Test the magazines assoications 
@@ -75,31 +76,70 @@ class SubscribableTest < Test::Unit::TestCase
       @nolan.subscriptions << @catch22
       @nolan.subscriptions << @make
     end
-    assert @nolan.books.include?(@catch22)
-    assert @nolan.magazines.include?(@make)
+    assert @nolan.books.include?(@catch22), "Reader's books should include 'Catch 22'"
+    assert @nolan.magazines.include?(@make), "Reader's magazines should include 'Make'"
   end
   
   def test_push_on_dynamic_associations
     r = a_reader
+    # These are STI
     b = a_book
+    m = a_magazine
+    # This is not
+    l = a_letter
     r.books << b
-    # TODO
-    # assert r.books.include?(b)
+    r.magazines << m
+    
+    # Single Table Interitance tests
+    assert r.books.include?(b), "Reader's books should include '#{b.title}'."
+    
+    # Ensure only the books are counted not other subscription types
+    assert_equal 1, r.books.size, "Reader's books should include just one book."
+    
+    # Ensure that books not belonging to any subscription are not picked up as well.
+    b2 = a_book
+    assert_equal 1, r.books.size, "Reader's books should include just one book."
+    
+    # Non STI
+    assert r.letters << l
+    assert r.letters.include?(l)
+    assert_equal 1, r.letters.size
   end
-        
+  
+  def test_prevent_association_mismatches
+    assert !(@nolan.books << JunkMail.create)
+  end
+  
+  # Route the object to the correct association magically.
+  def test_magically_reroute_associations
+   assert_difference @nolan.books, :size do
+     @nolan.magazines << a_book
+   end
+  end
+  
+  def test_delete_through_dynamic_associations
+    assert @nolan.books << @catch22
+    assert 1, @nolan.books.size
+  end
+          
   protected
   def a_reader(opts = {})
-    o = { :name => 'nolan'}.merge(opts)
+    o = { :name => "Reader: #{Time.now.to_s}"}.merge(opts)
     Reader.create(o)
   end
   
+  def a_letter(opts = {})
+    o = { :subject => "Letter: #{Time.now.to_s}", :body => "I'm in ur testz"}.merge(opts)
+    Letter.create(o)
+  end
+  
   def a_magazine(opts={})
-    o = {:title => 'Make', :publisher => "O'rly?"}
+    o = {:title => "Magazine: #{Time.now.to_s}", :publisher => "O'rly?"}.merge(opts)
     Magazine.create(o)
   end
   
   def a_book(opts={})
-    o = {:title => 'Catch22', :publisher => "beats me"}
+    o = {:title => "Book: #{Time.now.to_s}", :publisher => "beats me"}.merge(opts)
     Book.create(o)
   end
 end

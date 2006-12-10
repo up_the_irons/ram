@@ -1,19 +1,3 @@
-# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
-#
-#  id                  :integer(11)   not null
-#  name                :string(255)   
-#  description         :text          
-#  public              :boolean(1)    default(true)
-#  user_id             :integer(11)   
-#  type                :string(255)   
-#  state_id            :integer(11)   
-#  parent_id           :integer(11)   
-#  counter_cache       :boolean(1)    default(true)
-#  permanent           :boolean(1)    
-#  created_at          :datetime      
-#  updated_at          :datetime      
-#
-
 #--
 # $Id$
 #

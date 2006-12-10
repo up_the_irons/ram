@@ -1,11 +1,3 @@
-# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
-#
-#  id                  :integer(11)   not null
-#  controller          :string(128)   default(), not null
-#  action              :string(128)   default(), not null
-#  num_per_page        :integer(11)   default(10), not null
-#
-
 #--
 # $Id$
 #

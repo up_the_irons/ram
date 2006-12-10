@@ -1,24 +1,3 @@
-# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
-#
-#  id                  :integer(11)   not null
-#  parent_id           :integer(11)   
-#  category_id         :integer(11)   
-#  user_id             :integer(11)   
-#  title               :string(255)   
-#  permalink           :string(255)   
-#  excerpt             :text          
-#  body                :text          
-#  excerpt_html        :text          
-#  body_html           :text          
-#  created_at          :datetime      
-#  updated_at          :datetime      
-#  published_at        :datetime      
-#  children_count      :integer(11)   
-#  type                :string(255)   
-#  allow_comments      :boolean(1)    
-#  status              :integer(11)   default(0), not null
-#
-
 #--
 # $Id$
 #

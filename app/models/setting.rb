@@ -1,10 +1,12 @@
-# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
+#--
+# $Id: profile.rb 1038 2006-11-28 17:54:16Z mark $
 #
-#  id                  :integer(11)   not null
-#  application_name    :string(255)   
-#  admin_group_id      :integer(11)   
-#  filesize_limit      :integer(11)   
+# Copyright (c) 2006 Mark Daggett & Garry Dolley
 #
+# This file is part of RAM (Ruby Asset Manager) 
+# 
+# Released under the MIT / X11 License.  See LICENSE file for details.
+#++
 
 class Setting < ActiveRecord::Base
   validates_presence_of :application_name, :admin_group_id, :filesize_limit

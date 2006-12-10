@@ -1,29 +1,3 @@
-# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
-#
-#  id                  :integer(11)   not null
-#  content_type        :string(100)   
-#  filename            :string(255)   
-#  size                :integer(11)   
-#  db_file_id          :integer(11)   
-#  path                :string(255)   
-#  parent_id           :integer(11)   
-#  thumbnail           :string(255)   
-#  width               :integer(11)   
-#  height              :integer(11)   
-#  image_format        :string(255)   
-#  aspect_ratio        :float         
-#  depth               :integer(11)   
-#  colors              :integer(11)   
-#  colorspace          :string(255)   
-#  resolution          :string(255)   
-#  description         :text          
-#  user_id             :integer(11)   
-#  created_on          :datetime      
-#  updated_on          :datetime      
-#  type                :string(255)   
-#  category_id         :integer(11)   
-#
-
 #--
 # $Id$
 #

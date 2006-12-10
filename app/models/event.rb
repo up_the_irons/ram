@@ -1,14 +1,3 @@
-# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
-#
-#  id                  :integer(11)   not null
-#  sender_id           :integer(11)   
-#  recipient_id        :integer(11)   
-#  subject             :text          
-#  msg_body            :text          
-#  created_at          :datetime      
-#  read_at             :datetime      
-#
-
 #--
 # $Id$
 #

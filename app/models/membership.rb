@@ -1,13 +1,3 @@
-# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
-#
-#  id                  :integer(11)   not null
-#  user_id             :integer(11)   
-#  collection_id       :integer(11)   
-#  collection_type     :string(255)   
-#  state_id            :integer(11)   default(0)
-#  created_at          :datetime      
-#
-
 #--
 # $Id$
 #

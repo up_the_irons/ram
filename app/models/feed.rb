@@ -1,14 +1,3 @@
-# Schema as of Sun Nov 26 22:00:45 PST 2006 (schema version 2)
-#
-#  id                  :integer(11)   not null
-#  url                 :string(255)   
-#  name                :string(255)   
-#  created_at          :datetime      
-#  updated_at          :datetime      
-#  is_local            :boolean(1)    default(true)
-#  local_path          :string(255)   
-#
-
 #--
 # $Id$
 #

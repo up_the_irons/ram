@@ -1,3 +1,3 @@
 class Reader < ActiveRecord::Base
-  acts_as_subscribable :subscribe_to => [:books,:magazines]
+  acts_as_subscribable :subscribe_to => %w(books magazines letters)
 end
