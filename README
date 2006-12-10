@@ -1,3 +1,11 @@
+= Welcome to RAM: Ruby Asset Manager
+
+RAM is the premiere open-source, role-based, access-controlled digital asset
+manager for Ruby on Rails. It was built from the ground up to be a fast, secure
+and efficient platform for the distribution, aggregation and tracking of online
+digital assets.
+
+
 = Installation
 
 From the root directory of this application type:
