@@ -5,6 +5,13 @@ class AssetsApi < ActionWebService::API::Base #:nodoc:
                           { :ids      => [:int]  }],
              :returns => [[AssetStruct]]
 
+  api_method :update,
+             :expects => [{ :username => :string     },
+                          { :password => :string     },
+                          { :id       => :int        },
+                          { :asset    => AssetStruct }],
+             :returns => [:bool]
+
   api_method :search, 
              :expects => [:text => :string]
 end

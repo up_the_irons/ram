@@ -5,6 +5,7 @@
 #   http://<your_host>/services/api
 #
 # WSDL URL (SOAP): 
+#
 #   http://<your_host>/services/service.wsdl
 
 class AssetsService < ActionWebService::Base
