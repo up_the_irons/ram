@@ -25,7 +25,13 @@ ActiveRecord::Schema.define(:version => 0) do
     t.column "body", :string
   end
   
-  create_table "readers", :force => true do |t|
+  create_table "people", :force => true do |t|
+    t.column "type", :string
     t.column "name", :string
-  end  
+  end
+  
+  create_table "bookclubs", :force => true do |t|
+    t.column "name", :string
+  end
+      
 end

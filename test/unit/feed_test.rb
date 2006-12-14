@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class FeedTest < Test::Unit::TestCase
-  fixtures :feeds, :users, :subscriptions, :changes, :assets, :articles, :settings
+  fixtures :collections, :feeds, :users, :subscriptions, :changes, :assets, :articles, :settings
 
   def setup
     @model_attributes={:name=>Time.now.to_s, :url=>'http://developer.apple.com/rss/adcheadlines.rss',:is_local=>false, :local_path=>'/feed/category/8'}
@@ -61,28 +61,28 @@ class FeedTest < Test::Unit::TestCase
         @feed = Feed.create(@model_attributes)
       end
     end
-    assert_equal 0, @feed.subscribers.size
+    assert_equal 0, @feed.users.size
     
     # Add 
     users = User.find(:all)
     assert_difference Subscription, :count, users.size do
-      assert_difference @feed.subscribers, :size, users.size do
+      assert_difference @feed.users, :size, users.size do
         users.each do |user|
-          @feed.subscribers << user
+          @feed.users << user
         end
       end
     end
     assert_equal 2, User.find(administrator.id).feeds.size
 
     # Remove
-    assert_difference @feed.subscribers, :size, -1 do
-      @feed.subscribers.unsubscribe users(:administrator)
+    assert_difference @feed.users, :size, -1 do
+      @feed.users.delete users(:administrator)
     end
     
     assert_equal 1, User.find(administrator.id).feeds.size
     
     # Remove the rest
-    @feed.subscribers.unsubscribe_all
+    @feed.users.clear
   end
   
   def test_validations

@@ -1,34 +1,38 @@
 #--
 # $Id$
 #
- # Copyright (c) 2006 Mark Daggett
- #
- # This file is part of RAM (Ruby Asset Manager) 
- # 
- # Released under the MIT / X11 License.  See LICENSE file for details.
- # ++
+# Copyright (c) 2006 Mark Daggett
+#
+# This file is part of RAM (Ruby Asset Manager) 
+# 
+# Released under the MIT / X11 License.  See LICENSE file for details.
+# ++
  
  
- # == Acts As Subscribable
- # Acts as subscribable allows you to extend a model to afford other models to subscribe to it.
- # The advantage of acts_as_subscribable over the :through option in has_many is that the associations can be polymorphic on both ends.
- # The subscribable module transparently handles the implicit joins between the two models.
+ # == Has A Collection
+ # The "Has A Collection" plugin allows you to extend a model to collect other models (like a has_many relationship)
+ # or allow other models to collect it (like a poly morphic belongs_to).
+ # The advantage of has_a_collection over the :through option in has_many is that the associations can be polymorphic on both ends.
+ # In a typical polymorphic has_many assocation at least one class still needs to use a "belongs_to" association. 
+ # The collection module transparently handles the implicit joins between the two models.
+ # The syntax is very readable for example, for class User 'has a collection of blogs' would be written:
+ # has_a_collection :of =>["blogs"] 
  #
- # == Example implementations of acts_as_subscribable
- # Creates @reader.blogs
- # class Reader
- #   acts_as_subscribable :subscribe_to => ["blogs"]
+ # == Example implementations of has_a_collection
+ # Creates @reader.articles and @reader.comments
+ # class Reader < ActiveRecord::Base
+ #   has_a_collection :of => ["blogs","comments"]
  # end
  # 
- # Creates @blogs.feeds, @blogs.newspapers
- # Allows only the Reader class to subscribe to the Blog class.
- # class Blogs
- #   acts_as_subscribable :subscribe_to => ["feeds","newspapers"], :allow_subscriptions_from => ["readers"]
+ # Creates @blogs.articles, @blogs.authors and @reader.blogs
+ # Allows only the Reader class to collect to the Blog class.
+ # class Blog < ActiveRecord::Base
+ #   has_a_collection :of =>%w(articles authors), :for => ["readers"]
  # end
  # 
- # Allows only the Blog class to subscribe to the Feed class.
+ # Allows only the Blog class to collect to the Feed class.
  # class Feed
- #   acts_as_subscribable :allow_subscriptions_from => ["blogs"]
+ #   has_a_collection :for => ["blogs"]
  # end
 
 module ActiveRecord
@@ -40,150 +44,153 @@ module ActiveRecord
       
       module ClassMethods
 
-        def acts_as_subscribable(options = {:subscribe_to=>[]})
-                    
-          # The mixee is subscribed to other models
-          is_a_subscriber(options) unless options[:subscribe_to].empty?
+        def acts_as_subscribable(opts = {})
+          options = {:of => [], :for => []}.merge(opts)
+          # The mixee collects other models
+          has_a_collection_of(options) unless options[:of].empty?
           
-          # The mixee has other classes subscribing to it
-          is_subscribed_to(options) if options[:subscribe_to].empty?
+          # The mixee is collected by other models
+          is_collected_by(options) unless options[:for].empty?
           
           include ActiveRecord::Acts::Subscribable::InstanceMethods
           extend ActiveRecord::Acts::Subscribable::SingletonMethods          
         end
         
-        # For example a User is_a_subscriber to Feeds
-        def is_a_subscriber(options)
+        # For example @novel has a collection of chapters
+        def has_a_collection_of(options)
           self.module_eval do
-            # Dynamically create a has_many association.
-            options[:subscribe_to].each do | subscribable |
-               subscribed_to_class = subscribable.to_s.singularize.classify.constantize
-               subscribed_to_table = subscribed_to_class.class_name.tableize
-               subscriber_table = self.class_name.tableize
-               
-               # Why I am mixing single and double quotes in the finder_sql statement you ask?
-               # Excellent question! The answer is when you use "double quotes" the string is 
-               # interpolated immediately in current class.  When you use 'single quotes' the
-               # string is interpolated by Rails in the context of a class instance.  
-               # I use single quotes to get the correct id and double qoutes to get the correct
-               # classname.
-               
-               # Construct the SQL statement needed to bring back the correct association
-               sql =  " SELECT #{subscribed_to_table}.* FROM #{subscribed_to_table} "
-               sql << " WHERE #{subscribed_to_table}.id IN"
-               sql << " (SELECT subscribed_to_id FROM subscriptions WHERE subscriptions.subscribed_to_type = " + "'#{subscribed_to_class}'"
-               sql << " AND subscriptions.subscriber_id = " + '#{self.id}' 
-               sql << " AND subscriptions.subscriber_type = " + "'#{self.to_s}' )"
-               # Only add this fragment if the table is STI.
-               sql << " AND #{subscribed_to_table}.type = " + "'#{subscribed_to_class}'" if subscribed_to_class.columns.map{|x|x.name}.include?('type')
-               
-               counter_sql = sql.sub(/^SELECT (\/\*.*?\*\/ )?(.*)\bFROM\b/im) { "SELECT #{$1}COUNT(*) FROM" }
-
-               has_many subscribable.to_s.pluralize.to_sym, :finder_sql => sql, :counter_sql => counter_sql do
-                 def <<(subscription)
-                   # Ensure unique records of the right class
-                   return unless @owner.respond_to?subscription.class.to_s.tableize.to_sym
-                   return unless @owner.send(subscription.class.to_s.tableize.to_sym, true).map{|x| return false if x.id == subscription.id}
-                   s = Subscription.create(
-                     :subscriber_id      => @owner.id,
-                     :subscriber_type    => @owner.class.to_s,
-                     :subscribed_to_id   => subscription.id,
-                     :subscribed_to_type => subscription.class.to_s
-                   )
-                   # Force the reload of the association
-                   @owner.send(subscription.class.to_s.tableize.to_sym, true)
-                 end  
+            
+            options[:of].each do | collection |
+              collected_class = collection.to_s.singularize.classify.constantize
+              collections_table = collected_class.class_name.tableize
+              counter_sql, sql = create_sql_statements({:collection_table => collections_table, :collection_class => collected_class,:collector? => true})
+              
+              # TODO need to add these methods                
+              # collection=objects - replaces the collections content by deleting and adding objects as appropriate.
+              
+              # Dynamically create a has_many association.  
+              has_many collection.to_s.pluralize.to_sym, :finder_sql => sql, :counter_sql => counter_sql do
+                def <<(subscription)
+                  # Ensure unique records of the right class
+                  return unless @owner.respond_to?subscription.class.to_s.tableize.to_sym
+                  return unless @owner.send(subscription.class.to_s.tableize.to_sym, true).map{|x| return false if x.id == subscription.id}
+                  s = Subscription.create(
+                    :subscriber_id      => @owner.id,
+                    :subscriber_type    => @owner.class.to_s,
+                    :subscribed_to_id   => subscription.id,
+                    :subscribed_to_type => subscription.class.to_s
+                  )
+                  # Force the reload of the association
+                  @owner.send(subscription.class.to_s.tableize.to_sym, true)
+                end  
                  
-                 # TODO remove the subscription but not the object because acts_as_subscribable doesn't handle 'belongs_to' associations
-                 def delete(subscription)
-                 end
+                def delete(subscription)
+                  s = Subscription.find :first, :conditions =>"subscribed_to_type = \'#{subscription.class.to_s}\' AND subscribed_to_id = #{subscription.id} AND subscriber_id = " + "'#{@owner.id}'" +" AND subscriber_type ="+" '#{@owner.class.to_s}'"
+                  return false unless s
+                  return false unless s.destroy
+                  @owner.send(subscription.class.to_s.tableize.to_sym, true)
+                end
+                
+                def build(*args)
+                  reflection = @reflection.name.to_s.singularize.classify.constantize
+                  # Display a helpful error the the terminal window.
+                  puts "\n WARNING: #{@owner.class}##{@reflection.name.to_s}.build Will not create a has_many association between #{@owner.class} and #{reflection}."
+                  puts "use #{@owner.class}##{@reflection.name.to_s}.create instead.\n"
+                  obj = reflection.send(:new, args[0])
+                  return obj
+                end
+                
+                def create(*args)
+                  reflection = @reflection.name.to_s.singularize.classify.constantize
+                  obj = reflection.send(:create, args[0])
+                  @owner.send(@reflection.name, send('<<',obj )) if obj.valid?
+                  return obj
+                end
+                
+                def clear
+                  self.each{| record | @owner.send(@reflection.name, send('delete',record))}
+                end
               end  
             end
           end
-          
-          
-          has_many :subscriptions, :foreign_key => 'subscriber_id', :conditions => 'subscriptions.subscriber_type = ' +"'#{self.to_s}'" do
-            # Override the  << method so that it doesn't fuk up the association proxy.
-            def <<(subscription)
-              return unless @owner.subscriptions.map{|s| return false if s.subscribed_to_id == subscription.id && s.subscribed_to_type == subscription.class.to_s}
-              s = Subscription.create(
-                :subscriber_id      => @owner.id,
-                :subscriber_type    => @owner.class.to_s,
-                :subscribed_to_id   => subscription.id,
-                :subscribed_to_type => subscription.class.to_s
-              )
-              @owner.subscriptions(true)
-            end
-            
-            # @reader.subscriptions.include?(@magazine) #=> true / false
-            def include?(subscription)
-              @owner.subscriptions.map{|s| return true if s.subscribed_to_id == subscription.id && s.subscribed_to_type == subscription.class.to_s}
-              return false
-            end 
-          end
-        
-          # Dynamically create methods which map to the specific types of subscriptions    
-          # TODO see if you can replace this with an alias method to the has_many      
-          # self.module_eval do
-          #   options[:subscribe_to].each do | assoc |
-          #     # alias_method assoc.to_s.pluralize.to_sym, :subscriptions
-          #     define_method(assoc.to_s.pluralize) do
-          #        klass = assoc.to_s.singularize.classify.constantize
-          #        objects = []
-          #        subscriptions.map{|s| objects << klass.send(:find, s.subscribed_to_id) if s.subscribed_to_type == klass.to_s}
-          #        return objects
-          #     end
-          #   end
-          # end
         end
         
-        # For example a Feed is subscribed_to by A User.
-        def is_subscribed_to(options)
-          
+        # For example a feed is collected by user i.e. @user.feeds
+        def is_collected_by(options)
+          self.module_eval do
+            # Dynamically create a has_many association.
+            options[:for].each do | collector |
+               collector_class = collector.to_s.singularize.classify.constantize
+               collectors_table = collector_class.class_name.tableize
+               
+               counter_sql, sql = create_sql_statements({:collection_table => collectors_table, :collection_class => collector_class, :collector? => false})
+               has_many collector.to_s.pluralize.to_sym, :finder_sql => sql, :counter_sql => counter_sql do
+                 def <<(subscriber)
+                   # Ensure unique records of the right class
+                   return unless @owner.respond_to?subscriber.class.to_s.tableize.to_sym
+                   return unless @owner.send(subscriber.class.to_s.tableize.to_sym, true).map{|x| return false if x.id == subscriber.id}
+                   s = Subscription.create(
+                     :subscriber_id      => subscriber.id,
+                     :subscriber_type    => subscriber.class.to_s,
+                     :subscribed_to_id   => @owner.id,
+                     :subscribed_to_type => @owner.class.to_s
+                   )
+                   # Force the reload of the association
+                   @owner.send(subscriber.class.to_s.tableize.to_sym, true)
+                 end
+                 
+                 def delete(subscription)
+                   s = Subscription.find :first, :conditions =>"subscriber_type = \'#{subscription.class.to_s}\' AND subscriber_id = #{subscription.id} AND subscribed_to_id = " + "'#{@owner.id}'" +" AND subscribed_to_type ="+" '#{@owner.class.to_s}'"
+                   return false unless s
+                   return false unless s.destroy
+                   @owner.send(subscription.class.to_s.tableize.to_sym, true)
+                 end
+                 
+                 def create(*args)
+                   reflection = @reflection.name.to_s.singularize.classify.constantize
+                   obj = reflection.send(:create, args[0])
+                   @owner.send(@reflection.name, send('<<',obj )) if obj.valid?
+                   return obj
+                 end
+                 
+                 def clear
+                   self.each{| record | @owner.send(@reflection.name, send('delete',record))}
+                 end
+               end  
+            end
+          end
+        end
+      
+        protected
+       
+        # Construct the SQL statement needed to bring back the correct association
+        def create_sql_statements(opts)
+          options = {:collection_table => nil, :collection_class => nil, :collector? => nil}.merge(opts)
+          if options[:collector?]
+            self_class = "subscriber" 
+            other_class = "subscribed_to"
+          else
+            self_class = "subscribed_to" 
+            other_class = "subscriber"            
+          end
           # Why I am mixing single and double quotes in the finder_sql statement you ask?
           # Excellent question! The answer is when you use "double quotes" the string is 
           # interpolated immediately in current class.  When you use 'single quotes' the
           # string is interpolated by Rails in the context of a class instance.  
           # I use single quotes to get the correct id and double qoutes to get the correct
           # classname.
-
-          has_many :subscribers, :class_name => 'Subscription', :finder_sql =>
-                'SELECT subscriptions.* ' +
-                'FROM subscriptions ' +
-                'WHERE subscriptions.subscribed_to_id = #{self.id} AND subscriptions.subscribed_to_type =' + "'#{self.to_s}'" do
-            
-            # Override the  << method so that it doesn't fuk up the association proxy.
-            def <<(subscriber)
-              return unless @owner.subscribers.map{|s| return false if s.subscriber_id == subscriber.id && s.subscriber_type == subscriber.class.to_s}
-              s = Subscription.create(
-               :subscriber_id      => subscriber.id,
-               :subscriber_type    => subscriber.class.to_s,
-               :subscribed_to_id   => @owner.id,
-               :subscribed_to_type => @owner.class.to_s      
-               )
-            @owner.subscribers(true) 
-           end
-           
-           # @feed.subscribers.include?(@reader) #=> true / false
-           def include?(subscriber)
-             @owner.subscribers.map{|s| return true if s.subscriber_id == subscriber.id && s.subscriber_type == subscriber.class.to_s}
-             return false
-           end
-           
-           # @feed.subscribers.unsubscribe << @feed.subscribers[0]
-           def unsubscribe(remove_me)
-             @owner.subscribers.map{|subscription| subscription.destroy if subscription.subscriber_id == remove_me.id}
-             @owner.subscribers(true)
-           end
-
-           # @feed.unsubscribe_all
-           def unsubscribe_all
-             @owner.subscribers.each{|subscription| subscription.destroy}
-             @owner.subscribers(true)
-           end
-          
-          end
+          sql =  " SELECT #{options[:collection_table]}.* FROM #{options[:collection_table]} "
+          sql << " WHERE #{options[:collection_table]}.id IN"
+          sql << " (SELECT #{other_class}_id FROM subscriptions WHERE subscriptions.#{other_class}_type = " + "'#{options[:collection_class]}'"
+          sql << " AND subscriptions.#{self_class}_id = " + '#{self.id}' 
+          sql << " AND subscriptions.#{self_class}_type = " + "'#{self.to_s}' )"
+          # Only add this fragment if the table is STI.
+          sql << " AND #{options[:collection_table]}.type = " + "'#{options[:collection_class]}'" if options[:collection_class].columns.map{|x|x.name}.include?('type')
+          sql
+          counter_sql = sql.sub(/^SELECT (\/\*.*?\*\/ )?(.*)\bFROM\b/im) { "SELECT #{$1}COUNT(*) FROM" }
+          return [counter_sql, sql]
         end
+      
       end
       
       module SingletonMethods

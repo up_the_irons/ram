@@ -93,7 +93,7 @@ class InboxController < ProtectedController
     if request.post?
       @feed = Feed.find_or_create_by_local_path_and_name_and_is_local(params[:local_path], params[:name], true)
       if @feed.valid?
-        @feed.subscribers << current_user
+        @feed.users << current_user
         flash[:notice] = "You are now subscribed to #{@feed.name}"
       else
         flash[:error] = "There was an error creating your subscription."
@@ -162,7 +162,7 @@ class InboxController < ProtectedController
       flash[:error] = "Could not find Feed"
     end
     if feed and request.post?
-      feed.subscribers.unsubscribe(current_user)
+      feed.users.delete current_user
       flash[:notice] = "Your request to unsubscribe was successful."
     end
     redirect_to :action=>'inbox'
