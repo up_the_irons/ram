@@ -3,5 +3,5 @@ author:
     homepage: http://locusfoc.us
 summary: Flexible polymorphic subcriber / subscribee class
 homepage: http://locusfoc.us
-plugin: http://svn.locusfoc.us/projects/plugins/acts_as_subscribable
+plugin: http://svn.locusfoc.us/projects/plugins/has_a_collection
 license: MIT

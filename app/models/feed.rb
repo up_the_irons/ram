@@ -11,7 +11,7 @@
 require 'rss/2.0'
 
 class Feed < ActiveRecord::Base
-  acts_as_subscribable :for=>'user'
+  has_a_collection :for=>'user'
   
   def title
     name

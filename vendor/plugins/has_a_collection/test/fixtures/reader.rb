@@ -6,11 +6,10 @@ end
 # and neighter can load without the other, yet neither can properly load because one will have to come in front of the other.
 # maybe it is possible to add the has_many association after the class has been initialized.
 class Bookclub < ActiveRecord::Base
-  # acts_as_subscribable :of => %w(books), :for=>["readers"]
+  # has_a_collection :of => %w(books), :for=>["readers"]
 end
 
 class Reader < Person
-  # acts_as_subscribable :subscribe_to => %w(books magazines letters)
-  acts_as_subscribable :of => %w(books magazines letters)
+  has_a_collection :of => %w(books magazines letters)
 end
   
