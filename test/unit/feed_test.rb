@@ -72,7 +72,7 @@ class FeedTest < Test::Unit::TestCase
         end
       end
     end
-    assert_equal 2, User.find(administrator.id).feeds.size
+    assert_equal 2, User.find(administrator.id).feeds(true).size
 
     # Remove
     assert_difference @feed.users, :size, -1 do
