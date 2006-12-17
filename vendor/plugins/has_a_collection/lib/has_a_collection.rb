@@ -27,12 +27,13 @@
  # Creates @blogs.articles, @blogs.authors and @reader.blogs
  # Allows only the Reader class to collect to the Blog class.
  # class Blog < ActiveRecord::Base
- #   has_a_collection :of =>%w(articles authors), :for => ["readers"]
+ #   has_a_collection :of =>%w(articles authors)
+ #   is_collected :by => ["readers"]
  # end
  # 
  # Allows only the Blog class to collect to the Feed class.
  # class Feed
- #   has_a_collection :for => ["blogs"]
+ #   is_collected :by => ["blogs"]
  # end
 
 module ActiveRecord
@@ -43,18 +44,20 @@ module ActiveRecord
       end
       
       module ClassMethods
-
         def has_a_collection(opts = {})
-          options = {:of => [], :for => []}.merge(opts)
+          options = {:of => []}.merge(opts)
           create_associations(options[:of],"subscriber","subscribed_to") unless options[:of].empty?
-          create_associations(options[:for],"subscribed_to","subscriber") unless options[:for].empty?
+        end
+        
+        def is_collected(opts ={})
+          options = {:by => []}.merge(opts)
+          create_associations(options[:by],"subscribed_to","subscriber") unless options[:by].empty?
         end
 
         # For example novel has a collection of chapters i.e. @novel.chapters
         def create_associations(options,self_class,other_class)
           module_eval do
             options.each do | collection |
-
               counter_sql, sql = create_sql_statements({
                                                         :collection_table => collection.to_s.singularize.classify.constantize.class_name.tableize, 
                                                         :collection_class => collection.to_s.singularize.classify.constantize,

@@ -10,7 +10,7 @@ class HasACollection < Test::Unit::TestCase
   end
   
   # Test the readers associations instead of the magazine
-  def test_collect_for
+  def test_is_collected_by
     assert @nolan.magazines.empty?
     assert @make.readers.empty?
     assert_add_to_collection @nolan, :magazines, @make
@@ -27,11 +27,13 @@ class HasACollection < Test::Unit::TestCase
     assert_no_difference @make.readers, :size do
       @make.readers << @nolan
     end
-    # TODO
-    # @nolan.bookclubs << @oprahs_bookclub
-    # @catch22.bookclubs << @oprahs_bookclub
-    # assert @oprahs_bookclub.readers.include?(@nolan)
-    # assert @oprahs_bookclub.books.include?(@catch22)
+    
+    @nolan.bookclubs << @oprahs_bookclub
+    @catch22.bookclubs << @oprahs_bookclub
+    assert @oprahs_bookclub.readers.include?(@nolan)
+    assert @nolan.bookclubs.include?(@oprahs_bookclub)
+    assert @catch22.bookclubs.include?(@oprahs_bookclub)
+    assert @oprahs_bookclub.books.include?(@catch22)
   end
 
   # The collector should be able to dynamically segment their collections like:

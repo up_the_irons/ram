@@ -15,12 +15,13 @@ end
 # Creates @blogs.feeds, @blogs.newspapers
 # Allows only the Reader class to subscribe to the Blog class.
 class Blogs < ActiveRecord::Base
-  has_a_collection :of => ["feeds","newspapers"], :for => ["readers"]
+  has_a_collection :of => ["feeds","newspapers"],
+  is_collected :by => ["readers"]
 end
 
 # Allows only the Blog class to subscribe to the Feed class.
 class Feed < ActiveRecord::Base
-  has_a_collection :for => ["blogs"]
+  is_collected :by => ["blogs"]
 end
   
 
@@ -43,5 +44,5 @@ end
 Credits & License
 ===========================================================
 Copyright 2006 Mark Daggett
-Many thanks the those on #caboose for their help
+Special thanks to Garry Dolley and those on #caboose for his help on this plugin.
 This software is released under the MIT License, no warranty is given or implied. 

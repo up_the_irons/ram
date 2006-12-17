@@ -11,7 +11,7 @@
 require 'rss/2.0'
 
 class Feed < ActiveRecord::Base
-  has_a_collection :for=>'user'
+  is_collected :by=>'user'
   
   def title
     name
