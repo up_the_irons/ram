@@ -27,13 +27,6 @@ class HasACollection < Test::Unit::TestCase
     assert_no_difference @make.readers, :size do
       @make.readers << @nolan
     end
-    
-    @nolan.bookclubs << @oprahs_bookclub
-    @catch22.bookclubs << @oprahs_bookclub
-    assert @oprahs_bookclub.readers.include?(@nolan)
-    assert @nolan.bookclubs.include?(@oprahs_bookclub)
-    assert @catch22.bookclubs.include?(@oprahs_bookclub)
-    assert @oprahs_bookclub.books.include?(@catch22)
   end
 
   # The collector should be able to dynamically segment their collections like:
@@ -213,7 +206,32 @@ class HasACollection < Test::Unit::TestCase
       @nolan.magazines << a_book
     end
   end
-          
+  
+  def test_alternate_table_name
+    @oprahs_bookclub.readers << @nolan
+    @oprahs_bookclub.books << @catch22
+    assert @oprahs_bookclub.readers.include?(@nolan)
+    assert @oprahs_bookclub.books.include?(@catch22)
+  end
+  
+  #TODO
+  
+  def test_before_add_callback
+    
+  end
+  
+  def test_after_add_callback
+  
+  end
+  
+  def test_before_remove_callback
+    
+  end
+  
+  def test_after_remove_callback
+    
+  end
+
   protected
   def assert_add_to_collection(record, collection, object)
     assert_difference record.send(collection,true), :size do

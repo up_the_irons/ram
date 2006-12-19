@@ -9,6 +9,15 @@ ActiveRecord::Schema.define(:version => 0) do
     t.column "updated_at", :datetime
   end
   
+  create_table "members", :force => true do |t|
+    t.column "member_id", :integer
+    t.column "member_type", :string
+    t.column "offering_id", :integer
+    t.column "offering_type", :string
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
+  end
+  
   create_table "printings", :force => true do |t|
     t.column "title", :string
     t.column "publisher", :string
@@ -32,6 +41,8 @@ ActiveRecord::Schema.define(:version => 0) do
   
   create_table "bookclubs", :force => true do |t|
     t.column "name", :string
+    t.column "subscribers_count", :integer, :default => 0
+    t.column "offerings_count", :integer, :default => 0
   end
       
 end

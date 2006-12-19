@@ -27,40 +27,39 @@ class User < ActiveRecord::Base
   end
   has_many :event_subscriptions
   
-  # has_a_collection :of =>%w( feeds )
-   TODO: Abstract this inside the acts_as_subscribable plug-in.... however to do this we need to find out why the user model will not load 
-   the mixin associations. It may be because of the user_observer. 
-   The ideal format is: acts_as_subscribable :subscribe_to=>['Feed']
-   has_many :feeds, :finder_sql => 'SELECT DISTINCT f.* ' +
-         'FROM feeds f, subscriptions s ' +
-        'WHERE s.subscribed_to_type = \'Feed\' AND s.subscriber_id = #{id} AND s.subscriber_type = \'User\' AND f.id = s.subscribed_to_id' do
-    
-    # @user.feeds << Feed.find(:first)
-    def <<(feed)
-      return if @owner.feeds.include?(feed)
-  
-      Subscription.create(
-        :subscribed_to_type => 'Feed',
-        :subscribed_to_id => feed.id,
-        :subscriber_type => 'User',
-        :subscriber_id => @owner.id
-      )
-      
-      # Reload the user's feeds to ensure the correct count
-      @owner.feeds(true)
-    end
-    
-    # @user.feeds.unsubscribe @user.feeds[0]
-    def unsubscribe(feed)
-      return unless @owner.feeds.include?(feed)
-      s = Subscription.find_by_subscriber_id_and_subscriber_type_and_subscribed_to_type_and_subscribed_to_id(@owner.id, 'User', 'Feed', feed.id)
-      return unless s
-      s.destroy # Destroy the subscription.
-      
-      # Reload the user's feeds to ensure the correct count
-      @owner.feeds(true)
-    end
-   end
+  has_collection :of => %w(feeds)
+  #  TODO: Abstract this inside the acts_as_subscribable plug-in.... however to do this we need to find out why the user model will not load 
+  #  the mixin associations. It may be because of the user_observer. 
+  #  The ideal format is: acts_as_subscribable :subscribe_to=>['Feed']
+  #  has_many :feeds, :finder_sql => 'SELECT DISTINCT f.* ' +
+  #        'FROM feeds f, subscriptions s ' +
+  #       'WHERE s.subscribed_to_type = \'Feed\' AND s.subscriber_id = #{id} AND s.subscriber_type = \'User\' AND f.id = s.subscribed_to_id' do
+  #   
+  #   # @user.feeds << Feed.find(:first)
+  #   def <<(feed)
+  #     return if @owner.feeds.include?(feed)
+  #     Subscription.create(
+  #       :subscribed_to_type => 'Feed',
+  #       :subscribed_to_id => feed.id,
+  #       :subscriber_type => 'User',
+  #       :subscriber_id => @owner.id
+  #     )
+  #     
+  #     # Reload the user's feeds to ensure the correct count
+  #     @owner.feeds(true)
+  #   end
+  #   
+  #   # @user.feeds.unsubscribe @user.feeds[0]
+  #   def unsubscribe(feed)
+  #     return unless @owner.feeds.include?(feed)
+  #     s = Subscription.find_by_subscriber_id_and_subscriber_type_and_subscribed_to_type_and_subscribed_to_id(@owner.id, 'User', 'Feed', feed.id)
+  #     return unless s
+  #     s.destroy # Destroy the subscription.
+  #     
+  #     # Reload the user's feeds to ensure the correct count
+  #     @owner.feeds(true)
+  #   end
+  #  end
   
   has_many :groups, :through => :memberships,
                     :conditions => "memberships.collection_type = 'Group'", :include => :categories do
