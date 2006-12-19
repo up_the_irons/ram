@@ -217,19 +217,29 @@ class HasACollection < Test::Unit::TestCase
   #TODO
   
   def test_before_add_callback
-    
+    @oprahs_bookclub.subscribers_count
+    @oprahs_bookclub.readers << @nolan
+    assert_equal 1,  @oprahs_bookclub.subscribers_count
   end
   
   def test_after_add_callback
-  
+    assert @nolan.id != @oprahs_bookclub.recent_subscriber_id
+    @oprahs_bookclub.readers << @nolan
+    assert_equal @nolan.id, @oprahs_bookclub.recent_subscriber_id
   end
   
   def test_before_remove_callback
-    
+    assert @nolan.id != @oprahs_bookclub.last_subscriber_to_cancel_id
+    assert_add_to_collection @oprahs_bookclub, :readers, @nolan
+    @oprahs_bookclub.readers.delete @nolan
+    assert_equal @nolan.id, @oprahs_bookclub.last_subscriber_to_cancel_id
   end
   
   def test_after_remove_callback
-    
+    assert @catch22.id != @oprahs_bookclub.last_months_offering_id
+    assert_add_to_collection @oprahs_bookclub, :books, @catch22
+    @oprahs_bookclub.books.delete @catch22
+    assert_equal @catch22.id, @oprahs_bookclub.last_months_offering_id
   end
 
   protected

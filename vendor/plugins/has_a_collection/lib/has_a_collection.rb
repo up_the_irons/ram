@@ -75,8 +75,8 @@ module ActiveRecord
         end
 
         def create_associations(options)
-          self_class   = options[:class_column]
-          other_class  = options[:association_column]
+          self_class    = options[:class_column]
+          other_class   = options[:association_column]
           collection_class =  options[:class_name].classify.constantize
           
           # If needed dynamically create the class, which acts as the join model.
@@ -107,6 +107,10 @@ module ActiveRecord
                     return unless @owner.respond_to?record.class.to_s.tableize.to_sym
                     return unless @owner.send(record.class.to_s.tableize.to_sym, true).map{|x| return false if x.id == record.id}
                     klass = #{collection_class}
+                    before_add    = record.class.to_s.downcase << '_before_add'
+                    after_add     = record.class.to_s.downcase << '_after_add'
+                     
+                    @owner.send(before_add, record) if @owner.respond_to? before_add
                     s = #{collection_class}.create(
                       :#{self_class}_id    => @owner.id,
                       :#{self_class}_type  => @owner.class.to_s,
@@ -114,18 +118,24 @@ module ActiveRecord
                       :#{other_class}_type => record.class.to_s
                     )
                     # Force the reload of the association
+                    @owner.send(after_add, record) if @owner.respond_to? after_add
                     @owner.send(record.class.to_s.tableize.to_sym, true)
                   end
                   
                   # Class#collections.delete @record
                   def delete(record)
+                    before_remove = record.class.to_s.downcase << '_before_remove'
+                    after_remove  = record.class.to_s.downcase << '_after_remove'
                     record.each{| x | @owner.send(@reflection.name, send('delete',record[x] ))} if record.is_a?(Array)
                     s = #{collection_class}.find :first, :conditions =>create_delete_sql( '#{self_class}', '#{other_class}', record )
                     return false unless s
                     #{collection_class}.transaction do
+                      @owner.send(before_remove,record) if @owner.respond_to? before_remove
                       return false unless s.destroy
                       @owner.send(record.class.to_s.tableize.to_sym, true)
+                      @owner.send(after_remove,record) if @owner.respond_to? after_remove
                     end
+                    
                   end
                 endofeval
                 

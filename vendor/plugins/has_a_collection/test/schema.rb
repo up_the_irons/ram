@@ -43,6 +43,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.column "name", :string
     t.column "subscribers_count", :integer, :default => 0
     t.column "offerings_count", :integer, :default => 0
+    t.column "recent_subscriber_id", :integer, :default =>0
+    t.column "last_months_offering_id", :integer, :default =>0
+    t.column "last_subscriber_to_cancel_id", :integer, :default =>0
   end
       
 end
