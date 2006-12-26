@@ -88,7 +88,7 @@ begin
   require 'RMagick'
 rescue LoadError
   # Failed to load RMagick
-  $APPLICATION_SETTINGS.preferences[:rmagick? => false]
+  $APPLICATION_SETTINGS.preferences[:rmagick?] = false
 end
   
 begin
