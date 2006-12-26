@@ -166,6 +166,7 @@ class Asset < ActiveRecord::Base
           when "jpe"  : "image/jpeg"
           when "jpeg" : "image/jpeg"
           when "jpg"  : "image/jpeg"
+          when "png"  : "image/png"
           when "jfif" : "image/pipeg"
           when "tif"  : "image/tiff"
           when "tiff" : "image/tiff"

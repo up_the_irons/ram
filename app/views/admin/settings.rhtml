@@ -3,6 +3,14 @@
 <% end -%>
 <%= error_messages_for 'settings' %>
 <%= start_form_tag :action => "settings"-%>
+<h2>Server Configuration</h2>
+<p>You can only make changes to these settings though a server terminal.</p>
+<ul class="web_form_stacked">
+  <li>RMagick Installed: <%= @settings.preferences[:rmagick?] %></li>
+</ul>
+</p>
+<h2>Application Configurations</h2>
+<p>These settings affect the look and feel of the application</p>
 <ul class="web_form_stacked">
   <li><label for="application_name">Application Name:</label>
     <%= text_field :settings, :application_name %>

@@ -130,7 +130,7 @@ class AdminController
   
   def settings
       # There should only be one setting record for the application
-      @settings = Setting.find(:first)
+      @settings = $APPLICATION_SETTINGS
       return false unless request.post?
       
       if @settings.update_attributes(params[:settings])
