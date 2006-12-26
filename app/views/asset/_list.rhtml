@@ -5,24 +5,25 @@
     <%= render :partial => 'shared/paging', :locals => { :name => 'Assets', :pages => @asset_pages } %>
   <% end -%>
   
-  <% details_display = "display:none"
-  thumbnails_display = "display:none" -%>
+  <% details_display = "display:none;"
+  thumbnails_display = "display:none;" -%>
+  
   <% unless session[:asset_display].nil?
     details_display = "display:block;" if session[:asset_display] == 'details'
     thumbnails_display = "display:block;" if session[:asset_display] == 'thumbnails'
   else
     details_display = "display:block;"
   end -%>
-   <%= form_tag :controller=>'briefcase',:action=>'add' %>
-  <div id="details" style="<%= details_display %>">
-    <%= render :partial => 'asset/details' %>
-  </div>
-  <div id="thumbnails" style="<%= thumbnails_display %>">
+  <form id="data_grid_list" name="data_grid_list" action="" method="post">
+    <div id="details" style="<%= details_display %>">
+      <%= render :partial => 'asset/details' %>
+    </div>
+    <div id="thumbnails" style="<%= thumbnails_display %>">
       <%= render :partial=>'asset/thumbnails' %>
-  </div>
-  <div style="display:block;clear:both;margin-top:10px;">
-    <%= image_tag('/images/icons/briefcase.png',{:title=>'Add to Briefcase to Download'})%>
-    <%= submit_tag "Add To Briefcase", {:class=>'button'} %> 
-  </div>
-</form>
+    </div>
+    <div style="display:block;clear:both;margin-top:10px;">
+      <%= submit_tag "Add To Briefcase", {:onclick => "this.form.action = '/briefcase/add'", :name => 'add_to_briefcase', :class => 'briefcase_button'} %> 
+      <%= submit_tag "Delete Selected",  {:onclick => "this.form.action = '/asset/destroy'", :name => 'delete_selected', :class => 'delete_button'} %> 
+    </div>
+  </form>
 </div>

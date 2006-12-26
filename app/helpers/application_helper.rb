@@ -33,14 +33,14 @@ module ApplicationHelper
       when 'image/jpeg','image/jpg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png'
          # breakpoint
         unless asset.thumbnail_size(opts[:size]).nil? || !asset.thumbnail_size(opts[:size])
-          return "<img src=\"#{url_for(:controller=>'asset', :action=>'show_inline', :id=>asset.id, :thumbnail=>opts[:size]) }\"/>"
+          return "<img src=\"#{url_for(:controller=>'asset', :action=>'show_inline', :id=>asset.id, :thumbnail=>opts[:size]) }\" alt=\"asset_#{asset.id}\" />"
         else
           return "#{image_tag(url_for(:controller=>'asset', :action=>'show_inline', :id=>asset.id)) }"
         end
       when 'application/pdf'
         return "#{image_tag('/images/icons/page_white_acrobat.png')} #{link_to( asset.name, :controller=>'asset', :action=>'show',:id=>asset.id)}"
       else
-        return "#{link_to(image_tag('/images/icons/page_white.png'), :controller=>'asset', :action=>'show',:id=>asset.id)}"
+        return "#{image_tag('/images/icons/page_white.png')}"
     end
   end
   

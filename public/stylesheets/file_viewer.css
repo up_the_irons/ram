@@ -68,28 +68,47 @@
 
 .dataGrid tr.highlighted{
   background-color : #FDF766;
-  color:#000;
+  color: #000;
 }
 
 .pagination{
   background-color  : #efefef;
   padding           : 10px;
 }
-.pagination a{
+.pagination a {
   text-decoration   : underline;
 }
 
-.pagination .selected{
+.pagination .selected {
   color             : #f00;
 }
-.button{
-  margin            : 0.2em;
-  background-color  : #efefef;
-  color             : #000;
-  padding           : 0.5em 0.8em 0.5em 0.8em;
-  border-right      : 1px solid #ccc;
-  border-bottom      : 1px solid #ccc;
+.button, .icon_button, .delete_button, .briefcase_button, .zip_button {
+  margin: 0.2em;
+  background-color : #efefef;
+  color: #000;
+  padding: 0.5em 0.8em 0.5em 0.8em;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
+
+.icon_button, .briefcase_button, .delete_button, .zip_button {
+  padding-left: 30px;
+  background-repeat: no-repeat;
+  background-position: 10px;    
+}
+
+.briefcase_button {
+  background-image: url(/images/icons/briefcase.png);
+}
+
+.delete_button {
+  background-image: url(/images/icons/cross.png);
+}
+
+.zip_button {
+  background-image: url(/images/icons/page_white_zip.png);
+}
+
 .dataGrid th{
   font-size         : 1.1em;
   font-weight       : lighter;
@@ -101,15 +120,15 @@
   color             : #fff;
 }
 .dataGrid .options{
-  background-color  : #BCBCCB;
+  background-color: #BCBCCB;
 }
 .dataGrid th a{
-  color             : #fff;
+  color: #fff;
 }
 .dataGrid td{
-  padding           : 5px 5px 5px 5px;
+  padding: 5px 5px 5px 5px;
 }
 .dataGrid td li{
-  list-style       : none;
-  display          : inline;
+  list-style: none;
+  display: inline;
 }

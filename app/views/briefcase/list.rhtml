@@ -7,9 +7,8 @@
 <% if session[:briefcase].size > 0 %>
 
 <div style="display:block;clear:both;margin-top:10px;">
-<%= image_tag('/images/icons/briefcase.png',{:title=>'Remove From Briefcase'})%>
-<%= submit_tag "Remove From Briefcase", {:class=>'button'} %> 
-<span class="button"><%= link_to" #{image_tag('/images/icons/page_white_zip.png')} Download Archive of briefcase as a .zip file", :action=>'zip' %></span>
+<%= submit_tag "Remove From Briefcase", {:class => 'briefcase_button'} %> 
+<span class="zip_button"><%= link_to "Download Archive of briefcase as a .zip file", :action => 'zip' %></span>
 </div>
 </form>
 <% else -%>

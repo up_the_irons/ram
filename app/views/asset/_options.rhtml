@@ -9,16 +9,4 @@
                 :update=>"new_asset_form"
                }
             ) 
-%>
-<%= link_to_remote(image_tag('/images/icons/cross.png'),
-           :url=>{
-               :controller=>'asset',
-               :action=>'destroy',
-                :id=>asset.id,
-              :category_id=>asset.category.id,
-              :update=>"asset_#{asset.id}"
-             },
-          :confirm=>"Are you sure you want to delete #{ h asset.name}?"
-          ) 
-  %>
-<% end -%>
+%><% end -%>

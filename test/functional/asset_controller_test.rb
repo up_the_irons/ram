@@ -120,6 +120,27 @@ class AssetControllerTest < Test::Unit::TestCase
       Asset.find(@a.id)
     end
   end
+  
+  def test_delete_many_assets
+    cat = @user.categories[0]
+    doomed = []
+    num = 10
+    assert_difference Asset, :count, num do
+      num.times do
+       asset = an_asset({:user_id=>@user.id,:category_id=>cat.id})
+       asset.groups << @user.groups[0]
+       doomed << asset
+      end
+    end
+    
+    post :destroy, :assets=>doomed.map{|a| a.id}
+    assert_redirected_to :controller=>'category', :action=>'show', :id=>cat.id
+    doomed.each do | asset |
+      assert_raise(ActiveRecord::RecordNotFound) do
+        Asset.find(asset.id)
+      end
+    end
+  end
    
   def test_shall_prevent_destroy_on_gets
     @a = @user.assets[0]

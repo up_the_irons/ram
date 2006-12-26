@@ -10,7 +10,7 @@
   </tr>
   <tr class="options">
     <td><input type="checkbox" onclick="javascript:View.CheckAll(this.form,'assets',this);" /></td>
-    <td colspan="6">Select or unselect all assets on this page.</td>
+    <td colspan="6">Select or deselect all assets on this page.</td>
   </tr>
 <% for asset in @assets -%>
   <%row_class =  cycle("even", "odd") %>
@@ -22,7 +22,6 @@
     <td><%= asset.updated_on.strftime("%Y-%m-%d") unless asset.updated_on.nil?%></td>
     <td><%= asset.groups.find(:all).map{|g| g.name}.join(', ') %></td>
     <td><%= render :partial=>'asset/options',:locals=>{:asset=>asset} unless params[:controller] == 'briefcase' %></td>
-
   </tr>
 <% end unless @assets.nil? %>
 </table>

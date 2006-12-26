@@ -43,7 +43,7 @@ class AssetController < ProtectedController
     send_data @asset.data, :filename => @asset.filename, :type => @asset.content_type, :disposition => 'inline'
   end
 
-  #the bulk upload process is initiated from flash.
+  # The bulk upload process is initiated from flash.
   def bulk_upload
     # @size_limit = UPLOAD_SIZE_LIMIT #50000*1024
     @size_limit = $APPLICATION_SETTINGS.filesize_limit
@@ -55,7 +55,7 @@ class AssetController < ProtectedController
     end
   end
   
-  #called repeatedly through flash
+  # Called repeatedly through flash
   def create_en_masse
     redirect_to :controller=>'inbox' and return false unless request.post?
     
@@ -73,7 +73,7 @@ class AssetController < ProtectedController
         session[:user] = @user
         @asset.save
       end
-      #the js in the view returns the items a comma delimited string and NOT an array like you would expect.
+      # The js in the view returns the items a comma delimited string and NOT an array like you would expect.
       #so we must convert the string into an array.
       @groups_from_params  = params[:user][:group_ids][0].split(',').map do |g| 
         group = @user.groups.find(g)
@@ -86,7 +86,7 @@ class AssetController < ProtectedController
   
   
   def show_upload_results
-    #DON'T DELETE THIS METHOD Flash Needs to resolve to it.
+    # DON'T DELETE THIS METHOD Flash Needs to resolve to it.
   end
   
   def edit
@@ -139,22 +139,32 @@ class AssetController < ProtectedController
   end
   
   def destroy
+    @results = {:success => [], :failure => []}
     raise if request.get?
-    @asset = find_asset_by params[:id]
-    raise if @asset.nil?
-    raise unless current_user.can_edit? @asset
-    @category = Category.find(@asset.category_id)
-    raise unless accessible_items(@category,'assets',current_user.groups).include?(@asset)
-    raise unless @asset.destroy
+    params[:assets] = params[:id] if params[:id]
+    params[:assets] = [params[:assets]] unless params[:assets].is_a?(Array)
+    params[:assets] = params[:assets].uniq
+    params[:assets].each do | asset | 
+     if find_and_destroy(asset)
+       @results[:success] << asset
+     else
+       @results[:failure] << asset
+     end
+    end
     
     respond_to do |wants|
+      message = ""
+      message << "<p>Successfully deleted #{@results[:success].size} assets.</p>" unless @results[:success].empty?
+      message << "<p>Failed to delete #{@results[:failure].size} assets.</p>" unless @results[:failure].empty?
+      
       wants.html do
-        redirect_to :controller=>'category',:action=>'show', :id=>@asset.category_id
+        redirect_to :controller => 'category',:action => 'show', :id => @category.id
+        flash[:notice] = message
       end
         
       wants.js do
         render :update do |page|
-          page.call "grail.notify",{:skin=>"music_video",:subject=>'Success',:body=>"#{@asset.filename} was deleted."}
+          page.call "grail.notify",{:skin => "music_video",:subject => 'Success',:body => message}
           page.remove params[:update]
           page.remove params[:update]+"_thumbnail" # Remove the thumbnail too
         end
@@ -167,11 +177,22 @@ class AssetController < ProtectedController
   end
   
   protected
+  
+  def find_and_destroy(asset)
+    @asset = find_asset_by asset
+    return false if @asset.nil?
+    return false unless current_user.can_edit? @asset
+    @category = Category.find(@asset.category_id)
+    # return false unless accessible_items(@category,'assets',current_user.groups).include?(@asset)
+    return false unless @asset.destroy
+    true
+  end
+  
   def find_asset_by(param)
-    if params[:id].to_s.match(/^\d+$/)
-      asset = Asset.find(param)
+    if param.to_s.match(/^\d+$/)
+      asset = current_user.assets.find(param)
     else
-      asset = Asset.find_by_name(param)
+      asset = current_user.assets.find_by_filename(param)
     end
   end
     
