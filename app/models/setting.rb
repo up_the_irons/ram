@@ -11,6 +11,7 @@
 class Setting < ActiveRecord::Base
   validates_presence_of :application_name, :admin_group_id, :filesize_limit
   validates_numericality_of :admin_group_id, :filesize_limit
+  serialize :preferences
   @@max_limit = 100000 * 1024
   @@min_limit = 1000 * 1024
   def before_save

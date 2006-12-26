@@ -104,8 +104,9 @@ class AccountController < ProtectedController
       safe_hash[:password_confirmation] = params[:user][:password_confirmation]
     end
     
-    # Only create the avatar if a file was selected.
-    if params[:avatar] && params[:avatar][:uploaded_data].size > 0
+    # Only create the avatar if a file was selected and RMagick is available.
+    # TODO if no avatar is available then use a default icon.
+    if params[:avatar] && params[:avatar][:uploaded_data].size > 0 && $APPLICATION_SETTINGS.preferences[:rmagick?]
       @avatar = create_avatar(@user.id,params[:avatar][:uploaded_data])
     end
       

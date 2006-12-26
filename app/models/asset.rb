@@ -10,8 +10,24 @@
 
 class Asset < ActiveRecord::Base  
   set_table_name "attachments"
-
-  acts_as_attachment :thumbnails => { :large => '485>',:medium => '291>', :small => '95' }
+  
+  
+  def self.use_thumbnails
+    acts_as_attachment :thumbnails => { :large => '485>',:medium => '291>', :small => '95' }
+  end    
+  
+  def self.skip_thumbnails
+    acts_as_attachment
+  end
+  
+  begin
+    require 'RMagick'
+    use_thumbnails
+  rescue LoadError
+    # Failed to load RMagick do not create thumbnails
+    skip_thumbnails
+  end
+  
   acts_as_taggable
 
   validates_as_attachment
@@ -78,7 +94,8 @@ class Asset < ActiveRecord::Base
     linking.destroy if linking.valid?
   end
     
-  class << self    
+  class << self
+    
     def search(keywords, groups, order = nil)
       query = { :id => "", :name => "", :description => "", :filename => "",:user_id=>"" }
       

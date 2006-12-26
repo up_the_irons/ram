@@ -1,8 +1,13 @@
 <% for asset in @assets -%>
 <div id="asset_<%= asset.id %>_thumbnail" style="float:left;border:1px solid #cfcfcf;padding:2px;margin:2px;">
-  <%= link_to(display_as( asset, {:size=>'small'}), :controller=>'asset',:action=>'show',:id=>asset.id ) %>
+  <% if $APPLICATION_SETTINGS.preferences[:rmagick?] -%>
+    <%= link_to(display_as( asset, {:size=>'small'}), :controller=>'asset',:action=>'show',:id=>asset.id ) %>
+  <% else -%>
+    <%= link_to(image_tag('/images/icons/page_white.png'), :controller=>'asset',:action=>'show',:id=>asset.id ) %>
+  <% end -%>
   <p>
-  <input type="checkbox" name="assets[]" value="<%= asset.id %>" />
-<%= link_to( truncate(asset.filename,12), :controller=>'asset',:action=>'show',:id=>asset.id) %></p>
+    <input type="checkbox" name="assets[]" value="<%= asset.id %>" />
+    <%= link_to( truncate(asset.filename,12), :controller=>'asset',:action=>'show',:id=>asset.id) %>
+  </p>
 </div>
 <% end -%>

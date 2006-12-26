@@ -3,7 +3,8 @@
 #  id                  :integer(11)   not null
 #  application_name    :string(255)   
 #  admin_group_id      :integer(11)   
-#  filesize_limit      :integer(11)   
+#  filesize_limit      :integer(11)
+#  preferences         :string    
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
@@ -12,3 +13,6 @@ default:
   application_name: 'RAM'
   admin_group_id: 31
   filesize_limit: 51200000
+  preferences: "--- 
+  :rmagick?: true
+  "

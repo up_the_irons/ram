@@ -205,12 +205,25 @@ class AccountControllerTest < Test::Unit::TestCase
     login_as :normal_user # Non-admin
     file = "#{RAILS_ROOT}/test/fixtures/images/rails.png"
     temp_file = uploaded_jpeg(file)
-    assert_difference Avatar, :count, 1 do # There is 1 new asset and 3 new thumbnails
+    assert_difference Avatar, :count, 1 do # There is 1 new avatar
       post :edit, :avatar=>{:uploaded_data=>temp_file}
       assert assigns(:avatar)
       assert_equal assigns(:avatar).user_id, users(:normal_user).id
     end
     assert_response :success
+  end
+  
+  def test_shall_skip_avatar_without_rmagick
+    $APPLICATION_SETTINGS.preferences[:rmagick?] = false
+    login_as :normal_user # Non-admin
+    file = "#{RAILS_ROOT}/test/fixtures/images/rails.png"
+    temp_file = uploaded_jpeg(file)
+    assert_no_difference Avatar, :count do
+      post :edit, :avatar=>{:uploaded_data=>temp_file}
+      assert !assigns(:avatar)
+    end
+    assert_response :success
+    $APPLICATION_SETTINGS.preferences[:rmagick?] = true # rollback
   end
   
   def test_users_shall_not_edit_status_or_login

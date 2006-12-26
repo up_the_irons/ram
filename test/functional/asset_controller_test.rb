@@ -68,6 +68,21 @@ class AssetControllerTest < Test::Unit::TestCase
     assert_redirected_to :action=>'edit',:id=>assigns(:asset).id
   end
   
+  # In configurations where RMagick is not available no thumbnails shall be generated.
+  def test_create_without_rmagick
+    $APPLICATION_SETTINGS.preferences[:rmagick?] = false
+    file = "#{RAILS_ROOT}/test/fixtures/images/rails.png"
+    temp_file = uploaded_jpeg(file)
+    Asset.skip_thumbnails
+    assert_difference Asset, :count do
+      post :edit, :asset=>{:description=>"I made this asset on #{Time.now.to_s}", :category_id=>@category_with_asset, :user_id=>@user.id, :uploaded_data=>temp_file}
+      assert assigns(:asset)
+      assert_equal 0, assigns(:asset).thumbnails.size
+    end
+    
+    $APPLICATION_SETTINGS.preferences[:rmagick?] = true # Rollback
+  end
+  
   def test_update
     asset = @user.assets[0]
     another_cat = (@user.categories - [Category.find(asset.category_id)])[0]

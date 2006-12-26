@@ -11,7 +11,13 @@
 class Avatar < ActiveRecord::Base
   belongs_to :user
 
-  acts_as_attachment :content_type => :image, :resize_to => [100, 100]
+  begin
+    require 'RMagick'
+    acts_as_attachment :content_type => :image, :resize_to => [100, 100]
+  rescue LoadError
+    # Failed to load RMagick do not create avatar image
+  end
+  
   validates_as_attachment
   
   # Read from the model's attributes if it's available.

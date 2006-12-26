@@ -67,12 +67,6 @@ end
 # Include your application configuration below
 require 'openssl'
 require 'base64'
-begin
-  require 'RMagick'
-rescue LoadError
-  # Failed to load RMagick
-  # TODO disable all RMagick functionality
-end
 require 'ostruct'
 
 # OpenStruct is used in several places throughout the app to fake out views, which are expecting AR models.
@@ -82,13 +76,21 @@ OpenStruct.class_eval { undef :id }
 
 UPLOAD_SIZE_LIMIT = 50000 * 1024
 RAM_SALT          = 'foodz'
-# APP_NAME          = 'RAM'
-# ADMIN_GROUP       = 'Administrators'
+
 begin
   $APPLICATION_SETTINGS = Setting.find(:first) unless RAILS_ENV == 'test' # The record, which hold all the website configurations
+  
 rescue
-  $APPLICATION_SETTINGS = OpenStruct.new({:application_name=>'RAM',:admin_group_id=>1,:filesize_limit=>55000})
+  $APPLICATION_SETTINGS = OpenStruct.new({:application_name => 'RAM',:admin_group_id => 1,:filesize_limit => 55000, :preferences => {:rmagick? => true}})
 end
+
+begin
+  require 'RMagick'
+rescue LoadError
+  # Failed to load RMagick
+  $APPLICATION_SETTINGS.preferences[:rmagick? => false]
+end
+  
 begin
   # Codename generated from the dictionary
   @rev = YAML.load(`svn info`)['Revision'] if File.exist?('.svn')

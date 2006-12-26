@@ -6,6 +6,8 @@
 <% end -%>
 
 <li id="avatar_field">
-  <label>Profile Image (large images will be cropped to 50x50)</label>
-  <%= file_field(:avatar, :uploaded_data) -%>
+  <% if $APPLICATION_SETTINGS.preferences[:rmagick?] -%>
+    <label>Profile Image (large images will be cropped to 50x50)</label>
+    <%= file_field(:avatar, :uploaded_data) -%>
+  <% end -%>
 </li>
