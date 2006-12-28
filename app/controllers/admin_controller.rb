@@ -49,7 +49,7 @@ class AdminController
   end
   
   def edit_category
-    edit_collection({:table=>'categories', :many_associations=>['groups']})
+    edit_collection({:table=>'categories', :many_associations=>['groups'], :required_associations=>['group_ids']})
   end
   
   # A group is not destroyed, it's disbanded!

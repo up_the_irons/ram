@@ -91,6 +91,7 @@ module CollectionMethods
     instance_variable_set("@#{obj[:table].singularize}", obj[:model].send(:new)) unless instance_variable_get("@#{obj[:table].singularize}")
     
     model_instance = instance_variable_get("@#{obj[:table].singularize}")
+    model_instance.errors.clear # Clear any custom errors, which would not be cleared by Active Record.
     raise "Could not find or create #{obj[:table].singularize}" and return false unless model_instance # The view will produce an error without instance variable
     yield and return if block_given?  # Thar be dragons past this point!
     
@@ -101,7 +102,16 @@ module CollectionMethods
     
     params[model_sym][:user_id] = current_user.id if model_instance.new_record?
     
-    #ensure that the required associations are supplied in the url post
+    # Save the record and strip out the has_many associations so that the record saves correctly.
+    # TODO: Find a way to make this more succient. 
+    attributes = params[model_sym].dup
+    obj[:many_associations].each do | m | 
+      attributes.delete("#{m.singularize}_ids".to_sym)
+      attributes.delete("tags") if params[model_sym][:tags]
+    end
+    model_instance.attributes = attributes
+    
+    # Ensure that the required associations are supplied in the url post.
     opts[:required_associations].each do | assoc |
       included = false
       params[model_sym].each_pair do |k,v| 
@@ -112,15 +122,7 @@ module CollectionMethods
         return false
       end
     end if opts[:required_associations]
-    # Save the record and strip out the has_many associations so that the record saves correctly.
-    # TODO: Find a way to make this more succient. 
-    attributes = params[model_sym].dup
-    obj[:many_associations].each do | m | 
-      attributes.delete("#{m.singularize}_ids".to_sym)
-      attributes.delete("tags") if params[model_sym][:tags]
-    end
-    model_instance.attributes = attributes
-    
+    return false unless model_instance.errors.empty? # Don't try to save if errors have already been applied. 
     return false unless model_instance.save
     # Tags must be assigned after the object is saved b/c they rely on the ID of the record
     model_instance.tags = params[model_sym][:tags] if params[model_sym][:tags]

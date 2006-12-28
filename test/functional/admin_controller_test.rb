@@ -11,7 +11,7 @@ require 'admin_controller'
 class AdminController; def rescue_action(e) raise e end; end
 
 class AdminControllerTest < Test::Unit::TestCase
-  fixtures :collections, :attachments, :db_files, :users, :linkings, :memberships,:changes, :profiles, :people, :settings
+  fixtures :collections, :attachments, :db_files, :users, :linkings, :memberships, :changes, :profiles, :people, :settings, :subscriptions, :event_subscriptions, :events, :event_triggers
 
   include IncludedTests::UserMethodsTest
   include IncludedTests::GroupMethodsTest

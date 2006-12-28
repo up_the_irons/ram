@@ -16,7 +16,7 @@ module IncludedTests::CategoryMethodsTest
     assert assigns(:category).new_record?
     assert_no_difference Category, :count do
       post :edit_category, :category => { :name => '' }
-      assert assigns(:category).errors[:name]
+      assert !assigns(:category).errors.empty?
       assert !assigns(:category).valid?
       assert assigns(:category).new_record?
     end
@@ -120,9 +120,15 @@ module IncludedTests::CategoryMethodsTest
     get :categories
     assert @controller.session[:category_tree].to_s =~ /#{cat.name}/
     assert @controller.session[:category_tree].to_s !~ /#{new_name}/
-
+    @group_ids = Group.find(:all).map{|g| g.id }
     changes = cat.changes.size
-    post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first), :tags => new_tags.join(', ')}
+    post :edit_category, :id => @existing_category_id, :category => {
+                                                                     :name => 'Atari Promotions',
+                                                                     :description => 'great give-aways from the past',
+                                                                     :group_ids => @group_ids, 
+                                                                     :user_id => User.find(:first), 
+                                                                     :tags => new_tags.join(', ')
+                                                                     }
     assert_response :success
     category_after_update = Category.find(@existing_category_id)
     assert_equal new_name, category_after_update.name
@@ -138,7 +144,13 @@ module IncludedTests::CategoryMethodsTest
 
     # Now make sure the old tags get overwritten with new ones
     new_tags = ['beach', 'bird','dog']
-    post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first), :tags => new_tags.join(', ')}
+    post :edit_category, :id => @existing_category_id, :category => {
+                                                                     :name => 'Atari Promotions',
+                                                                     :description => 'great give-aways from the past', 
+                                                                     :group_ids => @group_ids, 
+                                                                     :user_id => User.find(:first), 
+                                                                     :tags => new_tags.join(', ')
+                                                                     }
     assert_response :success
     category_after_update = Category.find(@existing_category_id)
     assert_equal new_name, category_after_update.name
@@ -153,8 +165,15 @@ module IncludedTests::CategoryMethodsTest
   end
 
   def test_update_category_with_blank_tags
+    @group_ids = Group.find(:all).map{|g| g.id }
     new_tags = ['beach', 'bird','dog']
-    post :edit_category, :id => @existing_category_id, :category =>{:name=>'Atari Promotions',:description=>'great give-aways from the past',:user_id=>User.find(:first), :tags => new_tags.join(', ')}
+    post :edit_category, :id => @existing_category_id, :category => {
+                                                                    :name => 'Atari Promotions',
+                                                                    :description => 'great give-aways from the past',
+                                                                    :user_id => User.find(:first), 
+                                                                    :group_ids => @group_ids, 
+                                                                    :tags => new_tags.join(', ')
+                                                                    }
     assert_response :success
     
     # Make sure tags display correctly (comma delimited)
