@@ -31,7 +31,7 @@ class UserNotifier < ActionMailer::Base
   def setup_email(user)
     @recipients  = "#{user.email}"
     @from        = "ADMINEMAIL"
-    @subject     = $APPLICATION_SETTINGS.application_name
+    @subject     = "Message from RAM"# $APPLICATION_SETTINGS.application_name
     @sent_on     = Time.now
     @body[:user] = user
   end

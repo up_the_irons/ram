@@ -29,6 +29,13 @@ class SettingTest < Test::Unit::TestCase
     assert_equal false, s.update_attribute(:filesize_limit, 1000000 * 1024) # Too Large
   end
   
+  def test_ensure_preferences_not_nil
+    s = Setting.find(:first)
+    s.update_attribute(:preferences,nil)
+    s = Setting.find(s.id) # force reload
+    assert !s.preferences.nil?
+  end
+  
   def test_prevent_assignment_to_invalid_group
     assert_no_difference Setting, :count do
       @settings[:admin_group_id] = 100000000000000000

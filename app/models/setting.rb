@@ -25,4 +25,8 @@ class Setting < ActiveRecord::Base
     errors.add :admin_group_id, "The admin group needs to have at least one member" and return false if @group.users.empty?
     errors.add :admin_group_id, "This group could not be locked to prevent deletion" and return false unless @group.update_attribute(:permanent, true)
   end
+  
+  def preferences
+    self[:preferences] ||= {}
+  end
 end

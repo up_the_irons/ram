@@ -78,13 +78,21 @@ UPLOAD_SIZE_LIMIT = 50000 * 1024
 RAM_SALT          = 'foodz'
 
 begin
-  $APPLICATION_SETTINGS = Setting.find(:first) unless RAILS_ENV == 'test' # The record, which hold all the website configurations
+  @setting = Setting.find(:first)
+  @setting.preferences = { :rmagick => true } unless @setting.preferences || @setting.preferences.empty?
+  $APPLICATION_SETTINGS = @setting
 rescue
-  $APPLICATION_SETTINGS = OpenStruct.new({:application_name => 'RAM',:admin_group_id => 1,:filesize_limit => 55000, :preferences => {:rmagick => true}})
+  @setting = OpenStruct.new({:application_name => 'RAM',:admin_group_id => 1,:filesize_limit => 55000, :preferences => {:rmagick => true}})
+  $APPLICATION_SETTINGS = @setting
 end
 
 begin
   require 'RMagick'
+  unless @setting.preferences[:rmagick]
+    @setting.preferences[:rmagick] = true
+    @setting.save!
+    $APPLICATION_SETTINGS = @setting
+  end
 rescue LoadError
   # Failed to load RMagick
   $APPLICATION_SETTINGS.preferences[:rmagick] = false
