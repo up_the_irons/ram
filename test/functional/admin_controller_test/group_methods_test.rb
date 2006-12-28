@@ -177,7 +177,7 @@ module IncludedTests::GroupMethodsTest
     g.users.map{|u| group_members << u.id unless u.id == users(:administrator).id}
     post :edit_group, :id => g.id, :group =>{:user_ids => group_members}
     assert_response :redirect
-    assert_equal "You are no longer have access to \"#{g.name}\"", assigns(:flash)[:notice]
+    assert_equal "You are no longer can edit \"#{g.name}\"", assigns(:flash)[:notice]
     assert !users(:administrator).groups(true).include?(g)
   end
   
