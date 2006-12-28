@@ -70,7 +70,7 @@ class AssetControllerTest < Test::Unit::TestCase
   
   # In configurations where RMagick is not available no thumbnails shall be generated.
   def test_create_without_rmagick
-    $APPLICATION_SETTINGS.preferences[:rmagick?] = false
+    $APPLICATION_SETTINGS.preferences[:rmagick] = false
     file = "#{RAILS_ROOT}/test/fixtures/images/rails.png"
     temp_file = uploaded_jpeg(file)
     Asset.skip_thumbnails
@@ -80,7 +80,7 @@ class AssetControllerTest < Test::Unit::TestCase
       assert_equal 0, assigns(:asset).thumbnails.size
     end
     
-    $APPLICATION_SETTINGS.preferences[:rmagick?] = true # Rollback
+    $APPLICATION_SETTINGS.preferences[:rmagick] = true # Rollback
   end
   
   def test_update

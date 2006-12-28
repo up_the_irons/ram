@@ -14,5 +14,5 @@ default:
   admin_group_id: 31
   filesize_limit: 51200000
   preferences: "--- 
-  :rmagick?: true
+  :rmagick: true
   "

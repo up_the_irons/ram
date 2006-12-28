@@ -214,7 +214,7 @@ class AccountControllerTest < Test::Unit::TestCase
   end
   
   def test_shall_skip_avatar_without_rmagick
-    $APPLICATION_SETTINGS.preferences[:rmagick?] = false
+    $APPLICATION_SETTINGS.preferences[:rmagick] = false
     login_as :normal_user # Non-admin
     file = "#{RAILS_ROOT}/test/fixtures/images/rails.png"
     temp_file = uploaded_jpeg(file)
@@ -223,7 +223,7 @@ class AccountControllerTest < Test::Unit::TestCase
       assert !assigns(:avatar)
     end
     assert_response :success
-    $APPLICATION_SETTINGS.preferences[:rmagick?] = true # rollback
+    $APPLICATION_SETTINGS.preferences[:rmagick] = true # rollback
   end
   
   def test_users_shall_not_edit_status_or_login

@@ -13,6 +13,6 @@ class SiteControllerTest < Test::Unit::TestCase
   end
   
   def test_rmagick_dependency
-    assert !$APPLICATION_SETTINGS.preferences[:rmagick?].nil?
+    assert !$APPLICATION_SETTINGS.preferences[:rmagick].nil?
   end
 end

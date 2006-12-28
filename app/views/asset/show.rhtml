@@ -19,7 +19,7 @@
     <h1 class='title'><%= h @asset.name %>
     <% if @asset.name != @asset.content_type -%> <span class="miceType">(<%=h @asset.content_type%> )</span> <% end -%>
     </h1>
-    <p><%= link_to("View Larger Size", :action => "show_inline", :id=>@asset.id) if $APPLICATION_SETTINGS.preferences[:rmagick?]%></p>
+    <p><%= link_to("View Larger Size", :action => "show_inline", :id=>@asset.id) if $APPLICATION_SETTINGS.preferences[:rmagick]%></p>
     <%= display_as(@asset)%>
     <p>
     <%= @asset.description %></p>

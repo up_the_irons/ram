@@ -80,14 +80,14 @@ RAM_SALT          = 'foodz'
 begin
   $APPLICATION_SETTINGS = Setting.find(:first) unless RAILS_ENV == 'test' # The record, which hold all the website configurations
 rescue
-  $APPLICATION_SETTINGS = OpenStruct.new({:application_name => 'RAM',:admin_group_id => 1,:filesize_limit => 55000, :preferences => {:rmagick? => true}})
+  $APPLICATION_SETTINGS = OpenStruct.new({:application_name => 'RAM',:admin_group_id => 1,:filesize_limit => 55000, :preferences => {:rmagick => true}})
 end
 
 begin
   require 'RMagick'
 rescue LoadError
   # Failed to load RMagick
-  $APPLICATION_SETTINGS.preferences[:rmagick?] = false
+  $APPLICATION_SETTINGS.preferences[:rmagick] = false
 end
 
 begin
