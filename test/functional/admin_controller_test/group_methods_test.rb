@@ -167,7 +167,18 @@ module IncludedTests::GroupMethodsTest
   end
   
   def test_remove_admin_from_group
-    todo
+    login_as :administrator
+    g = users(:administrator).groups.find(:first, :conditions => "name != '#{Group.find($APPLICATION_SETTINGS.admin_group_id).name}'")
+    # Ensure the admin is not the only group memeber.
+    assert_difference g.users(true), :size do
+      g.users << users(:normal_user)
+    end if g.users.size < 1
+    group_members = []
+    g.users.map{|u| group_members << u.id unless u.id == users(:administrator).id}
+    post :edit_group, :id => g.id, :group =>{:user_ids => group_members}
+    assert_response :redirect
+    assert_equal "You are no longer have access to \"#{g.name}\"", assigns(:flash)[:notice]
+    assert !users(:administrator).groups(true).include?(g)
   end
   
   def test_rescue_on_invalid_disband

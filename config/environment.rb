@@ -89,7 +89,7 @@ rescue LoadError
   # Failed to load RMagick
   $APPLICATION_SETTINGS.preferences[:rmagick?] = false
 end
-  
+
 begin
   # Codename generated from the dictionary
   @rev = YAML.load(`svn info`)['Revision'] if File.exist?('.svn')

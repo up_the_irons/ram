@@ -4,7 +4,6 @@
   <%= image_tag(url_for(:controller=>'account', :action=>'avatar', :id=>avatar.id))%>
 </li>
 <% end -%>
-
 <li id="avatar_field">
   <% if $APPLICATION_SETTINGS.preferences[:rmagick?] -%>
     <label>Profile Image (large images will be cropped to 50x50)</label>

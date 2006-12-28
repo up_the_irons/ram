@@ -16,6 +16,7 @@
 <ul class="web_form_stacked">
 <%= render :partial=>'account/user_data_form'     %>
 <%= render :partial=>'account/admin_options' if current_user.is_admin? && params[:controller] =='admin'%>
+<%= render :partial=>'account/avatar_form', :locals=>{:avatar=>@user.avatar} %>
 <%= render :partial=>'account/personal_data_form' %>
 <%= render :partial=>'account/profile_data_form'  %>
 <%= submit_tag "Save Profile" %>

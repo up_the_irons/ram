@@ -46,10 +46,18 @@ class AdminController
   
   def edit_group
       edit_collection({:table=>'groups', :many_associations=>['users','categories'], :required_associations=>['user_ids']})
+      if !@group.users(true).include?(current_user) and !@group.new_record?
+        flash[:notice] = "You are no longer have access to \"#{@group.name}\""
+        redirect_to :action => "dashboard" and return false 
+      end
   end
   
   def edit_category
     edit_collection({:table=>'categories', :many_associations=>['groups'], :required_associations=>['group_ids']})
+    if !@category.groups(true).map{|g| g.id}.include?($APPLICATION_SETTINGS.admin_group_id) and !@category.new_record?
+      flash[:notice] = "You are no longer have access to \"#{@category.name}\""
+      redirect_to :action => "dashboard" and return false
+    end
   end
   
   # A group is not destroyed, it's disbanded!
