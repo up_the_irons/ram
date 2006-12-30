@@ -50,6 +50,7 @@ class AdminController
         flash[:notice] = "You are no longer can edit \"#{@group.name}\""
         redirect_to :action => "dashboard" and return false 
       end
+      redirect_to(:action => "edit_group", :id => @group.id) unless params[:id] || @group.new_record?
   end
   
   def edit_category
@@ -58,6 +59,7 @@ class AdminController
       flash[:notice] = "You are no longer can edit \"#{@category.name}\""
       redirect_to :action => "dashboard" and return false
     end
+    redirect_to(:action => "edit_category", :id => @category.id) unless params[:id] || @category.new_record?
   end
   
   # A group is not destroyed, it's disbanded!

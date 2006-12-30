@@ -152,7 +152,7 @@ module CollectionMethods
     if model_instance.valid?
       flash[:notice] = "\"#{model_instance.name}\" was saved."
       flash[:notice] << many_associations_results
-      redirect_to(:action => "edit_#{obj[:table].singularize}", :id => model_instance.id) and return false unless params[:id]
+      # redirect_to(:action => "edit_#{obj[:table].singularize}", :id => model_instance.id) and return false unless params[:id]
     else
       flash[:notice] = "The #{model_instance.class.class_name} could not be saved."
     end
