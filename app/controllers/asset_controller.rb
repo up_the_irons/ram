@@ -17,7 +17,7 @@ class AssetController < ProtectedController
 
   def show
     @asset = current_user.assets_search({:id=>params[:id]})[0]
-    
+    @category = @asset.category
     if @asset
       redirect_to :action=>'download',:id=>@asset.filename unless @asset.image?
     else
