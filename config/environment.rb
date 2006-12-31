@@ -104,7 +104,7 @@ begin
   @codename  = IO.readlines("/usr/share/dict/words")[@rev]
 rescue
   @rev = ""
-  @codename =""
+  @codename = ""
 end
   REVISION_NUMBER = @rev
   APP_CODENAME = @codename

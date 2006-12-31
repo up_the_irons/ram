@@ -1,1 +1,3 @@
+<% if REVISION_NUMBER.to_i > 0 -%>
 <p><%= link_to "#{$APPLICATION_SETTINGS.application_name}",:controller=>'site',:action=>'about' %> Build:<%= REVISION_NUMBER %> the <em><%= link_to APP_CODENAME, "http://dictionary.reference.com/browse/#{APP_CODENAME}", {:target=>'_new'} %></em> edition.</p>
+<% end -%>
