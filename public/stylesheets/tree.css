@@ -11,34 +11,32 @@ ul.tree, ul.selectableTree{
   margin-left  : 0px;
 }
 
-
 ul.tree img, ul.selectableTree img{
    border : none;
 }
- 
 
 ul.tree, ul.tree ul, ul.selectableTree, ul.selectableTree ul{
   padding-left: 0;
 }
-
 
 ul.tree ul, ul.selectableTree ul{
   margin-left: 16px;
     
 }
 
-
 ul.tree li.closed ul{
   /*display: none;*/
 }
 
+ul.tree a.selected{
+  background-image: url(/images/icons/folder_go.png) !important;
+}
 
 ul.selectableTree li.selected{
   /*display: none;*/
   padding: 0;
   /*background-color: #ff0000;*/
 }
-
 
 ul.tree li, ul.selectableTree li{
   list-style: none;
@@ -48,12 +46,10 @@ ul.tree li, ul.selectableTree li{
   /* background-color:#FFFFFF; */
 }
 
-
 ul.tree li.last, ul.selectableTree li.last{
   list-style: none;
   background-image: none;
 }
-
 
 /* Span-A: I/L/I glpyhs */
 ul.tree span.a, ul.selectableTree span.a{
@@ -61,55 +57,45 @@ ul.tree span.a, ul.selectableTree span.a{
   display: block;
 }
 
-
 ul.tree span.a.last, ul.selectableTree span.a.last{
   background: url(/images/tree/l.gif) 0 50% no-repeat;
 }
-
 
 /* Span-B: Plus/Minus icon */
 ul.tree span.b, ul.selectableTree span.b{
   /*cursor: pointer;*/
 }
 
-
 ul.tree span.a.children span.b{
   /* background: url(/images/icons/bullet_toggle_minus.png) 0 50% no-repeat; */
   cursor: pointer;
 }
-
 
 ul.tree li.closed span.a.children span.b{
   /* background: url(/images/icons/bullet_toggle_plus.png) 0 50% no-repeat; */
   cursor: pointer;
 }
 
-
 ul.selectableTree li.selected span.a.children span.b{
   /*cursor: pointer;*/
 }
-
 
 /* Span-C: Spacing and extending tree line below the icon */
 ul.tree span.c, ul.selectableTree span.c {
   margin-left: 16px;
 }
 
-
 ul.tree span.a.children span.c, ul.selectableTree span.a.children span.c{
   background: url(/images/tree/i-bottom.gif) 0 50% no-repeat;
 }
-
 
 ul.tree span.a.spanClosed span.c{
   background-image: none;
 }
 
-
 ul.selectableTree span.a.spanSelected span.c {
   background-image: none;
 }
-
 
 /* Anchor tag: Page icon */
 ul.tree a, ul.selectableTree a{
@@ -122,25 +108,21 @@ ul.tree a, ul.selectableTree a{
   background: url(/images/icons/folder.png) 0 50% no-repeat;
 }
 
-
 ul.tree span.a.children a, ul.selectableTree span.a.children a {
   background: no-repeat;
   background-image: url(/images/icons/folder.png);
 }
-
 
 ul.tree span.a.children.spanClosed a{
   background: no-repeat;
   background-image: url(/images/icons/folder.png);
 }
 
-
 ul.selectableTree span.a.children.spanSelected a{
   background: no-repeat;
   background-image: url(/images/icons/folder.png);
-  /*background-color: #ff0000;*/
+  /* background-color: #ff0000; */
 }
-
 
 /* Unformatted tree */
 ul.tree.unformatted li, ul.selectableTree.unformatted li{
@@ -148,12 +130,10 @@ ul.tree.unformatted li, ul.selectableTree.unformatted li{
   padding-left: 16px;
 }
 
-
 ul.tree.unformatted li li, ul.selectableTree.unformatted li li{
   background-image: none;
   padding-left: 0px;
 }
-
 
 /*
  * Divs, by default store vertically aligned data
@@ -165,7 +145,6 @@ ul.tree li div, ul.selectableTree li div{
   margin-top: -26px;
 }
 
-
 /* As inside DIVs should be treated normally */
 ul.tree div a, ul.selectableTree div a{
   padding: 0;
@@ -173,7 +152,6 @@ ul.tree div a, ul.selectableTree div a{
   /*min-height: auto;*/
   height: auto;
 }
-
 
 ul.tree li A:link, ul.tree li A:hover, ul.tree li A:visited,
 ul.selectableTree li a:link, ul.selectableTree li a:visited, ul.selectableTree li a:hover,  ul.selectableTree li a:active{

@@ -76,6 +76,7 @@
       <% end -%>
         
       <td id="page" valign="top" style="border-left:1px solid #efefef;padding-left:10px;padding-top:10px;">
+        <%= yield :page_actions -%>
         <%= yield :page_view_options %>
         <%= yield :layout %>
         <%= yield :subscription_options %>

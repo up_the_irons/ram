@@ -12,7 +12,7 @@
       <dd><label>State: </label><%= text_field :profile, :state %></dd>
       <dd><label>Country: </label>
         <select id="profile_country" name="profile[country]">
-          <%= country_options_for_select(@profile.country,['United States','United Kingdom']) %>
+          <%= country_options_for_select(@profile.country, ['United States','United Kingdom']) %>
         </select>
       </dd>
       <dd><label>Postal Code: </label><%= text_field :profile, :postal_code %></dd>

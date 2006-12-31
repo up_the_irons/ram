@@ -4,5 +4,5 @@
   -%>
   <li><label>Status: </label><%= select :user, :state,  status_options %></li>
   <li><label>Group Members: </label>
-  <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{:parent=>@user,:selected=>@user.groups,:available=>current_user.groups - @user.groups}%>
+  <%= render :partial=>'shared/selected_or_available_sorter', :locals=>{ :parent => @user, :selected => @user.groups, :available => current_user.groups - @user.groups }%>
   </li>

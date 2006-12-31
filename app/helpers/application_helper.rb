@@ -48,7 +48,9 @@ module ApplicationHelper
   def parse_tree(branches)
     code = ""
     branches.each do |b|
-      link = link_to truncate(b[:name], 25), :controller => 'category', :action => 'show', :id => b[:id]
+      selected_class = "selected" if @category && @category.id == b[:id]
+      link = link_to truncate(b[:name], 25), {:controller => 'category', :action => 'show', :id => b[:id]},{:class => selected_class ||= ""}
+      
       if b[:children].size > 0
         code << "<li id=\"branch_#{b[:id]}\">#{link}\n\r" 
         code << "<ul>#{parse_tree(b[:children])}</ul></li>\n\r"

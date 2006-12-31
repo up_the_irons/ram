@@ -1,5 +1,9 @@
 <% content_for('application_header') do -%>
-<h1>Edit <%=@user.login%>'s Profile</h1>
+  <% unless @user.new_record? -%>
+  <h1>Edit <%= @user.login %>'s Profile</h1>
+  <% else -%>
+  <h1>Create User</h1>
+  <% end -%>
 <% end -%>
 <%= error_messages_for 'user'         %>
 <%= error_messages_for 'person'       %>

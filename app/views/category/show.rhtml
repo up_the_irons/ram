@@ -8,32 +8,31 @@
     @asset_count = "(#{@assets.size})"   unless @assets.nil?
     -%>
     <li <%= "class='selected'" if params[:display] == 'changes' %> ><%= link_to "Change Log",{:action=>'changes',:id=>@category.id,:display=>'changes'} %></li>
-    <li <%= "class='selected'" if params[:display] == 'articles' %> ><%= link_to "Articles #{@article_count}",{:action=>'show',:id=>@category.id,:display=>'articles'} %></li>
-    <li <%= "class='selected'" if params[:display] == 'assets'   %> ><%= link_to "Assets #{@asset_count}"  ,{:action=>'show',:id=>@category.id,:display=>'assets'}   %></li>
+    <li <%= "class='selected'" if params[:display] == 'articles' %> ><%= link_to "Articles",{:action=>'show',:id=>@category.id,:display=>'articles'} %></li>
+    <li <%= "class='selected'" if params[:display] == 'assets'   %> ><%= link_to "Assets"  ,{:action=>'show',:id=>@category.id,:display=>'assets'}   %></li>
   </ul>
     
 <% end %>
 
 <% content_for('rss_feed'){ auto_discovery_link_tag(:rss, {:controller => 'feed', :action =>'category',:id=>@category.id})}%>
 
-
-<% admin_only_content do -%>
-<dl class="adminOptions">
-  <dt>Admin Only Options</dt>
-    <dd><%= link_to "#{image_tag('/images/icons/pencil.png')} Edit Category", :controller=>'admin', :action=>'edit_category',:id=>@category %></dd>
-    <dd><%= link_to "#{image_tag('/images/icons/cross.png')} Delete Category", {:controller=>'admin', :action=>'destroy_category',:id=>@category},{:confirm=>"Are you sure you want to remove #{@category.name} and all its assets?",:post=>true} %></dd>
-</dl>
-<% end -%>
-
-
-<div class="pageActionOptions">
-  From here you can:
-  <dl>
-    <dd><%= link_to_remote( "#{image_tag('/images/icons/add.png')} Upload A file", 
+<% content_for(:page_actions) do -%>
+  <% admin_only_content do -%>
+  <dl class="adminOptions">
+    <dt>Admin Only Options</dt>
+      <dd><%= link_to "#{image_tag('/images/icons/pencil.png')} Edit Category", :controller=>'admin', :action=>'edit_category',:id=>@category %></dd>
+      <dd><%= link_to "#{image_tag('/images/icons/cross.png')} Delete Category", {:controller=>'admin', :action=>'destroy_category',:id=>@category},{:confirm=>"Are you sure you want to remove #{@category.name} and all its assets?",:post=>true} %></dd>
+  </dl>
+  <% end -%>
+  <div class="pageActionOptions">
+    From here you can:
+    <dl>
+      <dd><%= link_to_remote( "#{image_tag('/images/icons/add.png')} Upload A file", 
                        :url => { :controller=>'asset', :action => "edit", :category_id =>@category.id, :update=>'new_asset_form' } ) %></dd>
-    <dd><%= link_to "#{image_tag('/images/icons/add.png')} Write An Article", :controller=>'article',:action=>'write',:category_id=>@category.id %></dd>
-  </dl>                      
-</div>
+      <dd><%= link_to "#{image_tag('/images/icons/add.png')} Write An Article", :controller=>'article',:action=>'write',:category_id=>@category.id %></dd>
+    </dl>                      
+  </div>
+<% end -%>
 
 <%= render :partial=>'article/list' if params[:display] == 'articles' -%>
 <br class="clear_both"/>
