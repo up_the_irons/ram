@@ -7,12 +7,12 @@
       <% current_user.feeds.each do |feed| -%>
         <% row_class = cycle("even", "odd") %>
         <li class="menuDataItem_<%= row_class %>">
-          <%= link_to feed.name, :action => 'read_feed', :id => feed.id %> 
+          <%= link_to feed.name, :controller => 'inbox', :action => 'read_feed', :id => feed.id %> 
           [ <%= link_to "unsubscribe", { :controller => 'inbox', :action => 'unsubscribe_feed', :id => feed.id }, { :confirm => "Are you sure you want to unsubscribe from #{feed.name}?", :post => true } %> ]
         </li>
       <% end -%>
       </ul>
     </li>
     
-  </ul>                
+  </ul>
 </div>
