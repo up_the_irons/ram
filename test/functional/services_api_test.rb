@@ -45,8 +45,9 @@ class ServicesControllerApiTest < Test::Unit::TestCase
     user  = OpenStruct.new(:login => 'lskdjfldjskf', :password => '')
     asset = attachments(:attachment_1)
 
-    result = invoke_layered :assets, :get, user.login, user.password, [asset.id]
-    assert_nil result
+    assert_raises(RuntimeError) do
+      result = invoke_layered :assets, :get, user.login, user.password, [asset.id]
+    end
   end
 
   def test_assets_update
@@ -56,8 +57,9 @@ class ServicesControllerApiTest < Test::Unit::TestCase
     user  = OpenStruct.new(:login => 'lskdjfldjskf', :password => '')
     asset = attachments(:attachment_1)
 
-    result = invoke_layered :assets, :update, user.login, user.password, asset.id, WebServiceStructs::AssetStruct.new(:filename => 'blah')
-    assert_nil result # This is to test for raising of invalid login exception once we get exceptions working...
+    assert_raises(RuntimeError) do
+      result = invoke_layered :assets, :update, user.login, user.password, asset.id, WebServiceStructs::AssetStruct.new(:filename => 'blah')
+    end
   end
 
   def test_categories_get
