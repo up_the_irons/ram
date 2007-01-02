@@ -4,7 +4,7 @@ require 'services_controller'
 class ServicesController; def rescue_action(e) raise e end; end
 
 class ServicesControllerApiTest < Test::Unit::TestCase
-  fixtures :attachments, :users
+  fixtures :attachments, :users, :collections
 
   def setup
     @controller = ServicesController.new
@@ -48,4 +48,35 @@ class ServicesControllerApiTest < Test::Unit::TestCase
     result = invoke_layered :assets, :get, user.login, user.password, [asset.id]
     assert_nil result
   end
+
+  def test_assets_update
+  end
+
+  def test_assets_update_bad_login
+    user  = OpenStruct.new(:login => 'lskdjfldjskf', :password => '')
+    asset = attachments(:attachment_1)
+
+    result = invoke_layered :assets, :update, user.login, user.password, asset.id, WebServiceStructs::AssetStruct.new(:filename => 'blah')
+    assert_nil result # This is to test for raising of invalid login exception once we get exceptions working...
+  end
+
+  def test_categories_get
+    user     = users(:administrator)
+    category = collections(:collection_30)
+
+    result = invoke_layered :categories, :get, user.login, 'qazwsx', [category.id]
+    assert_not_nil  result
+    assert_equal 1, result.size
+
+    result_category = result.first
+
+    assert_equal category.id,           result_category.id
+    assert_equal category.parent_id,    result_category.parent_id
+    assert_equal category.name,         result_category.name
+    assert_equal category.description,  result_category.description
+    assert_equal category.user_id,      result_category.user_id
+    assert_equal category.public,       result_category.public
+    assert_equal category.permanent,    result_category.permanent
+  end
+
 end

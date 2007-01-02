@@ -5,6 +5,7 @@ class ServicesController < ApplicationController
 
   web_service_scaffold :invoke
 
-  web_service :test,   TestService.new
-  web_service :assets, AssetsService.new
+  web_service :test,       TestService.new
+  web_service :assets,     AssetsService.new
+  web_service :categories, CategoriesService.new
 end
