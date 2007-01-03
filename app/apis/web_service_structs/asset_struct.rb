@@ -7,6 +7,7 @@ module WebServiceStructs
   #   id           : (int)      Unique ID of this asset
   #   filename     : (string)   Filename
   #   content_type : (string)   Content-type (e.g. image/gif, application/pdf, ...)
+  #   content      : (string)   File content (UTF8 encoded)
   #   size         : (int)      Size in bytes
   #   description  : (string)   Description
   #   created_on   : (datetime) Creation date and time
@@ -16,6 +17,7 @@ module WebServiceStructs
     member :id,           :int
     member :filename,     :string
     member :content_type, :string
+    member :content,      :string
     member :size,         :int
     member :description,  :string
   
