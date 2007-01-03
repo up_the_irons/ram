@@ -31,6 +31,7 @@ class AssetsService < ProtectedWebService
         :id           => asset.id,
         :filename     => asset.filename,
         :content_type => asset.content_type,
+        :content      => asset.data,
         :size         => asset.size,
         :description  => asset.description,
         :created_on   => asset.created_on,
