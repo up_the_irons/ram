@@ -9,8 +9,8 @@ if false
 require 'soap/rpc/driver'
 
 proxy = SOAP::RPC::Driver.new("http://localhost:3030/services/api", nil, '/services/assets/')
-proxy.add_method('Get', 'username', 'password', 'ids') # Must be 'Get', not 'get'
-puts proxy.Get('admin','admin', [1]).to_yaml
+proxy.add_method('get', 'username', 'password', 'ids') # Must be 'Get', not 'get'
+puts proxy.get('admin','admin', [1]).to_yaml
 
 else
 
