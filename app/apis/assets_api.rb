@@ -1,4 +1,6 @@
 class AssetsApi < ActionWebService::API::Base #:nodoc:
+  inflect_names false
+
   api_method :find, 
              :expects => [:text => :string]
 
