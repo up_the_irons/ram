@@ -11,7 +11,6 @@
 class Asset < ActiveRecord::Base  
   set_table_name "attachments"
   
-  
   def self.use_thumbnails
     acts_as_attachment :thumbnails => { :large => '485>',:medium => '291>', :small => '95' }
   end    
@@ -24,7 +23,7 @@ class Asset < ActiveRecord::Base
     require 'RMagick'
     use_thumbnails
   rescue LoadError
-    # Failed to load RMagick do not create thumbnails
+    # Failed to load RMagick, do not create thumbnails
     skip_thumbnails
   end
   
@@ -40,15 +39,15 @@ class Asset < ActiveRecord::Base
     def << (group)
       return if @owner.groups.include?group
       l = Linking.create(
-          :linkable_id => @owner.id,
+          :linkable_id   => @owner.id,
           :linkable_type => "Asset",
-          :group_id => group.id
+          :group_id      => group.id
         )
       l.errors.each_full { |msg| puts msg } unless l.save 
     end
   end
    
-  has_many :changes, :finder_sql=>'SELECT DISTINCT * ' +
+  has_many :changes, :finder_sql => 'SELECT DISTINCT * ' +
          'FROM changes c WHERE c.record_id = #{id} AND c.record_type = "Asset" ORDER BY c.created_at'   
    
   def name
@@ -97,7 +96,7 @@ class Asset < ActiveRecord::Base
   class << self
     
     def search(keywords, groups, order = nil)
-      query = { :id => "", :name => "", :description => "", :filename => "",:user_id=>"" }
+      query = { :id => "", :name => "", :description => "", :filename => "",:user_id => "" }
       
       if keywords.class.to_s == "Hash"
         query = query.merge(keywords)
