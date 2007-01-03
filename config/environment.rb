@@ -106,6 +106,8 @@ rescue
   @rev = ""
   @codename = ""
 end
-  REVISION_NUMBER = @rev
-  APP_CODENAME = @codename
 
+REVISION_NUMBER = @rev
+APP_CODENAME = @codename
+
+$KCODE = 'UTF8'
